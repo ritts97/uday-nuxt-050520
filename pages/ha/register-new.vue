@@ -1,0 +1,182 @@
+<template>
+  <div>
+    <div class="w-100 bg-dark text-white mb-3">
+      <div class="container bg-dark">
+        <div class="row py-2">
+          <div class="col-md-6 font-weight-bold pt-2" style="font-size: 24px;">
+            UD.
+          </div>
+          <div class="col-md-6 py-3 text-right">
+            jane.doe@udayhealth.org | Logout
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <small>
+            <nuxt-link to="/ha" class="text-muted">
+              Back to Dashboard
+            </nuxt-link>
+          </small>
+        </div>
+        <div class="col-md-12 text-center">
+          Register a New Patient
+          <hr>
+        </div>
+      </div>
+    </div>
+    <div class="container mt-2">
+      <div class="row">
+        <div class="col-md-12 rounded">
+          <ul class="list-inline border-bottom">
+            <li class="list-inline-item" v-for="(tab, index) in tabs" :key="index">
+              <button class="btn" @click="getTab(tab.name)" role="button">
+                {{ tab.title }}
+              </button>
+            </li>
+          </ul>
+          <div class="w-100 bg-white my-3 px-3 py-3" v-if="tabs[0].isActive">
+            <!-- Demographics <br><br> -->
+            <div class="container">
+              <div class="row">
+                <div class="col-md-12 text-center">
+                  <img src="/avatar.png" class="m-3" style="width: 200px;" alt=""><br>
+                  <button>Action :: Upload a Patient Photo</button>
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col-md-12 mb-3">
+                  General Information
+                </div>
+                <div class="col-md-6">
+                  <input type="text" class="w-100 p-2 mb-3" placeholder="First Name">
+                  <input type="text" class="w-100 p-2 mb-3" placeholder="Gender">
+                  <input type="text" class="w-100 p-2 mb-3" placeholder="Phone Number">
+                  <input type="text" class="w-100 p-2 mb-3" placeholder="H/W/S/D of">
+                </div>
+                <div class="col-md-6">
+                  <input type="text" class="w-100 p-2 mb-3" placeholder="Last Name">
+                  <input type="text" class="w-100 p-2 mb-3" placeholder="Age">
+                  <input type="text" class="w-100 p-2 mb-3" placeholder="Occupation">
+                  <input type="text" class="w-100 p-2 mb-3" placeholder="Current Date">
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col-md-12 mb-3">
+                  Location Information
+                </div>
+                <div class="col-md-6">
+                  <input type="text" class="w-100 p-2 mb-3" placeholder="Address 1">
+                  <input type="text" class="w-100 p-2 mb-3" placeholder="District">
+                  <input type="text" class="w-100 p-2 mb-3" placeholder="Police Station">
+                </div>
+                <div class="col-md-6">
+                  <input type="text" class="w-100 p-2 mb-3" placeholder="Address 2">
+                  <input type="text" class="w-100 p-2 mb-3" placeholder="State">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container mb-3">
+      <div class="row">
+        <div class="col-md-12">
+          <button disabled class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">
+            Register New Patient
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="container text-center mb-4">
+      <div class="row">
+        <div class="col-md-12 text-secondary">
+          <small>
+            UdayHealth.org is a virtual, telemedicine application organized by medical professionals and volunteers worldwide.
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  methods: {
+    getTab: function (tabName) {
+      let tabs = this.tabs
+      let ref = 0
+
+      for (let i = 0; i < tabs.length; i++) {
+        if (tabs[i].name === tabName) {
+          tabs[i].isActive = true
+          ref = i
+        } else {
+          tabs[i].isActive = false
+        }
+
+        if (ref == (tabs.length - 1)) {
+          this.showComplete = true
+        } else {
+          this.showComplete = false
+        }
+      }
+    }
+  },
+  data() {
+    return {
+      list: [],
+      tabs: [
+        {
+          name: 'patients',
+          title: 'Demographics',
+          isActive: true,
+        }
+      ]
+    }
+  },
+}
+</script>
+
+<style>
+.list-inline-item {
+  margin-right: 16px !important;
+}
+
+thead tr th {
+  border-top: none !important;
+}
+
+.btn-dark {
+  background-color: #444f5a;
+  border: none;
+}
+
+.btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.btn-dark:hover {
+  background-color: #5d666e;
+  border: none;
+}
+
+.btn-light {
+  background-color: #e4e4e4;
+  border: none;
+}
+
+.shape-status {
+  width: 12px;
+  margin-right: 7px;
+  margin-bottom: 4px;
+}
+
+.pointer:hover {
+  cursor: pointer;
+}
+</style>
