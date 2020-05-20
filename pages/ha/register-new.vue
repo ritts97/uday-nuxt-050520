@@ -56,7 +56,7 @@
               <div class="row">
                 <div class="col-md-12 text-center">
                   <img src="/avatar.png" class="m-3" style="width: 200px;" alt=""><br>
-                  <button>Action :: Upload a Patient Photo</button>
+                  <button class="btn btn-dark px-4">Upload a Patient Photo</button>
                 </div>
               </div>
               <div class="row mt-3">
@@ -98,9 +98,11 @@
     <div class="container mb-3">
       <div class="row">
         <div class="col-md-12">
-          <button disabled class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">
-            Register New Patient
-          </button>
+          <nuxt-link to="/ha">
+            <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">
+              Register New Patient
+            </button>
+          </nuxt-link>
         </div>
       </div>
     </div>

@@ -33,10 +33,6 @@
              > Patient Profile
           </small>
         </div>
-        <!-- <div class="col-md-12 text-center">
-          Patient Profile
-          <hr>
-        </div> -->
       </div>
     </div>
     <div class="container mt-3">
@@ -107,15 +103,12 @@
         <div class="col-md-12">
           <ul class="list-inline mb-2">
             <li class="list-inline-item" v-for="(tab, index) in tabs" :key="index">
-              <!-- <div style="border-bottom: 2px solid #ccc;"> -->
                 <button class="btn" @click="getList(tab.name)" role="button">
                   {{ tab.title }} ({{ getListLength(tab.name) }})
                 </button>
-              <!-- </div> -->
             </li>
           </ul>
           <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 300px;">
-            <!-- <input type="text" class="w-100 p-2 mb-3" placeholder=":: Search by ID, name or phone number"> -->
             <table class="table table-sm table-hover">
               <thead>
                 <tr>
@@ -123,7 +116,6 @@
                   <th scope="col">Visit Type</th>
                   <th scope="col">Date of Visit</th>
                   <th scope="col"># FUs</th>
-                  <!-- <th scope="col">Released</th> -->
                   <th scope="col"># Prescr.</th>
                   <th scope="col"># Services</th>
                   <th scope="col">HA Actions</th>
@@ -133,13 +125,18 @@
                 <tr class="pointer" v-for="(visit, index) in list" :key="index" style="height: 40px;">
                   <td scope="row">{{ visit.id }}</td>
                   <td>
-                    <nuxt-link to="/ha/profile-visit">{{ visit.name }}
-                    </nuxt-link>
+                    <div v-if="visit.link">
+                      <nuxt-link :to="visit.link">
+                        {{ visit.name }}
+                      </nuxt-link>
+                    </div>
+                    <div v-else>
+                      {{ visit.name }}
+                    </div>
                   </td>
                   <td>{{ visit.gender }}</td>
                   <td>{{ visit.followups }}</td>
                   <td>3</td>
-                  <!-- <td>{{ visit.age }}</td> -->
                   <td>1</td>
                   <td>
                     <div class="dropdown w-100" v-if="visit.type === 'episode'">
@@ -147,19 +144,18 @@
                         Select an Action
                       </button>
                       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">New Follow Up</a>
-                        <a class="dropdown-item" href="#">New Service</a>
-                        <!-- <a class="dropdown-item" href="#">Mark Episode Resolved</a> -->
+                        <nuxt-link class="dropdown-item" to="/ha/profile-visit">
+                          New Follow Up
+                        </nuxt-link>
+                        <nuxt-link class="dropdown-item" to="/ha/profile-visit">
+                          New Service
+                        </nuxt-link>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">View Billing</a>
+                        <nuxt-link class="dropdown-item" to="/ha/profile-visit">
+                          View Billing
+                        </nuxt-link>
                       </div>
                     </div>
-                    <!-- <select v-if="visit.type === 'episode'" id="actions">
-                      <option value="volvo">Select an Action</option>
-                      <option value="saab">New Follow Up</option>
-                      <option value="mercedes">New Service</option>
-                      <option value="audi">Mark Episode Resolved</option>
-                    </select> -->
                   </td>
                 </tr>
               </tbody>
@@ -192,12 +188,6 @@ export default {
     filterEpisode: function () { 
       return this.masterList.filter(visit => visit.type == 'episode').reverse()
     },
-    // filterFollowUp: function () {
-    //   return this.masterList.filter(visit => visit.type == 'followup')
-    // },
-    // filterPrescription: function () {
-    //   return this.masterList.filter(visit => visit.type == 'prescription').reverse()
-    // },
     filterService: function () {
       return this.masterList.filter(visit => visit.type == 'service').reverse()
     },
@@ -232,12 +222,6 @@ export default {
       else if (tabName == 'episode') {
         this.list = this.filterEpisode
       }
-      // else if (tabName == 'followup') {
-      //   this.list = this.filterFollowUp
-      // }
-      // else if (tabName == 'prescription') {
-      //   this.list = this.filterPrescription
-      // }
       else if (tabName == 'service') {
         this.list = this.filterService
       }
@@ -260,9 +244,6 @@ export default {
       else if (tabName == 'episode') {
         return this.filterEpisode.length
       }
-      // else if (tabName == 'followup') {
-      //   return this.filterFollowUp.length
-      // }
       else if (tabName == 'prescription') {
         return this.filterPrescription.length
       }
@@ -274,11 +255,6 @@ export default {
       }
     },
   },
-  // computed: {
-  //   listReversed: function () {
-  //     return this.list.reverse()
-  //   }
-  // },
   data() {
     return {
       arr: [1,12,31,23,21,312],
@@ -294,16 +270,6 @@ export default {
           title: 'Episodes',
           isActive: false,
         },
-        // {
-        //   name: 'followup',
-        //   title: 'Follow Ups',
-        //   isActive: false,
-        // },
-        // {
-        //   name: 'prescription',
-        //   title: 'Prescriptions',
-        //   isActive: false,
-        // },
         {
           name: 'service',
           title: 'Direct Services',
@@ -323,6 +289,7 @@ export default {
           type: 'registration',
           gender: '8 weeks ago',
           billed: '',
+          link: '',
           age: 'Yes',
           phone: '14155551234'
         },
@@ -332,64 +299,21 @@ export default {
           type: 'episode',
           gender: '4 weeks ago',
           billed: '',
+          link: '/ha/profile-visit',
           followups: 4,
           age: 'Yes',
           phone: '14155551234'
         },
-        // {
-        //   id: 'EP1 FL1',
-        //   name: 'Follow Up',
-        //   type: 'followup',
-        //   gender: '2 weeks ago',
-        //   billed: '',
-        //   age: 'Yes',
-        //   phone: '14155551234'
-        // },
-        // {
-        //   id: 'EP1 FL2',
-        //   name: 'Follow Up',
-        //   type: 'followup',
-        //   gender: '2 weeks ago',
-        //   billed: '',
-        //   age: 'Yes',
-        //   phone: '14155551234'
-        // },
-        // {
-        //   id: 'EP1 PR1',
-        //   name: 'Prescribe Medicine',
-        //   type: 'prescription',
-        //   gender: '2 weeks ago',
-        //   billed: 'View Bill',
-        //   age: 'Yes',
-        //   phone: '14155551234'
-        // },
         {
           id: 'EP1 SV1',
           name: 'Perform ECG',
           type: 'service',
           gender: '2 weeks ago',
           billed: 'View Bill',
+          link: '/ha/profile-visit-service',
           age: 'Yes',
           phone: '14155551234'
         },
-        // {
-        //   id: 'EP1 BL1',
-        //   name: 'Bill for Service',
-        //   type: 'bill',
-        //   gender: '2 weeks ago',
-        //   billed: '',
-        //   age: 'Yes',
-        //   phone: '14155551234'
-        // },
-        // {
-        //   id: 'EP1 BL2',
-        //   name: 'Bill for Prescription',
-        //   type: 'bill',
-        //   gender: '2 weeks ago',
-        //   billed: '',
-        //   age: 'Yes',
-        //   phone: '14155551234'
-        // },
         {
           id: 'EP2 FL0',
           name: 'New Episode 2',
@@ -397,18 +321,10 @@ export default {
           gender: '1 weeks ago',
           followups: 3,
           billed: '',
+          link: '/ha/profile-visit-service',
           age: 'Yes',
           phone: '14155551234'
         },
-        // {
-        //   id: 'EP2 FL1',
-        //   name: 'Follow Up',
-        //   type: 'followup',
-        //   gender: '2 weeks ago',
-        //   billed: '',
-        //   age: 'Yes',
-        //   phone: '14155551234'
-        // }
       ]
     }
   },

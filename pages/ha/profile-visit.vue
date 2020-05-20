@@ -35,10 +35,6 @@
             </nuxt-link> > Episode 1
           </small>
         </div>
-        <!-- <div class="col-md-12 text-center">
-          Patient Profile
-          <hr>
-        </div> -->
       </div>
     </div>
     <div class="container mt-3">
@@ -68,7 +64,7 @@
             View Medical History...
           </nuxt-link><br>
           <nuxt-link to="/ha/profile-view-history" class="text-muted">
-            View All Billed...
+            View Billing History...
           </nuxt-link><br>
         </div>
         <div class="col-md-5">
@@ -91,29 +87,9 @@
       <div class="row">
         <div class="col-md-12 rounded">
           <ul class="list-inline">
-            <li class="list-inline-item">
-              <button class="btn btn-dark px-3 small" role="button">
-                Episode 1
-              </button>
-            </li>
-            <li class="list-inline-item">
-              <button class="btn btn-light px-3 small" role="button">
-                Follow Up 1
-              </button>
-            </li>
-            <li class="list-inline-item">
-              <button class="btn btn-light px-3 small" role="button">
-                Follow Up 2
-              </button>
-            </li>
-            <li class="list-inline-item">
-              <button class="btn btn-light px-3 small" role="button">
-                + New Follow Up
-              </button>
-            </li>
-            <li class="list-inline-item">
-              <button class="btn btn-light px-3 small" role="button">
-                + New Service
+            <li v-for="(tab, index) in tabs" :key="index" class="list-inline-item">
+              <button  @click="getTab(tab.name)" class="btn px-3 small" :class="tab.isActive ? 'btn-dark' : 'btn-light'" role="button">
+                {{ tab.title }}
               </button>
             </li>
           </ul>
@@ -122,189 +98,262 @@
       <div class="row">
         <div class="col-md-12 rounded">
           <ul class="list-inline mb-2">
-            <li class="list-inline-item" v-for="(tab, index) in tabs" :key="index">
-              <button class="btn pl-0 pr-4 pb-2" @click="getTab(tab.name)" role="button">
+            <li class="list-inline-item" v-for="(tab, index) in subTabs" :key="index">
+              <button class="btn pl-0 pr-4 pb-2" @click="getSubTab(tab.name)" role="button">
                 {{ tab.title }}
               </button>
             </li>
           </ul>
-          <!-- <div class="w-100 bg-white my-3 px-3 py-3" v-if="tabs[0].isActive"> -->
-            <!-- Demographics <br><br> -->
-            <!-- <div class="container"> -->
-              <!-- <div class="row">
-                <div class="col-md-12 text-center">
-                  <img src="/avatar.png" class="m-3" style="width: 200px;" alt=""><br>
-                  <button>Action :: Upload a Patient Photo</button>
-                </div>
-              </div> -->
-              <!-- <div class="row mt-3">
-                <div class="col-md-12 mb-3">
-                  General Information
-                </div>
-                <div class="col-md-6">
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="First Name">
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="Gender">
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="Phone Number">
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="H/W/S/D of">
-                </div>
-                <div class="col-md-6">
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="Last Name">
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="Age">
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="Occupation">
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="Current Date">
-                </div>
-              </div>
-              <div class="row mt-3">
-                <div class="col-md-12 mb-3">
-                  Location Information
-                </div>
-                <div class="col-md-6">
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="Address 1">
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="District">
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="Police Station">
-                </div>
-                <div class="col-md-6">
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="Address 2">
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="State">
-                </div>
-              </div>
-            </div>
-          </div> -->
-          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="tabs[0].isActive">
-            Chief Complaints<br><br>
+          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="subTabs[0].isActive">
             <div class="row mt-1">
-              <div class="col-md-12 text-muted small mb-3">
-                  Please complete to the best of your ability.
+              <div class="col-md-6 mb-3">
+                <div class="small text-muted">
+                  Complaint 1
                 </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Complaint 1">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Complaint 1"> -->
               </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Complaint 2">
+              <div class="col-md-6 mb-3">
+                <div class="small text-muted">
+                  Complaint 2
+                </div>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Complaint 2"> -->
               </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Complaint 3">
+              <div class="col-md-6 mb-3">
+                <div class="small text-muted">
+                  Complaint 3
+                </div>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Complaint 3"> -->
               </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Complaint 4">
+              <div class="col-md-6 mb-3">
+                <div class="small text-muted">
+                  Complaint 4
+                </div>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Complaint 4"> -->
               </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Complaint 5">
+              <div class="col-md-6 mb-3">
+                <div class="small text-muted">
+                  Complaint 5
+                </div>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Complaint 5"> -->
               </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Complaint 6">
+              <div class="col-md-6 mb-32">
+                <div class="small text-muted">
+                  Complaint 6
+                </div>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Complaint 6"> -->
               </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Complaint 7">
+              <div class="col-md-6 mb-3">
+                <div class="small text-muted">
+                  Complaint 7
+                </div>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Complaint 7"> -->
               </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Complaint 8">
+              <div class="col-md-6 mb-3">
+                <div class="small text-muted">
+                  Complaint 8
+                </div>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Complaint 8"> -->
               </div>
             </div>
           </div>
-          <!-- <div class="w-100 bg-white my-3 px-3 py-3" v-if="tabs[2].isActive">
-            Medical History
-          </div> -->
-          <div class="w-100 bg-white my-3 px-3 py-3" style="min-height: 200px;" v-if="tabs[1].isActive">
-            Vitals<br><br>
+          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="subTabs[1].isActive">
             <div class="row mt-1">
-              <div class="col-md-12 text-muted small mb-3">
-                  Please complete to the best of your ability.
+              <div class="col-md-6 mb-3">
+                <div class="small text-muted">
+                  Patient Appearance
                 </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Patient Appearance">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Patient Appearance"> -->
               </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Patient Gait">
+              <div class="col-md-6 mb-3">
+                <div class="small text-muted">
+                  Patient Gait
+                </div>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Patient Gait"> -->
               </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="BP (___/___ mmHg)">
+              <div class="col-md-6 mb-3">
+                <div class="small text-muted">
+                  BP
+                </div>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="BP (___/___ mmHg)"> -->
               </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="SP02 (%)">
+              <div class="col-md-6 mb-3">
+                <div class="small text-muted">
+                  SP02
+                </div>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="SP02 (%)"> -->
               </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Temperature (‘’ F)">
+              <div class="col-md-6 mb-3">
+                <div class="small text-muted">
+                  Temperature
+                </div>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Temperature (‘’ F)"> -->
               </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Height (cm)">
+              <div class="col-md-6 mb-3">
+                <div class="small text-muted">
+                  Height
+                </div>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Height (cm)"> -->
               </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Weight (kg)">
+              <div class="col-md-6 mb-3">
+                <div class="small text-muted">
+                  Weight
+                </div>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Weight (kg)"> -->
               </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="BMI (kg/m2) (Auto Calculated)">
+              <div class="col-md-6 mb-3">
+                <div class="small text-muted">
+                  BMI
+                </div>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="BMI (kg/m2) (Auto Calculated)"> -->
               </div>
             </div>
           </div>
-          <div class="w-100 bg-white my-3 px-3 py-3" style="min-height: 200px;" v-if="tabs[2].isActive">
-            General Exams<br><br>
+          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="subTabs[2].isActive">
             <div class="row mt-1">
               <div class="col-md-12 mb-5 text-center">
                 <img src="/anatomy_sketch.png" alt="">
               </div>
-              <div class="col-md-12 text-muted small mb-3">
-                  Please complete to the best of your ability.
+              <div class="col-md-6 mb-3">
+                <div class="small text-muted">
+                  Patient Appearance
                 </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Patient Appearance">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Patient Appearance"> -->
               </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Patient Gait">
+              <div class="col-md-6 mb-3">
+                <div class="small text-muted">
+                  Patient Gait
+                </div>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Patient Gait"> -->
               </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="BP (___/___ mmHg)">
+              <div class="col-md-6 mb-3">
+                <div class="small text-muted">
+                  BP
+                </div>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="BP (___/___ mmHg)"> -->
               </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="SP02 (%)">
+              <div class="col-md-6 mb-3">
+                <div class="small text-muted">
+                  SP02
+                </div>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="SP02 (%)"> -->
               </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Temperature (‘’ F)">
+              <div class="col-md-6 mb-3">
+                <div class="small text-muted">
+                  Temperature
+                </div>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Temperature (‘’ F)"> -->
               </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Height (cm)">
+              <div class="col-md-6 mb-3">
+                <div class="small text-muted">
+                  Height
+                </div>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Height (cm)"> -->
               </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Weight (kg)">
+              <div class="col-md-6 mb-3">
+                <div class="small text-muted">
+                  Weight
+                </div>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Weight (kg)"> -->
               </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="BMI (kg/m2) (Auto Calculated)">
+              <div class="col-md-6 mb-3">
+                <div class="small text-muted">
+                  BMI
+                </div>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="BMI (kg/m2) (Auto Calculated)"> -->
               </div>
             </div>
           </div>
-          <div class="w-100 bg-white my-3 px-3 py-3" style="min-height: 200px;" v-if="tabs[3].isActive">
-            Specific Exams
-            <br><br>
+          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="subTabs[3].isActive">
             <div class="row mt-1">
               <div class="col-md-12 mb-5 text-center">
                 <img src="/anatomy_sketch.png" alt="">
               </div>
-              <div class="col-md-12 text-muted small mb-3">
-                  Please complete to the best of your ability.
+              <div class="col-md-6 mb-3">
+                <div class="small text-muted">
+                  Patient Appearance
                 </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Patient Appearance">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Patient Appearance"> -->
               </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Patient Gait">
+              <div class="col-md-6 mb-3">
+                <div class="small text-muted">
+                  Patient Gait
+                </div>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Patient Gait"> -->
               </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="BP (___/___ mmHg)">
+              <div class="col-md-6 mb-3">
+                <div class="small text-muted">
+                  BP
+                </div>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="BP (___/___ mmHg)"> -->
               </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="SP02 (%)">
+              <div class="col-md-6 mb-3">
+                <div class="small text-muted">
+                  SP02
+                </div>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="SP02 (%)"> -->
               </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Temperature (‘’ F)">
+              <div class="col-md-6 mb-3">
+                <div class="small text-muted">
+                  Temperature
+                </div>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Temperature (‘’ F)"> -->
               </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Height (cm)">
+              <div class="col-md-6 mb-3">
+                <div class="small text-muted">
+                  Height
+                </div>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Height (cm)"> -->
               </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Weight (kg)">
+              <div class="col-md-6 mb-3">
+                <div class="small text-muted">
+                  Weight
+                </div>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Weight (kg)"> -->
               </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="BMI (kg/m2) (Auto Calculated)">
+              <div class="col-md-6 mb-3">
+                <div class="small text-muted">
+                  BMI
+                </div>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="BMI (kg/m2) (Auto Calculated)"> -->
+              </div>
+            </div>
+          </div>
+          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="subTabs[4].isActive">
+            <div class="row mt-1">
+              <div class="col-md-12 mb-5 text-center">
+                Additional Photos
               </div>
             </div>
           </div>
@@ -358,14 +407,6 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil vero qui consecte
         </div>
       </div>
     </div>
-    <!-- <div class="container pt-2 mb-3">
-      <div class="row">
-        <div class="col-md-12">
-          <button v-if="!showComplete" @click="goToNext()" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">GO TO NEXT</button>
-          <button disabled v-else @click="goToNext()" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">COMPLETE AND REGISTER PATIENT</button>
-        </div>
-      </div>
-    </div> -->
     <div class="container text-center mb-4">
       <div class="row">
         <div class="col-md-12 text-secondary">
@@ -381,8 +422,8 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil vero qui consecte
 <script>
 export default {
   methods: {
-    getTab: function (tabName) {
-      let tabs = this.tabs
+    getSubTab: function (tabName) {
+      let tabs = this.subTabs
       let ref = 0
 
       for (let i = 0; i < tabs.length; i++) {
@@ -400,22 +441,18 @@ export default {
         }
       }
     },
-    goToNext: function () {
+    getTab: function (tabName) {
       let tabs = this.tabs
       let ref = 0
 
       for (let i = 0; i < tabs.length; i++) {
-        if (tabs[i].isActive === true) {
-          tabs[i].isActive = false
+        if (tabs[i].name === tabName) {
+          tabs[i].isActive = true
           ref = i
+        } else {
+          tabs[i].isActive = false
         }
       }
-
-      if ((ref + 1) >= (tabs.length-1)) {
-        this.showComplete = true
-      } 
-
-      tabs[ref + 1].isActive = true
     }
   },
   data() {
@@ -425,21 +462,43 @@ export default {
       showDemographics: true,
       showComplete: false,
       tabs: [
-        // {
-        //   name: 'patients',
-        //   title: 'Demographics',
-        //   isActive: true,
-        // },
+        {
+          name: 'episode1',
+          title: 'Episode 1',
+          isActive: true
+        },
+        {
+          name: 'followup1',
+          title: 'Follow Up 1',
+          isActive: false
+        },
+        {
+          name: 'followup2',
+          title: 'Follow Up 2',
+          isActive: false
+        },
+        {
+          name: 'billing',
+          title: 'Billing',
+          isActive: false
+        },
+        {
+          name: 'newfollowup',
+          title: '+ New Follow Up',
+          isActive: false
+        },
+        {
+          name: 'newservice',
+          title: '+ New Service',
+          isActive: false
+        },
+      ],
+      subTabs: [
         {
           name: 'allocated',
           title: 'Chief Complaints',
           isActive: true,
         },
-        // {
-        //   name: 'released',
-        //   title: 'Medical History',
-        //   isActive: false,
-        // },
         {
           name: 'cluster',
           title: 'Vitals',

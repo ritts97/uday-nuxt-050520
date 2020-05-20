@@ -35,19 +35,11 @@
             </nuxt-link> > New Episode
           </small>
         </div>
-        <!-- <div class="col-md-12 text-center">
-          Patient Profile
-          <hr>
-        </div> -->
       </div>
     </div>
     <div class="container mt-3">
       <div class="row">
         <div class="col-md-12">
-          <!-- <div class="text-muted pointer d-inline" style="margin-left: -16px; position: absolute;" @click="showDemographics = !showDemographics">
-            <span v-if="!showDemographics">+</span>
-            <span v-else>-</span>
-          </div> -->
           <h5 class="d-inline">Delores Abernathy (29, F)</h5> 
           [ <div class="d-inline pointer text-muted" @click="showDemographics = !showDemographics">
             <span v-if="!showDemographics">show</span>
@@ -93,26 +85,6 @@
                 New Episode
               </button>
             </li>
-            <!-- <li class="list-inline-item">
-              <button class="btn btn-light px-3" role="button">
-                Follow Up 1
-              </button>
-            </li>
-            <li class="list-inline-item">
-              <button class="btn btn-light px-3" role="button">
-                Follow Up 2
-              </button>
-            </li>
-            <li class="list-inline-item">
-              <button class="btn btn-light px-3" role="button">
-                New Follow Up
-              </button>
-            </li> -->
-            <!-- <li class="list-inline-item">
-              <button class="btn btn-light px-3 small" role="button">
-                + Service
-              </button>
-            </li> -->
           </ul>
         </div>
       </div>
@@ -125,50 +97,8 @@
               </button>
             </li>
           </ul>
-          <!-- <div class="w-100 bg-white my-3 px-3 py-3" v-if="tabs[0].isActive"> -->
-            <!-- Demographics <br><br> -->
-            <!-- <div class="container"> -->
-              <!-- <div class="row">
-                <div class="col-md-12 text-center">
-                  <img src="/avatar.png" class="m-3" style="width: 200px;" alt=""><br>
-                  <button>Action :: Upload a Patient Photo</button>
-                </div>
-              </div> -->
-              <!-- <div class="row mt-3">
-                <div class="col-md-12 mb-3">
-                  General Information
-                </div>
-                <div class="col-md-6">
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="First Name">
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="Gender">
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="Phone Number">
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="H/W/S/D of">
-                </div>
-                <div class="col-md-6">
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="Last Name">
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="Age">
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="Occupation">
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="Current Date">
-                </div>
-              </div>
-              <div class="row mt-3">
-                <div class="col-md-12 mb-3">
-                  Location Information
-                </div>
-                <div class="col-md-6">
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="Address 1">
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="District">
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="Police Station">
-                </div>
-                <div class="col-md-6">
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="Address 2">
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="State">
-                </div>
-              </div>
-            </div>
-          </div> -->
           <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="tabs[0].isActive">
-            Chief Complaints<br><br>
+            <!-- Chief Complaints<br><br> -->
             <div class="row mt-1">
               <div class="col-md-12 text-muted small mb-3">
                   Please complete to the best of your ability.
@@ -199,11 +129,8 @@
               </div>
             </div>
           </div>
-          <!-- <div class="w-100 bg-white my-3 px-3 py-3" v-if="tabs[2].isActive">
-            Medical History
-          </div> -->
-          <div class="w-100 bg-white my-3 px-3 py-3" style="min-height: 200px;" v-if="tabs[1].isActive">
-            Vitals<br><br>
+          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="tabs[1].isActive">
+            <!-- Vitals<br><br> -->
             <div class="row mt-1">
               <div class="col-md-12 text-muted small mb-3">
                   Please complete to the best of your ability.
@@ -234,8 +161,8 @@
               </div>
             </div>
           </div>
-          <div class="w-100 bg-white my-3 px-3 py-3" style="min-height: 200px;" v-if="tabs[2].isActive">
-            General Exams<br><br>
+          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="tabs[2].isActive">
+            <!-- General Exams<br><br> -->
             <div class="row mt-1">
               <div class="col-md-12 mb-5 text-center">
                 <img src="/anatomy_sketch.png" alt="">
@@ -269,9 +196,9 @@
               </div>
             </div>
           </div>
-          <div class="w-100 bg-white my-3 px-3 py-3" style="min-height: 200px;" v-if="tabs[3].isActive">
-            Specific Exams
-            <br><br>
+          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="tabs[3].isActive">
+            <!-- Specific Exams
+            <br><br> -->
             <div class="row mt-1">
               <div class="col-md-12 mb-5 text-center">
                 <img src="/anatomy_sketch.png" alt="">
@@ -302,6 +229,13 @@
               </div>
               <div class="col-md-6">
                 <input type="text" class="w-100 p-2 mb-3" placeholder="BMI (kg/m2) (Auto Calculated)">
+              </div>
+            </div>
+          </div>
+          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="tabs[4].isActive">
+            <div class="row mt-1">
+              <div class="col-md-12 mb-5 text-center">
+                Additional Photos
               </div>
             </div>
           </div>
@@ -311,8 +245,16 @@
     <div class="container mb-3">
       <div class="row">
         <div class="col-md-12">
-          <button v-if="!showComplete" @click="goToNext()" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">GO TO NEXT</button>
-          <button disabled v-else @click="goToNext()" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">Record New Patient</button>
+          <div v-if="!showComplete">
+            <button @click="goToNext()" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">GO TO NEXT</button>
+          </div>
+          <div v-else>
+            <nuxt-link to="/ha/profile">
+              <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">
+                Record New Episode
+              </button>
+            </nuxt-link>
+          </div>
         </div>
       </div>
     </div>
@@ -402,6 +344,11 @@ export default {
         {
           name: 'specific',
           title: 'Specific Exams',
+          isActive: false,
+        },
+        {
+          name: 'photos',
+          title: 'Add. Photos',
           isActive: false,
         }
       ]

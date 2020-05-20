@@ -213,7 +213,7 @@ export default {
       masterList: [
         {
           id: 'AAA1',
-          name: 'Bernard Lowe',
+          name: 'Delores Abernathy',
           gender: 'M',
           age: 99,
           phone: '1-415-555-1234',
