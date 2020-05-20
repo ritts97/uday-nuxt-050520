@@ -3,11 +3,22 @@
     <div class="w-100 bg-dark text-white mb-3">
       <div class="container bg-dark">
         <div class="row py-2">
-          <div class="col-md-6 font-weight-bold pt-2" style="font-size: 24px;">
-            UD.
+          <div class="col-md-6 font-weight-bold pt-2" style="font-size: 24px;"> 
+            <nuxt-link to="/ha" class="text-white text-decoration-none">UD.</nuxt-link>
           </div>
           <div class="col-md-6 py-3 text-right">
-            jane.doe@udayhealth.org | Logout
+            <div class="dropdown d-inline">
+              <span class="dropdown-toggle dropdown-no-caret pointer" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                jane.doe@udayhealth.org
+              </span>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#">MIS Reports</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Edit Profile</a>
+                <a class="dropdown-item" href="#">Change Password</a>
+              </div>
+            </div>
+            | Logout
           </div>
         </div>
       </div>
@@ -21,7 +32,7 @@
             </nuxt-link> >
             <nuxt-link to="/ha/profile" class="text-muted">
               Patient Profile
-            </nuxt-link>
+            </nuxt-link> > Episode 1
           </small>
         </div>
         <!-- <div class="col-md-12 text-center">
@@ -31,17 +42,17 @@
       </div>
     </div>
     <div class="container mt-3">
-      <div class="row pointer" @click="showDemographics = !showDemographics">
-        <div class="col-md-12">
-          <!-- <div class="text-muted pointer d-inline" style="margin-left: -16px; position: absolute;">
-            <span v-if="!showDemographics">+</span>
-            <span v-else>-</span>
-          </div> -->
-          <h5 class="d-inline">Delores Abernathy (29, F)</h5> 
+      <div class="row">
+        <div class="col-md-6">
+          <h5 class="d-inline">Delores Abernathy (29, F)</h5>  
           [ <div class="d-inline pointer text-muted" @click="showDemographics = !showDemographics">
-            <span v-if="!showDemographics">+</span>
-            <span v-else>-</span>
+            <span v-if="!showDemographics">show</span>
+            <span v-else>hide</span>
           </div> ]
+        </div>
+        <div class="col-md-6 text-right">
+          <img src="/circle-green.svg" class="shape-status" alt="">
+          Registered
         </div>
       </div>
       <div class="row mt-3" v-if="showDemographics">
@@ -110,7 +121,7 @@
       </div>
       <div class="row">
         <div class="col-md-12 rounded">
-          <ul class="list-inline border-bottom">
+          <ul class="list-inline mb-2">
             <li class="list-inline-item" v-for="(tab, index) in tabs" :key="index">
               <button class="btn pl-0 pr-4 pb-2" @click="getTab(tab.name)" role="button">
                 {{ tab.title }}
@@ -159,7 +170,7 @@
               </div>
             </div>
           </div> -->
-          <div class="w-100 bg-white my-3 px-3 py-3" style="min-height: 200px;" v-if="tabs[0].isActive">
+          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="tabs[0].isActive">
             Chief Complaints<br><br>
             <div class="row mt-1">
               <div class="col-md-12 text-muted small mb-3">
@@ -301,13 +312,13 @@
       </div>
     </div>
     <div>
-      <div class="container mt-4 mb-3">
+      <div class="container mt-3 mb-3">
         <div class="row">
           <div class="col-md-12">
             <h5 class="d-inline">Doctor's Feedback </h5> 
             [ <div class="d-inline pointer text-muted" @click="showDocsFeedback = !showDocsFeedback">
-              <span v-if="!showDocsFeedback">+</span>
-              <span v-else>-</span>
+              <span v-if="!showDocsFeedback">show</span>
+              <span v-else>hide</span>
             </div> ]
           </div>
         </div>
@@ -355,11 +366,11 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil vero qui consecte
         </div>
       </div>
     </div> -->
-    <div class="container text-center">
+    <div class="container text-center mb-4">
       <div class="row">
         <div class="col-md-12 text-secondary">
           <small>
-            UdayHealth.org is a virtual, telemedicine application <br> organized by medical professionals and volunteers worldwide.
+            UdayHealth.org is a virtual, telemedicine application organized by medical professionals and volunteers worldwide.
           </small>
         </div>
       </div>
@@ -410,7 +421,7 @@ export default {
   data() {
     return {
       list: [],
-      showDocsFeedback: true,
+      showDocsFeedback: false,
       showDemographics: true,
       showComplete: false,
       tabs: [

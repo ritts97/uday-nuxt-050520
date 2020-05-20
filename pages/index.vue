@@ -32,11 +32,11 @@
         </div>
       </div>
     </div>
-    <div class="container text-center pt-5">
+    <div class="container text-center mt-4 pt-5">
       <div class="row">
         <div class="col-md-12 text-secondary">
           <small>
-            UdayHealth.org is a virtual, telemedicine application <br> organized by medical professionals and volunteers worldwide.
+            UdayHealth.org is a virtual, telemedicine application organized by medical professionals and volunteers worldwide.
           </small>
         </div>
       </div>
@@ -50,4 +50,7 @@ export default {
 </script>
 
 <style>
+.no-underline {
+
+}
 </style>

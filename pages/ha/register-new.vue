@@ -3,11 +3,22 @@
     <div class="w-100 bg-dark text-white mb-3">
       <div class="container bg-dark">
         <div class="row py-2">
-          <div class="col-md-6 font-weight-bold pt-2" style="font-size: 24px;">
-            UD.
+          <div class="col-md-6 font-weight-bold pt-2" style="font-size: 24px;"> 
+            <nuxt-link to="/ha" class="text-white text-decoration-none">UD.</nuxt-link>
           </div>
           <div class="col-md-6 py-3 text-right">
-            jane.doe@udayhealth.org | Logout
+            <div class="dropdown d-inline">
+              <span class="dropdown-toggle dropdown-no-caret pointer" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                jane.doe@udayhealth.org
+              </span>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#">MIS Reports</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Edit Profile</a>
+                <a class="dropdown-item" href="#">Change Password</a>
+              </div>
+            </div>
+            | Logout
           </div>
         </div>
       </div>
@@ -17,8 +28,8 @@
         <div class="col-md-12">
           <small>
             <nuxt-link to="/ha" class="text-muted">
-              Back to Dashboard
-            </nuxt-link>
+              Dashboard
+            </nuxt-link> > Register New Patient
           </small>
         </div>
         <div class="col-md-12 text-center">
@@ -27,17 +38,19 @@
         </div>
       </div>
     </div>
-    <div class="container mt-2">
+    <div class="container">
       <div class="row">
         <div class="col-md-12 rounded">
-          <ul class="list-inline border-bottom">
+          <ul class="list-inline mb-2">
             <li class="list-inline-item" v-for="(tab, index) in tabs" :key="index">
-              <button class="btn" @click="getTab(tab.name)" role="button">
-                {{ tab.title }}
-              </button>
+              <!-- <div style="border-bottom: 2px solid #ccc;"> -->
+                <button class="btn" @click="getTab(tab.name)" role="button">
+                  {{ tab.title }}
+                </button>
+              <!-- </div> -->
             </li>
           </ul>
-          <div class="w-100 bg-white my-3 px-3 py-3" v-if="tabs[0].isActive">
+          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" v-if="tabs[0].isActive">
             <!-- Demographics <br><br> -->
             <div class="container">
               <div class="row">

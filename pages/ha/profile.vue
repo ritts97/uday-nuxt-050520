@@ -3,11 +3,22 @@
     <div class="w-100 bg-dark text-white mb-3">
       <div class="container bg-dark">
         <div class="row py-2">
-          <div class="col-md-6 font-weight-bold pt-2" style="font-size: 24px;">    
-            <nuxt-link to="/ha" class="text-white">UD.</nuxt-link>
+          <div class="col-md-6 font-weight-bold pt-2" style="font-size: 24px;"> 
+            <nuxt-link to="/ha" class="text-white text-decoration-none">UD.</nuxt-link>
           </div>
           <div class="col-md-6 py-3 text-right">
-            jane.doe@udayhealth.org | Logout
+            <div class="dropdown d-inline">
+              <span class="dropdown-toggle dropdown-no-caret pointer" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                jane.doe@udayhealth.org
+              </span>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#">MIS Reports</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Edit Profile</a>
+                <a class="dropdown-item" href="#">Change Password</a>
+              </div>
+            </div>
+            | Logout
           </div>
         </div>
       </div>
@@ -17,8 +28,9 @@
         <div class="col-md-12">
           <small>
             <nuxt-link to="/ha" class="text-muted">
-              Back to Dashboard
+              Dashboard
             </nuxt-link>
+             > Patient Profile
           </small>
         </div>
         <!-- <div class="col-md-12 text-center">
@@ -29,16 +41,16 @@
     </div>
     <div class="container mt-3">
       <div class="row">
-        <div class="col-md-12">
-          <!-- <div class="text-muted pointer d-inline" style="margin-left: -16px; position: absolute;" >
-            <span v-if="!showDemographics">+</span>
-            <span v-else>-</span>
-          </div> -->
+        <div class="col-md-6">
           <h5 class="d-inline">Delores Abernathy (29, F)</h5>  
           [ <div class="d-inline pointer text-muted" @click="showDemographics = !showDemographics">
-            <span v-if="!showDemographics">+</span>
-            <span v-else>-</span>
+            <span v-if="!showDemographics">show</span>
+            <span v-else>hide</span>
           </div> ]
+        </div>
+        <div class="col-md-6 text-right">
+          <img src="/circle-green.svg" class="shape-status" alt="">
+          Registered
         </div>
       </div>
       <div class="row mt-3" v-if="showDemographics">
@@ -50,11 +62,11 @@
           1-415-555-1234 <br>
           Son of Bernard <br><br>
           District, State <br><br>
-          <nuxt-link to="/ha/profile-view-history" class="text-muted">
+          <nuxt-link to="/ha/update-history" class="text-muted">
             View Medical History...
           </nuxt-link><br>
-          <nuxt-link to="/ha/profile-view-history" class="text-muted">
-            View All Billed...
+          <nuxt-link to="/ha/view-bills" class="text-muted">
+            View Billing History...
           </nuxt-link><br>
         </div>
         <div class="col-md-5">
@@ -62,7 +74,7 @@
           Address 2 <br>
           <br><br>
           Police Station<br><br>
-          <nuxt-link to="/ha/profile-edit-demographics" class="text-muted">
+          <nuxt-link to="/ha/update-demo" class="text-muted">
             Update Demographics...
           </nuxt-link>
         </div>
@@ -79,21 +91,30 @@
           <nuxt-link to="/ha/new-episode">
             <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Record New Episode</button>     
           </nuxt-link>
-          <nuxt-link to="/ha/new-episode">
+          <nuxt-link to="/ha/new-service">
             <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0  text-uppercase">Record New Service</button>     
           </nuxt-link>
         </div>
       </div>
-      <div class="row mt-3">
+
+      <div class="row">
         <div class="col-md-12">
-          <ul class="list-inline border-bottom">
+          <hr>
+        </div>
+      </div>
+
+      <div class="row mt-0">
+        <div class="col-md-12">
+          <ul class="list-inline mb-2">
             <li class="list-inline-item" v-for="(tab, index) in tabs" :key="index">
-              <button class="btn" @click="getList(tab.name)" role="button">
-                {{ tab.title }} ({{ getListLength(tab.name) }})
-              </button>
+              <!-- <div style="border-bottom: 2px solid #ccc;"> -->
+                <button class="btn" @click="getList(tab.name)" role="button">
+                  {{ tab.title }} ({{ getListLength(tab.name) }})
+                </button>
+              <!-- </div> -->
             </li>
           </ul>
-          <div class="w-100 bg-white my-3 px-3 py-3" style="min-height: 300px;">
+          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 300px;">
             <!-- <input type="text" class="w-100 p-2 mb-3" placeholder=":: Search by ID, name or phone number"> -->
             <table class="table table-sm table-hover">
               <thead>
@@ -128,9 +149,9 @@
                       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="#">New Follow Up</a>
                         <a class="dropdown-item" href="#">New Service</a>
-                        <a class="dropdown-item" href="#">Mark Episode Resolved</a>
+                        <!-- <a class="dropdown-item" href="#">Mark Episode Resolved</a> -->
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">View Bills</a>
+                        <a class="dropdown-item" href="#">View Billing</a>
                       </div>
                     </div>
                     <!-- <select v-if="visit.type === 'episode'" id="actions">
@@ -147,11 +168,11 @@
         </div>
       </div>
     </div>
-    <div class="container text-center mb-3">
+    <div class="container text-center mb-4">
       <div class="row">
         <div class="col-md-12 text-secondary">
           <small>
-            UdayHealth.org is a virtual, telemedicine application <br> organized by medical professionals and volunteers worldwide.
+            UdayHealth.org is a virtual, telemedicine application organized by medical professionals and volunteers worldwide.
           </small>
         </div>
       </div>

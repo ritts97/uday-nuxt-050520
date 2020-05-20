@@ -12,10 +12,10 @@
                 jane.doe@udayhealth.org
               </span>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <nuxt-link to="/ha/mis-reports" class="dropdown-item">MIS Reports</nuxt-link>
+                <a class="dropdown-item" href="#">MIS Reports</a>
                 <div class="dropdown-divider"></div>
-                <nuxt-link to="/ha/edit-profile" class="dropdown-item">Edit Profile</nuxt-link>
-                <nuxt-link to="/ha/edit-profile" class="dropdown-item">Change Password</nuxt-link>
+                <a class="dropdown-item" href="#">Edit Profile</a>
+                <a class="dropdown-item" href="#">Change Password</a>
               </div>
             </div>
             | Logout
@@ -28,6 +28,7 @@
         <div class="col-md-12">
           <small>
             Dashboard
+            > MIS Reports
           </small>
         </div>
       </div>
@@ -35,69 +36,15 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12 mb-1 text-center">
-          Health Assistant's Dashboard
+          MIS Reports
           <hr>
         </div>
       </div>
     </div>
-    <div class="container">
+    <div class="container mb-3">
       <div class="row">
-        <div class="col-md-12">
-          <nuxt-link to="/ha/register-new">
-            <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">Register a New Patient</button>
-          </nuxt-link>
-        </div>
-      </div>
-    </div>
-    <div class="container mt-3">
-      <div class="row">
-        <div class="col-md-12 rounded">
-          <ul class="list-inline mb-2">
-            <li class="list-inline-item" v-for="(tab, index) in tabs" :key="index">
-              <!-- <div style="border-bottom: 2px solid #ccc;"> -->
-                <button class="btn" @click="getList(tab.name)" role="button">
-                  {{ tab.title }} <span v-if="tab.name !== 'global'">({{ getListLength(tab.name) }})</span>
-                </button>
-              <!-- </div> -->
-            </li>
-          </ul>
-          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3">
-            <input type="text" class="w-100 p-2" placeholder=":: Search by ID, name or phone number">
-            <table class="table table-sm table-hover mt-3" v-if="!tabs[4].isActive">
-              <thead>
-                <tr>
-                  <th scope="col">ID</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Gender</th>
-                  <th scope="col">Age</th>
-                  <th scope="col">Phone</th>
-                  <th scope="col">Location</th>
-                  <th scope="col">Reg. By</th>
-                  <th scope="col">Patient Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="pointer" v-for="(patient, index) in list" :key="index">
-                  <th scope="row">{{ patient.id }}</th>
-                  <td>
-                    <nuxt-link to="/ha/profile">{{ patient.name }}
-                    </nuxt-link>
-                  </td>
-                  <td>{{ patient.gender }}</td>
-                  <td>{{ patient.age }}</td>
-                  <td>{{ patient.phone }}</td>
-                  <td>{{ patient.location }}</td>
-                  <td>{{ patient.creator }}</td>
-                  <td class="text-capitalize">
-                    <img v-if="patient.status == 'registered'" src="circle-green.svg" class="shape-status" alt="">
-                    <img v-if="patient.status == 'released'" src="circle-yellow.svg" class="shape-status" alt="">
-                    <img v-if="patient.status == 'allocated'" src="circle-red.svg" class="shape-status" alt="">
-                    {{ patient.status }}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+        <div class="col-md-12 bg-white rounded py-5 text-center">
+          MIS REPORTS
         </div>
       </div>
     </div>
