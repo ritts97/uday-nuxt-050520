@@ -92,11 +92,7 @@
           <ul class="list-inline">
             <li class="list-inline-item">
               <button class="btn btn-dark px-3 small" role="button">
-                View Medical History
-              </button>
-            </li><li class="list-inline-item">
-              <button class="btn btn-light px-3 small" role="button">
-                Update Medical History
+                Billing History
               </button>
             </li>
           </ul>

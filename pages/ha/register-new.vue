@@ -44,9 +44,9 @@
           <ul class="list-inline mb-2">
             <li class="list-inline-item" v-for="(tab, index) in tabs" :key="index">
               <!-- <div style="border-bottom: 2px solid #ccc;"> -->
-                <button class="btn" @click="getTab(tab.name)" role="button">
+                <div class="px-2 mr-2 pb-1 mb-1 underline" @click="getTab(tab.name)" role="button">
                   {{ tab.title }}
-                </button>
+                </div>
               <!-- </div> -->
             </li>
           </ul>
@@ -64,15 +64,25 @@
                   General Information
                 </div>
                 <div class="col-md-6">
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="First Name">
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="Gender">
+                  <input type="text" class="w-100 p-2 mb-3" placeholder="Full Name">
+                  <select class="custom-select mb-3">
+                    <option selected disabled>Gender</option>
+                    <option value="1">Male</option>
+                    <option value="2">Female</option>
+                    <option value="3">Other</option>
+                  </select>
                   <input type="text" class="w-100 p-2 mb-3" placeholder="Phone Number">
                   <input type="text" class="w-100 p-2 mb-3" placeholder="H/W/S/D of">
                 </div>
                 <div class="col-md-6">
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="Last Name">
                   <input type="text" class="w-100 p-2 mb-3" placeholder="Age">
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="Occupation">
+                  <select class="custom-select mb-3">
+                    <option selected disabled>Occupation</option>
+                    <option value="1">Industrial Farmer</option>
+                    <option value="2">Teacher</option>
+                    <option value="2">Student</option>
+                    <option value="3">Other</option>
+                  </select>
                   <input type="text" class="w-100 p-2 mb-3" placeholder="Current Date">
                 </div>
               </div>
@@ -87,7 +97,13 @@
                 </div>
                 <div class="col-md-6">
                   <input type="text" class="w-100 p-2 mb-3" placeholder="Address 2">
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="State">
+                  <select class="custom-select mb-3">
+                    <option selected disabled>State</option>
+                    <option value="1">Maharashtra</option>
+                    <option value="2">Kerala</option>
+                    <option value="2">Tamila Nadu</option>
+                    <option value="3">Other</option>
+                  </select>
                 </div>
               </div>
             </div>

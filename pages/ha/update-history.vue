@@ -190,7 +190,9 @@
                 General Notes
               </div>
               <div class="col-md-12">
-                <textarea class="w-100 form-control" rows="5"></textarea>
+                <textarea class="w-100 form-control" rows="5">
+Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus veritatis, doloremque cum sunt rerum fugit, voluptatum rem pariatur similique nemo id reiciendis commodi. Aliquam aspernatur sapiente inventore ducimus, distinctio tempore.
+                </textarea>
               </div>
               <div class="col-md-12 py-2">
                 <hr>
@@ -210,65 +212,49 @@
                   <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
                   <label class="form-check-label ml-3" for="defaultCheck1">
                     High Blood Pressure
-                  </label>
-                  <div class="dropdown ml-3 mt-3">
-                    <button class="btn btn-secondary dropdown-toggle w-75" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Relationship
-                    </button>
-                    <div class="dropdown-menu w-75" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" href="#">Parent</a>
-                      <a class="dropdown-item" href="#">Spouse</a>
-                      <a class="dropdown-item" href="#">Other Relative</a>
-                    </div>
-                  </div>
+                  </label><br>
+                  <select class="custom-select w-75 ml-3 mt-3">
+                    <option selected disabled>Relationship</option>
+                    <option value="1">Parent</option>
+                    <option value="2">Spouse</option>
+                    <option value="3">Other Relationship</option>
+                  </select>
                 </div>
                 <div class="form-check ml-5 mb-4">
                   <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
                   <label class="form-check-label ml-3" for="defaultCheck1">
                     Stroke
-                  </label>
-                  <div class="dropdown ml-3 mt-3">
-                    <button class="btn btn-secondary dropdown-toggle w-75" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Relationship
-                    </button>
-                    <div class="dropdown-menu w-75" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" href="#">Parent</a>
-                      <a class="dropdown-item" href="#">Spouse</a>
-                      <a class="dropdown-item" href="#">Other Relative</a>
-                    </div>
-                  </div>
+                  </label><br>
+                  <select class="custom-select w-75 ml-3 mt-3">
+                    <option selected disabled>Relationship</option>
+                    <option value="1">Parent</option>
+                    <option value="2">Spouse</option>
+                    <option value="3">Other Relationship</option>
+                  </select>
                 </div>
                 <div class="form-check ml-5 mb-4">
                   <input class="form-check-input" type="checkbox" value="" checked id="defaultCheck1">
                   <label class="form-check-label ml-3" for="defaultCheck1">
                     Asthma
-                  </label>
-                  <div class="dropdown ml-3 mt-3">
-                    <button class="btn btn-secondary dropdown-toggle w-75" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Relationship
-                    </button>
-                    <div class="dropdown-menu w-75" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" href="#">Parent</a>
-                      <a class="dropdown-item" href="#">Spouse</a>
-                      <a class="dropdown-item" href="#">Other Relative</a>
-                    </div>
-                  </div>
+                  </label><br>
+                  <select class="custom-select w-75 ml-3 mt-3">
+                    <option disabled>Relationship</option>
+                    <option selected value="1">Parent</option>
+                    <option value="2">Spouse</option>
+                    <option value="3">Other Relationship</option>
+                  </select>
                 </div>
                 <div class="form-check ml-5 mb-4">
                   <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
                   <label class="form-check-label ml-3" for="defaultCheck1">
                     Cancer
-                  </label>
-                  <div class="dropdown ml-3 mt-3">
-                    <button class="btn btn-secondary dropdown-toggle w-75" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Relationship
-                    </button>
-                    <div class="dropdown-menu w-75" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" href="#">Parent</a>
-                      <a class="dropdown-item" href="#">Spouse</a>
-                      <a class="dropdown-item" href="#">Other Relative</a>
-                    </div>
-                  </div>
+                  </label><br>
+                  <select class="custom-select w-75 ml-3 mt-3">
+                    <option disabled>Relationship</option>
+                    <option value="1">Parent</option>
+                    <option selected value="2">Spouse</option>
+                    <option value="3">Other Relationship</option>
+                  </select>
                 </div>
               </div>
               <div class="col-md-6">
@@ -276,66 +262,50 @@
                   <input class="form-check-input" type="checkbox" value="" checked id="defaultCheck1">
                   <label class="form-check-label ml-3" for="defaultCheck1">
                     Heart Attack
-                  </label>
-                  <div class="dropdown ml-3 mt-3">
-                    <button class="btn btn-secondary dropdown-toggle w-75" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Relationship
-                    </button>
-                    <div class="dropdown-menu w-75" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" href="#">Parent</a>
-                      <a class="dropdown-item" href="#">Spouse</a>
-                      <a class="dropdown-item" href="#">Other Relative</a>
-                    </div>
-                  </div>
+                  </label><br>
+                  <select class="custom-select w-75 ml-3 mt-3">
+                    <option disabled>Relationship</option>
+                    <option value="1">Parent</option>
+                    <option value="2">Spouse</option>
+                    <option selected value="3">Other Relationship</option>
+                  </select>
                 </div>
                 <div class="form-check ml-5 mb-4">
                   <input class="form-check-input" type="checkbox" value="" checked id="defaultCheck1">
                   <label class="form-check-label ml-3" for="defaultCheck1">
                     Diabetes
-                  </label>
-                  <div class="dropdown ml-3 mt-3">
-                    <button class="btn btn-secondary dropdown-toggle w-75" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Relationship
-                    </button>
-                    <div class="dropdown-menu w-75" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" href="#">Parent</a>
-                      <a class="dropdown-item" href="#">Spouse</a>
-                      <a class="dropdown-item" href="#">Other Relative</a>
-                    </div>
-                  </div>
+                  </label><br>
+                  <select class="custom-select w-75 ml-3 mt-3">
+                    <option disabled>Relationship</option>
+                    <option selected value="1">Parent</option>
+                    <option value="2">Spouse</option>
+                    <option value="3">Other Relationship</option>
+                  </select>
                 </div>
                 <div class="form-check ml-5 mb-4">
                   <input class="form-check-input" type="checkbox" value="" checked id="defaultCheck1">
                   <label class="form-check-label ml-3" for="defaultCheck1">
                     TB
-                  </label>
-                  <div class="dropdown ml-3 mt-3">
-                    <button class="btn btn-secondary dropdown-toggle w-75" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Relationship
-                    </button>
-                    <div class="dropdown-menu w-75" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" href="#">Parent</a>
-                      <a class="dropdown-item" href="#">Spouse</a>
-                      <a class="dropdown-item" href="#">Other Relative</a>
-                    </div>
-                  </div>
+                  </label><br>
+                  <select class="custom-select w-75 ml-3 mt-3">
+                    <option disabled>Relationship</option>
+                    <option selected value="1">Parent</option>
+                    <option value="2">Spouse</option>
+                    <option value="3">Other Relationship</option>
+                  </select>
                 </div>
                 <div class="form-check ml-5 mb-4">
                   <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
                   <label class="form-check-label ml-3" for="defaultCheck1">
                     Other
                   </label><br>
-                  <input type="text" class="ml-3 p-2 mt-3 w-75" placeholder="Describe condition..." name="" id="">
-                  <div class="dropdown ml-3 mt-3">
-                    <button class="btn btn-secondary dropdown-toggle w-75" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Relationship
-                    </button>
-                    <div class="dropdown-menu w-75" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" href="#">Parent</a>
-                      <a class="dropdown-item" href="#">Spouse</a>
-                      <a class="dropdown-item" href="#">Other Relative</a>
-                    </div>
-                  </div>
+                  <input type="text" class="ml-3 p-2 mt-3 w-75" placeholder="Describe condition..." name="" id=""><br>
+                  <select class="custom-select w-75 ml-3 mt-3">
+                    <option selected disabled>Relationship</option>
+                    <option value="1">Parent</option>
+                    <option value="2">Spouse</option>
+                    <option value="3">Other Relationship</option>
+                  </select>
                 </div>
               </div>
             </div>
@@ -346,17 +316,13 @@
                   <label class="form-check-label ml-3" for="defaultCheck1">
                     Tobacco
                   </label><br>
-                  <input type="text" class="ml-3 p-2 mt-3 w-75" placeholder="Sticks/Packs per day" name="" id="">
-                  <div class="dropdown ml-3 mt-3">
-                    <button class="btn btn-secondary dropdown-toggle w-75" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Relationship
-                    </button>
-                    <div class="dropdown-menu w-75" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" href="#">Parent</a>
-                      <a class="dropdown-item" href="#">Spouse</a>
-                      <a class="dropdown-item" href="#">Other Relative</a>
-                    </div>
-                  </div>
+                  <input type="text" class="ml-3 p-2 mt-3 w-75" placeholder="Sticks/Packs per day" name="" id=""><br>
+                  <select class="custom-select w-75 ml-3 mt-3">
+                    <option selected disabled>Relationship</option>
+                    <option value="1">Parent</option>
+                    <option value="2">Spouse</option>
+                    <option value="3">Other Relationship</option>
+                  </select>
                 </div>
               </div>
               <div class="col-md-6">
@@ -365,17 +331,13 @@
                   <label class="form-check-label ml-3" for="defaultCheck1">
                     Alcohol
                   </label><br>
-                  <input type="text form-control" class="ml-3 p-2 mt-3 w-75" placeholder="Cups/Bottles per day" name="" id="">
-                  <div class="dropdown ml-3 mt-3">
-                    <button class="btn btn-secondary dropdown-toggle w-75" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Relationship
-                    </button>
-                    <div class="dropdown-menu w-75" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" href="#">Parent</a>
-                      <a class="dropdown-item" href="#">Spouse</a>
-                      <a class="dropdown-item" href="#">Other Relative</a>
-                    </div>
-                  </div>
+                  <input type="text form-control" class="ml-3 p-2 mt-3 w-75" placeholder="Cups/Bottles per day" name="" id=""><br>
+                  <select class="custom-select w-75 ml-3 mt-3">
+                    <option selected disabled>Relationship</option>
+                    <option value="1">Parent</option>
+                    <option value="2">Spouse</option>
+                    <option value="3">Other Relationship</option>
+                  </select>
                 </div>
               </div>
             </div>
@@ -384,7 +346,9 @@
                 General Notes
               </div>
               <div class="col-md-12">
-                <textarea class="w-100 form-control" rows="5"></textarea>
+                <textarea class="w-100 form-control" rows="5">
+Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores vel aliquam debitis tempore eligendi libero. Soluta aperiam accusamus aliquid hic?
+                </textarea>
               </div>
             </div>
           </div>
