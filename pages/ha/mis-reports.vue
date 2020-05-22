@@ -27,7 +27,9 @@
       <div class="row">
         <div class="col-md-12">
           <small>
-            Dashboard
+            <nuxt-link class="text-muted" to="/ha">
+              Dashboard
+            </nuxt-link>
             > MIS Reports
           </small>
         </div>

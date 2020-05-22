@@ -29,22 +29,29 @@
           <small>
             <nuxt-link to="/ha" class="text-muted">
               Dashboard
-            </nuxt-link> >
+            </nuxt-link> > 
             <nuxt-link to="/ha/profile" class="text-muted">
               Patient Profile
-            </nuxt-link> > New Episode
+            </nuxt-link> > 
+            New Episode
           </small>
         </div>
       </div>
     </div>
     <div class="container mt-3">
       <div class="row">
-        <div class="col-md-12">
-          <h5 class="d-inline">Delores Abernathy (29, F)</h5> 
+        <div class="col-md-6">
+          <nuxt-link to="/ha/profile" class="text-decoration-none text-dark">
+            <h5 class="d-inline text-decoration-none">Delores Abernathy (29, F)</h5>  
+          </nuxt-link>
           [ <div class="d-inline pointer text-muted" @click="showDemographics = !showDemographics">
             <span v-if="!showDemographics">show</span>
             <span v-else>hide</span>
           </div> ]
+        </div>
+        <div class="col-md-6 text-right">
+          <img src="/circle-green.svg" class="shape-status" alt="">
+          Registered
         </div>
       </div>
       <div class="row mt-3" v-if="showDemographics">
@@ -56,8 +63,11 @@
           1-415-555-1234 <br>
           Son of Bernard <br><br>
           District, State <br><br>
-          <nuxt-link to="/ha/profile-view-history" class="text-muted">
+          <nuxt-link to="/ha/update-history" class="text-muted">
             View Medical History...
+          </nuxt-link><br>
+          <nuxt-link to="/ha/view-bills" class="text-muted">
+            View Billing History...
           </nuxt-link><br>
         </div>
         <div class="col-md-5">
@@ -65,8 +75,11 @@
           Address 2 <br>
           <br><br>
           Police Station<br><br>
-          <nuxt-link to="/ha/profile-edit-demographics" class="text-muted">
+          <nuxt-link to="/ha/update-demo" class="text-muted">
             Update Demographics...
+          </nuxt-link><br>
+          <nuxt-link to="/ha/update-history" class="text-muted">
+            Update Medical History...
           </nuxt-link>
         </div>
       </div>
@@ -250,7 +263,7 @@
           </div>
           <div v-else>
             <nuxt-link to="/ha/profile">
-              <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">
+              <button @click="showAlert()" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">
                 Record New Episode
               </button>
             </nuxt-link>
@@ -273,6 +286,15 @@
 <script>
 export default {
   methods: {
+    showAlert: function () {
+      alert(`This episode has been recorded.\n
+Please allocate a doctor for which you would like to have this patient seen by.
+
+:: Doctor Suresh (available)
+:: Doctor Gupta (available)
+:: Doctor Sitadel (unavailable)
+      `)
+    },
     getTab: function (tabName) {
       let tabs = this.tabs
       let ref = 0

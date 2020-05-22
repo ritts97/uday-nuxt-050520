@@ -29,31 +29,26 @@
           <small>
             <nuxt-link to="/ha" class="text-muted">
               Dashboard
-            </nuxt-link> >
-            <nuxt-link to="/ha/profile" class="text-muted">
-              Patient Profile
-            </nuxt-link> > Billing History
+            </nuxt-link>
+             > Patient Profile
           </small>
         </div>
-        <!-- <div class="col-md-12 text-center">
-          Patient Profile
-          <hr>
-        </div> -->
       </div>
     </div>
     <div class="container mt-3">
-      <div class="row pointer">
-        <div class="col-md-12">
-          <!-- <div class="text-muted pointer d-inline" style="margin-left: -16px; position: absolute;">
-            <span v-if="!showDemographics">+</span>
-            <span v-else>-</span>
-          </div> -->
-          <h5 class="d-inline">Delores Abernathy (29, F)</h5> 
-          [ 
-          <div class="d-inline pointer text-muted" @click="showDemographics = !showDemographics">
+      <div class="row">
+        <div class="col-md-6">
+          <nuxt-link to="/ha/profile" class="text-decoration-none text-dark">
+            <h5 class="d-inline text-decoration-none">Delores Abernathy (29, F)</h5>  
+          </nuxt-link>
+          [ <div class="d-inline pointer text-muted" @click="showDemographics = !showDemographics">
             <span v-if="!showDemographics">show</span>
             <span v-else>hide</span>
           </div> ]
+        </div>
+        <div class="col-md-6 text-right">
+          <img src="/circle-green.svg" class="shape-status" alt="">
+          Registered
         </div>
       </div>
       <div class="row mt-3" v-if="showDemographics">
@@ -65,11 +60,11 @@
           1-415-555-1234 <br>
           Son of Bernard <br><br>
           District, State <br><br>
-          <nuxt-link to="/ha/profile-view-history" class="text-muted">
+          <nuxt-link to="/ha/update-history" class="text-muted">
             View Medical History...
           </nuxt-link><br>
-          <nuxt-link to="/ha/profile-view-history" class="text-muted">
-            View All Billing History...
+          <nuxt-link to="/ha/view-bills" class="text-muted">
+            View Billing History...
           </nuxt-link><br>
         </div>
         <div class="col-md-5">
@@ -77,8 +72,11 @@
           Address 2 <br>
           <br><br>
           Police Station<br><br>
-          <nuxt-link to="/ha/profile-edit-demographics" class="text-muted">
+          <nuxt-link to="/ha/update-demo" class="text-muted">
             Update Demographics...
+          </nuxt-link><br>
+          <nuxt-link to="/ha/update-history" class="text-muted">
+            Update Medical History...
           </nuxt-link>
         </div>
       </div>
@@ -91,13 +89,28 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12 rounded">
-          <div class="w-100 bg-white my-3 px-3 py-3 text-center py-5" style="min-height: 200px;">
+          <ul class="list-inline">
+            <li class="list-inline-item">
+              <button class="btn btn-dark px-3 small" role="button">
+                View Medical History
+              </button>
+            </li><li class="list-inline-item">
+              <button class="btn btn-light px-3 small" role="button">
+                Update Medical History
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 rounded">
+          <div class="w-100 bg-white mb-3 px-3 text-center py-5" style="min-height: 200px;">
             BILLING HISTORY
           </div>
         </div>
       </div>
     </div>
-    <div class="container text-center">
+    <div class="container text-center my-3">
       <div class="row">
         <div class="col-md-12 text-secondary">
           <small>

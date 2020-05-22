@@ -29,31 +29,29 @@
           <small>
             <nuxt-link to="/ha" class="text-muted">
               Dashboard
-            </nuxt-link> >
+            </nuxt-link> > 
             <nuxt-link to="/ha/profile" class="text-muted">
               Patient Profile
-            </nuxt-link> > Update Demographics
+            </nuxt-link> > 
+            Demographics
           </small>
         </div>
-        <!-- <div class="col-md-12 text-center">
-          Patient Profile
-          <hr>
-        </div> -->
       </div>
     </div>
     <div class="container mt-3">
-      <div class="row pointer">
-        <div class="col-md-12">
-          <!-- <div class="text-muted pointer d-inline" style="margin-left: -16px; position: absolute;">
-            <span v-if="!showDemographics">+</span>
-            <span v-else>-</span>
-          </div> -->
-          <h5 class="d-inline">Delores Abernathy (29, F)</h5> 
-          [ 
-          <div class="d-inline pointer text-muted" @click="showDemographics = !showDemographics">
+      <div class="row">
+        <div class="col-md-6">
+          <nuxt-link to="/ha/profile" class="text-decoration-none text-dark">
+            <h5 class="d-inline text-decoration-none">Delores Abernathy (29, F)</h5>  
+          </nuxt-link>
+          [ <div class="d-inline pointer text-muted" @click="showDemographics = !showDemographics">
             <span v-if="!showDemographics">show</span>
             <span v-else>hide</span>
           </div> ]
+        </div>
+        <div class="col-md-6 text-right">
+          <img src="/circle-green.svg" class="shape-status" alt="">
+          Registered
         </div>
       </div>
       <div class="row mt-3" v-if="showDemographics">
@@ -65,11 +63,11 @@
           1-415-555-1234 <br>
           Son of Bernard <br><br>
           District, State <br><br>
-          <nuxt-link to="/ha/profile-view-history" class="text-muted">
+          <nuxt-link to="/ha/update-history" class="text-muted">
             View Medical History...
           </nuxt-link><br>
-          <nuxt-link to="/ha/profile-view-history" class="text-muted">
-            View All Billed...
+          <nuxt-link to="/ha/view-bills" class="text-muted">
+            View Billing History...
           </nuxt-link><br>
         </div>
         <div class="col-md-5">
@@ -77,8 +75,11 @@
           Address 2 <br>
           <br><br>
           Police Station<br><br>
-          <nuxt-link to="/ha/profile-edit-demographics" class="text-muted">
+          <nuxt-link to="/ha/update-demo" class="text-muted">
             Update Demographics...
+          </nuxt-link><br>
+          <nuxt-link to="/ha/update-history" class="text-muted">
+            Update Medical History...
           </nuxt-link>
         </div>
       </div>
@@ -91,8 +92,99 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12 rounded">
-          <div class="w-100 bg-white my-3 px-3 py-3 text-center py-5" style="min-height: 200px;">
-            UPDATE DEMOGRAPHICS
+          <ul class="list-inline">
+            <li class="list-inline-item">
+              <button class="btn btn-dark px-3 small" role="button">
+                View Demographics
+              </button>
+            </li><li class="list-inline-item">
+              <button class="btn btn-light px-3 small" role="button">
+                Update Demographics
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12 rounded">
+          
+          <div class="w-100 bg-white mb-3 px-3 pb-3" style="min-height: 100px;">
+            <div class="row pt-3">
+              <div class="col-md-12 pb-3">
+                General Information
+              </div>
+              <div class="col-md-6">
+                <div class="small text-muted mb-1">
+                  Full Name
+                </div>
+                <input type="text" class="w-100 p-2 mb-3" placeholder="First Name" value="Delores Abernathy">
+                <div class="small text-muted mb-1">
+                  Phone Number
+                </div>
+                <input type="text" class="w-100 p-2 mb-3" placeholder="Phone Number" value="1-415-555-12234">
+                <div class="small text-muted mb-1">
+                  H/W/S/D of
+                </div>
+                <input type="text" class="w-100 p-2 mb-3" placeholder="H/W/S/D of" value="Delores Abernathy">
+              </div>
+              <div class="col-md-6">
+                <div class="small text-muted mb-1">
+                  Gender
+                </div>
+                <input type="text" class="w-100 p-2 mb-3" placeholder="Gender" value="Male">
+                <div class="small text-muted mb-1">
+                  Age
+                </div>
+                <input type="text" class="w-100 p-2 mb-3" placeholder="Age" value="29">
+                <div class="small text-muted mb-1">
+                  Occupation
+                </div>
+                <input type="text" class="w-100 p-2 mb-3" placeholder="Occupation" value="Industrial Farmer">
+              </div>
+            </div>
+            <div class="row pt-3">
+              <div class="col-md-12 pb-3">
+                Location Information
+              </div>
+              <div class="col-md-6">
+                <div class="small text-muted mb-1">
+                  Address 1
+                </div>
+                <input type="text" class="w-100 p-2 mb-3" placeholder="First Name" value="444 D St.">
+                <div class="small text-muted mb-1">
+                  District
+                </div>
+                <input type="text" class="w-100 p-2 mb-3" placeholder="First Name" value="Hyperbad">
+                <div class="small text-muted mb-1">
+                  Police Station
+                </div>
+                <input type="text" class="w-100 p-2 mb-3" placeholder="Phone Number" value="Police Station">
+              </div>
+              <div class="col-md-6">
+                <div class="small text-muted mb-1">
+                  Address 2
+                </div>
+                <input type="text" class="w-100 p-2 mb-3" placeholder="First Name" value="Apt #4">
+                <div class="small text-muted mb-1">
+                  State
+                </div>
+                <input type="text" class="w-100 p-2 mb-3" placeholder="Gender" value="India">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container mb-3">
+      <div class="row">
+        <div class="col-md-12">
+          <div>
+            <nuxt-link to="/ha/profile">
+              <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1 text-uppercase">
+                Save Demographics
+              </button>
+            </nuxt-link>
           </div>
         </div>
       </div>

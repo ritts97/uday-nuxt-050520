@@ -38,7 +38,9 @@
     <div class="container mt-3">
       <div class="row">
         <div class="col-md-6">
-          <h5 class="d-inline">Delores Abernathy (29, F)</h5>  
+          <nuxt-link to="/ha/profile" class="text-decoration-none text-dark">
+            <h5 class="d-inline text-decoration-none">Delores Abernathy (29, F)</h5>  
+          </nuxt-link>
           [ <div class="d-inline pointer text-muted" @click="showDemographics = !showDemographics">
             <span v-if="!showDemographics">show</span>
             <span v-else>hide</span>
@@ -72,6 +74,9 @@
           Police Station<br><br>
           <nuxt-link to="/ha/update-demo" class="text-muted">
             Update Demographics...
+          </nuxt-link><br>
+          <nuxt-link to="/ha/update-history" class="text-muted">
+            Update Medical History...
           </nuxt-link>
         </div>
       </div>
@@ -321,7 +326,7 @@ export default {
           gender: '1 weeks ago',
           followups: 3,
           billed: '',
-          link: '/ha/profile-visit-service',
+          link: '/ha/profile-visit',
           age: 'Yes',
           phone: '14155551234'
         },

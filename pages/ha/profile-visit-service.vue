@@ -29,10 +29,11 @@
           <small>
             <nuxt-link to="/ha" class="text-muted">
               Dashboard
-            </nuxt-link> >
+            </nuxt-link> > 
             <nuxt-link to="/ha/profile" class="text-muted">
               Patient Profile
-            </nuxt-link> > Episode 1
+            </nuxt-link> > 
+            Perform ECG
           </small>
         </div>
       </div>
@@ -40,7 +41,9 @@
     <div class="container mt-3">
       <div class="row">
         <div class="col-md-6">
-          <h5 class="d-inline">Delores Abernathy (29, F)</h5>  
+          <nuxt-link to="/ha/profile" class="text-decoration-none text-dark">
+            <h5 class="d-inline text-decoration-none">Delores Abernathy (29, F)</h5>  
+          </nuxt-link>
           [ <div class="d-inline pointer text-muted" @click="showDemographics = !showDemographics">
             <span v-if="!showDemographics">show</span>
             <span v-else>hide</span>
@@ -60,11 +63,11 @@
           1-415-555-1234 <br>
           Son of Bernard <br><br>
           District, State <br><br>
-          <nuxt-link to="/ha/profile-view-history" class="text-muted">
+          <nuxt-link to="/ha/update-history" class="text-muted">
             View Medical History...
           </nuxt-link><br>
-          <nuxt-link to="/ha/profile-view-history" class="text-muted">
-            View All Billed...
+          <nuxt-link to="/ha/view-bills" class="text-muted">
+            View Billing History...
           </nuxt-link><br>
         </div>
         <div class="col-md-5">
@@ -72,8 +75,11 @@
           Address 2 <br>
           <br><br>
           Police Station<br><br>
-          <nuxt-link to="/ha/profile-edit-demographics" class="text-muted">
+          <nuxt-link to="/ha/update-demo" class="text-muted">
             Update Demographics...
+          </nuxt-link><br>
+          <nuxt-link to="/ha/update-history" class="text-muted">
+            Update Medical History...
           </nuxt-link>
         </div>
       </div>
@@ -154,33 +160,45 @@
     <div class="w-100 bg-white pt-3 pb-3 mb-4" style="min-height: 30px;">
       <div class="container" v-if="showDocsFeedback">
         <div class="row">
-          <div class="col-md-12">
-            <span class="small text-muted">
+          <div class="col-md-12 mb-5">
+            <div class="small text-muted mb-3">
               Investigations
-            </span> <br><br>
-            <textarea class="w-100 p-2 mb-3" rows="6" name="">
+            </div>
+            <!-- <textarea class="w-100 p-2 mb-3" rows="6" name=""> -->
 Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil vero qui consectetur, eligendi facilis soluta maiores quae sequi eaque. Quia suscipit quaerat deleniti iure aliquid, voluptas repellat delectus ad labore officia nulla voluptatem ratione omnis provident cumque ab quae. Ullam natus sunt atque. Sint ullam autem commodi, corrupti inventore quod!
-            </textarea>
+            <!-- </textarea> -->
           </div>
         </div>
         <div class="row">
-          <div class="col-md-12">
-            <span class="small text-muted">
+          <div class="col-md-12 mb-5">
+            <div class="small text-muted mb-3">
               Prescribed Medicines
-            </span> <br><br>
-            <textarea class="w-100 p-2 mb-3" rows="6" name="">
+            </div>
+            <!-- <textarea class="w-100 p-2 mb-3" rows="6" name=""> -->
 Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil vero qui consectetur, eligendi facilis soluta maiores quae sequi eaque. Quia suscipit quaerat deleniti iure aliquid, voluptas repellat delectus ad labore officia nulla voluptatem ratione omnis provident cumque ab quae. Ullam natus sunt atque. Sint ullam autem commodi, corrupti inventore quod!
-            </textarea>
+            <!-- </textarea> -->
           </div>
         </div>
         <div class="row">
-          <div class="col-md-12">
-            <span class="small text-muted">
+          <div class="col-md-12 mb-5">
+            <div class="small text-muted mb-3">
               Advice
-            </span> <br><br>
-            <textarea class="w-100 p-2 mb-3" rows="6" name="">
+            </div>
+            <!-- <textarea class="w-100 p-2 mb-3" rows="6" name=""> -->
 Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil vero qui consectetur, eligendi facilis soluta maiores quae sequi eaque. Quia suscipit quaerat deleniti iure aliquid, voluptas repellat delectus ad labore officia nulla voluptatem ratione omnis provident cumque ab quae. Ullam natus sunt atque. Sint ullam autem commodi, corrupti inventore quod!
-            </textarea>
+            <!-- </textarea> -->
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 mb-3 text-right">
+            <!-- <div class="small text-muted mb-3">
+              <hr>
+            </div> -->
+            <div class="small">
+              Last reviewed by Doctor Suresh at 7:00pm, 01/01/2021
+            </div>
+            <!-- <textarea class="w-100 p-2 mb-3" rows="6" name=""> -->
+            <!-- </textarea> -->
           </div>
         </div>
       </div>
@@ -190,6 +208,8 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil vero qui consecte
         <div class="col-md-12 text-secondary">
           <small>
             UdayHealth.org is a virtual, telemedicine application organized by medical professionals and volunteers worldwide.
+            <!-- <br> 
+            About | Privacy Policy | Contact -->
           </small>
         </div>
       </div>

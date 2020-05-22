@@ -29,10 +29,11 @@
           <small>
             <nuxt-link to="/ha" class="text-muted">
               Dashboard
-            </nuxt-link> >
+            </nuxt-link> > 
             <nuxt-link to="/ha/profile" class="text-muted">
               Patient Profile
-            </nuxt-link> > Episode 1
+            </nuxt-link> > 
+            Episode 1
           </small>
         </div>
       </div>
@@ -40,7 +41,9 @@
     <div class="container mt-3">
       <div class="row">
         <div class="col-md-6">
-          <h5 class="d-inline">Delores Abernathy (29, F)</h5>  
+          <nuxt-link to="/ha/profile" class="text-decoration-none text-dark">
+            <h5 class="d-inline text-decoration-none">Delores Abernathy (29, F)</h5>  
+          </nuxt-link>
           [ <div class="d-inline pointer text-muted" @click="showDemographics = !showDemographics">
             <span v-if="!showDemographics">show</span>
             <span v-else>hide</span>
@@ -60,10 +63,10 @@
           1-415-555-1234 <br>
           Son of Bernard <br><br>
           District, State <br><br>
-          <nuxt-link to="/ha/profile-view-history" class="text-muted">
+          <nuxt-link to="/ha/update-history" class="text-muted">
             View Medical History...
           </nuxt-link><br>
-          <nuxt-link to="/ha/profile-view-history" class="text-muted">
+          <nuxt-link to="/ha/view-bills" class="text-muted">
             View Billing History...
           </nuxt-link><br>
         </div>
@@ -72,8 +75,11 @@
           Address 2 <br>
           <br><br>
           Police Station<br><br>
-          <nuxt-link to="/ha/profile-edit-demographics" class="text-muted">
+          <nuxt-link to="/ha/update-demo" class="text-muted">
             Update Demographics...
+          </nuxt-link><br>
+          <nuxt-link to="/ha/update-history" class="text-muted">
+            Update Medical History...
           </nuxt-link>
         </div>
       </div>
@@ -107,119 +113,105 @@
           <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="subTabs[0].isActive">
             <div class="row mt-1">
               <div class="col-md-6 mb-3">
-                <div class="small text-muted">
+                <div class="small text-muted mb-2">
                   Complaint 1
                 </div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                Coughing Problem <br><br>
+                Lasting 2 days <br>
+                Only at night <br>
+                Sputum No <br>
+                Yellow Color <br>
+                Amount a lot <br>
+                Fever Yes <br>
+                No difficulty in swallowing <br>
+                No Pain in throat <br>
                 <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Complaint 1"> -->
               </div>
               <div class="col-md-6 mb-3">
-                <div class="small text-muted">
+                <div class="small text-muted mb-2">
                   Complaint 2
                 </div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Complaint 2"> -->
-              </div>
-              <div class="col-md-6 mb-3">
-                <div class="small text-muted">
-                  Complaint 3
-                </div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Complaint 3"> -->
-              </div>
-              <div class="col-md-6 mb-3">
-                <div class="small text-muted">
-                  Complaint 4
-                </div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Complaint 4"> -->
-              </div>
-              <div class="col-md-6 mb-3">
-                <div class="small text-muted">
-                  Complaint 5
-                </div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Complaint 5"> -->
-              </div>
-              <div class="col-md-6 mb-32">
-                <div class="small text-muted">
-                  Complaint 6
-                </div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Complaint 6"> -->
-              </div>
-              <div class="col-md-6 mb-3">
-                <div class="small text-muted">
-                  Complaint 7
-                </div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Complaint 7"> -->
-              </div>
-              <div class="col-md-6 mb-3">
-                <div class="small text-muted">
-                  Complaint 8
-                </div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Complaint 8"> -->
+                Fever <br><br>
+                Lasting 3 days <br>
+                Felt on alternate <br>
+                Present all day <br>
+                Low grade <br>
+                Yes shivers <br>
+                Associated with None <br>
+                Haemoptysis No <br>
+                Associated with Gguggu <br>
+                Weakness No <br>
+                Weightloss No <br>
+                Dysuria No <br>
+                Brought on by Ugugu <br>
+                Relieved by Ugiig <br>
+                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Complaint 1"> -->
               </div>
             </div>
           </div>
           <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="subTabs[1].isActive">
             <div class="row mt-1">
-              <div class="col-md-6 mb-3">
-                <div class="small text-muted">
+              <div class="col-md-6 mb-4">
+                <div class="small text-muted mb-1">
                   Patient Appearance
                 </div>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
                 <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Patient Appearance"> -->
               </div>
-              <div class="col-md-6 mb-3">
-                <div class="small text-muted">
+              <div class="col-md-6 mb-4">
+                <div class="small text-muted mb-1">
                   Patient Gait
                 </div>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
                 <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Patient Gait"> -->
               </div>
-              <div class="col-md-6 mb-3">
-                <div class="small text-muted">
-                  BP
+              <div class="col-md-6 mb-4">
+                <div class="small text-muted mb-1">
+                  Pulse
                 </div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                72 BPM
                 <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="BP (___/___ mmHg)"> -->
               </div>
-              <div class="col-md-6 mb-3">
-                <div class="small text-muted">
+              <div class="col-md-6 mb-4">
+                <div class="small text-muted mb-1">
+                  BP
+                </div>
+                120/80 mmHg
+                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="BP (___/___ mmHg)"> -->
+              </div>
+              <div class="col-md-6 mb-4">
+                <div class="small text-muted mb-1">
                   SP02
                 </div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                89%
                 <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="SP02 (%)"> -->
               </div>
-              <div class="col-md-6 mb-3">
-                <div class="small text-muted">
+              <div class="col-md-6 mb-4">
+                <div class="small text-muted mb-1">
                   Temperature
                 </div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                98^
                 <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Temperature (‘’ F)"> -->
               </div>
-              <div class="col-md-6 mb-3">
-                <div class="small text-muted">
+              <div class="col-md-6 mb-4">
+                <div class="small text-muted mb-1">
                   Height
                 </div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                180 cm
                 <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Height (cm)"> -->
               </div>
-              <div class="col-md-6 mb-3">
-                <div class="small text-muted">
+              <div class="col-md-6 mb-4">
+                <div class="small text-muted mb-1">
                   Weight
                 </div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                65 kg
                 <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Weight (kg)"> -->
               </div>
               <div class="col-md-6 mb-3">
-                <div class="small text-muted">
+                <div class="small text-muted mb-1">
                   BMI
                 </div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                20.06 kg/m2
                 <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="BMI (kg/m2) (Auto Calculated)"> -->
               </div>
             </div>
@@ -231,59 +223,26 @@
               </div>
               <div class="col-md-6 mb-3">
                 <div class="small text-muted">
-                  Patient Appearance
+                  Eyes
                 </div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                Jaundice – Yes <br>
+                Pallor – Mild
                 <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Patient Appearance"> -->
               </div>
               <div class="col-md-6 mb-3">
                 <div class="small text-muted">
-                  Patient Gait
+                  Hands
                 </div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                Nails – Normal <br>
+                Cyanosis – Yes
                 <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Patient Gait"> -->
               </div>
               <div class="col-md-6 mb-3">
                 <div class="small text-muted">
-                  BP
+                  Lower Leg and Ankle
                 </div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
+                Oedema – Mild
                 <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="BP (___/___ mmHg)"> -->
-              </div>
-              <div class="col-md-6 mb-3">
-                <div class="small text-muted">
-                  SP02
-                </div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="SP02 (%)"> -->
-              </div>
-              <div class="col-md-6 mb-3">
-                <div class="small text-muted">
-                  Temperature
-                </div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Temperature (‘’ F)"> -->
-              </div>
-              <div class="col-md-6 mb-3">
-                <div class="small text-muted">
-                  Height
-                </div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Height (cm)"> -->
-              </div>
-              <div class="col-md-6 mb-3">
-                <div class="small text-muted">
-                  Weight
-                </div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Weight (kg)"> -->
-              </div>
-              <div class="col-md-6 mb-3">
-                <div class="small text-muted">
-                  BMI
-                </div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="BMI (kg/m2) (Auto Calculated)"> -->
               </div>
             </div>
           </div>
@@ -376,33 +335,45 @@
     <div class="w-100 bg-white pt-3 pb-3 mb-4" style="min-height: 30px;">
       <div class="container" v-if="showDocsFeedback">
         <div class="row">
-          <div class="col-md-12">
-            <span class="small text-muted">
+          <div class="col-md-12 mb-5">
+            <div class="small text-muted mb-3">
               Investigations
-            </span> <br><br>
-            <textarea class="w-100 p-2 mb-3" rows="6" name="">
+            </div>
+            <!-- <textarea class="w-100 p-2 mb-3" rows="6" name=""> -->
 Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil vero qui consectetur, eligendi facilis soluta maiores quae sequi eaque. Quia suscipit quaerat deleniti iure aliquid, voluptas repellat delectus ad labore officia nulla voluptatem ratione omnis provident cumque ab quae. Ullam natus sunt atque. Sint ullam autem commodi, corrupti inventore quod!
-            </textarea>
+            <!-- </textarea> -->
           </div>
         </div>
         <div class="row">
-          <div class="col-md-12">
-            <span class="small text-muted">
+          <div class="col-md-12 mb-5">
+            <div class="small text-muted mb-3">
               Prescribed Medicines
-            </span> <br><br>
-            <textarea class="w-100 p-2 mb-3" rows="6" name="">
+            </div>
+            <!-- <textarea class="w-100 p-2 mb-3" rows="6" name=""> -->
 Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil vero qui consectetur, eligendi facilis soluta maiores quae sequi eaque. Quia suscipit quaerat deleniti iure aliquid, voluptas repellat delectus ad labore officia nulla voluptatem ratione omnis provident cumque ab quae. Ullam natus sunt atque. Sint ullam autem commodi, corrupti inventore quod!
-            </textarea>
+            <!-- </textarea> -->
           </div>
         </div>
         <div class="row">
-          <div class="col-md-12">
-            <span class="small text-muted">
+          <div class="col-md-12 mb-5">
+            <div class="small text-muted mb-3">
               Advice
-            </span> <br><br>
-            <textarea class="w-100 p-2 mb-3" rows="6" name="">
+            </div>
+            <!-- <textarea class="w-100 p-2 mb-3" rows="6" name=""> -->
 Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil vero qui consectetur, eligendi facilis soluta maiores quae sequi eaque. Quia suscipit quaerat deleniti iure aliquid, voluptas repellat delectus ad labore officia nulla voluptatem ratione omnis provident cumque ab quae. Ullam natus sunt atque. Sint ullam autem commodi, corrupti inventore quod!
-            </textarea>
+            <!-- </textarea> -->
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 mb-3 text-right">
+            <!-- <div class="small text-muted mb-3">
+              <hr>
+            </div> -->
+            <div class="small">
+              Last reviewed by Doctor Suresh at 7:00pm, 01/01/2021
+            </div>
+            <!-- <textarea class="w-100 p-2 mb-3" rows="6" name=""> -->
+            <!-- </textarea> -->
           </div>
         </div>
       </div>
