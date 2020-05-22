@@ -11,7 +11,7 @@
               <span class="dropdown-toggle dropdown-no-caret pointer" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 jane.doe@udayhealth.org
               </span>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <div class="dropdown-menu w-75" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" href="#">MIS Reports</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#">Edit Profile</a>
@@ -215,7 +215,7 @@
                     <button class="btn btn-secondary dropdown-toggle w-75" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Relationship
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <div class="dropdown-menu w-75" aria-labelledby="dropdownMenuButton">
                       <a class="dropdown-item" href="#">Parent</a>
                       <a class="dropdown-item" href="#">Spouse</a>
                       <a class="dropdown-item" href="#">Other Relative</a>
@@ -231,7 +231,7 @@
                     <button class="btn btn-secondary dropdown-toggle w-75" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Relationship
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <div class="dropdown-menu w-75" aria-labelledby="dropdownMenuButton">
                       <a class="dropdown-item" href="#">Parent</a>
                       <a class="dropdown-item" href="#">Spouse</a>
                       <a class="dropdown-item" href="#">Other Relative</a>
@@ -247,7 +247,7 @@
                     <button class="btn btn-secondary dropdown-toggle w-75" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Relationship
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <div class="dropdown-menu w-75" aria-labelledby="dropdownMenuButton">
                       <a class="dropdown-item" href="#">Parent</a>
                       <a class="dropdown-item" href="#">Spouse</a>
                       <a class="dropdown-item" href="#">Other Relative</a>
@@ -263,7 +263,7 @@
                     <button class="btn btn-secondary dropdown-toggle w-75" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Relationship
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <div class="dropdown-menu w-75" aria-labelledby="dropdownMenuButton">
                       <a class="dropdown-item" href="#">Parent</a>
                       <a class="dropdown-item" href="#">Spouse</a>
                       <a class="dropdown-item" href="#">Other Relative</a>
@@ -281,7 +281,7 @@
                     <button class="btn btn-secondary dropdown-toggle w-75" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Relationship
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <div class="dropdown-menu w-75" aria-labelledby="dropdownMenuButton">
                       <a class="dropdown-item" href="#">Parent</a>
                       <a class="dropdown-item" href="#">Spouse</a>
                       <a class="dropdown-item" href="#">Other Relative</a>
@@ -297,7 +297,7 @@
                     <button class="btn btn-secondary dropdown-toggle w-75" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Relationship
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <div class="dropdown-menu w-75" aria-labelledby="dropdownMenuButton">
                       <a class="dropdown-item" href="#">Parent</a>
                       <a class="dropdown-item" href="#">Spouse</a>
                       <a class="dropdown-item" href="#">Other Relative</a>
@@ -313,7 +313,7 @@
                     <button class="btn btn-secondary dropdown-toggle w-75" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Relationship
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <div class="dropdown-menu w-75" aria-labelledby="dropdownMenuButton">
                       <a class="dropdown-item" href="#">Parent</a>
                       <a class="dropdown-item" href="#">Spouse</a>
                       <a class="dropdown-item" href="#">Other Relative</a>
@@ -330,7 +330,7 @@
                     <button class="btn btn-secondary dropdown-toggle w-75" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Relationship
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <div class="dropdown-menu w-75" aria-labelledby="dropdownMenuButton">
                       <a class="dropdown-item" href="#">Parent</a>
                       <a class="dropdown-item" href="#">Spouse</a>
                       <a class="dropdown-item" href="#">Other Relative</a>
@@ -351,7 +351,7 @@
                     <button class="btn btn-secondary dropdown-toggle w-75" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Relationship
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <div class="dropdown-menu w-75" aria-labelledby="dropdownMenuButton">
                       <a class="dropdown-item" href="#">Parent</a>
                       <a class="dropdown-item" href="#">Spouse</a>
                       <a class="dropdown-item" href="#">Other Relative</a>
@@ -370,7 +370,7 @@
                     <button class="btn btn-secondary dropdown-toggle w-75" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Relationship
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <div class="dropdown-menu w-75" aria-labelledby="dropdownMenuButton">
                       <a class="dropdown-item" href="#">Parent</a>
                       <a class="dropdown-item" href="#">Spouse</a>
                       <a class="dropdown-item" href="#">Other Relative</a>

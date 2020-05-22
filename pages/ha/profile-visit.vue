@@ -104,10 +104,10 @@
       <div class="row">
         <div class="col-md-12 rounded">
           <ul class="list-inline mb-2">
-            <li class="list-inline-item" v-for="(tab, index) in subTabs" :key="index">
-              <button class="btn pl-0 pr-4 pb-2" @click="getSubTab(tab.name)" role="button">
+            <li class="list-inline-item text-center pointer" v-for="(tab, index) in subTabs" :key="index">
+              <div class="px-2 mr-2 pb-1 mb-1" @click="getSubTab(tab.name)" role="button" :class="{ underline: tab.isActive }">
                 {{ tab.title }}
-              </button>
+              </div>
             </li>
           </ul>
           <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="subTabs[0].isActive">
@@ -533,5 +533,9 @@ thead tr th {
 
 .pointer:hover {
   cursor: pointer;
+}
+
+.underline {
+  border-bottom: 2px solid #AAA;
 }
 </style>

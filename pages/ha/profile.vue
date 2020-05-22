@@ -107,10 +107,10 @@
       <div class="row mt-0">
         <div class="col-md-12">
           <ul class="list-inline mb-2">
-            <li class="list-inline-item" v-for="(tab, index) in tabs" :key="index">
-                <button class="btn" @click="getList(tab.name)" role="button">
+            <li class="list-inline-item pointer" v-for="(tab, index) in tabs" :key="index">
+                <div class="px-2 mr-2 pb-1 mb-1" @click="getList(tab.name)" :class="{ underline: tab.isActive }" role="button">
                   {{ tab.title }} ({{ getListLength(tab.name) }})
-                </button>
+                </div>
             </li>
           </ul>
           <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 300px;">
@@ -144,7 +144,7 @@
                   <td>3</td>
                   <td>1</td>
                   <td>
-                    <div class="dropdown w-100" v-if="visit.type === 'episode'">
+                    <div class="dropdown" v-if="visit.type === 'episode'">
                       <button class="btn btn-secondary dropdown-toggle dropdown-menu-right w-100" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Select an Action
                       </button>

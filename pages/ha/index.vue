@@ -53,11 +53,11 @@
       <div class="row">
         <div class="col-md-12 rounded">
           <ul class="list-inline mb-2">
-            <li class="list-inline-item" v-for="(tab, index) in tabs" :key="index">
+            <li class="list-inline-item pointer" v-for="(tab, index) in tabs" :key="index">
               <!-- <div style="border-bottom: 2px solid #ccc;"> -->
-                <button class="btn" @click="getList(tab.name)" role="button">
+                <div class="px-2 mr-2 pb-1 mb-1" @click="getList(tab.name)" :class="{ underline: tab.isActive }" role="button">
                   {{ tab.title }} <span v-if="tab.name !== 'global'">({{ getListLength(tab.name) }})</span>
-                </button>
+                </div>
               <!-- </div> -->
             </li>
           </ul>
@@ -346,5 +346,20 @@ thead tr th {
   cursor: pointer;
 }
 
+.dropdown-menu {
+  width: 100%;
+}
+
 .dropdown-no-caret:after { content: none }
+
+.dropdown-toggle {
+  cursor: pointer;
+  text-align: left;
+}
+
+.dropdown-toggle::after {
+  position: relative;
+  float:right; 
+  margin-top: 10px;
+}
 </style>
