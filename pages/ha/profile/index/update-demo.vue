@@ -1,94 +1,5 @@
 <template>
   <div>
-    <div class="w-100 bg-dark text-white mb-3">
-      <div class="container bg-dark">
-        <div class="row py-2">
-          <div class="col-md-6 font-weight-bold pt-2" style="font-size: 24px;"> 
-            <nuxt-link to="/ha" class="text-white text-decoration-none">UD.</nuxt-link>
-          </div>
-          <div class="col-md-6 py-3 text-right">
-            <div class="dropdown d-inline">
-              <span class="dropdown-toggle dropdown-no-caret pointer" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                jane.doe@udayhealth.org
-              </span>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">MIS Reports</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Edit Profile</a>
-                <a class="dropdown-item" href="#">Change Password</a>
-              </div>
-            </div>
-            | Logout
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <small>
-            <nuxt-link to="/ha" class="text-muted">
-              Dashboard
-            </nuxt-link> > 
-            <nuxt-link to="/ha/profile" class="text-muted">
-              Patient Profile
-            </nuxt-link> > 
-            Demographics
-          </small>
-        </div>
-      </div>
-    </div>
-    <div class="container mt-3">
-      <div class="row">
-        <div class="col-md-6">
-          <nuxt-link to="/ha/profile" class="text-decoration-none text-dark">
-            <h5 class="d-inline text-decoration-none">Delores Abernathy (29, F)</h5>  
-          </nuxt-link>
-          [ <div class="d-inline pointer text-muted" @click="showDemographics = !showDemographics">
-            <span v-if="!showDemographics">show</span>
-            <span v-else>hide</span>
-          </div> ]
-        </div>
-        <div class="col-md-6 text-right">
-          <img src="/circle-green.svg" class="shape-status" alt="">
-          Registered
-        </div>
-      </div>
-      <div class="row mt-3" v-if="showDemographics">
-        <div class="col-md-3 text-left">
-          <img src="/avatar.png" alt="">
-        </div>
-        <div class="col-md-4">
-          Industrial Farmer <br>
-          1-415-555-1234 <br>
-          Son of Bernard <br><br>
-          District, State <br><br>
-          <nuxt-link to="/ha/update-history" class="text-muted">
-            View Medical History...
-          </nuxt-link><br>
-          <nuxt-link to="/ha/view-bills" class="text-muted">
-            View Billing History...
-          </nuxt-link><br>
-        </div>
-        <div class="col-md-5">
-          Address 1 <br>
-          Address 2 <br>
-          <br><br>
-          Police Station<br><br>
-          <nuxt-link to="/ha/update-demo" class="text-muted">
-            Update Demographics...
-          </nuxt-link><br>
-          <nuxt-link to="/ha/update-history" class="text-muted">
-            Update Medical History...
-          </nuxt-link>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <hr>
-        </div>
-      </div>
-    </div>
     <div class="container">
       <div class="row">
         <div class="col-md-12 rounded">
@@ -189,20 +100,12 @@
         </div>
       </div>
     </div>
-    <div class="container text-center">
-      <div class="row">
-        <div class="col-md-12 text-secondary">
-          <small>
-            UdayHealth.org is a virtual, telemedicine application organized by medical professionals and volunteers worldwide.
-          </small>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
 export default {
+  layout: 'dashboard',
   methods: {
     getTab: function (tabName) {
       let tabs = this.tabs

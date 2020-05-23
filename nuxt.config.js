@@ -43,6 +43,11 @@ module.exports = {
   ],
 
   /*
+  ** Page transitions
+  */
+  // transition: 'v-fade',
+
+  /*
   ** Nuxt.js modules
   */
   modules: [

@@ -1,98 +1,13 @@
 <template>
   <div>
-    <div class="w-100 bg-dark text-white mb-3">
-      <div class="container bg-dark">
-        <div class="row py-2">
-          <div class="col-md-6 font-weight-bold pt-2" style="font-size: 24px;"> 
-            <nuxt-link to="/ha" class="text-white text-decoration-none">UD.</nuxt-link>
-          </div>
-          <div class="col-md-6 py-3 text-right">
-            <div class="dropdown d-inline">
-              <span class="dropdown-toggle dropdown-no-caret pointer" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                jane.doe@udayhealth.org
-              </span>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">MIS Reports</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Edit Profile</a>
-                <a class="dropdown-item" href="#">Change Password</a>
-              </div>
-            </div>
-            | Logout
-          </div>
-        </div>
-      </div>
-    </div>
+    
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <small>
-            <nuxt-link to="/ha" class="text-muted">
-              Dashboard
-            </nuxt-link>
-             > Patient Profile
-          </small>
-        </div>
-      </div>
-    </div>
-    <div class="container mt-3">
-      <div class="row">
-        <div class="col-md-6">
-          <nuxt-link to="/ha/profile" class="text-decoration-none text-dark">
-            <h5 class="d-inline text-decoration-none">Delores Abernathy (29, F)</h5>  
-          </nuxt-link>
-          [ <div class="d-inline pointer text-muted" @click="showDemographics = !showDemographics">
-            <span v-if="!showDemographics">show</span>
-            <span v-else>hide</span>
-          </div> ]
-        </div>
-        <div class="col-md-6 text-right">
-          <img src="/circle-green.svg" class="shape-status" alt="">
-          Registered
-        </div>
-      </div>
-      <div class="row mt-3" v-if="showDemographics">
-        <div class="col-md-3 text-left">
-          <img src="/avatar.png" alt="">
-        </div>
-        <div class="col-md-4">
-          Industrial Farmer <br>
-          1-415-555-1234 <br>
-          Son of Bernard <br><br>
-          District, State <br><br>
-          <nuxt-link to="/ha/update-history" class="text-muted">
-            View Medical History...
-          </nuxt-link><br>
-          <nuxt-link to="/ha/view-bills" class="text-muted">
-            View Billing History...
-          </nuxt-link><br>
-        </div>
-        <div class="col-md-5">
-          Address 1 <br>
-          Address 2 <br>
-          <br><br>
-          Police Station<br><br>
-          <nuxt-link to="/ha/update-demo" class="text-muted">
-            Update Demographics...
-          </nuxt-link><br>
-          <nuxt-link to="/ha/update-history" class="text-muted">
-            Update Medical History...
-          </nuxt-link>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <hr>
-        </div>
-      </div>
-    </div>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <nuxt-link to="/ha/new-episode">
+          <nuxt-link to="/ha/profile/new-episode">
             <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Record New Episode</button>     
           </nuxt-link>
-          <nuxt-link to="/ha/new-service">
+          <nuxt-link to="/ha/profile/new-service">
             <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0  text-uppercase">Record New Service</button>     
           </nuxt-link>
         </div>
@@ -149,14 +64,14 @@
                         Select an Action
                       </button>
                       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <nuxt-link class="dropdown-item" to="/ha/profile-visit">
+                        <nuxt-link class="dropdown-item" to="/ha/profile/profile-visit">
                           New Follow Up
                         </nuxt-link>
-                        <nuxt-link class="dropdown-item" to="/ha/profile-visit">
+                        <nuxt-link class="dropdown-item" to="/ha/profile/profile-visit">
                           New Service
                         </nuxt-link>
                         <div class="dropdown-divider"></div>
-                        <nuxt-link class="dropdown-item" to="/ha/profile-visit">
+                        <nuxt-link class="dropdown-item" to="/ha/profile/profile-visit">
                           View Billing
                         </nuxt-link>
                       </div>
@@ -169,20 +84,13 @@
         </div>
       </div>
     </div>
-    <div class="container text-center mb-4">
-      <div class="row">
-        <div class="col-md-12 text-secondary">
-          <small>
-            UdayHealth.org is a virtual, telemedicine application organized by medical professionals and volunteers worldwide.
-          </small>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
+
 <script>
 export default {
+  layout: 'dashboard',
   mounted() {
     this.list = this.filterAllVisits
   },
@@ -263,7 +171,6 @@ export default {
   data() {
     return {
       arr: [1,12,31,23,21,312],
-      showDemographics: true,
       tabs: [
         {
           name: 'visit',
@@ -304,7 +211,7 @@ export default {
           type: 'episode',
           gender: '4 weeks ago',
           billed: '',
-          link: '/ha/profile-visit',
+          link: '/ha/profile/profile-visit',
           followups: 4,
           age: 'Yes',
           phone: '14155551234'
@@ -315,7 +222,7 @@ export default {
           type: 'service',
           gender: '2 weeks ago',
           billed: 'View Bill',
-          link: '/ha/profile-visit-service',
+          link: '/ha/profile/profile-visit-service',
           age: 'Yes',
           phone: '14155551234'
         },
@@ -326,7 +233,7 @@ export default {
           gender: '1 weeks ago',
           followups: 3,
           billed: '',
-          link: '/ha/profile-visit',
+          link: '/ha/profile/profile-visit',
           age: 'Yes',
           phone: '14155551234'
         },
