@@ -240,6 +240,7 @@ export default {
       ]
     }
   },
+  transition: 'u-fade'
 }
 </script>
 

@@ -48,6 +48,7 @@
     <div style="margin-top: 84px;">
       <transition name="u-fade" mode="out-in">
         <nuxt  />
+        <!-- :key="routerViewKey" -->
       </transition>
     </div>
 

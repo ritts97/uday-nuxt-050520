@@ -129,7 +129,7 @@
           </div>
           <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="subTabs[2].isActive">
             <div class="row mt-1">
-              <div class="col-md-12 mb-5 text-center">
+              <div class="col-md-12 mb-5 text-center" style="min-height: 300px;">
                 <img src="/anatomy_sketch.png" alt="">
               </div>
               <div class="col-md-6 mb-3">
@@ -160,7 +160,7 @@
           <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="subTabs[3].isActive">
             <div class="row mt-1">
               <div class="col-md-12 mb-5 text-center">
-                <img src="/anatomy_sketch.png" alt="">
+                <img src="/anatomy_sketch.png" style="min-height: 300px;">
               </div>
               <div class="col-md-6 mb-3">
                 <div class="small text-muted">
@@ -349,6 +349,11 @@ export default {
         {
           name: 'followup2',
           title: 'Follow Up 2',
+          isActive: false
+        },
+        {
+          name: 'service1',
+          title: 'Perform ECG',
           isActive: false
         },
         {

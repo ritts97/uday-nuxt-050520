@@ -30,9 +30,9 @@
       </div>
       <transition name="u-fade">
         <div class="row mt-3" v-if="showDemographics">
-          <div class="col-md-3 text-left">
+          <div class="col-md-3 text-left" style="min-height: 200px;">
             <nuxt-link to="/ha/profile" class="text-decoration-none text-dark">
-              <img src="/avatar.png" alt="">
+              <img src="/avatar.png">
             </nuxt-link>
           </div>
           <div class="col-md-4">
@@ -68,17 +68,34 @@
       </div>
     </div>
 
-    <nuxt-child></nuxt-child>
+    <transition name="u-fade" :key="routerViewKey">
+      <nuxt-child />
+    </transition>
   </div>
 </template>
 
 <script>
 export default {
   layout: 'dashboard',
+  computed: {
+    routerViewKey () {
+      return this.$route.fullPath
+    }
+  },
   data() {
     return {
       showDemographics: true,
     }
   },
+  transition: 'u-fade'
 }
 </script>
+
+<style>
+.u-fade-enter-active, .u-fade-leave-active {
+  transition: opacity .4s;
+}
+.u-fade-enter, .u-fade-leave-active {
+  opacity: 0;
+}
+</style>
