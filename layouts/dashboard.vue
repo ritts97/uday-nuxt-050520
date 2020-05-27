@@ -46,6 +46,24 @@
 
     <!-- Start Body -->
     <div style="margin-top: 84px;">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <small>
+              <nuxt-link to="/ha" class="text-muted">
+                Dashboard
+              </nuxt-link>
+              > 
+              <nuxt-link to="/ha/profile" class="text-muted">
+                Patient Profile
+              </nuxt-link>
+              > Lorem Ipsum
+            </small>
+            <!-- Lorem ipsum dolor sit amet. {{ counter }} <button @click="increment()">Click</button> <br> -->
+            <!-- <button @click="increment()">Click</button> -->
+          </div>
+        </div>
+      </div>
       <transition name="u-fade" mode="out-in">
         <nuxt  />
         <!-- :key="routerViewKey" -->
@@ -66,12 +84,28 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
+
 export default {
   computed: {
+    counter () {
+      return this.$store.state.counter
+    },
     routerViewKey () {
       return this.$route.fullPath
     }
   },
+  data() {
+    return {
+      
+    }
+  },
+  methods: {
+    increment (e) {
+      // this.$store.dispatch('increment')
+      this.$store.commit('increment')
+    }
+  }
 }
 </script>
 

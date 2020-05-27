@@ -6,13 +6,14 @@
           <ul class="list-inline">
             <li class="list-inline-item">
               <button class="btn btn-dark px-3 small" role="button">
-                View Demographics
-              </button>
-            </li><li class="list-inline-item">
-              <button class="btn btn-light px-3 small" role="button">
                 Update Demographics
               </button>
             </li>
+            <!-- <li class="list-inline-item">
+              <button class="btn btn-light px-3 small" role="button">
+                Update Demographics
+              </button>
+            </li> -->
           </ul>
         </div>
       </div>

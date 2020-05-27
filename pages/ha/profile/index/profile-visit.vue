@@ -1,6 +1,21 @@
 <template>
   <div>
-    <div class="container mt-2">
+    <div class="container mt-0">
+      <div class="row">
+        <div class="col-md-6">
+          <nuxt-link to="/ha/profile/new-episode">
+            <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Record New Follow Up</button>     
+          </nuxt-link>
+        </div>
+        <div class="col-md-6">
+          <nuxt-link to="/ha/profile/new-service">
+            <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0  text-uppercase">Record New Service</button>     
+          </nuxt-link>
+        </div>
+        <div class="col-md-12">
+          <hr class="mt-2">
+        </div>
+      </div>
       <div class="row">
         <div class="col-md-12 rounded">
           <ul class="list-inline">
@@ -167,59 +182,140 @@
                   Patient Appearance
                 </div>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Patient Appearance"> -->
               </div>
               <div class="col-md-6 mb-3">
                 <div class="small text-muted">
                   Patient Gait
                 </div>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Patient Gait"> -->
               </div>
               <div class="col-md-6 mb-3">
                 <div class="small text-muted">
                   BP
                 </div>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="BP (___/___ mmHg)"> -->
               </div>
               <div class="col-md-6 mb-3">
                 <div class="small text-muted">
                   SP02
                 </div>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="SP02 (%)"> -->
               </div>
               <div class="col-md-6 mb-3">
                 <div class="small text-muted">
                   Temperature
                 </div>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Temperature (‘’ F)"> -->
               </div>
               <div class="col-md-6 mb-3">
                 <div class="small text-muted">
                   Height
                 </div>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Height (cm)"> -->
               </div>
               <div class="col-md-6 mb-3">
                 <div class="small text-muted">
                   Weight
                 </div>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Weight (kg)"> -->
               </div>
               <div class="col-md-6 mb-3">
                 <div class="small text-muted">
                   BMI
                 </div>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, cupiditate.
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="BMI (kg/m2) (Auto Calculated)"> -->
+                
               </div>
             </div>
           </div>
+          <!-- <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="subTabs[4].isActive">
+            <div class="row mt-1">
+              <div class="col-md-6 mb-3">
+                <div class="small text-muted">
+                  Bill Number
+                </div>
+                00012345
+              </div>
+              <div class="col-md-6 mb-3">
+                <div class="small text-muted">
+                  Health Assistant
+                </div>
+                Lorem Ipsum
+              </div>
+              <div class="col-md-6 mb-3">
+                <div class="small text-muted">
+                  Bill Date
+                </div>
+                Lorem Ipsum
+              </div>
+              <div class="col-md-6 mb-3">
+                <div class="small text-muted">
+                  Administrating Doctor
+                </div>
+                Lorem Ipsum
+              </div>
+            </div>
+            <div class="row pt-4">
+              <div class="col-md-12">
+                <div class="w-100 bg-white mb-3 mt-0 pt-3 pb-3">
+                  <table class="table table-sm table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">Medicine</th>
+                        <th scope="col">Batch</th>
+                        <th scope="col">MSRP</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Disc. Rate</th>
+                        <th scope="col">Net</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="pointer" style="height: 40px;">
+                        <td>xxx</td>
+                        <td>xxx</td>
+                        <td>xxx</td>
+                        <td>3</td>
+                        <td>1</td>
+                        <td>Lorem ipsum</td>
+                      </tr>
+                      <tr class="pointer" style="height: 40px;">
+                        <td>xxx</td>
+                        <td>xxx</td>
+                        <td>xxx</td>
+                        <td>3</td>
+                        <td>1</td>
+                        <td>Lorem ipsum</td>
+                      </tr>
+                      <tr class="pointer" style="height: 40px;">
+                        <td>xxx</td>
+                        <td>xxx</td>
+                        <td>xxx</td>
+                        <td>3</td>
+                        <td>1</td>
+                        <td>Lorem ipsum</td>
+                      </tr>
+                      <tr class="pointer" style="height: 40px;">
+                        <td>xxx</td>
+                        <td>xxx</td>
+                        <td>xxx</td>
+                        <td>3</td>
+                        <td>1</td>
+                        <td>Lorem ipsum</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-1">
+              <div class="col-md-12 mb-3">
+                <div class="small text-muted pb-3">
+                  General Notes
+                </div>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Earum illum quis nemo commodi accusantium veritatis modi molestias cupiditate doloribus nostrum.s
+              </div>
+            </div>
+          </div> -->
           <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="subTabs[4].isActive">
             <div class="row mt-1">
               <div class="col-md-12 mb-5 text-center">
@@ -255,14 +351,65 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil vero qui consecte
             <!-- </textarea> -->
           </div>
         </div>
-        <div class="row">
-          <div class="col-md-12 mb-5">
+        <div class="row mb-5">
+          <div class="col-md-12">
             <div class="small text-muted mb-3">
               Prescribed Medicines
             </div>
+          </div>
+          <div class="col-md-12">
+            <div class="w-100 bg-white mb-3 mt-0 pt-3 pb-3">
+              <table class="table table-sm table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">Medicine</th>
+                    <th scope="col">Batch</th>
+                    <th scope="col">MSRP</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Disc. Rate</th>
+                    <th scope="col">Net</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="pointer" style="height: 40px;">
+                    <td>xxx</td>
+                    <td>xxx</td>
+                    <td>xxx</td>
+                    <td>3</td>
+                    <td>1</td>
+                    <td>Lorem ipsum</td>
+                  </tr>
+                  <tr class="pointer" style="height: 40px;">
+                    <td>xxx</td>
+                    <td>xxx</td>
+                    <td>xxx</td>
+                    <td>3</td>
+                    <td>1</td>
+                    <td>Lorem ipsum</td>
+                  </tr><tr class="pointer" style="height: 40px;">
+                    <td>xxx</td>
+                    <td>xxx</td>
+                    <td>xxx</td>
+                    <td>3</td>
+                    <td>1</td>
+                    <td>Lorem ipsum</td>
+                  </tr><tr class="pointer" style="height: 40px;">
+                    <td>xxx</td>
+                    <td>xxx</td>
+                    <td>xxx</td>
+                    <td>3</td>
+                    <td>1</td>
+                    <td>Lorem ipsum</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
             <!-- <textarea class="w-100 p-2 mb-3" rows="6" name=""> -->
 Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil vero qui consectetur, eligendi facilis soluta maiores quae sequi eaque. Quia suscipit quaerat deleniti iure aliquid, voluptas repellat delectus ad labore officia nulla voluptatem ratione omnis provident cumque ab quae. Ullam natus sunt atque. Sint ullam autem commodi, corrupti inventore quod!
             <!-- </textarea> -->
+            <br><br>
+            :: Download This Bill
           </div>
         </div>
         <div class="row">
@@ -358,19 +505,19 @@ export default {
         },
         {
           name: 'billing',
-          title: 'Billing',
+          title: 'All Billed',
           isActive: false
         },
-        {
-          name: 'newfollowup',
-          title: '+ New Follow Up',
-          isActive: false
-        },
-        {
-          name: 'newservice',
-          title: '+ New Service',
-          isActive: false
-        },
+        // {
+        //   name: 'newfollowup',
+        //   title: '+ New Follow Up',
+        //   isActive: false
+        // },
+        // {
+        //   name: 'newservice',
+        //   title: '+ New Service',
+        //   isActive: false
+        // },
       ],
       subTabs: [
         {
@@ -393,6 +540,11 @@ export default {
           title: 'Specific Exams',
           isActive: false,
         },
+        // {
+        //   name: 'bill',
+        //   title: 'Billed',
+        //   isActive: false,
+        // },
         {
           name: 'photos',
           title: 'Add. Photos',

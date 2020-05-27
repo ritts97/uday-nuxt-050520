@@ -3,12 +3,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <small>
-            <nuxt-link to="/ha" class="text-muted">
-              Dashboard
-            </nuxt-link>
-             > Patient Profile > Lorem Ipsum
-          </small>
+          
         </div>
       </div>
     </div>
