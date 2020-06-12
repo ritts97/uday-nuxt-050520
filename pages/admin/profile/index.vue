@@ -10,13 +10,7 @@
     <div class="container mt-3">
       <div class="row">
         <div class="col-md-6">
-          <!-- <nuxt-link to="/ha/profile" class="text-decoration-none text-dark"> -->
-            <h5 class="d-inline text-decoration-none">Delores Abernathy (29, F)</h5>  
-          <!-- </nuxt-link> -->
-          <!-- [ <div class="d-inline pointer text-muted" @click="showDemographics = !showDemographics">
-            <span v-if="!showDemographics">show</span>
-            <span v-else>hide</span>
-          </div> ] -->
+          <h5 class="d-inline text-decoration-none">Delores Abernathy (29, F)</h5>  
         </div>
         <div class="col-md-6 text-right">
           <img src="/circle-orange.svg" class="shape-status" alt="">
@@ -83,11 +77,11 @@ export default {
       fullPath: [
         {
           title: 'Dashboard',
-          url: '/ha'
+          url: '/md'
         },
         {
           title: 'Delores Abernathy',
-          url: '/ha/profile'
+          url: '/md/profile'
         },
       ]
     }

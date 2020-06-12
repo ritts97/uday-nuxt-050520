@@ -27,10 +27,8 @@
       <div class="row">
         <div class="col-md-12">
           <small>
-            <nuxt-link class="text-muted" to="/ha">
-              Dashboard
-            </nuxt-link>
-            > MIS Reports
+            <nuxt-link class="text-muted" to="/ha">Dashboard</nuxt-link>
+             > MIS Reports
           </small>
         </div>
       </div>
@@ -46,7 +44,7 @@
     <div class="container mb-3">
       <div class="row">
         <div class="col-md-12 bg-white rounded py-5 text-center">
-          MIS REPORTS
+          In development...
         </div>
       </div>
     </div>

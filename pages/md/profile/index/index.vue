@@ -2,15 +2,10 @@
   <div>
     
     <div class="container">
-      <div class="row">
-        <div class="col-md-6">
+      <!-- <div class="row">
+        <div class="col-md-12">
           <nuxt-link to="/ha/profile/new-episode">
-            <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Record New Episode</button>     
-          </nuxt-link>
-        </div>
-        <div class="col-md-6">
-          <nuxt-link to="/ha/profile/new-service">
-            <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0  text-uppercase">Record New Service</button>     
+            <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Allocate This Patient</button>     
           </nuxt-link>
         </div>
       </div>
@@ -19,7 +14,7 @@
         <div class="col-md-12">
           <hr>
         </div>
-      </div>
+      </div> -->
 
       <div class="row mt-0">
         <div class="col-md-12">
@@ -211,7 +206,7 @@ export default {
           gender: '4 weeks ago',
           status: 'released',
           billed: '',
-          link: '/ha/profile/profile-visit',
+          link: '/md/profile/profile-visit',
           followups: 4,
           age: 'Yes',
           phone: '14155551234'
@@ -223,7 +218,7 @@ export default {
           gender: '2 weeks ago',
           status: 'Released',
           billed: 'View Bill',
-          link: '/ha/profile/profile-visit-service',
+          link: '/md/profile/profile-visit-service',
           age: 'Yes',
           phone: '14155551234'
         },
@@ -235,7 +230,7 @@ export default {
           status: 'queued',
           followups: 3,
           billed: '',
-          link: '/ha/profile/profile-visit',
+          link: '/md/profile/profile-visit',
           age: 'Yes',
           phone: '14155551234'
         },

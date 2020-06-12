@@ -2,13 +2,6 @@
   <div>
     <div class="container">
       <div class="row">
-        <div class="col-md-12">
-          <small>
-            <nuxt-link to="/ha" class="text-muted">
-              Dashboard
-            </nuxt-link> > Register New Patient
-          </small>
-        </div>
         <div class="col-md-12 text-center">
           Register a New Patient
           <hr>
@@ -92,7 +85,7 @@
       <div class="row">
         <div class="col-md-12">
           <nuxt-link to="/ha">
-            <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">
+            <button @click="showAlert('Delores Abernathy has been successfully registered.')" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">
               Register New Patient
             </button>
           </nuxt-link>
@@ -105,6 +98,20 @@
 <script>
 export default {
   layout: 'dashboard',
+  mounted() {
+    let path = [
+      {
+        title: 'Dashboard',
+        url: '/ha'
+      },
+      {
+        title: 'Register New Patient',
+        url: '/ha/register-new'
+      },
+    ]
+
+    this.$store.commit('increment', path)
+  },
   methods: {
     getTab: function (tabName) {
       let tabs = this.tabs
@@ -124,6 +131,9 @@ export default {
           this.showComplete = false
         }
       }
+    },
+    showAlert: function (msg) {
+      alert(msg)
     }
   },
   data() {

@@ -3,16 +3,21 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12 mb-1 text-center">
-          Health Assistant's Dashboard
+          Doctor's Dashboard
           <hr>
         </div>
       </div>
     </div>
     <div class="container">
       <div class="row">
-        <div class="col-md-12">
-          <nuxt-link to="/ha/register-new">
+        <!-- <div class="col-md-12">
+          <nuxt-link to="/md/register-new">
             <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">Register a New Patient</button>
+          </nuxt-link>
+        </div> -->
+        <div class="col-md-12 mt-2">
+          <nuxt-link to="/md/register-new">
+            <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">Register a New Health Assistant</button>
           </nuxt-link>
         </div>
       </div>
@@ -30,9 +35,9 @@
             </li>
           </ul>
           <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3">
-            <!-- <input type="text" class="w-100 p-2" placeholder=":: Search by ID, name or phone number"> -->
+            <input type="text" class="w-100 p-2" placeholder=":: Search by ID, name or phone number">
             <table class="table table-sm table-hover mt-3">
-              <!--  v-if="!tabs[4].isActive" -->
+              <!--  v-if="!tabs[2].isActive" -->
               <thead>
                 <tr>
                   <th scope="col">ID</th>
@@ -49,7 +54,7 @@
                 <tr class="pointer" v-for="(patient, index) in list" :key="index">
                   <th scope="row">{{ patient.id }}</th>
                   <td>
-                    <nuxt-link to="/ha/profile">{{ patient.name }}
+                    <nuxt-link to="/md/profile">{{ patient.name }}
                     </nuxt-link>
                   </td>
                   <td>{{ patient.gender }}</td>
@@ -98,7 +103,7 @@ export default {
     let path = [
       {
         title: 'Dashboard',
-        url: '/ha'
+        url: '/md'
       },
     ]
 
@@ -156,22 +161,17 @@ export default {
       tabs: [
         {
           name: 'patients',
-          title: 'My Patients',
+          title: 'Patients in Queue',
           isActive: true,
         },
         // {
-        //   name: 'allocated',
-        //   title: 'My Allocated Patients',
-        //   isActive: false,
-        // },
-        // {
         //   name: 'released',
-        //   title: 'My Released Patients',
-        //   isActive: false,
+        //   title: 'Recently Released',
+        //   isActive: true,
         // },
         // {
-        //   name: 'cluster',
-        //   title: 'My Cluster',
+        //   name: 'has',
+        //   title: 'Health Assistants',
         //   isActive: false,
         // },
         // {
@@ -188,7 +188,7 @@ export default {
           age: 99,
           phone: '1-415-555-1234',
           location: 'Hyperbad, IN',
-          status: 'allocated',
+          status: 'queued',
           creator: 'Jane Doe'
         },
         {
@@ -208,7 +208,7 @@ export default {
           age: 99,
           phone: '1-415-555-1234',
           location: 'Hyperbad, IN',
-          status: 'released',
+          status: 'queued',
           creator: 'Jane Doe'
         },
         {
@@ -218,7 +218,7 @@ export default {
           age: 99,
           phone: '1-415-555-1234',
           location: 'Hyperbad, IN',
-          status: 'registered',
+          status: 'queued',
           creator: 'Jane Doe'
         },
         {
@@ -228,7 +228,7 @@ export default {
           age: 99,
           phone: '1-415-555-1234',
           location: 'Hyperbad, IN',
-          status: 'registered',
+          status: 'queued',
           creator: 'Jane Doe'
         },
         {
@@ -238,7 +238,7 @@ export default {
           age: 99,
           phone: '1-415-555-1234',
           location: 'Hyperbad, IN',
-          status: 'registered',
+          status: 'queued',
           creator: 'John Smith'
         },
         {
@@ -248,7 +248,7 @@ export default {
           age: 99,
           phone: '1-415-555-1234',
           location: 'Hyperbad, IN',
-          status: 'registered',
+          status: 'queued',
           creator: 'John Smith'
         },
         {
@@ -258,7 +258,7 @@ export default {
           age: 99,
           phone: '1-415-555-1234',
           location: 'Hyperbad, IN',
-          status: 'registered',
+          status: 'queued',
           creator: 'John Smith'
         }
       ]

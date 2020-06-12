@@ -6,15 +6,18 @@
         <div class="container bg-dark">
           <div class="row py-2">
             <div class="col-md-6 font-weight-bold pt-2" style="font-size: 24px;"> 
-              <nuxt-link to="/ha" class="text-white text-decoration-none">UD.</nuxt-link>
+              <nuxt-link to="/" class="text-white text-decoration-none">UD.</nuxt-link>
             </div>
             <div class="col-md-6 py-3 text-right">
               <div class="dropdown d-inline">
                 <span class="dropdown-toggle dropdown-no-caret pointer" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   jane.doe@udayhealth.org
                 </span>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <nuxt-link to="/ha/mis-reports" class="dropdown-item">MIS Reports</nuxt-link>
+                <div class="dropdown-menu">
+                  <a href="/ha/mis-reports" class="dropdown-item">Link</a>
+                  <span class="dropdown-item" @click="sendAlert('123')">MIS Reports</span>
+                  <span class="dropdown-item" @click="sendAlert('1234')">MIS Reports</span>
+                  <span class="dropdown-item" @click="sendAlert('1235')">MIS Reports</span>
                   <div class="dropdown-divider"></div>
                   <nuxt-link to="/ha/edit-profile" class="dropdown-item">Edit Profile</nuxt-link>
                   <nuxt-link to="/ha/edit-profile" class="dropdown-item">Change Password</nuxt-link>
@@ -25,23 +28,6 @@
           </div>
         </div>
       </div>
-      <!-- <div class="" style="background-color: #fff;">
-        <div class="container py-2">
-          <div class="row">
-            <div class="col-md-12">
-              <small>
-                <nuxt-link to="/ha" class="text-muted">
-                  Dashboard
-                </nuxt-link> > 
-                <nuxt-link to="/ha/profile" class="text-muted">
-                  Patient Profile
-                </nuxt-link> > 
-                Episode 1
-              </small>
-            </div>
-          </div>
-        </div>
-      </div> -->
     </div>
 
     <!-- Start Body -->
@@ -50,14 +36,18 @@
         <div class="row">
           <div class="col-md-12">
             <small>
-              <nuxt-link to="/ha" class="text-muted">
-                Dashboard
-              </nuxt-link>
-              > 
-              <nuxt-link to="/ha/profile" class="text-muted">
-                Patient Profile
-              </nuxt-link>
-              > Lorem Ipsum
+              <!-- {{ currPath }} -->
+              <span v-for="(path,index) in currPath" :key="index">
+                <span v-if="index !== currPath.length - 1">
+                  <nuxt-link :to="path.url" class="text-muted">
+                    {{ path.title }}
+                  </nuxt-link> 
+                </span>
+                <span v-else>
+                  {{ path.title }}
+                </span>
+                <span v-if="index !== currPath.length - 1"> > </span>
+              </span>
             </small>
             <!-- Lorem ipsum dolor sit amet. {{ counter }} <button @click="increment()">Click</button> <br> -->
             <!-- <button @click="increment()">Click</button> -->
@@ -91,19 +81,34 @@ export default {
     counter () {
       return this.$store.state.counter
     },
+    currPath () {
+      return this.$store.state.currPath
+    },
     routerViewKey () {
       return this.$route.fullPath
     }
   },
   data() {
     return {
-      
+      path: [
+        {
+          title: 'Dashboard',
+          url: '/ha'
+        },
+      ]
     }
   },
+  mounted () {
+    this.setPath()
+
+    // alert('123')
+  },
   methods: {
-    increment (e) {
-      // this.$store.dispatch('increment')
-      this.$store.commit('increment')
+    setPath () {
+      // this.$store.commit('increment', this.path)
+    },
+    sendAlert (msg) {
+      alert(msg)
     }
   }
 }
@@ -113,6 +118,8 @@ export default {
 html, body {
   background-color: #eee;
 }
+
+.dropdown-no-caret:after { content: none }
 
 .u-fade-enter-active, .u-fade-leave-active {
   transition: opacity .4s;

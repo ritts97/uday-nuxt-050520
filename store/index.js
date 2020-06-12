@@ -1,9 +1,15 @@
 export const state = () => ({
-  counter: 10
+  counter: 10,
+  currPath: [
+    {
+      title: 'Dashboard',
+      url: '/ha'
+    }
+  ]
 })
 
 export const mutations = {
-  increment(state) {
-    state.counter++
+  increment(state, payload) {
+    state.currPath = payload
   }
 }
