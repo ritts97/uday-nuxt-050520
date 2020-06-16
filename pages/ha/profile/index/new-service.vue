@@ -6,7 +6,7 @@
           <ul class="list-inline">
             <li class="list-inline-item">
               <button class="btn btn-dark px-3" role="button">
-                + New Service
+                New Service
               </button>
             </li>
           </ul>
@@ -27,28 +27,13 @@
                   Please complete to the best of your ability.
                 </div>
               <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Complaint 1">
+                <input type="text" class="w-100 p-2 mb-3" placeholder="What service did you provide?">
               </div>
               <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Complaint 2">
+                <input type="text" class="w-100 p-2 mb-3" placeholder="What were the results?">
               </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Complaint 3">
-              </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Complaint 4">
-              </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Complaint 5">
-              </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Complaint 6">
-              </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Complaint 7">
-              </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Complaint 8">
+              <div class="col-md-12">
+                <textarea class="w-100 p-2" rows="5" placeholder="Please provide any additional information..."></textarea>
               </div>
             </div>
           </div>

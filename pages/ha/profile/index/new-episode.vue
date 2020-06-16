@@ -28,28 +28,13 @@
                   Please complete to the best of your ability.
                 </div>
               <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Complaint 1">
+                <input type="text" class="w-100 p-2 mb-3" placeholder="What is the major complaint?">
               </div>
               <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Complaint 2">
+                <input type="text" class="w-100 p-2 mb-3" placeholder="What are the symptoms?">
               </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Complaint 3">
-              </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Complaint 4">
-              </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Complaint 5">
-              </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Complaint 6">
-              </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Complaint 7">
-              </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Complaint 8">
+              <div class="col-md-12">
+                <textarea class="w-100 p-2" rows="5" placeholder="Please provide any additional information..."></textarea>
               </div>
             </div>
           </div>
@@ -159,25 +144,28 @@
           <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-1" style="min-height: 200px;" v-if="tabs[4].isActive">
             <div class="row mt-1">
               <div class="col-md-12 mb-3 text-center">
-                Additional Photos 12312
+                Additional Photos
               </div>
-              <div class="col-md-4 mb-4">
-                <img src="/square-grey.jpg" alt="">
+              <div class="col-md-3 mb-4">
+                <img src="/square-grey.jpg" class="w-100" alt="">
               </div>
-              <div class="col-md-4 mb-4">
-                <img src="/square-grey.jpg" alt="">
+              <div class="col-md-3 mb-4">
+                <img src="/square-grey.jpg" class="w-100" alt="">
               </div>
-              <div class="col-md-4 mb-4">
-                <img src="/square-grey.jpg" alt="">
+              <div class="col-md-3 mb-4">
+                <img src="/square-grey.jpg" class="w-100" alt="">
               </div>
-              <div class="col-md-4 mb-4">
-                <img src="/square-grey.jpg" alt="">
+              <div class="col-md-3 mb-4">
+                <img src="/square-grey.jpg" class="w-100" alt="">
               </div>
-              <div class="col-md-4 mb-4">
-                <img src="/square-grey.jpg" alt="">
+              <div class="col-md-3 mb-4">
+                <img src="/square-grey.jpg" class="w-100" alt="">
               </div>
-              <div class="col-md-4 mb-4">
-                <img src="/square-grey.jpg" alt="">
+              <div class="col-md-3 mb-4">
+                <img src="/square-grey.jpg" class="w-100" alt="">
+              </div>
+              <div class="col-md-3 mb-4">
+                <img src="/square-grey-add.jpg" class="w-100" alt="">
               </div>
             </div>
           </div>
@@ -185,9 +173,27 @@
       </div>
     </div>
     <div class="container mb-3">
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-md-12">
-          <div v-if="!showComplete">
+          <hr>
+        </div>
+        <div class="col-md-12 mb-3">
+          Record New Episode
+        </div>
+      </div> -->
+      <div class="row">
+        <!-- <div class="col-md-6">
+          <nuxt-link to="/ha/profile/new-episode">
+            <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Allocate to Doctor</button>     
+          </nuxt-link>
+        </div> -->
+        <div class="col-md-12">
+          <nuxt-link to="/ha/profile/">
+            <button @click="addToQueue()" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0  text-uppercase">Add to Patient Queue</button>     
+          </nuxt-link>
+        </div>
+        <div class="col-md-12">
+          <!-- <div v-if="showComplete">
             <button @click="goToNext()" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">GO TO NEXT</button>
           </div>
           <div v-else>
@@ -196,7 +202,7 @@
                 Record New Episode
               </button>
             </nuxt-link>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -251,10 +257,15 @@ export default {
       } 
 
       tabs[ref + 1].isActive = true
+    },
+    addToQueue: function () {
+      alert('Added to Patient Queue.')
+
+      this.$store.commit('updateStatus', 'queued')
     }
   },
   mounted () {
-    this.$store.commit('increment', this.fullPath)
+    this.$store.commit('updatePath', this.fullPath)
   },
   data() {
     return {

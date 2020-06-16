@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800px" height="392px" viewBox="0 0 800 392" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 15 Copy</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-15-Copy">
+            <rect id="Rectangle-Copy-2" fill="#FFFFFF" x="0" y="0" width="800" height="392"></rect>
+            <text id="Total-Patients" font-family="Roboto-Regular, Roboto" font-size="12" font-weight="normal" fill="#363636">
+                <tspan x="83.3251953" y="166.3435">Total Patients</tspan>
+            </text>
+            <circle id="Oval" stroke="#E0E0E0" stroke-width="8.748" cx="123.03475" cy="81.37825" r="48.66075"></circle>
+            <path d="M199.8255,108.169 C199.8255,78.5767547 176.081034,54.5875 146.79075,54.5875 C117.500466,54.5875 93.756,78.5767547 93.756,108.169" id="Oval" stroke="#4CB2FF" stroke-width="16.4025" transform="translate(146.790750, 81.378250) rotate(90.000000) translate(-146.790750, -81.378250) "></path>
+            <text id="2,768" font-family="Roboto-Medium, Roboto" font-size="25.1505" font-weight="400" fill="#363636">
+                <tspan x="91.1478386" y="89.3435">2,768</tspan>
+            </text>
+            <text id="Revenue-Generated" font-family="Roboto-Regular, Roboto" font-size="12" font-weight="normal" fill="#363636">
+                <tspan x="68.1884766" y="359">Revenue Generated</tspan>
+            </text>
+            <circle id="Oval" stroke="#E0E0E0" stroke-width="8.748" cx="123.03475" cy="273.03475" r="48.66075"></circle>
+            <path d="M199.8255,299.8255 C199.8255,270.233255 176.081034,246.244 146.79075,246.244 C117.500466,246.244 93.756,270.233255 93.756,299.8255" id="Oval" stroke="#4CB2FF" stroke-width="16.4025" transform="translate(146.790750, 273.034750) rotate(90.000000) translate(-146.790750, -273.034750) "></path>
+            <text id="2,768" font-family="Roboto-Medium, Roboto" font-size="25.1505" font-weight="400" fill="#363636">
+                <tspan x="91.1478386" y="281">2,768</tspan>
+            </text>
+            <text id="Total-Consultations" font-family="Roboto-Regular, Roboto" font-size="12" font-weight="normal" fill="#363636">
+                <tspan x="340.37207" y="167.3435">Total Consultations</tspan>
+            </text>
+            <circle id="Oval" stroke="#E0E0E0" stroke-width="8.748" cx="393.03475" cy="82.37825" r="48.66075"></circle>
+            <path d="M443.5815,27.3435 C413.989255,27.3435 390,51.3327547 390,80.925" id="Oval" stroke="#F14C4C" stroke-width="16.4025" transform="translate(416.790750, 54.134250) rotate(90.000000) translate(-416.790750, -54.134250) "></path>
+            <text id="345" font-family="Roboto-Medium, Roboto" font-size="25.1505" font-weight="400" fill="#363636">
+                <tspan x="371.058216" y="90.3435">345</tspan>
+            </text>
+            <text id="Medicine-In-Stock" font-family="Roboto-Regular, Roboto" font-size="12" font-weight="normal" fill="#363636">
+                <tspan x="345.121094" y="358">Medicine In Stock</tspan>
+            </text>
+            <circle id="Oval" stroke="#E0E0E0" stroke-width="8.748" cx="393.03475" cy="273.03475" r="48.66075"></circle>
+            <path d="M443.5815,219 C413.989255,219 390,242.989255 390,272.5815" id="Oval" stroke="#F14C4C" stroke-width="16.4025" transform="translate(416.790750, 245.790750) rotate(90.000000) translate(-416.790750, -245.790750) "></path>
+            <text id="345" font-family="Roboto-Medium, Roboto" font-size="25.1505" font-weight="400" fill="#363636">
+                <tspan x="371.058216" y="281">345</tspan>
+            </text>
+            <text id="Total-Services" font-family="Roboto-Regular, Roboto" font-size="12" font-weight="normal" fill="#363636">
+                <tspan x="644.289062" y="167.3435">Total Services</tspan>
+            </text>
+            <circle id="Oval" stroke="#E0E0E0" stroke-width="8.748" cx="679.03475" cy="82.37825" r="48.66075"></circle>
+            <path d="M678.952257,134.330507 C708.24254,134.330507 731.987007,110.58604 731.987007,81.2957566 C731.987007,52.0054729 708.24254,28.2610066 678.952257,28.2610066 C649.661973,28.2610066 625.917507,52.0054729 625.917507,81.2957566" id="Oval" stroke="#3BA500" stroke-width="16.4025" transform="translate(678.952257, 81.295757) rotate(91.000000) translate(-678.952257, -81.295757) "></path>
+            <text id="3" font-family="Roboto-Medium, Roboto" font-size="25.1505" font-weight="400" fill="#363636">
+                <tspan x="671.352739" y="90.3435">3</tspan>
+            </text>
+            <text id="Medicine-Sold" font-family="Roboto-Regular, Roboto" font-size="12" font-weight="normal" fill="#363636">
+                <tspan x="644.350586" y="358">Medicine Sold</tspan>
+            </text>
+            <circle id="Oval" stroke="#E0E0E0" stroke-width="8.748" cx="679.03475" cy="273.03475" r="48.66075"></circle>
+            <path d="M678.952257,325.987007 C708.24254,325.987007 731.987007,302.24254 731.987007,272.952257 C731.987007,243.661973 708.24254,219.917507 678.952257,219.917507 C649.661973,219.917507 625.917507,243.661973 625.917507,272.952257" id="Oval" stroke="#3BA500" stroke-width="16.4025" transform="translate(678.952257, 272.952257) rotate(91.000000) translate(-678.952257, -272.952257) "></path>
+            <text id="3" font-family="Roboto-Medium, Roboto" font-size="25.1505" font-weight="400" fill="#363636">
+                <tspan x="671.352739" y="281">3</tspan>
+            </text>
+        </g>
+    </g>
+</svg>

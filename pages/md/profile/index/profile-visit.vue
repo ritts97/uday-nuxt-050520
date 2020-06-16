@@ -2,20 +2,24 @@
   <div>
     <div class="container mt-0">
       <div class="row">
-        <div class="col-md-12">
-          <!-- <nuxt-link to="/ha/profile/new-episode"> -->
-            <button v-if="visitStatus === 'queued'" @click="handleAllocate()" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">
-              Allocate this Patient
-            </button>   
-            <button v-else @click="handleAllocate()" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">
-              Release this Patient
-            </button>    
-          <!-- </nuxt-link> -->
+        <div class="col-md-6">
+          <nuxt-link to="/md/profile/profile-visit">
+            <button @click="editable = true" :disabled="editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Begin Feedback</button>     
+          </nuxt-link>
         </div>
-        <div class="col-md-12">
-          <hr class="mt-2">
+        <div class="col-md-6">
+          <nuxt-link to="/md/profile/profile-visit">
+            <button @click="editable = false" :disabled="!editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Release Patient</button>     
+          </nuxt-link>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <hr>
+        </div>
+      </div>
+
       <div class="row">
         <div class="col-md-12 rounded">
           <ul class="list-inline">
@@ -289,16 +293,16 @@
               </div>
             </div>
           </div>
-          <div v-if="visitStatus === 'allocated'" class="container px-0">
+          <div v-if="editable" class="container px-0">
             <div class="row">
               <div class="col-md-6">
                 <nuxt-link to="/ha/profile/new-episode">
-                  <button class="w-100 btn btn-dark rounded font-weight-bold py-3 px-0 mb-2 text-uppercase">Make Changes</button>     
+                  <button class="w-100 btn btn-dark rounded font-weight-bold py-3 px-0 mb-2 text-uppercase">Edit Complaint</button>     
                 </nuxt-link>
               </div>
               <div class="col-md-6">
                 <nuxt-link to="/ha/profile/new-episode">
-                  <button class="w-100 btn btn-dark rounded font-weight-bold py-3 px-0 mb-2 text-uppercase">Save Changes</button>     
+                  <button disabled class="w-100 btn btn-dark rounded font-weight-bold py-3 px-0 mb-2 text-uppercase">Save Changes</button>     
                 </nuxt-link>
               </div>
             </div>
@@ -319,8 +323,19 @@
         </div>
       </div>
     </div>
-    <div class="w-100 bg-white pt-3 pb-3 mb-3" style="min-height: 30px;">
-      <div class="container" v-if="showDocsFeedback">
+
+    <div v-if="!editable" class="w-100 bg-white py-4 mb-4">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="small text-center">
+            This patient visit does not yet have feedback.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div v-else class="w-100 bg-white pt-3 pb-3 mb-3" style="min-height: 30px;">
+      <div class="container">
         
         <!-- <div class="row">
           <div class="col-md-12 mb-5">
@@ -333,7 +348,7 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil vero qui consecte
         <div v-if="this.visitStatus !== 'allocated'" class="row my-4">
           <div class="col-md-12">
             <div class="small text-center">
-              This patient visit has not yet been allocated.
+              This patient visit does not yet have feedback.
             </div>
           </div>
         </div>
@@ -387,15 +402,24 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil vero qui consecte
               <button class="btn btn-dark text-center px-5">Save Medicine</button>
             </div> -->
           </div>
+          <div class="col-md-6">
+            <nuxt-link to="/ha/profile/new-episode">
+              <button class="w-100 btn btn-dark rounded font-weight-bold py-3 px-0 mb-2 text-uppercase">Add New Medicine</button>     
+            </nuxt-link>
+          </div>
+          <div class="col-md-6">
+            <nuxt-link to="/ha/profile/new-episode">
+              <button disabled class="w-100 btn btn-dark rounded font-weight-bold py-3 px-0 mb-2 text-uppercase">Delete Medicine</button>     
+            </nuxt-link>
+          </div>
         </div>
         <div v-if="this.visitStatus === 'allocated'" class="row">
           <div class="col-md-12 mb-2">
             <div class="small text-muted mb-3">
               Investigations
             </div>
-            <textarea class="w-100 p-2 mb-3" rows="3">
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil vero qui consectetur, eligendi facilis soluta maiores quae sequi eaque. Quia suscipit quaerat deleniti iure aliquid, voluptas repellat delectus ad labore officia nulla voluptatem ratione omnis provident cumque ab quae. Ullam natus sunt atque. Sint ullam autem commodi, corrupti inventore quod!
-            </textarea>
+            <textarea class="w-100 p-2 mb-3" rows="3" placeholder="Provide a description of your current investigations...">
+           </textarea>
             <!-- <div class="text-right w-100">
               <button class="btn btn-dark text-center px-5">Edit Advice</button>
               <button class="btn btn-dark text-center px-5">Save Advice</button>
@@ -407,8 +431,7 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil vero qui consecte
             <div class="small text-muted mb-3">
               Advice
             </div>
-            <textarea class="w-100 p-2 mb-3" rows="3">
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil vero qui consectetur, eligendi facilis soluta maiores quae sequi eaque. Quia suscipit quaerat deleniti iure aliquid, voluptas repellat delectus ad labore officia nulla voluptatem ratione omnis provident cumque ab quae. Ullam natus sunt atque. Sint ullam autem commodi, corrupti inventore quod!
+            <textarea class="w-100 p-2 mb-3" rows="3"  placeholder="Provide a description of your current advice...">
             </textarea>
             <!-- <div class="text-right w-100">
               <button class="btn btn-dark text-center px-5">Edit Advice</button>
@@ -421,8 +444,7 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil vero qui consecte
             <div class="small text-muted mb-3">
               Diagnosis
             </div>
-            <textarea class="w-100 p-2" rows="3">
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil vero qui consectetur, eligendi facilis soluta maiores quae sequi eaque. Quia suscipit quaerat deleniti iure aliquid, voluptas repellat delectus ad labore officia nulla voluptatem ratione omnis provident cumque ab quae. Ullam natus sunt atque. Sint ullam autem commodi, corrupti inventore quod!
+            <textarea class="w-100 p-2" rows="3"  placeholder="Provide a description of your current diagnosis...">
             </textarea>
             <!-- <div class="text-right w-100">
               <button class="btn btn-dark text-center px-5">Edit Feedback</button>
@@ -454,16 +476,16 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil vero qui consecte
         </div>
       </div>
     </div>
-    <div v-if="visitStatus === 'allocated'" class="container mb-3">
+    <div v-if="editable" class="container mb-3">
         <div class="row">
           <div class="col-md-6">
             <nuxt-link to="/ha/profile/new-episode">
-              <button class="w-100 btn btn-dark rounded font-weight-bold py-3 px-0 mb-2 text-uppercase">Make Changes</button>     
+              <button class="w-100 btn btn-dark rounded font-weight-bold py-3 px-0 mb-2 text-uppercase">Edit Feedback</button>     
             </nuxt-link>
           </div>
           <div class="col-md-6">
             <nuxt-link to="/ha/profile/new-episode">
-              <button class="w-100 btn btn-dark rounded font-weight-bold py-3 px-0 mb-2 text-uppercase">Save Changes</button>     
+              <button disabled class="w-100 btn btn-dark rounded font-weight-bold py-3 px-0 mb-2 text-uppercase">Save Changes</button>     
             </nuxt-link>
           </div>
         </div>
@@ -520,7 +542,8 @@ export default {
   data() {
     return {
       list: [],
-      visitStatus: 'queued',
+      editable: false,
+      visitStatus: 'allocated',
       showDocsFeedback: true,
       showDemographics: true,
       showComplete: false,

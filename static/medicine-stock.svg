@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800px" height="539px" viewBox="0 0 800 539" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 5</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-5">
+            <g id="Group-4">
+                <rect id="Rectangle" fill="#EEEEEE" x="0" y="0" width="800" height="539"></rect>
+                <text id="MEDICINE-STOCK" font-family="HelveticaNeue-Bold, Helvetica Neue" font-size="28" font-weight="bold" fill="#333333">
+                    <tspan x="276.87" y="59">MEDICINE STOCK</tspan>
+                </text>
+                <text id="The-admin-of-a-clust" font-family="HelveticaNeue-Bold, Helvetica Neue" font-size="14" font-weight="bold" fill="#333333">
+                    <tspan x="46" y="107">The admin of a cluster is able to access this module. The admin can do the</tspan>
+                    <tspan x="46" y="124">following:</tspan>
+                    <tspan x="46" y="141"></tspan>
+                    <tspan x="46" y="158">1. See the full medicine list of the hub and cycle units in alphabetic order.</tspan>
+                    <tspan x="46" y="175">2. Add new medicines.</tspan>
+                    <tspan x="46" y="192">3. Delete medicines.</tspan>
+                    <tspan x="46" y="209"></tspan>
+                    <tspan x="46" y="226">A medicine row must be flagged red for the following conditions:</tspan>
+                    <tspan x="46" y="243"></tspan>
+                    <tspan x="46" y="260">1. When the medicine’s expiry date is in a month</tspan>
+                    <tspan x="46" y="277">2. When the medicine’s stock value is below a critical point</tspan>
+                    <tspan x="46" y="294"></tspan>
+                    <tspan x="46" y="311">The following information must be entered by the admin for a particular medicine:</tspan>
+                    <tspan x="46" y="328"></tspan>
+                    <tspan x="46" y="345">1. Name of the medicine</tspan>
+                    <tspan x="46" y="362">2. Type</tspan>
+                    <tspan x="46" y="379">3. Batch Number</tspan>
+                    <tspan x="46" y="396">4. Expiry date</tspan>
+                    <tspan x="46" y="413">5. Current stock</tspan>
+                    <tspan x="46" y="430">6. MRP</tspan>
+                    <tspan x="46" y="447">7. GST</tspan>
+                    <tspan x="46" y="464">8. Discount rate</tspan>
+                    <tspan x="46" y="481">9. Critical value (to be determined by the admin)</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>

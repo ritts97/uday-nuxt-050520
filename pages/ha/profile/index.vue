@@ -2,57 +2,50 @@
   <div>
     <div class="container">
       <div class="row">
-        <div class="col-md-12">
-          
+        <div class="col-md-12 mb-1 text-center">
+          Patient's Profile 
+          <!-- {{ this.$route.query.test }} -->
+          <hr>
         </div>
       </div>
     </div>
-    <div class="container mt-3">
-      <div class="row">
-        <div class="col-md-6">
-          <!-- <nuxt-link to="/ha/profile" class="text-decoration-none text-dark"> -->
-            <h5 class="d-inline text-decoration-none">Delores Abernathy (29, F)</h5>  
-          <!-- </nuxt-link> -->
-          <!-- [ <div class="d-inline pointer text-muted" @click="showDemographics = !showDemographics">
-            <span v-if="!showDemographics">show</span>
-            <span v-else>hide</span>
-          </div> ] -->
-        </div>
-        <div class="col-md-6 text-right">
-          <img src="/circle-orange.svg" class="shape-status" alt="">
-          Queued
-        </div>
-      </div>
+    <div class="container mt-2">
       <transition name="u-fade">
-        <div class="row mt-3" v-if="showDemographics">
+        <div class="row mt-2">
           <div class="col-md-3 text-left" style="min-height: 200px;">
             <nuxt-link to="/ha/profile" class="text-decoration-none text-dark">
-              <img src="/avatar.png">
+              <img src="/avatar-woman.png">
             </nuxt-link>
           </div>
-          <div class="col-md-4">
-            Industrial Farmer <br>
-            1-415-555-1234 <br>
-            Son of Bernard <br><br>
-            District, State <br><br>
-            <!-- <nuxt-link to="/ha/profile/update-history" class="text-muted">
-              View Medical History...
-            </nuxt-link><br>
-            <nuxt-link to="/ha/profile/view-bills" class="text-muted">
-              View Billing History...
-            </nuxt-link><br> -->
-          </div>
-          <div class="col-md-5">
-            Address 1 <br>
-            Address 2 <br>
-            <br><br>
-            Police Station<br><br>
-            <!-- <nuxt-link to="/ha/profile/update-demo" class="text-muted">
-              Update Demographics...
-            </nuxt-link><br> -->
-            <!-- <nuxt-link to="/ha/profile/update-history" class="text-muted">
-              Update Medical History...
-            </nuxt-link> -->
+          <div class="col-md-9">
+            <div class="row">
+              <div class="col-md-6">
+                <h5 class="d-inline text-decoration-none">Delores Abernathy</h5>  
+              </div>
+              <div class="col-md-6 text-right text-capitalize">
+                <img v-if="this.$store.state.currPatient.status == 'registered'" src="/circle-green.svg" class="shape-status" alt="">
+                <img v-if="this.$store.state.currPatient.status == 'released'" src="/circle-yellow.svg" class="shape-status" alt="">
+                <img v-if="this.$store.state.currPatient.status == 'allocated'" src="/circle-red.svg" class="shape-status" alt="">
+                <img v-if="this.$store.state.currPatient.status == 'queued'" src="/circle-orange.svg" class="shape-status" alt="">
+                {{ this.$store.state.currPatient.status }}
+              </div>
+            </div>
+            <br>
+            <!-- Hello, my name is Dr. Gupta, and I graduated from John Hopkins in '20. I'm happy help you!<br><br> -->
+            <div class="row">
+              <div class="col-md-6">
+                Industrial Farmer <br>
+                1-415-555-1234 <br>
+                Son of Bernard <br><br>
+                District, State <br><br>
+              </div>
+              <div class="col-md-6">
+                Address 1 <br>
+                Address 2 <br>
+                <br><br>
+                Police Station<br><br>
+              </div>
+            </div>
           </div>
         </div>
       </transition>
@@ -73,9 +66,6 @@
 export default {
   layout: 'dashboard',
   computed: {
-    routerViewKey () {
-      return this.$route.fullPath
-    }
   },
   data() {
     return {
@@ -93,7 +83,7 @@ export default {
     }
   },
   created() {
-    // this.$store.commit('increment', this.fullPath)
+    this.$store.commit('updatePath', this.fullPath)
   },
   transition: 'u-fade'
 }

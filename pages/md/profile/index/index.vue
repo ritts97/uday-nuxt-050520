@@ -2,10 +2,10 @@
   <div>
     
     <div class="container">
-      <!-- <div class="row">
+      <div class="row">
         <div class="col-md-12">
-          <nuxt-link to="/ha/profile/new-episode">
-            <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Allocate This Patient</button>     
+          <nuxt-link to="/md/profile/profile-visit">
+            <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Review Latest Complaint</button>     
           </nuxt-link>
         </div>
       </div>
@@ -14,7 +14,7 @@
         <div class="col-md-12">
           <hr>
         </div>
-      </div> -->
+      </div>
 
       <div class="row mt-0">
         <div class="col-md-12">
@@ -25,14 +25,15 @@
                 </div>
             </li>
           </ul>
-          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 300px;">
-            <table class="table table-sm table-hover">
+          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 10px;">
+            <table class="table table-sm table-hover mb-0">
               <thead>
                 <tr>
                   <th scope="col">Visit ID</th>
                   <th scope="col">Visit Type</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Date of Visit</th>
+                  <!-- <th scope="col">Status</th> -->
+                  <th scope="col">Date Created</th>
+                  <th scope="col">Last Updated</th>
                   <th scope="col"># Follow Ups</th>
                   <!-- <th scope="col"># Prescr.</th> -->
                   <!-- <th scope="col"># Services</th> -->
@@ -52,7 +53,7 @@
                       {{ visit.name }}
                     </div>
                   </td>
-                  <td>
+                  <!-- <td>
                     <span v-if="visit.type === 'episode'" class="text-capitalize">
                       <img v-if="visit.status == 'registered'" src="/circle-green.svg" class="shape-status" alt="">
                       <img v-if="visit.status == 'released'" src="/circle-yellow.svg" class="shape-status" alt="">
@@ -60,8 +61,9 @@
                       <img v-if="visit.status == 'queued'" src="/circle-orange.svg" class="shape-status" alt="">
                       {{ visit.status }}
                     </span>
-                  </td>
+                  </td> -->
                   <td>{{ visit.gender }}</td>
+                  <td>{{ visit.lastVisited }}</td>
                   <td>{{ visit.followups }}</td>
                   <!-- <td>3</td> -->
                 </tr>
@@ -193,6 +195,7 @@ export default {
           name: 'Patient Registered',
           type: 'registration',
           gender: '8 weeks ago',
+          lastVisited: '1 weeks ago',
           status: 'Released',
           billed: '',
           link: '',
@@ -204,6 +207,7 @@ export default {
           name: 'Episode 1',
           type: 'episode',
           gender: '4 weeks ago',
+          lastVisited: '1 weeks ago',
           status: 'released',
           billed: '',
           link: '/md/profile/profile-visit',
@@ -216,6 +220,7 @@ export default {
           name: 'Perform Service',
           type: 'service',
           gender: '2 weeks ago',
+          lastVisited: '1 weeks ago',
           status: 'Released',
           billed: 'View Bill',
           link: '/md/profile/profile-visit-service',
@@ -227,6 +232,7 @@ export default {
           name: 'Episode 2',
           type: 'episode',
           gender: '1 weeks ago',
+          lastVisited: '1 weeks ago',
           status: 'queued',
           followups: 3,
           billed: '',

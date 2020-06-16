@@ -1,21 +1,21 @@
 <template>
   <div>
     <div class="container mt-0">
-      <!-- <div class="row">
+      <div class="row">
         <div class="col-md-6">
           <nuxt-link to="/ha/profile/new-episode">
-            <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Record New Follow Up</button>     
+            <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Allocate to Doctor</button>     
           </nuxt-link>
         </div>
         <div class="col-md-6">
-          <nuxt-link to="/ha/profile/new-service">
-            <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0  text-uppercase">Record New Service</button>     
+          <nuxt-link to="/ha/profile/new-episode">
+            <button disabled class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0  text-uppercase">Move to Queue</button>     
           </nuxt-link>
         </div>
         <div class="col-md-12">
           <hr class="mt-2">
         </div>
-      </div> -->
+      </div>
       <div class="row">
         <div class="col-md-12 rounded">
           <ul class="list-inline">
@@ -262,7 +262,7 @@
           <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-1" style="min-height: 200px;" v-if="subTabs[4].isActive">
             <div class="row mt-1">
               <div class="col-md-12 mb-3 text-center">
-                Additional Photos 12312
+                Additional Photos
               </div>
               <div class="col-md-3 mb-4">
                 <img src="/square-grey.jpg" class="w-100" alt="">
@@ -282,11 +282,11 @@
               <div class="col-md-3 mb-4">
                 <img src="/square-grey.jpg" class="w-100" alt="">
               </div>
-              <div class="col-md-3 mb-4">
+              <!-- <div class="col-md-3 mb-4">
                 <img src="/square-grey.jpg" class="w-100" alt="">
-              </div>
+              </div> -->
               <div class="col-md-3 mb-4">
-                <img src="/square-grey.jpg" class="w-100" alt="">
+                <img src="/square-grey-add.jpg" class="w-100" alt="">
               </div>
               <!-- <div class="col-md-3 mb-4">
                 <img src="/square-grey.jpg" alt="">
@@ -314,23 +314,22 @@
         </div>
       </div>
     </div>
-
-    <div class="w-100 bg-white pt-3 pb-3 py-3 mb-4">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            Unfortunately, a doctor has yet to provide feedback. 
-            <!-- Thank you for your patience. -->
+<!-- 
+    <div class="w-100 bg-white py-4 mb-4">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="small text-center">
+            This patient visit does not yet have feedback.
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     
-    <div class="w-100 bg-white pt-3 pb-3 mb-4 d-none" style="min-height: 30px;">
+    <div class="w-100 bg-white pt-4 pb-3 mb-4" style="min-height: 30px;">
       <div class="container" v-if="showDocsFeedback">
         <div class="row mb-5">
           <div class="col-md-12">
-            <div class="small text-muted mb-3">
+            <div class="small text-muted">
               Prescribed Medicines
             </div>
           </div>
@@ -381,17 +380,27 @@
                 </tbody>
               </table>
             </div>
-            <div class="text-center w-100">
-              <button class="btn btn-dark text-center px-5">Print Prescription</button>
-            </div>
+          </div>
+          <div class="col-md-12">
+            <nuxt-link to="/ha/profile/new-episode">
+              <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0  text-uppercase">Print Prescription</button>     
+            </nuxt-link>
           </div>
         </div>
         <div class="row">
           <div class="col-md-12 mb-5">
             <div class="small text-muted mb-3">
-              Investigations and Advice
+              Investigations
             </div>
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil vero qui consectetur, eligendi facilis soluta maiores quae sequi eaque. Quia suscipit quaerat deleniti iure aliquid, voluptas repellat delectus ad labore officia nulla voluptatem ratione omnis provident cumque ab quae. Ullam natus sunt atque. Sint ullam autem commodi, corrupti inventore quod!
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil vero qui consectetur, eligendi facilis soluta maiores quae sequi eaque. Quia suscipit quaerat deleniti iure aliquid, voluptas repellat delectus ad labore officia nulla voluptatem ratione omnis provident cumque ab quae. Ullam natus sunt atque. Sint ullam autem commodi, corrupti inventore quod!
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 mb-5">
+            <div class="small text-muted mb-3">
+              Advice
+            </div>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil vero qui consectetur, eligendi facilis soluta maiores quae sequi eaque. Quia suscipit quaerat deleniti iure aliquid, voluptas repellat delectus ad labore officia nulla voluptatem ratione omnis provident cumque ab quae. Ullam natus sunt atque. Sint ullam autem commodi, corrupti inventore quod!
           </div>
         </div>
         <div class="row">

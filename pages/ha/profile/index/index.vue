@@ -30,14 +30,15 @@
                 </div>
             </li>
           </ul>
-          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 300px;">
-            <table class="table table-sm table-hover">
+          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 10px;">
+            <table class="table table-sm table-hover mb-0">
               <thead>
                 <tr>
                   <th scope="col">Visit ID</th>
                   <th scope="col">Visit Type</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Date of Visit</th>
+                  <!-- <th scope="col">Status</th> -->
+                  <th scope="col">Date Created</th>
+                  <th scope="col">Last Updated</th>
                   <th scope="col"># Follow Ups</th>
                   <!-- <th scope="col"># Prescr.</th> -->
                   <!-- <th scope="col"># Services</th> -->
@@ -57,7 +58,7 @@
                       {{ visit.name }}
                     </div>
                   </td>
-                  <td>
+                  <!-- <td>
                     <span v-if="visit.type === 'episode'" class="text-capitalize">
                       <img v-if="visit.status == 'registered'" src="/circle-green.svg" class="shape-status" alt="">
                       <img v-if="visit.status == 'released'" src="/circle-yellow.svg" class="shape-status" alt="">
@@ -65,9 +66,10 @@
                       <img v-if="visit.status == 'queued'" src="/circle-orange.svg" class="shape-status" alt="">
                       {{ visit.status }}
                     </span>
-                  </td>
-                  <td>{{ visit.gender }}</td>
-                  <td>{{ visit.followups }}</td>
+                  </td> -->
+                  <td>{{ visit.created }}</td>
+                  <td>{{ visit.lastVisited }}</td>
+                  <td>{{ visit.followUps }}</td>
                   <!-- <td>3</td> -->
                 </tr>
               </tbody>
@@ -86,7 +88,7 @@ export default {
   mounted() {
     this.list = this.filterAllVisits
 
-    this.$store.commit('increment', [
+    this.$store.commit('updatePath', [
       {
         title: 'Dashboard',
         url: '/ha'
@@ -197,48 +199,49 @@ export default {
           id: 'EP0 FL0',
           name: 'Patient Registered',
           type: 'registration',
-          gender: '8 weeks ago',
-          status: 'Released',
-          billed: '',
-          link: '',
-          age: 'Yes',
-          phone: '14155551234'
+          status: '',
+          created: '1 week ago',
+          lastVisited: '1 week ago',
+          followUps: 0,
         },
-        {
-          id: 'EP1 FL0',
-          name: 'Episode 1',
-          type: 'episode',
-          gender: '4 weeks ago',
-          status: 'released',
-          billed: '',
-          link: '/ha/profile/profile-visit',
-          followups: 4,
-          age: 'Yes',
-          phone: '14155551234'
-        },
-        {
-          id: 'EP1 SV1',
-          name: 'Perform Service',
-          type: 'service',
-          gender: '2 weeks ago',
-          status: 'Released',
-          billed: 'View Bill',
-          link: '/ha/profile/profile-visit-service',
-          age: 'Yes',
-          phone: '14155551234'
-        },
-        {
-          id: 'EP2 FL0',
-          name: 'Episode 2',
-          type: 'episode',
-          gender: '1 weeks ago',
-          status: 'queued',
-          followups: 3,
-          billed: '',
-          link: '/ha/profile/profile-visit',
-          age: 'Yes',
-          phone: '14155551234'
-        },
+        // {
+        //   id: 'EP1 FL0',
+        //   name: 'Episode 1',
+        //   type: 'episode',
+        //   gender: '4 weeks ago',
+        //   lastVisited: '1 weeks ago',
+        //   status: '',
+        //   billed: '',
+        //   link: '/ha/profile/profile-visit',
+        //   followups: 4,
+        //   age: 'Yes',
+        //   phone: '14155551234'
+        // },
+        // {
+        //   id: 'EP1 SV1',
+        //   name: 'Perform Service',
+        //   type: 'service',
+        //   gender: '2 weeks ago',
+        //   lastVisited: '1 weeks ago',
+        //   status: '',
+        //   billed: 'View Bill',
+        //   link: '/ha/profile/profile-visit-service',
+        //   age: 'Yes',
+        //   phone: '14155551234'
+        // },
+        // {
+        //   id: 'EP2 FL0',
+        //   name: 'Episode 2',
+        //   type: 'episode',
+        //   gender: '1 weeks ago',
+        //   lastVisited: '1 weeks ago',
+        //   status: 'queued',
+        //   followups: 3,
+        //   billed: '',
+        //   link: '/ha/profile/profile-visit',
+        //   age: 'Yes',
+        //   phone: '14155551234'
+        // },
       ]
     }
   },

@@ -3,7 +3,49 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12 mb-1 text-center">
-          Health Assistant's Dashboard
+          Health Assistant's Dashboard 
+          <!-- {{ this.$store.state.counter }}
+          <button @click="addCounter()">Add 1</button>
+          <button @click="addCounter(10)">Add 10</button> -->
+          <hr>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <transition name="u-fade">
+        <div class="row mt-2">
+          <div class="col-md-3 text-left" style="min-height: 200px;">
+            <nuxt-link to="/ha/profile" class="text-decoration-none text-dark">
+              <img src="/avatar.png">
+            </nuxt-link>
+          </div>
+          <div class="col-md-9">
+            <div class="row">
+              <div class="col-md-6">
+                <h5 class="d-inline text-decoration-none">Jane Doe (RN)</h5>  
+              </div>
+              <div class="col-md-6 text-right">
+                <img src="/circle-green.svg" class="shape-status" alt="">
+                Online
+              </div>
+            </div>
+            <br>
+            Hello, my name is Jane Doe, and I'm studying to become a nurse! I'm happy help you!<br><br>
+            <div class="row">
+              <div class="col-md-6">
+                1-415-555-1234 <br>
+                District, State <br><br>
+              </div>
+              <div class="col-md-6">
+                1-415-555-1234 <br>
+                District, State <br><br>
+              </div>
+            </div>
+          </div>
+        </div>
+      </transition>
+      <div class="row">
+        <div class="col-md-12">
           <hr>
         </div>
       </div>
@@ -49,8 +91,7 @@
                 <tr class="pointer" v-for="(patient, index) in list" :key="index">
                   <th scope="row">{{ patient.id }}</th>
                   <td>
-                    <nuxt-link to="/ha/profile">{{ patient.name }}
-                    </nuxt-link>
+                    <nuxt-link :to="'/ha/profile?id=' + patient.id">{{ patient.name }}</nuxt-link>
                   </td>
                   <td>{{ patient.gender }}</td>
                   <td>{{ patient.age }}</td>
@@ -78,20 +119,28 @@
 export default {
   layout: 'dashboard',
   computed: {
+    // get store values
+    patientList () {
+      return this.$store.state.patientList
+    },
+    counter () {
+      return this.$store.state.counter
+    },
+    // 
     filterMyPatients: function () {
-      return this.masterList.filter(patient => patient.creator == 'Jane Doe')
+      return this.patientList.filter(patient => patient.creator == 'Jane Doe')
     },
     filterAllocated: function () {
-      return  this.masterList.filter(patient => patient.status == 'allocated')
+      return  this.patientList.filter(patient => patient.status == 'allocated')
     },
     filterReleased: function () {
-      return this.masterList.filter(patient => patient.status == 'released')
+      return this.patientList.filter(patient => patient.status == 'released')
     },
     filterCluster: function () {
-      return this.masterList
+      return this.patientList
     },
     filterGlobal: function () {
-      return this.masterList.filter(patient => patient.status == 'global')
+      return this.patientList.filter(patient => patient.status == 'global')
     }
   },
   mounted () {
@@ -102,9 +151,9 @@ export default {
       },
     ]
 
-    this.list = this.masterList.filter(patient => patient.creator == 'Jane Doe')
+    this.list = this.patientList.filter(patient => patient.creator == 'Jane Doe')
 
-    this.$store.commit('increment', path)
+    this.$store.commit('updatePath', path)
   },
   methods: {
     getList: function (tabName) {
@@ -149,6 +198,9 @@ export default {
         return this.filterGlobal.length
       }
     },
+    addCounter: function (payload) {
+      this.$store.dispatch('increment', payload)
+    }
   },
   data() {
     return {
@@ -169,99 +221,17 @@ export default {
         //   title: 'My Released Patients',
         //   isActive: false,
         // },
-        // {
-        //   name: 'cluster',
-        //   title: 'My Cluster',
-        //   isActive: false,
-        // },
-        // {
-        //   name: 'global',
-        //   title: 'Search Global',
-        //   isActive: false,
-        // }
-      ],
-      masterList: [
         {
-          id: 'AAA1',
-          name: 'Delores Abernathy',
-          gender: 'M',
-          age: 99,
-          phone: '1-415-555-1234',
-          location: 'Hyperbad, IN',
-          status: 'allocated',
-          creator: 'Jane Doe'
+          name: 'cluster',
+          title: 'My Cluster',
+          isActive: false,
         },
         {
-          id: 'AAA1',
-          name: 'Delores Abernathy',
-          gender: 'M',
-          age: 99,
-          phone: '1-415-555-1234',
-          location: 'Hyperbad, IN',
-          status: 'queued',
-          creator: 'Jane Doe'
-        },
-        {
-          id: 'AAA1',
-          name: 'Delores Abernathy',
-          gender: 'M',
-          age: 99,
-          phone: '1-415-555-1234',
-          location: 'Hyperbad, IN',
-          status: 'released',
-          creator: 'Jane Doe'
-        },
-        {
-          id: 'AAA1',
-          name: 'Delores Abernathy',
-          gender: 'M',
-          age: 99,
-          phone: '1-415-555-1234',
-          location: 'Hyperbad, IN',
-          status: 'registered',
-          creator: 'Jane Doe'
-        },
-        {
-          id: 'AAA1',
-          name: 'Delores Abernathy',
-          gender: 'M',
-          age: 99,
-          phone: '1-415-555-1234',
-          location: 'Hyperbad, IN',
-          status: 'registered',
-          creator: 'Jane Doe'
-        },
-        {
-          id: 'AAA1',
-          name: 'Delores Abernathy',
-          gender: 'M',
-          age: 99,
-          phone: '1-415-555-1234',
-          location: 'Hyperbad, IN',
-          status: 'registered',
-          creator: 'John Smith'
-        },
-        {
-          id: 'AAA1',
-          name: 'Delores Abernathy',
-          gender: 'M',
-          age: 99,
-          phone: '1-415-555-1234',
-          location: 'Hyperbad, IN',
-          status: 'registered',
-          creator: 'John Smith'
-        },
-        {
-          id: 'AAA1',
-          name: 'Delores Abernathy',
-          gender: 'M',
-          age: 99,
-          phone: '1-415-555-1234',
-          location: 'Hyperbad, IN',
-          status: 'registered',
-          creator: 'John Smith'
+          name: 'global',
+          title: 'Search Global',
+          isActive: false,
         }
-      ]
+      ],
     }
   },
   transition: 'u-fade'
@@ -311,7 +281,6 @@ thead tr th {
   width: 100%;
 }
 
-.dropdown-no-caret:after { content: none }
 
 .dropdown-toggle {
   cursor: pointer;

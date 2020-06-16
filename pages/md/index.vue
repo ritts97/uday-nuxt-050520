@@ -9,19 +9,118 @@
       </div>
     </div>
     <div class="container">
+      <transition name="u-fade">
+        <div class="row mt-2">
+          <div class="col-md-3 text-left" style="min-height: 200px;">
+            <nuxt-link to="/ha/profile" class="text-decoration-none text-dark">
+              <img src="/avatar-md.png">
+            </nuxt-link>
+          </div>
+          <div class="col-md-9">
+            <div class="row">
+              <div class="col-md-6">
+                <h5 class="d-inline text-decoration-none">Dr. Akshit Gupta</h5>  
+              </div>
+              <div class="col-md-6 text-right">
+                <img src="/circle-green.svg" class="shape-status" alt="">
+                Online
+              </div>
+            </div>
+            <br>
+            Hello, my name is Dr. Gupta, and I graduated from John Hopkins in '20. I'm happy help you!<br><br>
+            <div class="row">
+              <div class="col-md-6">
+                1-415-555-1234 <br>
+                District, State <br><br>
+              </div>
+              <div class="col-md-6">
+                1-415-555-1234 <br>
+                District, State <br><br>
+              </div>
+            </div>
+          </div>
+        </div>
+      </transition>
+      <div class="row">
+        <div class="col-md-12">
+          <hr>
+        </div>
+      </div>
+    </div>
+    <div class="container">
       <div class="row">
         <!-- <div class="col-md-12">
           <nuxt-link to="/md/register-new">
             <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">Register a New Patient</button>
           </nuxt-link>
         </div> -->
-        <div class="col-md-12 mt-2">
+        <div class="col-md-6 mt-2">
           <nuxt-link to="/md/register-new">
+            <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">Register a New Patient</button>
+          </nuxt-link>
+        </div>
+        <div class="col-md-6 mt-2">
+          <nuxt-link to="/md/register-ha">
             <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">Register a New Health Assistant</button>
           </nuxt-link>
         </div>
       </div>
     </div>
+    <!-- <div class="container">
+      <div class="row pt-3">
+        <div class="col-md-12 rounded">
+          <ul class="list-inline mb-2">
+            <li class="list-inline-item pointer">
+              <div class="px-2 mr-2 pb-1 mb-1" role="button">
+                My Allocated Patients (2)
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="w-100 bg-white mb-3 px-3 pt-2 pb-2">
+            <table class="table table-sm table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Gender</th>
+                  <th scope="col">Age</th>
+                  <th scope="col">Phone</th>
+                  <th scope="col">Location</th>
+                  <th scope="col">Reg. By</th>
+                  <th scope="col">Patient Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="pointer">
+                  <td>AAA1</td>
+                  <td>Delores Abernathy</td>
+                  <td>F</td>
+                  <td>29</td>
+                  <td>1-415-555-1234</td>
+                  <td>Hyperbad, IN</td>
+                  <td>Jane Doe</td>
+                  <td><img src="circle-orange.svg" class="shape-status" alt=""> Queued</td>
+                </tr>
+                <tr class="pointer">
+                  <td>AAA2</td>
+                  <td>Delores Abernathy</td>
+                  <td>F</td>
+                  <td>29</td>
+                  <td>1-415-555-1234</td>
+                  <td>Hyperbad, IN</td>
+                  <td>Jane Doe</td>
+                  <td><img src="circle-orange.svg" class="shape-status" alt=""> Queued</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div> -->
     <div class="container mt-3">
       <div class="row">
         <div class="col-md-12 rounded">
@@ -83,20 +182,23 @@
 export default {
   layout: 'dashboard',
   computed: {
+    patientList () {
+      return this.$store.state.patientList
+    },
     filterMyPatients: function () {
-      return this.masterList.filter(patient => patient.creator == 'Jane Doe')
+      return this.list.filter(patient => patient.creator == 'Jane Doe')
     },
     filterAllocated: function () {
-      return  this.masterList.filter(patient => patient.status == 'allocated')
+      return  this.list.filter(patient => patient.status == 'allocated')
     },
     filterReleased: function () {
-      return this.masterList.filter(patient => patient.status == 'released')
+      return this.list.filter(patient => patient.status == 'released')
     },
     filterCluster: function () {
-      return this.masterList
+      return this.list
     },
     filterGlobal: function () {
-      return this.masterList.filter(patient => patient.status == 'global')
+      return this.list.filter(patient => patient.status == 'global')
     }
   },
   mounted () {
@@ -107,7 +209,7 @@ export default {
       },
     ]
 
-    this.list = this.masterList.filter(patient => patient.creator == 'Jane Doe')
+    this.list = this.patientList.filter(patient => patient.creator == 'Jane Doe')
 
     this.$store.commit('increment', path)
   },
@@ -160,31 +262,51 @@ export default {
       list: [],
       tabs: [
         {
-          name: 'patients',
-          title: 'Patients in Queue',
+          name: 'allocated',
+          title: 'My Allocated Patients',
           isActive: true,
         },
-        // {
-        //   name: 'released',
-        //   title: 'Recently Released',
-        //   isActive: true,
-        // },
-        // {
-        //   name: 'has',
-        //   title: 'Health Assistants',
-        //   isActive: false,
-        // },
-        // {
-        //   name: 'global',
-        //   title: 'Search Global',
-        //   isActive: false,
-        // }
+        {
+          name: 'patients',
+          title: 'Patients in Queue',
+          isActive: false,
+        },
+        {
+          name: 'healthAssistants',
+          title: 'Health Assistants',
+          isActive: false,
+        },
+        {
+          name: 'released',
+          title: 'All Patients',
+          isActive: false,
+        }
       ],
       masterList: [
         {
           id: 'AAA1',
           name: 'Delores Abernathy',
-          gender: 'M',
+          gender: 'F',
+          age: 99,
+          phone: '1-415-555-1234',
+          location: 'Hyperbad, IN',
+          status: 'allocated',
+          creator: 'Jane Doe'
+        },
+        {
+          id: 'AAA1',
+          name: 'Delores Abernathy',
+          gender: 'F',
+          age: 99,
+          phone: '1-415-555-1234',
+          location: 'Hyperbad, IN',
+          status: 'allocated',
+          creator: 'Jane Doe'
+        },
+        {
+          id: 'AAA1',
+          name: 'Delores Abernathy',
+          gender: 'F',
           age: 99,
           phone: '1-415-555-1234',
           location: 'Hyperbad, IN',
@@ -194,7 +316,7 @@ export default {
         {
           id: 'AAA1',
           name: 'Delores Abernathy',
-          gender: 'M',
+          gender: 'F',
           age: 99,
           phone: '1-415-555-1234',
           location: 'Hyperbad, IN',
@@ -204,7 +326,7 @@ export default {
         {
           id: 'AAA1',
           name: 'Delores Abernathy',
-          gender: 'M',
+          gender: 'F',
           age: 99,
           phone: '1-415-555-1234',
           location: 'Hyperbad, IN',
@@ -214,27 +336,7 @@ export default {
         {
           id: 'AAA1',
           name: 'Delores Abernathy',
-          gender: 'M',
-          age: 99,
-          phone: '1-415-555-1234',
-          location: 'Hyperbad, IN',
-          status: 'queued',
-          creator: 'Jane Doe'
-        },
-        {
-          id: 'AAA1',
-          name: 'Delores Abernathy',
-          gender: 'M',
-          age: 99,
-          phone: '1-415-555-1234',
-          location: 'Hyperbad, IN',
-          status: 'queued',
-          creator: 'Jane Doe'
-        },
-        {
-          id: 'AAA1',
-          name: 'Delores Abernathy',
-          gender: 'M',
+          gender: 'F',
           age: 99,
           phone: '1-415-555-1234',
           location: 'Hyperbad, IN',
@@ -244,7 +346,7 @@ export default {
         {
           id: 'AAA1',
           name: 'Delores Abernathy',
-          gender: 'M',
+          gender: 'F',
           age: 99,
           phone: '1-415-555-1234',
           location: 'Hyperbad, IN',
@@ -254,7 +356,7 @@ export default {
         {
           id: 'AAA1',
           name: 'Delores Abernathy',
-          gender: 'M',
+          gender: 'F',
           age: 99,
           phone: '1-415-555-1234',
           location: 'Hyperbad, IN',
