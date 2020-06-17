@@ -7,7 +7,37 @@ export const state = () => ({
     }
   ],
   currPatient: {
-    status: 'registered'
+    id: 'AAA1',
+    name: 'Delores Abernathy (from Store)',
+    gender: 'M',
+    age: 99,
+    phone: '1-415-555-1234',
+    location: 'Hyperbad, IN',
+    creator: 'Jane Doe',
+    cluster: 'Cluster 001',
+    status: 'registered',
+    demographics: {},
+    episodes: [{
+      episodeID: 'EP0 FU0',
+      title: 'Registered',
+      created: '1 week ago',
+      lastUpdated: '1 week ago',
+      numFollowUps: '3',
+      complaint: {
+        chiefComplaint: '',
+        vitals: '',
+        genExams: '',
+        specExams: '',
+        addPhotos: ''
+      },
+      feedback: {
+        medicine: '',
+        investigations: '',
+        advice: '',
+      }
+    }],
+    services: [],
+    bills: []
   },
   patientList: [
     {
@@ -44,7 +74,8 @@ export const state = () => ({
       ],
       services: [],
       bills: []
-    }]
+    }
+  ]
 })
 
 export const mutations = {
@@ -60,6 +91,36 @@ export const mutations = {
     } else {
       state.counter++
     }
+  },
+  recordNewEpisode(state, payload) {
+    let episodeLen = state.currPatient.episodes.length
+
+    state.currPatient.episodes.unshift(
+      {
+        type: 'episode',
+        billed: '',
+        link: '/ha/profile/profile-visit',
+        episodeID: 'EP01 FL00',
+        title: 'Episode ' + episodeLen,
+        created: '1 week ago',
+        lastUpdated: '1 week ago',
+        numFollowUps: '3',
+        complaint: {
+          chiefComplaint: '',
+          vitals: '',
+          genExams: '',
+          specExams: '',
+          addPhotos: ''
+        },
+        feedback: {
+          medicine: '',
+          investigations: '',
+          advice: '',
+        }
+      }
+    )
+
+    console.log(state.currPatient.episodes)
   },
   registerPatient(state, payload) {
     state.patientList.unshift(

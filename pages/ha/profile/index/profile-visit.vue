@@ -9,7 +9,7 @@
         </div>
         <div class="col-md-6">
           <nuxt-link to="/ha/profile/new-episode">
-            <button disabled class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0  text-uppercase">Move to Queue</button>     
+            <button disabled class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0  text-uppercase">Allocate To Queue</button>     
           </nuxt-link>
         </div>
         <div class="col-md-12">
@@ -36,7 +36,7 @@
               </div>
             </li>
           </ul>
-          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="subTabs[0].isActive">
+          <div class="w-100 bg-white mb-2 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="subTabs[0].isActive">
             <div class="row mt-1">
               <div class="col-md-12 mb-3">
                 <div class="small text-muted mb-2">
@@ -97,7 +97,7 @@
               </div> -->
             </div>
           </div>
-          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="subTabs[1].isActive">
+          <div class="w-100 bg-white mb-2 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="subTabs[1].isActive">
             <div class="row mt-1">
               <div class="col-md-6 mb-4">
                 <div class="small text-muted mb-1">
@@ -163,7 +163,7 @@
               </div>
             </div>
           </div>
-          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="subTabs[2].isActive">
+          <div class="w-100 bg-white mb-2 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="subTabs[2].isActive">
             <div class="row mt-1">
               <!-- <div class="col-md-12 mb-5 text-center" style="min-height: 300px;">
                 <img src="/anatomy_sketch.png" alt="">
@@ -193,7 +193,7 @@
               </div>
             </div>
           </div>
-                    <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="subTabs[3].isActive">
+          <div class="w-100 bg-white mb-2 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="subTabs[3].isActive">
             <div class="row mt-1">
               <div class="col-md-6 mb-4">
                 <div class="small text-muted mb-1">
@@ -259,7 +259,7 @@
               </div>
             </div>
           </div>
-          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-1" style="min-height: 200px;" v-if="subTabs[4].isActive">
+          <div class="w-100 bg-white mb-2 mt-0 px-3 pt-3 pb-1" style="min-height: 200px;" v-if="subTabs[4].isActive">
             <div class="row mt-1">
               <div class="col-md-12 mb-3 text-center">
                 Additional Photos
@@ -296,6 +296,18 @@
               </div> -->
             </div>
           </div>
+          <div class="row px-2 mb-2">
+            <div class="col-md-12 text-left">
+              <span>
+                <small>First Recorded on January 1, 2022</small>
+              </span>
+              <span class="float-right">
+                <small>
+                  Last Updated by Jane Doe on January 20, 2022
+                </small>
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -314,19 +326,18 @@
         </div>
       </div>
     </div>
-<!-- 
-    <div class="w-100 bg-white py-4 mb-4">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="small text-center">
-            This patient visit does not yet have feedback.
+
+    <div class="w-100 bg-white pt-4 pb-3 mb-4" style="min-height: 30px;">
+      <div class="container" v-if="!showDocsFeedback">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="small text-center">
+              This patient visit does not yet have feedback.
+            </div>
           </div>
         </div>
       </div>
-    </div> -->
-    
-    <div class="w-100 bg-white pt-4 pb-3 mb-4" style="min-height: 30px;">
-      <div class="container" v-if="showDocsFeedback">
+      <div class="container" v-else>
         <div class="row mb-5">
           <div class="col-md-12">
             <div class="small text-muted">
@@ -455,7 +466,7 @@ export default {
   data() {
     return {
       list: [],
-      showDocsFeedback: true,
+      showDocsFeedback: false,
       showDemographics: true,
       showComplete: false,
       tabs: [
@@ -484,16 +495,16 @@ export default {
         //   title: 'Billing History',
         //   isActive: false
         // },
-        // {
-        //   name: 'newfollowup',
-        //   title: '+ New Follow Up',
-        //   isActive: false
-        // },
-        // {
-        //   name: 'newservice',
-        //   title: '+ New Service',
-        //   isActive: false
-        // },
+        {
+          name: 'newfollowup',
+          title: 'Record Follow Up',
+          isActive: false
+        },
+        {
+          name: 'newservice',
+          title: 'Record Service',
+          isActive: false
+        },
       ],
       subTabs: [
         {

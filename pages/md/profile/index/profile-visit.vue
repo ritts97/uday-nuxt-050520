@@ -4,12 +4,12 @@
       <div class="row">
         <div class="col-md-6">
           <nuxt-link to="/md/profile/profile-visit">
-            <button @click="editable = true" :disabled="editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Begin Feedback</button>     
+            <button @click="editable = true" :disabled="editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Record Feedback</button>     
           </nuxt-link>
         </div>
         <div class="col-md-6">
-          <nuxt-link to="/md/profile/profile-visit">
-            <button @click="editable = false" :disabled="!editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Release Patient</button>     
+          <nuxt-link to="/md/">
+            <button @click="showAlert('Your feedback has been recorded, and the patient has been released.')" :disabled="!editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Release Patient</button>     
           </nuxt-link>
         </div>
       </div>
@@ -475,8 +475,7 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil vero qui consecte
           </div> -->
         </div>
       </div>
-    </div>
-    <div v-if="editable" class="container mb-3">
+      <div v-if="editable" class="container">
         <div class="row">
           <div class="col-md-6">
             <nuxt-link to="/ha/profile/new-episode">
@@ -490,6 +489,16 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil vero qui consecte
           </div>
         </div>
       </div>
+    </div>
+    <!-- <div v-if="editable" class="container mb-3">
+      <div class="row">
+        <div class="col-md-12">
+          <nuxt-link to="/ha/profile/new-episode">
+            <button class="w-100 btn btn-dark rounded font-weight-bold py-3 px-0 mb-2 text-uppercase">Save All Feedback</button>     
+          </nuxt-link>
+        </div>
+      </div>
+    </div> -->
   </div>
 </template>
 
@@ -497,6 +506,9 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil vero qui consecte
 export default {
   layout: 'dashboard',
   methods: {
+    showAlert: function (msg) {
+      alert(msg)
+    },
     handleAllocate: function () {
       if (this.visitStatus === 'queued') {
         alert('You have allocated this patient.')

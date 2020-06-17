@@ -4,7 +4,6 @@
       <div class="row">
         <div class="col-md-12 mb-1 text-center">
           Patient's Profile 
-          <!-- {{ this.$route.query.test }} -->
           <hr>
         </div>
       </div>
@@ -31,7 +30,7 @@
               </div>
             </div>
             <br>
-            <!-- Hello, my name is Dr. Gupta, and I graduated from John Hopkins in '20. I'm happy help you!<br><br> -->
+            
             <div class="row">
               <div class="col-md-6">
                 Industrial Farmer <br>
@@ -66,6 +65,9 @@
 export default {
   layout: 'dashboard',
   computed: {
+    routerViewKey () {
+      return this.$route.fullPath
+    }
   },
   data() {
     return {
@@ -82,8 +84,8 @@ export default {
       ]
     }
   },
-  created() {
-    this.$store.commit('updatePath', this.fullPath)
+  mounted () {
+    // this.$store.commit('updatePath', this.fullPath)
   },
   transition: 'u-fade'
 }

@@ -1,6 +1,6 @@
 <template>
   <div>
-    
+
     <div class="container">
       <div class="row">
         <div class="col-md-6">
@@ -31,6 +31,7 @@
             </li>
           </ul>
           <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 10px;">
+             <!-- 1 {{ this.$store.state.currPatient.episodes }} -->
             <table class="table table-sm table-hover mb-0">
               <thead>
                 <tr>
@@ -46,31 +47,21 @@
                 </tr>
               </thead>
               <tbody>
-                <tr class="pointer" v-for="(visit, index) in list" :key="index" style="height: 40px;">
-                  <td scope="row">{{ visit.id }}</td>
+                <tr class="pointer" v-for="(visit, index) in this.$store.state.currPatient.episodes" :key="index" style="height: 40px;">
+                  <td scope="row">{{ visit.episodeID }}</td>
                   <td>
                     <div v-if="visit.link">
                       <nuxt-link :to="visit.link">
-                        {{ visit.name }}
+                        {{ visit.title }}
                       </nuxt-link>
                     </div>
                     <div v-else>
-                      {{ visit.name }}
+                      {{ visit.title }}
                     </div>
                   </td>
-                  <!-- <td>
-                    <span v-if="visit.type === 'episode'" class="text-capitalize">
-                      <img v-if="visit.status == 'registered'" src="/circle-green.svg" class="shape-status" alt="">
-                      <img v-if="visit.status == 'released'" src="/circle-yellow.svg" class="shape-status" alt="">
-                      <img v-if="visit.status == 'allocated'" src="/circle-red.svg" class="shape-status" alt="">
-                      <img v-if="visit.status == 'queued'" src="/circle-orange.svg" class="shape-status" alt="">
-                      {{ visit.status }}
-                    </span>
-                  </td> -->
                   <td>{{ visit.created }}</td>
-                  <td>{{ visit.lastVisited }}</td>
-                  <td>{{ visit.followUps }}</td>
-                  <!-- <td>3</td> -->
+                  <td>{{ visit.lastUpdated }}</td>
+                  <td>{{ visit.numFollowUps }}</td>
                 </tr>
               </tbody>
             </table>
@@ -101,16 +92,16 @@ export default {
   },
   computed: {
     filterAllVisits: function () {
-      return this.masterList.reverse()
+      return this.$store.state.currPatient.episodes
     },
     filterEpisode: function () { 
-      return this.masterList.filter(visit => visit.type == 'episode').reverse()
+      return this.$store.state.currPatient.episodes.filter(visit => visit.type == 'episode').reverse()
     },
     filterService: function () {
-      return this.masterList.filter(visit => visit.type == 'service').reverse()
+      return this.$store.state.currPatient.episodes.filter(visit => visit.type == 'service').reverse()
     },
     filterBill: function () {
-      return this.masterList.filter(visit => visit.type == 'bill').reverse()
+      return this.$store.state.currPatient.episodes.filter(visit => visit.type == 'bill').reverse()
     }
   },
   methods: {

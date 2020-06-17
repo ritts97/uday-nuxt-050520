@@ -216,12 +216,6 @@ export default {
     showAlert: function () {
       alert(`This episode has been recorded.`)
     },
-// \n
-// Please allocate a doctor for which you would like to have this patient seen by.
-
-// :: Doctor Suresh (available)
-// :: Doctor Gupta (available)
-// :: Doctor Sitadel (unavailable)
     getTab: function (tabName) {
       let tabs = this.tabs
       let ref = 0
@@ -262,7 +256,11 @@ export default {
       alert('Added to Patient Queue.')
 
       this.$store.commit('updateStatus', 'queued')
-    }
+      this.$store.commit('recordNewEpisode')
+    },
+    // recordNewEpisode: function () {
+    //   this.$store.commit('recordNewEpisode')
+    // }
   },
   mounted () {
     this.$store.commit('updatePath', this.fullPath)

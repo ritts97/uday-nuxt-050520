@@ -101,7 +101,7 @@ export default {
       },
     ]
 
-    this.$store.commit('increment', path)
+    this.$store.commit('updatePath', path)
   },
   methods: {
     getTab: function (tabName) {

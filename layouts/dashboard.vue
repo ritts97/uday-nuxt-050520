@@ -14,13 +14,8 @@
                   jane.doe@udayhealth.org
                 </span>
                 <div class="dropdown-menu">
-                  <!-- <a href="/ha/mis-reports" class="dropdown-item">Link</a>
-                  <span class="dropdown-item" @click="sendAlert('123')">MIS Reports</span>
-                  <span class="dropdown-item" @click="sendAlert('1234')">MIS Reports</span>
-                  <span class="dropdown-item" @click="sendAlert('1235')">MIS Reports</span>
-                  <div class="dropdown-divider"></div> -->
                   <nuxt-link to="/ha/edit-profile" class="dropdown-item">Edit Profile</nuxt-link>
-                  <nuxt-link to="/ha/edit-profile" class="dropdown-item">Change Password</nuxt-link>
+                  <nuxt-link to="/ha/edit-password" class="dropdown-item">Change Password</nuxt-link>
                 </div>
               </div>
               | 
@@ -84,9 +79,9 @@ export default {
     currPath () {
       return this.$store.state.currPath
     },
-    routerViewKey () {
-      return this.$route.fullPath
-    }
+    // routerViewKey () {
+    //   return this.$route.fullPath
+    // }
   },
   data() {
     return {
