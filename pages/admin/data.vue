@@ -25,6 +25,8 @@
               <div class="row my-3">
                 <div class="col-md-12">
                   My Cluster <br><br>
+                  {{ this.$store.state.clusterData }}
+                  <br><br>
                   <img src="/data-anal.svg" class="w-100" alt="">
                 </div>
               </div>

@@ -9,6 +9,11 @@
                 New Episode
               </button>
             </li>
+            <li class="list-inline-item">
+              <button class="btn btn-light px-3" role="button">
+                Billing
+              </button>
+            </li>
           </ul>
         </div>
       </div>

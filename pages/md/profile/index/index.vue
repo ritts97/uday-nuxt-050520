@@ -83,14 +83,14 @@ export default {
   mounted() {
     this.list = this.filterAllVisits
 
-    this.$store.commit('increment', [
+    this.$store.commit('updatePath', [
       {
         title: 'Dashboard',
-        url: '/ha'
+        url: '/md'
       },
       {
-        title: 'Delores Abernathy',
-        url: '/ha/profile'
+        title: 'Patient Profile',
+        url: '/md/profile'
       }
     ])
   },

@@ -85,7 +85,7 @@ export default {
         url: '/ha'
       },
       {
-        title: 'Delores Abernathy',
+        title: 'Patient Profile',
         url: '/ha/profile'
       }
     ])
@@ -101,7 +101,7 @@ export default {
       return this.$store.state.currPatient.visits.filter(visit => visit.type == 'service').reverse()
     },
     filterBill: function () {
-      return this.$store.state.currPatient.visits.filter(visit => visit.type == 'bill').reverse()
+      return this.$store.state.currPatient.visitse.filter(visit => visit.type == 'bill').reverse()
     }
   },
   methods: {

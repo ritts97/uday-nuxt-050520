@@ -74,7 +74,7 @@
         </div>
         <div class="col-md-6 mt-2">
           <nuxt-link to="/admin/data">
-            <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">View Data Analysis</button>
+            <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">View Cluster Data</button>
           </nuxt-link>
         </div>
         <!-- <div class="col-md-6 mt-2">

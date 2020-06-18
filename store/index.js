@@ -6,6 +6,22 @@ export const state = () => ({
       url: '/ha'
     }
   ],
+  clusterData: {
+    clusterName: 'Cluster AAA01',
+    regDoctors: 10,
+    regHas: 10,
+    regPatients: 999,
+    medicineInStock: 999,
+    patientAnalytics: {
+      avgAge: 99,
+      gender: 99,
+      occupations: 99,
+      avgBMI: 99,
+      avgBpRange: 99,
+      mostCommonCC: 99,
+    }
+  },
+  clusterMedicine: [],
   currPatient: {
     id: 'AAA1',
     name: 'Delores Abernathy (from Store)',
@@ -70,6 +86,7 @@ export const state = () => ({
     {
       clusterName: 'Cluster AA1',
       clusterID: 'AA1',
+      medicine: [],
       patients: [
         {
           name: 'Patient 001',

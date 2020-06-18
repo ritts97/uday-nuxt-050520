@@ -75,7 +75,7 @@ export default {
           url: '/md'
         },
         {
-          title: 'Delores Abernathy',
+          title: 'Patient Profile',
           url: '/md/profile'
         },
       ]
