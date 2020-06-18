@@ -39,8 +39,8 @@
     <div class="container mb-3">
       <div class="row">
         <div class="col-md-12">
-          <nuxt-link to="/super">
-            <button @click="showAlert('New Admin has been successfully registered.')" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">
+          <nuxt-link to="/md">
+            <button @click="showAlert('New Health Assistant has been successfully registered.')" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">
               Register New Health Assistant
             </button>
           </nuxt-link>

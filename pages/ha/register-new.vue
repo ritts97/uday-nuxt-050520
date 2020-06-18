@@ -1,9 +1,14 @@
 <template>
   <div>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12 text-center">
+<div class="container">
+      <div class="row mt-2">
+        <div class="col-md-6 text-left">
           Register a New Patient
+        </div>
+        <div class="col-md-6 text-right">
+          Cluster AAA01 
+        </div>
+        <div class="col-md-12">
           <hr>
         </div>
       </div>

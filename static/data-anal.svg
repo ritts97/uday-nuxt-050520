@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="800px" height="590px" viewBox="0 0 800 590" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="800px" height="402px" viewBox="0 0 800 402" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
-    <title>Group 13 Copy 2</title>
+    <title>Group 13 Copy 3</title>
     <desc>Created with Sketch.</desc>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Group-13-Copy-2">
-            <rect id="Rectangle" fill="#FFFFFF" x="0" y="0" width="800" height="590"></rect>
+        <g id="Group-13-Copy-3">
+            <rect id="Rectangle" fill="#FFFFFF" x="0" y="0" width="800" height="402"></rect>
             <text id="Age-Groups" font-family="Roboto-Regular, Roboto" font-size="12" font-weight="normal" fill="#363636">
                 <tspan x="87.0500234" y="170.8155">Age Groups</tspan>
             </text>
@@ -69,14 +69,6 @@
             <path d="M296.62325,333.987007 C325.913534,333.987007 349.658,310.24254 349.658,280.952257 C349.658,251.661973 325.913534,227.917507 296.62325,227.917507 C267.332966,227.917507 243.5885,251.661973 243.5885,280.952257" id="Oval" stroke="#3BA500" stroke-width="16.4025" transform="translate(296.623250, 280.952257) rotate(91.000000) translate(-296.623250, -280.952257) "></path>
             <text id="3" font-family="Roboto-Medium, Roboto" font-size="25.1505" font-weight="400" fill="#363636">
                 <tspan x="288.929239" y="289.366">3</tspan>
-            </text>
-            <text id="Medicine" font-family="Roboto-Regular, Roboto" font-size="12" font-weight="normal" fill="#363636">
-                <tspan x="102.107727" y="570.5655">Medicine</tspan>
-            </text>
-            <circle id="Oval" stroke="#E0E0E0" stroke-width="8.748" cx="122.62325" cy="485.12825" r="48.66075"></circle>
-            <path d="M122.62325,537.987007 C151.913534,537.987007 175.658,514.24254 175.658,484.952257 C175.658,455.661973 151.913534,431.917507 122.62325,431.917507 C93.3329664,431.917507 69.5885,455.661973 69.5885,484.952257" id="Oval" stroke="#3BA500" stroke-width="16.4025" transform="translate(122.623250, 484.952257) rotate(91.000000) translate(-122.623250, -484.952257) "></path>
-            <text id="3" font-family="Roboto-Medium, Roboto" font-size="25.1505" font-weight="400" fill="#363636">
-                <tspan x="114.929239" y="493.366">3</tspan>
             </text>
         </g>
     </g>

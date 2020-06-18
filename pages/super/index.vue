@@ -8,7 +8,7 @@
         </div>
       </div>
     </div>
-    <div class="container">
+    <!-- <div class="container">
       <transition name="u-fade">
         <div class="row mt-2">
           <div class="col-md-3 text-left" style="min-height: 200px;">
@@ -46,7 +46,7 @@
           <hr>
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="container mb-3">
       <div class="row">
         <!-- <div class="col-md-6 mt-2">
@@ -70,9 +70,9 @@
           </nuxt-link>
         </div>
 
-        <div class="col-md-12 mt-2">
+        <!-- <div class="col-md-12 mt-2">
           <hr>
-        </div>
+        </div> -->
         
         <div class="col-md-6 mt-2">
           <nuxt-link to="/super/medicine">

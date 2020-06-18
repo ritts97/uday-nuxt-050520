@@ -1,12 +1,14 @@
 <template>
   <div>
     <div class="container">
-      <div class="row">
-        <div class="col-md-12 mb-1 text-center">
+      <div class="row mt-2">
+        <div class="col-md-6 text-left">
           Health Assistant's Dashboard 
-          <!-- {{ this.$store.state.counter }}
-          <button @click="addCounter()">Add 1</button>
-          <button @click="addCounter(10)">Add 10</button> -->
+        </div>
+        <div class="col-md-6 text-right">
+          Cluster AAA01 
+        </div>
+        <div class="col-md-12">
           <hr>
         </div>
       </div>

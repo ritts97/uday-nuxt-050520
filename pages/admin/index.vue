@@ -3,13 +3,13 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12 mb-0 text-center">
-          Admin's Dashboard
+          Cluster Admin's Dashboard
           <hr>
         </div>
       </div>
     </div>
     <div class="container">
-      <transition name="u-fade">
+      <!-- <transition name="u-fade">
         <div class="row mt-2">
           <div class="col-md-3 text-left" style="min-height: 200px;">
             <nuxt-link to="/ha/profile" class="text-decoration-none text-dark">
@@ -40,12 +40,12 @@
             </div>
           </div>
         </div>
-      </transition>
-      <div class="row">
+      </transition> -->
+      <!-- <div class="row">
         <div class="col-md-12">
           <hr>
         </div>
-      </div>
+      </div> -->
     </div>
     <div class="container mb-3">
       <div class="row">
@@ -59,9 +59,9 @@
             <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">Register a New Doctor</button>
           </nuxt-link>
         </div>
-        <div class="col-md-12 mt-2">
+        <!-- <div class="col-md-12 mt-2">
           <hr>
-        </div>
+        </div> -->
         <div class="col-md-6 mt-2">
           <nuxt-link to="/admin/medicine">
             <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">View Medicine Stock</button>
@@ -72,16 +72,34 @@
             <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">View MIS Reports</button>
           </nuxt-link>
         </div>
-        <div class="col-md-6 mt-2">
+        <!-- <div class="col-md-6 mt-2">
           <nuxt-link to="/admin/data">
             <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">View Cluster Data</button>
           </nuxt-link>
-        </div>
+        </div> -->
         <!-- <div class="col-md-6 mt-2">
           <nuxt-link to="/admin/">
             <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">Export Data</button>
           </nuxt-link>
         </div> -->
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 rounded">
+          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" v-if="tabs[0].isActive">
+            <div class="container">
+              <div class="row my-3">
+                <div class="col-md-12">
+                  <!-- Cluster AAA01 <br><br> -->
+                  <!-- {{ this.$store.state.clusterData }} -->
+                  <!-- <br><br> -->
+                  <img src="/data-anal.svg" class="w-100" alt="">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
