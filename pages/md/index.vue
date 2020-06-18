@@ -186,7 +186,7 @@ export default {
       return this.$store.state.patientList
     },
     filterMyPatients: function () {
-      return this.list.filter(patient => patient.creator == 'Jane Doe')
+      return this.list
     },
     filterAllocated: function () {
       return  this.list.filter(patient => patient.status == 'allocated')
@@ -209,7 +209,7 @@ export default {
       },
     ]
 
-    this.list = this.patientList.filter(patient => patient.creator == 'Jane Doe')
+    this.list = this.patientList
 
     this.$store.commit('increment', path)
   },

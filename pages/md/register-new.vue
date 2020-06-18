@@ -12,11 +12,12 @@
       <div class="row">
         <div class="col-md-12 rounded">
           <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" v-if="tabs[0].isActive">
+            <!-- Demographics <br><br> -->
             <div class="container">
               <div class="row">
                 <div class="col-md-12 text-center">
                   <img src="/avatar-placeholder.jpg" class="m-3" style="width: 200px;" alt=""><br>
-                  <button class="btn btn-dark px-4">Upload a Patient Photo</button>
+                  <button class="btn btn-dark px-4">Upload Photo</button>
                 </div>
               </div>
               <div class="row mt-3">
@@ -75,7 +76,7 @@
       <div class="row">
         <div class="col-md-12">
           <nuxt-link to="/md">
-            <button @click="showAlert('Delores Abernathy has been successfully registered.')" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">
+            <button @click="registerPatient()" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">
               Register New Patient
             </button>
           </nuxt-link>
@@ -100,7 +101,7 @@ export default {
       },
     ]
 
-    this.$store.commit('increment', path)
+    this.$store.commit('updatePath', path)
   },
   methods: {
     getTab: function (tabName) {
@@ -124,6 +125,20 @@ export default {
     },
     showAlert: function (msg) {
       alert(msg)
+    },
+    registerPatient: function () {
+      this.showAlert('Successfully registered.')
+
+      let payload = {
+        name: 'Delores Abernathy (from App)',
+        gender: 'M',
+        age: 99,
+        phone: '1-415-555-1234',
+        location: 'Hyperbad, IN',
+        creator: 'Dr. Akshit Gupta',
+      }
+
+      this.$store.commit('registerPatient', payload)
     }
   },
   data() {

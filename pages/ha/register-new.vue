@@ -127,7 +127,16 @@ export default {
       alert(msg)
     },
     registerPatient: function () {
-      this.$store.commit('registerPatient', 'empty payload')
+      let payload = {
+        name: 'Delores Abernathy (from App)',
+        gender: 'M',
+        age: 99,
+        phone: '1-415-555-1234',
+        location: 'Hyperbad, IN',
+        creator: 'Jane Doe',
+      }
+
+      this.$store.commit('registerPatient', payload)
     }
   },
   data() {

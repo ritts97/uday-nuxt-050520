@@ -200,41 +200,44 @@ export const mutations = {
   registerPatient(state, payload) {
     let patientCount = state.patientList.length;
 
+    console.log('.......')
+
+    let baseProfile = {
+      id: 'AAA' + patientCount++,
+      cluster: 'Cluster 001',
+      status: 'registered',
+      demographics: {},
+      visits: [{
+        episodeID: 'EP0 FU0',
+        type: 'register',
+        title: 'Episode 1',
+        created: '1 week ago',
+        lastUpdated: '1 week ago',
+        numFollowUps: '3',
+        complaint: {
+          chiefComplaint: '',
+          vitals: '',
+          genExams: '',
+          specExams: '',
+          addPhotos: ''
+        },
+        feedback: {
+          medicine: '',
+          investigations: '',
+          advice: '',
+        }
+      }],
+      services: [],
+      bills: [],
+      ...payload
+    }
+
+    console.log(baseProfile)
+
+    console.log('.......')
+
     state.patientList.unshift(
-      {
-        id: 'AAA' + patientCount++,
-        name: 'Delores Abernathy (from App)',
-        gender: 'M',
-        age: 99,
-        phone: '1-415-555-1234',
-        location: 'Hyperbad, IN',
-        creator: 'Jane Doe',
-        cluster: 'Cluster 001',
-        status: 'registered',
-        demographics: {},
-        visits: [{
-          episodeID: 'EP0 FU0',
-          type: 'register',
-          title: 'Episode 1',
-          created: '1 week ago',
-          lastUpdated: '1 week ago',
-          numFollowUps: '3',
-          complaint: {
-            chiefComplaint: '',
-            vitals: '',
-            genExams: '',
-            specExams: '',
-            addPhotos: ''
-          },
-          feedback: {
-            medicine: '',
-            investigations: '',
-            advice: '',
-          }
-        }],
-        services: [],
-        bills: []
-      }
+      baseProfile
     )
   },
 }
