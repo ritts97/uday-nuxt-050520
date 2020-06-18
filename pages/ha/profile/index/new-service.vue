@@ -9,6 +9,11 @@
                 New Service
               </button>
             </li>
+            <li class="list-inline-item">
+              <button class="btn btn-light px-3" role="button">
+                Billing
+              </button>
+            </li>
           </ul>
         </div>
       </div>
@@ -44,7 +49,7 @@
       <div class="row">
         <div class="col-md-12">
           <nuxt-link to="/ha/profile"> 
-            <button @click="showAlert()" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">Record New Service</button>
+            <button @click="recordNewService()" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">Record New Service</button>
           </nuxt-link>
         </div>
       </div>
@@ -72,13 +77,14 @@ export default {
     ])
   },
   methods: {
-    showAlert: function () {
-      alert(`This service has been recorded.`)
+    // showAlert: function () {
+    //   alert(`This service has been recorded.`)
+    // },
+    recordNewService: function () {
+      alert('New service has been recorded.')
+
+      this.$store.commit('recordNewService')
     },
-//     \n
-// Please review and print the bill for ₹ 9999.99 below.\n
-// Thank you for your hard work and dedication.
-      
     getTab: function (tabName) {
       let tabs = this.tabs
       let ref = 0

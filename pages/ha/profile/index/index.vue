@@ -47,7 +47,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr class="pointer" v-for="(visit, index) in this.$store.state.currPatient.episodes" :key="index" style="height: 40px;">
+                <tr class="pointer" v-for="(visit, index) in filterAllVisits" :key="index" style="height: 40px;">
                   <td scope="row">{{ visit.episodeID }}</td>
                   <td>
                     <div v-if="visit.link">
@@ -92,16 +92,16 @@ export default {
   },
   computed: {
     filterAllVisits: function () {
-      return this.$store.state.currPatient.episodes
+      return this.$store.state.currPatient.visits
     },
     filterEpisode: function () { 
-      return this.$store.state.currPatient.episodes.filter(visit => visit.type == 'episode').reverse()
+      return this.$store.state.currPatient.visits.filter(visit => visit.type == 'episode').reverse()
     },
     filterService: function () {
-      return this.$store.state.currPatient.episodes.filter(visit => visit.type == 'service').reverse()
+      return this.$store.state.currPatient.visits.filter(visit => visit.type == 'service').reverse()
     },
     filterBill: function () {
-      return this.$store.state.currPatient.episodes.filter(visit => visit.type == 'bill').reverse()
+      return this.$store.state.currPatient.visits.filter(visit => visit.type == 'bill').reverse()
     }
   },
   methods: {

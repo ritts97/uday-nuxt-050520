@@ -3,13 +3,13 @@
     <div class="container mt-0">
       <div class="row">
         <div class="col-md-6">
-          <nuxt-link to="/ha/profile/new-episode">
-            <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Allocate to Doctor</button>     
+          <nuxt-link to="/ha/profile/">
+            <button @click="sendAlert('The patient has been allocated to a doctor.')" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Allocate to Doctor</button>     
           </nuxt-link>
         </div>
         <div class="col-md-6">
-          <nuxt-link to="/ha/profile/new-episode">
-            <button disabled class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0  text-uppercase">Allocate To Queue</button>     
+          <nuxt-link to="/ha/profile/">
+            <button  @click="sendAlert('The patient has been allocated to a doctor.')" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0  text-uppercase">Allocate To Queue</button>     
           </nuxt-link>
         </div>
         <div class="col-md-12">
@@ -461,6 +461,9 @@ export default {
           tabs[i].isActive = false
         }
       }
+    },
+    sendAlert: function (msg) {
+      alert(msg)
     }
   },
   data() {

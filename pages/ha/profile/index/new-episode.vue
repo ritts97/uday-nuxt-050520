@@ -258,9 +258,6 @@ export default {
       this.$store.commit('updateStatus', 'queued')
       this.$store.commit('recordNewEpisode')
     },
-    // recordNewEpisode: function () {
-    //   this.$store.commit('recordNewEpisode')
-    // }
   },
   mounted () {
     this.$store.commit('updatePath', this.fullPath)

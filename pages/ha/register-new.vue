@@ -75,7 +75,7 @@
     <div class="container mb-3">
       <div class="row">
         <div class="col-md-12">
-          <nuxt-link to="/ha/profile?id=ABAB01">
+          <nuxt-link to="/ha">
             <button @click="showAlert('Successfully registered.'), registerPatient()" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">
               Register New Patient
             </button>

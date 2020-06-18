@@ -17,7 +17,7 @@ export const state = () => ({
     cluster: 'Cluster 001',
     status: 'registered',
     demographics: {},
-    episodes: [{
+    visits: [{
       episodeID: 'EP0 FU0',
       title: 'Registered',
       created: '1 week ago',
@@ -39,42 +39,91 @@ export const state = () => ({
     services: [],
     bills: []
   },
-  patientList: [
+  users: [
     {
-      id: 'AAA1',
-      name: 'Delores Abernathy (from Store)',
-      gender: 'M',
-      age: 99,
-      phone: '1-415-555-1234',
-      location: 'Hyperbad, IN',
-      creator: 'Jane Doe',
-      cluster: 'Cluster 001',
-      status: 'registered',
-      demographics: {},
-      episodes: [
-        {
-          episodeID: 'EP01 FU00',
-          title: 'Episode 1',
-          created: '1 week ago',
-          lastUpdated: '1 week ago',
-          numFollowUps: '3',
-          complaint: {
-            chiefComplaint: '',
-            vitals: '',
-            genExams: '',
-            specExams: '',
-            addPhotos: ''
-          },
-          feedback: {
-            medicine: '',
-            investigations: '',
-            advice: '',
-          }
-        }
+      name: 'has',
+      userList: [
+
       ],
-      services: [],
-      bills: []
-    }
+    },
+    {
+      name: 'mds',
+      userList: [
+
+      ],
+    },
+    {
+      name: 'admins',
+      userList: [
+
+      ],
+    },
+    {
+      name: 'superAdmins',
+      userList: [
+
+      ],
+    },
+  ],
+  patientList: [],
+  patientListDB: [
+    {
+      clusterName: 'Cluster AA1',
+      clusterID: 'AA1',
+      patients: [
+        {
+          name: 'Patient 001',
+          demographics: '',
+          visits: ''
+        }, 
+        {
+          name: 'Patient 002',
+          visits: ''
+        },
+        {
+          name: 'Patient 003',
+          visits: ''
+        }, {
+          name: 'Patient 004',
+          visits: ''
+        },
+        {
+          name: 'Patient 005',
+          visits: ''
+        }, {
+          name: 'Patient 006',
+          visits: ''
+        },
+      ]
+    }, {
+      clusterName: 'Cluster AA2',
+      clusterID: 'AA2',
+      patients: [
+        {
+          name: 'Patient 001',
+          demographics: '',
+          visits: ''
+        }, 
+        {
+          name: 'Patient 002',
+          visits: ''
+        },
+        {
+          name: 'Patient 003',
+          visits: ''
+        }, {
+          name: 'Patient 004',
+          visits: ''
+        },
+        {
+          name: 'Patient 005',
+          visits: ''
+        }, {
+          name: 'Patient 006',
+          visits: ''
+        },
+      ]
+    },
   ]
 })
 
@@ -93,13 +142,13 @@ export const mutations = {
     }
   },
   recordNewEpisode(state, payload) {
-    let episodeLen = state.currPatient.episodes.length
+    let episodeLen = state.currPatient.visits.length
 
-    state.currPatient.episodes.unshift(
+    state.currPatient.visits.unshift(
       {
         type: 'episode',
         billed: '',
-        link: '/ha/profile/profile-visit',
+        link: '/ha/profile/profile-visit?id=AAA1&visit=ep0fl01',
         episodeID: 'EP01 FL00',
         title: 'Episode ' + episodeLen,
         created: '1 week ago',
@@ -119,13 +168,41 @@ export const mutations = {
         }
       }
     )
+  },
+  recordNewService(state) {
+    console.log(state.currPatient.services)
 
-    console.log(state.currPatient.episodes)
+    state.currPatient.visits.unshift(
+      {
+        type: 'service',
+        billed: '',
+        link: '/ha/profile/profile-visit',
+        episodeID: 'SV 01',
+        title: 'New Service',
+        created: '1 week ago',
+        lastUpdated: '1 week ago',
+        numFollowUps: '',
+        complaint: {
+          chiefComplaint: '',
+          vitals: '',
+          genExams: '',
+          specExams: '',
+          addPhotos: ''
+        },
+        feedback: {
+          medicine: '',
+          investigations: '',
+          advice: '',
+        }
+      }
+    )
   },
   registerPatient(state, payload) {
+    let patientCount = state.patientList.length;
+
     state.patientList.unshift(
       {
-        id: 'AAA1',
+        id: 'AAA' + patientCount++,
         name: 'Delores Abernathy (from App)',
         gender: 'M',
         age: 99,
@@ -135,8 +212,9 @@ export const mutations = {
         cluster: 'Cluster 001',
         status: 'registered',
         demographics: {},
-        episodes: [{
-          episodeID: 'EP01 FU00',
+        visits: [{
+          episodeID: 'EP0 FU0',
+          type: 'register',
           title: 'Episode 1',
           created: '1 week ago',
           lastUpdated: '1 week ago',
