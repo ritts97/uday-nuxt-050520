@@ -18,7 +18,7 @@
         <div class="row mt-2">
           <div class="col-md-3 text-left" style="min-height: 200px;">
             <nuxt-link to="/ha/profile" class="text-decoration-none text-dark">
-              <img src="/avatar.png">
+              <img src="/avatar-md.png">
             </nuxt-link>
           </div>
           <div class="col-md-9">

@@ -1,5 +1,37 @@
 <template>
   <div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Select Allocation</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Allocate to Doctor <br><br>
+            <!-- {{ this.$store.state.clusters[0].mds }} -->
+
+            <span v-for="(md, index) in this.$store.state.clusters[0].mds" :key="index">
+              <input type="radio" class="mr-3" name="" id=""> {{ md.name }} – {{ md.status }} <br>
+            </span><br> or <br><br>
+            <input type="radio" class="mr-3" name="" id=""> Allocate to General Queue
+          </div>
+          <div class="modal-footer">
+            <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+
+            <nuxt-link to="/ha/profile" class="w-100">
+
+            <!-- <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0  text-uppercase">Allocate New Episode To Doctor</button>      -->
+              <button @click="addToQueue" type="button" data-dismiss="modal" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0 text-uppercase">Submit Allocation</button>
+            </nuxt-link>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="container mt-2">
       <div class="row">
         <div class="col-md-12 rounded">
@@ -193,9 +225,9 @@
           </nuxt-link>
         </div> -->
         <div class="col-md-12">
-          <nuxt-link to="/ha/profile/">
-            <button @click="addToQueue()" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0  text-uppercase">Add to Patient Queue</button>     
-          </nuxt-link>
+          <!-- <nuxt-link to="/ha/profile/"> -->
+            <button data-toggle="modal" data-target="#exampleModal" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0  text-uppercase">Allocate To Doctor</button>     
+          <!-- </nuxt-link> -->
         </div>
         <div class="col-md-12">
           <!-- <div v-if="showComplete">

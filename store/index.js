@@ -6,6 +6,31 @@ export const state = () => ({
       url: '/ha'
     }
   ],
+  clusters: [
+    {
+      name: 'AAA01',
+      mds: [
+        {
+          name: 'Akshit Gupta',
+          status: 'offline',
+          allocated: ['AAA01', 'AAA02', 'AAA03']
+        },
+        {
+          name: 'Kumar Shhin',
+          status: 'online',
+          allocated: ['AAA01', 'AAA02', 'AAA03']
+        }, {
+          name: 'Jamaica Samsung',
+          status: 'online',
+          allocated: ['AAA01', 'AAA02', 'AAA03']
+        }
+      ],
+      has: [],
+      patients: [
+
+      ]
+    }
+  ],
   clusterData: {
     clusterName: 'Cluster AAA01',
     regDoctors: 10,

@@ -1,9 +1,14 @@
 <template>
   <div>
     <div class="container">
-      <div class="row">
-        <div class="col-md-12 mb-1 text-center">
+      <div class="row mt-2">
+        <div class="col-md-6 text-left">
           Doctor's Dashboard
+        </div>
+        <div class="col-md-6 text-right">
+          Cluster AAA01 
+        </div>
+        <div class="col-md-12">
           <hr>
         </div>
       </div>
@@ -133,8 +138,8 @@
               <!-- </div> -->
             </li>
           </ul>
-          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3">
-            <input type="text" class="w-100 p-2" placeholder=":: Search by ID, name or phone number">
+          <div class="w-100 bg-white mb-3 mt-0 px-3 py-1">
+            <!-- <input type="text" class="w-100 p-2" placeholder=":: Search by ID, name or phone number"> -->
             <table class="table table-sm table-hover mt-3">
               <!--  v-if="!tabs[2].isActive" -->
               <thead>
@@ -151,7 +156,7 @@
               </thead>
               <tbody>
                 <tr class="pointer" v-for="(patient, index) in list" :key="index">
-                  <th scope="row">{{ patient.id }}</th>
+                  <td>{{ patient.id }}</td>
                   <td>
                     <nuxt-link to="/md/profile">{{ patient.name }}
                     </nuxt-link>
@@ -168,6 +173,9 @@
                     <img v-if="patient.status == 'queued'" src="circle-orange.svg" class="shape-status" alt="">
                     {{ patient.status }}
                   </td>
+                </tr>
+                <tr class="pointer" v-if='list.length === 0'>
+                  <td class="text-center pt-4" colspan="8">There are no patients in this list.</td>
                 </tr>
               </tbody>
             </table>
@@ -211,7 +219,7 @@ export default {
 
     this.list = this.patientList
 
-    this.$store.commit('increment', path)
+    this.$store.commit('updatePath', path)
   },
   methods: {
     getList: function (tabName) {
@@ -240,17 +248,25 @@ export default {
       })
     },
     getListLength: function (tabName) {
-      if (tabName == 'patients') {
-        return this.filterMyPatients.length
+      if (tabName == 'allocated') {
+        return 0
+        // return this.filterMyPatients.length
       }
-      else if (tabName == 'allocated') {
-        return this.filterAllocated.length
+      else if (tabName == 'queue') {
+        return 29
+        // return this.filterAllocated.length
       }
       else if (tabName == 'released') {
-        return this.filterReleased.length
+        return 999
+        // return this.filterReleased.length
       }
       else if (tabName == 'cluster') {
-        return this.filterCluster.length
+        return 999
+        // return this.filterCluster.length
+      }
+      else if (tabName == 'has') {
+        return 99
+        // return this.filterCluster.length
       }
       else if (tabName == 'global') {
         return this.filterGlobal.length
@@ -267,12 +283,12 @@ export default {
           isActive: true,
         },
         {
-          name: 'patients',
+          name: 'queue',
           title: 'Patients in Queue',
           isActive: false,
         },
         {
-          name: 'healthAssistants',
+          name: 'has',
           title: 'Health Assistants',
           isActive: false,
         },
@@ -280,88 +296,6 @@ export default {
           name: 'released',
           title: 'All Patients',
           isActive: false,
-        }
-      ],
-      masterList: [
-        {
-          id: 'AAA1',
-          name: 'Delores Abernathy',
-          gender: 'F',
-          age: 99,
-          phone: '1-415-555-1234',
-          location: 'Hyperbad, IN',
-          status: 'allocated',
-          creator: 'Jane Doe'
-        },
-        {
-          id: 'AAA1',
-          name: 'Delores Abernathy',
-          gender: 'F',
-          age: 99,
-          phone: '1-415-555-1234',
-          location: 'Hyperbad, IN',
-          status: 'allocated',
-          creator: 'Jane Doe'
-        },
-        {
-          id: 'AAA1',
-          name: 'Delores Abernathy',
-          gender: 'F',
-          age: 99,
-          phone: '1-415-555-1234',
-          location: 'Hyperbad, IN',
-          status: 'queued',
-          creator: 'Jane Doe'
-        },
-        {
-          id: 'AAA1',
-          name: 'Delores Abernathy',
-          gender: 'F',
-          age: 99,
-          phone: '1-415-555-1234',
-          location: 'Hyperbad, IN',
-          status: 'queued',
-          creator: 'Jane Doe'
-        },
-        {
-          id: 'AAA1',
-          name: 'Delores Abernathy',
-          gender: 'F',
-          age: 99,
-          phone: '1-415-555-1234',
-          location: 'Hyperbad, IN',
-          status: 'queued',
-          creator: 'Jane Doe'
-        },
-        {
-          id: 'AAA1',
-          name: 'Delores Abernathy',
-          gender: 'F',
-          age: 99,
-          phone: '1-415-555-1234',
-          location: 'Hyperbad, IN',
-          status: 'queued',
-          creator: 'John Smith'
-        },
-        {
-          id: 'AAA1',
-          name: 'Delores Abernathy',
-          gender: 'F',
-          age: 99,
-          phone: '1-415-555-1234',
-          location: 'Hyperbad, IN',
-          status: 'queued',
-          creator: 'John Smith'
-        },
-        {
-          id: 'AAA1',
-          name: 'Delores Abernathy',
-          gender: 'F',
-          age: 99,
-          phone: '1-415-555-1234',
-          location: 'Hyperbad, IN',
-          status: 'queued',
-          creator: 'John Smith'
         }
       ]
     }

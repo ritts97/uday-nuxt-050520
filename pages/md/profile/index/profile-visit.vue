@@ -296,9 +296,9 @@
           <div v-if="editable" class="container px-0">
             <div class="row">
               <div class="col-md-6">
-                <nuxt-link to="/ha/profile/new-episode">
+                <!-- <nuxt-link to="/ha/profile/new-episode"> -->
                   <button class="w-100 btn btn-dark rounded font-weight-bold py-3 px-0 mb-2 text-uppercase">Edit Complaint</button>     
-                </nuxt-link>
+                <!-- </nuxt-link> -->
               </div>
               <div class="col-md-6">
                 <nuxt-link to="/ha/profile/new-episode">

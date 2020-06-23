@@ -11,26 +11,32 @@
             </button>
           </div>
           <div class="modal-body">
-            Allocate to Doctor <br>
-            Allocate to Queue
+            Allocate to Doctor <br><br>
+            <!-- {{ this.$store.state.clusters[0].mds }} -->
+
+            <span v-for="(md, index) in this.$store.state.clusters[0].mds" :key="index">
+              <input type="radio" class="mr-3" name="" id=""> {{ md.name }} – {{ md.status }} <br>
+            </span><br> or <br><br>
+            <input type="radio" class="mr-3" name="" id=""> Allocate to General Queue
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+
+            <nuxt-link to="/ha/profile" class="w-100">
+
+            <!-- <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0  text-uppercase">Allocate New Episode To Doctor</button>      -->
+              <button @click="addToQueue" type="button" data-dismiss="modal" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0 text-uppercase">Submit Allocation</button>
+            </nuxt-link>
           </div>
         </div>
       </div>
     </div>
-<!-- 
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-      Launch demo modal
-    </button> -->
 
     <div class="container mt-0">
       <div class="row">
         <div class="col-md-12">
           <!-- <nuxt-link to="/ha/profile/"> -->
-            <button  @click="sendAlert('The patient has been allocated to a doctor.')"  data-toggle="modal" data-target="#exampleModal" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Allocate Latest Visit</button>     
+            <button  @click="sendAlert('The patient has been allocated to a doctor.')"  data-toggle="modal" data-target="#exampleModal" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Allocate for Review</button>     
           <!-- </nuxt-link> -->
         </div>
         <!-- <div class="col-md-6">
@@ -455,6 +461,18 @@
 <script>
 export default {
   layout: 'dashboard',
+  mounted() {
+    this.$store.commit('updatePath', [
+      {
+        title: 'Dashboard',
+        url: '/ha'
+      },
+      {
+        title: 'Patient\'s Profile',
+        url: '/ha/profile'
+      }
+    ])
+  },
   methods: {
     getSubTab: function (tabName) {
       let tabs = this.subTabs
