@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="container">
+    <!-- <div class="container">
       <div class="row mt-2">
         <div class="col-md-6 text-left">
           Patient's Profile
@@ -12,7 +12,7 @@
           <hr>
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="container">
       <transition name="u-fade">
         <div class="row mt-2">

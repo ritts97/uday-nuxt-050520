@@ -1,53 +1,41 @@
 <template>
   <div>
-    <div class="container">
-      <div class="row mt-2">
-        <div class="col-md-6 text-left">
-          Patient's Profile
-        </div>
-        <div class="col-md-6 text-right">
-          Cluster AAA01 
-        </div>
-        <div class="col-md-12">
-          <hr>
-        </div>
-      </div>
-    </div>
-    <div class="container mt-2">
+    <div class="container mt-3">
       <transition name="u-fade">
         <div class="row mt-2">
           <div class="col-md-3 text-left" style="min-height: 200px;">
             <nuxt-link to="/ha/profile" class="text-decoration-none text-dark">
-              <img src="/avatar-woman.png">
+              <img src="/avatar-man.png">
             </nuxt-link>
           </div>
           <div class="col-md-9">
             <div class="row">
               <div class="col-md-6">
-                <h5 class="d-inline text-decoration-none">Delores Abernathy</h5>  
+                <h5 class="d-inline text-decoration-none">{{ currPatient.demographics.name }} (::{{ this.$store.state.currPatient.id }})</h5>  
               </div>
               <div class="col-md-6 text-right text-capitalize">
-                <img v-if="this.$store.state.currPatient.status == 'registered'" src="/circle-green.svg" class="shape-status" alt="">
-                <img v-if="this.$store.state.currPatient.status == 'released'" src="/circle-yellow.svg" class="shape-status" alt="">
-                <img v-if="this.$store.state.currPatient.status == 'allocated'" src="/circle-red.svg" class="shape-status" alt="">
-                <img v-if="this.$store.state.currPatient.status == 'queued'" src="/circle-orange.svg" class="shape-status" alt="">
-                {{ this.$store.state.currPatient.status }}
+                <img v-if="currPatient.status == 'registered'" src="/circle-green.svg" class="shape-status" alt="">
+                <img v-if="currPatient.status == 'released'" src="/circle-yellow.svg" class="shape-status" alt="">
+                <img v-if="currPatient.status == 'allocated'" src="/circle-red.svg" class="shape-status" alt="">
+                <img v-if="currPatient.status == 'queued'" src="/circle-orange.svg" class="shape-status" alt="">
+                {{ currPatient.status }}
               </div>
             </div>
             <br>
             
             <div class="row">
               <div class="col-md-6">
-                Industrial Farmer <br>
-                1-415-555-1234 <br>
-                Son of Bernard <br><br>
-                District, State <br><br>
+                {{ currPatient.demographics.occupation }} <br>
+                {{ currPatient.demographics.phone }} <br>
+                {{ currPatient.demographics.hswd }} <br><br>
+                {{ currPatient.demographics.location }}
               </div>
               <div class="col-md-6">
-                Address 1 <br>
-                Address 2 <br>
-                <br><br>
-                Police Station<br><br>
+                {{ currPatient.demographics.address }} <br>
+                {{ currPatient.demographics.address2 }} <br>
+                {{ currPatient.demographics.age }} years old <br>
+                <br>
+                {{ currPatient.demographics.police }}<br><br>
               </div>
             </div>
           </div>
@@ -70,6 +58,9 @@
 export default {
   layout: 'dashboard',
   computed: {
+    currPatient: function () {
+      return this.$store.state.currPatient
+    },
     routerViewKey () {
       return this.$route.fullPath
     }
@@ -83,14 +74,15 @@ export default {
           url: '/ha'
         },
         {
-          title: 'Delores Abernathy',
-          url: '/ha/profile'
+          title: 'Patient\'s Profile',
+          url: '/ha'
         },
       ]
     }
   },
   mounted () {
-    // this.$store.commit('updatePath', this.fullPath)
+    console.log('Hello')
+    this.$store.commit('updatePath', this.fullPath)
   },
   transition: 'u-fade'
 }

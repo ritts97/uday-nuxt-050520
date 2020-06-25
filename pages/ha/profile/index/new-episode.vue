@@ -10,22 +10,15 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
-            Allocate to Doctor <br><br>
-            <!-- {{ this.$store.state.clusters[0].mds }} -->
-
-            <span v-for="(md, index) in this.$store.state.clusters[0].mds" :key="index">
-              <input type="radio" class="mr-3" name="" id=""> {{ md.name }} – {{ md.status }} <br>
-            </span><br> or <br><br>
-            <input type="radio" class="mr-3" name="" id=""> Allocate to General Queue
+          <div class="modal-body mb-2">
+            Allocate to an available doctor:<br><br>
+            <span v-for="(md, index) in this.$store.state.udayDb.clusters['cluster001'].mds" :key="index">
+              <input type="radio" class="mr-3" name="" id=""> {{ md.demographics.name }} ({{ md.status }})<br>
+            </span>
+            <input type="radio" class="mr-3" name="" id=""> or add to General Queue
           </div>
           <div class="modal-footer">
-            <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-
-            <nuxt-link to="/ha/profile" class="w-100">
-
-            <!-- <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0  text-uppercase">Allocate New Episode To Doctor</button>      -->
-              <button @click="addToQueue" type="button" data-dismiss="modal" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0 text-uppercase">Submit Allocation</button>
+            <nuxt-link to="/ha/profile" class="w-100"><button @click="addToQueue" type="button" data-dismiss="modal" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0 text-uppercase">Submit Allocation</button>
             </nuxt-link>
           </div>
         </div>
@@ -41,11 +34,11 @@
                 New Episode
               </button>
             </li>
-            <li class="list-inline-item">
+            <!-- <li class="list-inline-item">
               <button class="btn btn-light px-3" role="button">
                 Billing
               </button>
-            </li>
+            </li> -->
           </ul>
         </div>
       </div>
@@ -226,7 +219,7 @@
         </div> -->
         <div class="col-md-12">
           <!-- <nuxt-link to="/ha/profile/"> -->
-            <button data-toggle="modal" data-target="#exampleModal" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0  text-uppercase">Allocate To Doctor</button>     
+            <button data-toggle="modal" data-target="#exampleModal" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0  text-uppercase">Allocate for Feedback</button>     
           <!-- </nuxt-link> -->
         </div>
         <div class="col-md-12">
@@ -290,10 +283,10 @@ export default {
       tabs[ref + 1].isActive = true
     },
     addToQueue: function () {
-      alert('Added to Patient Queue.')
-
-      this.$store.commit('updateStatus', 'queued')
+      // alert('Added to Patient Queue.')
+      this.$store.commit('updateStatus', 'allocated')
       this.$store.commit('recordNewEpisode')
+      this.$store.commit('updateCurrPatient')
     },
   },
   mounted () {
@@ -307,7 +300,7 @@ export default {
           url: '/ha'
         },
         {
-          title: 'Delores Abernathy',
+          title: 'Patient\'s Profile',
           url: '/ha/profile'
         },
         {
@@ -349,43 +342,3 @@ export default {
   },
 }
 </script>
-
-<style>
-.list-inline-item {
-  margin-right: 16px !important;
-}
-
-thead tr th {
-  border-top: none !important;
-}
-
-.btn-dark {
-  background-color: #444f5a;
-  border: none;
-}
-
-.btn:focus {
-  outline: none;
-  box-shadow: none;
-}
-
-.btn-dark:hover {
-  background-color: #5d666e;
-  border: none;
-}
-
-.btn-light {
-  background-color: #e4e4e4;
-  border: none;
-}
-
-.shape-status {
-  width: 12px;
-  margin-right: 7px;
-  margin-bottom: 4px;
-}
-
-.pointer:hover {
-  cursor: pointer;
-}
-</style>

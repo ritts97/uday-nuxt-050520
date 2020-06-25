@@ -1,173 +1,65 @@
+import udayDBStore from "./udayStore"
+
 export const state = () => ({
   counter: 10,
   currPath: [
     {
-      title: 'Dashboard',
-      url: '/ha'
+      title: "Dashboard",
+      url: "/ha"
     }
   ],
-  clusters: [
-    {
-      name: 'AAA01',
-      mds: [
-        {
-          name: 'Akshit Gupta',
-          status: 'offline',
-          allocated: ['AAA01', 'AAA02', 'AAA03']
-        },
-        {
-          name: 'Kumar Shhin',
-          status: 'online',
-          allocated: ['AAA01', 'AAA02', 'AAA03']
-        }, {
-          name: 'Jamaica Samsung',
-          status: 'online',
-          allocated: ['AAA01', 'AAA02', 'AAA03']
-        }
-      ],
-      has: [],
-      patients: [
-
-      ]
-    }
-  ],
-  clusterData: {
-    clusterName: 'Cluster AAA01',
-    regDoctors: 10,
-    regHas: 10,
-    regPatients: 999,
-    medicineInStock: 999,
-    patientAnalytics: {
-      avgAge: 99,
-      gender: 99,
-      occupations: 99,
-      avgBMI: 99,
-      avgBpRange: 99,
-      mostCommonCC: 99,
-    }
-  },
-  clusterMedicine: [],
-  currPatient: {
-    id: 'AAA1',
-    name: 'Delores Abernathy (from Store)',
-    gender: 'M',
-    age: 99,
+  currCluster: 'cluster001',
+  currUser: {
+    name: 'Jane Doe (RN)',
+    id: 'ha0001',
+    role: 'ha',
+    status: 'online',
+    cluster: 'cluster0001',
+    bio: 'Hello, my name is Jane Doe, and I\'m studying to become a nurse! I\'m happy help you!',
     phone: '1-415-555-1234',
-    location: 'Hyperbad, IN',
-    creator: 'Jane Doe',
-    cluster: 'Cluster 001',
-    status: 'registered',
-    demographics: {},
-    visits: [{
-      episodeID: 'EP0 FU0',
-      title: 'Registered',
-      created: '1 week ago',
-      lastUpdated: '1 week ago',
-      numFollowUps: '3',
-      complaint: {
-        chiefComplaint: '',
-        vitals: '',
-        genExams: '',
-        specExams: '',
-        addPhotos: ''
-      },
-      feedback: {
-        medicine: '',
-        investigations: '',
-        advice: '',
-      }
-    }],
-    services: [],
-    bills: []
+    address: '2222 Market Street',
+    location: 'Calcutta, IN'
   },
-  users: [
-    {
-      name: 'has',
-      userList: [
-
-      ],
+  currPatient: {
+    id: "",
+    status: "",
+    regBy: "",
+    demographics: {
+      name: "",
+      occupation: '',
+      gender: "",
+      age: "",
+      hswd: '',
+      address: "",
+      address2: "",
+      police: "",
+      phone: "",
+      location: ""
     },
-    {
-      name: 'mds',
-      userList: [
-
-      ],
-    },
-    {
-      name: 'admins',
-      userList: [
-
-      ],
-    },
-    {
-      name: 'superAdmins',
-      userList: [
-
-      ],
-    },
-  ],
-  patientList: [],
-  patientListDB: [
-    {
-      clusterName: 'Cluster AA1',
-      clusterID: 'AA1',
-      medicine: [],
-      patients: [
-        {
-          name: 'Patient 001',
-          demographics: '',
-          visits: ''
-        }, 
-        {
-          name: 'Patient 002',
-          visits: ''
+    episodes: [{
+        episodeID: "EP0 FL0",
+        title: "Registered",
+        created: "1 week ago",
+        lastUpdated: "1 week ago",
+        numFollowUps: "3",
+        complaint: {
+          chiefComplaint: "",
+          vitals: "",
+          genExams: "",
+          specExams: "",
+          addPhotos: ""
         },
-        {
-          name: 'Patient 003',
-          visits: ''
-        }, {
-          name: 'Patient 004',
-          visits: ''
-        },
-        {
-          name: 'Patient 005',
-          visits: ''
-        }, {
-          name: 'Patient 006',
-          visits: ''
-        },
-      ]
-    }, {
-      clusterName: 'Cluster AA2',
-      clusterID: 'AA2',
-      patients: [
-        {
-          name: 'Patient 001',
-          demographics: '',
-          visits: ''
-        }, 
-        {
-          name: 'Patient 002',
-          visits: ''
-        },
-        {
-          name: 'Patient 003',
-          visits: ''
-        }, {
-          name: 'Patient 004',
-          visits: ''
-        },
-        {
-          name: 'Patient 005',
-          visits: ''
-        }, {
-          name: 'Patient 006',
-          visits: ''
-        },
-      ]
-    },
-  ]
-})
+        feedback: {
+          medicine: "",
+          investigations: "",
+          advice: ""
+        }
+      }
+    ],
+    services: []
+  },
+  ...udayDBStore,
+});
 
 export const mutations = {
   updatePath(state, payload) {
@@ -176,6 +68,16 @@ export const mutations = {
   updateStatus(state, payload) {
     state.currPatient.status = payload
   },
+  updateCurrPatient(state, payload) {
+    let CLUSTER_ID = state.currCluster
+    let PATIENT_ID = payload.id || state.currPatient.id
+
+    let patientProf = state.udayDb.clusters[CLUSTER_ID].patients.find(patient => patient.id === PATIENT_ID) || state.currPatient
+
+    console.log(patientProf)
+
+    state.currPatient = patientProf
+  },
   increment(state, payload) {
     if (payload) {
       state.counter += payload
@@ -183,46 +85,26 @@ export const mutations = {
       state.counter++
     }
   },
-  recordNewEpisode(state, payload) {
-    let episodeLen = state.currPatient.visits.length
+  recordNewEpisode(state, payload) {    
+    let CLUSTER_ID = state.currCluster
+    let PATIENT_ID = state.currPatient.id
 
-    state.currPatient.visits.unshift(
+    let episodeLen = state.udayDb.clusters[CLUSTER_ID].patients.find(patient => patient.id === PATIENT_ID).episodes.length
+
+    let d = new Date();
+
+    console.log('recorded new episode', episodeLen)
+    console.log(PATIENT_ID)
+
+    state.udayDb.clusters[CLUSTER_ID].patients.find(patient => patient.id === PATIENT_ID).episodes.push(
       {
         type: 'episode',
         billed: '',
         link: '/ha/profile/profile-visit?id=AAA1&visit=ep0fl01',
-        episodeID: 'EP01 FL00',
+        episodeID: 'PA001EP1',
         title: 'Episode ' + episodeLen,
-        created: '1 week ago',
-        lastUpdated: '1 week ago',
-        numFollowUps: '3',
-        complaint: {
-          chiefComplaint: '',
-          vitals: '',
-          genExams: '',
-          specExams: '',
-          addPhotos: ''
-        },
-        feedback: {
-          medicine: '',
-          investigations: '',
-          advice: '',
-        }
-      }
-    )
-  },
-  recordNewService(state) {
-    console.log(state.currPatient.services)
-
-    state.currPatient.visits.unshift(
-      {
-        type: 'service',
-        billed: '',
-        link: '/ha/profile/profile-visit',
-        episodeID: 'SV 01',
-        title: 'New Service',
-        created: '1 week ago',
-        lastUpdated: '1 week ago',
+        created: d.getTime(),
+        lastUpdated: '',
         numFollowUps: '',
         complaint: {
           chiefComplaint: '',
@@ -239,23 +121,29 @@ export const mutations = {
       }
     )
   },
-  registerPatient(state, payload) {
-    let patientCount = state.patientList.length;
+  recordNewService(state) {
+    let CLUSTER_ID = state.currCluster
+    let PATIENT_ID = state.currPatient.id
 
-    console.log('.......')
+    let d = new Date();
+    // get cluster
+    // get patientID
 
-    let baseProfile = {
-      id: 'AAA' + patientCount++,
-      cluster: 'Cluster 001',
-      status: 'registered',
-      demographics: {},
-      visits: [{
-        episodeID: 'EP0 FU0',
-        type: 'register',
-        title: 'Episode 1',
-        created: '1 week ago',
-        lastUpdated: '1 week ago',
-        numFollowUps: '3',
+    // state.udayDb.clusters[CLUSTER_ID].patients.find(patient => patient.id === PATIENT_ID).services.push
+
+    // find patient
+    // add service to services arr
+
+    state.udayDb.clusters[CLUSTER_ID].patients.find(patient => patient.id === PATIENT_ID).services.push(
+      {
+        type: 'service',
+        billed: '',
+        link: '/ha/profile/profile-visit',
+        episodeID: 'SV 01',
+        title: 'New Service',
+        created: d.getTime(),
+        lastUpdated: '',
+        numFollowUps: '',
         complaint: {
           chiefComplaint: '',
           vitals: '',
@@ -268,24 +156,48 @@ export const mutations = {
           investigations: '',
           advice: '',
         }
-      }],
-      services: [],
-      bills: [],
-      ...payload
-    }
+      }
+    )
+  }, 
+  registerPatient(state, payload) {
+    let CLUSTER_ID = state.currCluster
+    let PATIENT_COUNT = state.udayDb.clusters[CLUSTER_ID].patients.length + 1
 
-    console.log(baseProfile)
+    let d = new Date();
 
-    console.log('.......')
+    // console.log('xxxxxx')
+    // console.log(PATIENT_COUNT)
 
-    state.patientList.unshift(
+    let baseProfile = {
+      id: "pa0" + PATIENT_COUNT,
+      status: "registered",
+      regBy: "Jane Doe",
+      demographics: {
+        ...payload
+      },
+      episodes: [
+        {
+          episodeID: "PA01EP0",
+          title: "Registered",
+          created: d.getTime(),
+          lastUpdated: "",
+          numFollowUps: "",
+        }
+      ],
+      services: []
+    };
+
+
+    console.log('xxxxxx')
+    state.udayDb.clusters[CLUSTER_ID].patients.push(
       baseProfile
     )
   },
 }
 
 export const actions = {
-  increment (context, payload) {
-    context.commit('increment', payload)
+  recordEpisodeUpdateCurrPat (context, payload) {
+    context.commit('recordNewEpisode', payload)
+    context.commit('updateCurrPatient')
   }
 }

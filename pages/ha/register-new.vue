@@ -2,27 +2,13 @@
   <div>
     <div class="container">
       <div class="row mt-2">
-        <div class="col-md-6 text-left">
-          Register a New Patient
-        </div>
-        <div class="col-md-6 text-right">
-          Cluster AAA01 
-        </div>
-        <div class="col-md-12">
-          <hr>
-        </div>
-      </div>
-    </div>
-    <div class="container">
-      <div class="row">
         <div class="col-md-12 rounded">
-          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" v-if="tabs[0].isActive">
-            <!-- Demographics <br><br> -->
+          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-4 pb-3">
             <div class="container">
               <div class="row">
                 <div class="col-md-12 text-center">
                   <img src="/avatar-placeholder.jpg" class="m-3" style="width: 200px;" alt=""><br>
-                  <button class="btn btn-dark px-4">Upload Photo</button>
+                  <button class="btn btn-dark px-4 mb-3">Upload Photo</button>
                 </div>
               </div>
               <div class="row mt-3">
@@ -30,18 +16,18 @@
                   General Information
                 </div>
                 <div class="col-md-6">
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="Full Name">
+                  <input type="text" class="w-100 p-2 mb-3" v-model="patientData.name" placeholder="Full Name">
                   <select class="custom-select mb-3">
                     <option selected disabled>Gender</option>
                     <option value="1">Male</option>
                     <option value="2">Female</option>
                     <option value="3">Other</option>
                   </select>
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="Phone Number">
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="H/W/S/D of">
+                  <input type="text" class="w-100 p-2 mb-3" v-model="patientData.phone" placeholder="Phone Number">
+                  <input type="text" class="w-100 p-2 mb-3" v-model="patientData.hswd" placeholder="H/W/S/D of">
                 </div>
                 <div class="col-md-6">
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="Age">
+                  <input type="text" class="w-100 p-2 mb-3" v-model="patientData.age" placeholder="Age">
                   <select class="custom-select mb-3">
                     <option selected disabled>Occupation</option>
                     <option value="1">Industrial Farmer</option>
@@ -57,12 +43,12 @@
                   Location Information
                 </div>
                 <div class="col-md-6">
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="Address 1">
+                  <input type="text" class="w-100 p-2 mb-3" v-model="patientData.address" placeholder="Address 1">
                   <input type="text" class="w-100 p-2 mb-3" placeholder="District">
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="Police Station">
+                  <input type="text" class="w-100 p-2 mb-3" v-model="patientData.police" placeholder="Police Station">
                 </div>
                 <div class="col-md-6">
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="Address 2">
+                  <input type="text" class="w-100 p-2 mb-3" v-model="patientData.address2" placeholder="Address 2">
                   <select class="custom-select mb-3">
                     <option selected disabled>State</option>
                     <option value="1">Maharashtra</option>
@@ -81,7 +67,7 @@
       <div class="row">
         <div class="col-md-12">
           <nuxt-link to="/ha">
-            <button @click="showAlert('Successfully registered.'), registerPatient()" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">
+            <button @click="registerPatient()" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">
               Register New Patient
             </button>
           </nuxt-link>
@@ -97,7 +83,7 @@ export default {
   mounted() {
     let path = [
       {
-        title: 'Dashboard',
+        title: 'HA\'s Dashboard',
         url: '/ha'
       },
       {
@@ -128,73 +114,28 @@ export default {
         }
       }
     },
-    showAlert: function (msg) {
-      alert(msg)
-    },
     registerPatient: function () {
-      let payload = {
-        name: 'Delores Abernathy (from App)',
-        gender: 'M',
-        age: 99,
-        phone: '1-415-555-1234',
-        location: 'Hyperbad, IN',
-        creator: 'Jane Doe',
-      }
+      let payload = this.patientData
 
       this.$store.commit('registerPatient', payload)
+      this.$store.commit('updateCurrPat', payload)
     }
   },
   data() {
     return {
-      list: [],
-      tabs: [
-        {
-          name: 'patients',
-          title: 'Demographics',
-          isActive: true,
-        }
-      ]
+      patientData: {
+        name: "Delores Abernathy",
+        occupation: 'Industrial Worker',
+        gender: "m",
+        age: "29",
+        hswd: 'H/S/W/D',
+        address: "4444 Market St.",
+        address2: "Address 2",
+        police: "Police Station",
+        phone: "1-415-555-5555",
+        location: "Hyderabad, IN"
+      }
     }
-  },
+  }
 }
 </script>
-
-<style>
-.list-inline-item {
-  margin-right: 16px !important;
-}
-
-thead tr th {
-  border-top: none !important;
-}
-
-.btn-dark {
-  background-color: #444f5a;
-  border: none;
-}
-
-.btn:focus {
-  outline: none;
-  box-shadow: none;
-}
-
-.btn-dark:hover {
-  background-color: #5d666e;
-  border: none;
-}
-
-.btn-light {
-  background-color: #e4e4e4;
-  border: none;
-}
-
-.shape-status {
-  width: 12px;
-  margin-right: 7px;
-  margin-bottom: 4px;
-}
-
-.pointer:hover {
-  cursor: pointer;
-}
-</style>

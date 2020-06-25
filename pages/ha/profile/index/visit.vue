@@ -14,18 +14,16 @@
             Allocate to Doctor <br><br>
             <!-- {{ this.$store.state.clusters[0].mds }} -->
 
-            <span v-for="(md, index) in this.$store.state.clusters[0].mds" :key="index">
-              <input type="radio" class="mr-3" name="" id=""> {{ md.name }} – {{ md.status }} <br>
+            <span v-for="(md, index) in this.$store.state.udayDb.clusters.cluster001.mds" :key="index">
+              <input type="radio" class="mr-3" name="" id=""> {{ md.demographics.name }} – {{ md.status }} <br>
             </span><br> or <br><br>
             <input type="radio" class="mr-3" name="" id=""> Allocate to General Queue
           </div>
           <div class="modal-footer">
             <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-
-            <nuxt-link to="/ha/profile" class="w-100">
-
+            <nuxt-link to="/ha/profile/visit" class="w-100">
             <!-- <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0  text-uppercase">Allocate New Episode To Doctor</button>      -->
-              <button @click="addToQueue" type="button" data-dismiss="modal" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0 text-uppercase">Submit Allocation</button>
+              <button @click="addToQueue()" type="button" data-dismiss="modal" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0 text-uppercase">Submit Allocation</button>
             </nuxt-link>
           </div>
         </div>
@@ -36,7 +34,8 @@
       <div class="row">
         <div class="col-md-12">
           <!-- <nuxt-link to="/ha/profile/"> -->
-            <button  @click="sendAlert('The patient has been allocated to a doctor.')"  data-toggle="modal" data-target="#exampleModal" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Allocate for Review</button>     
+          <!-- {{ this.$store.state.currPatient.status === 'allocated'}} -->
+            <button data-toggle="modal" :disabled="this.$store.state.currPatient.status === 'allocated'" data-target="#exampleModal" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Allocate for Doctor's Review</button>     
           <!-- </nuxt-link> -->
         </div>
         <!-- <div class="col-md-6">
@@ -467,10 +466,10 @@ export default {
         title: 'Dashboard',
         url: '/ha'
       },
-      {
-        title: 'Patient\'s Profile',
-        url: '/ha/profile'
-      }
+      // {
+      //   title: 'Patient\'s Profile',
+      //   url: '/ha/profile'
+      // }
     ])
   },
   methods: {
@@ -506,8 +505,8 @@ export default {
         }
       }
     },
-    sendAlert: function (msg) {
-      // alert(msg)
+    addToQueue: function (msg) {
+      this.$store.commit("updateStatus", 'allocated')
     }
   },
   data() {

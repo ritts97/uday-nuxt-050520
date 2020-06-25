@@ -5,11 +5,11 @@
       <div class="w-100 bg-dark text-white">
         <div class="container bg-dark">
           <div class="row py-2">
-            <div class="col-md-6 font-weight-bold pt-2" style="font-size: 24px;"> 
-              <nuxt-link to="/" class="text-white text-decoration-none">UD.</nuxt-link>
-            </div>
-            <div class="col-md-6 py-3 text-right">
-              <div class="dropdown d-inline">
+            <div class="col-md-12 pt-2"> 
+              <span class="font-weight-bold" style="font-size: 24px;">
+                <nuxt-link to="/" class="text-white text-decoration-none">UD.</nuxt-link>
+              </span>
+              <div class="float-right pt-1 dropdown d-inline">
                 <span class="dropdown-toggle dropdown-no-caret pointer" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   jane.doe@udayhealth.org
                 </span>
@@ -17,9 +17,9 @@
                   <nuxt-link to="/ha/edit-profile" class="dropdown-item">Edit Profile</nuxt-link>
                   <nuxt-link to="/ha/edit-password" class="dropdown-item">Change Password</nuxt-link>
                 </div>
+                  | 
+                <nuxt-link to="/" class="text-white">Logout</nuxt-link>
               </div>
-              | 
-              <nuxt-link to="/" class="text-white">Logout</nuxt-link>
             </div>
           </div>
         </div>
@@ -27,7 +27,7 @@
     </div>
 
     <!-- Start Body -->
-    <div style="margin-top: 84px;">
+    <div style="margin-top: 72px;">
       <div class="container">
         <div class="row">
           <div class="col-md-12">
@@ -44,8 +44,14 @@
                 <span v-if="index !== currPath.length - 1"> > </span>
               </span>
             </small>
+            <div class="float-right d-inline">
+              <small>Cluster 0001</small>
+            </div>
             <!-- Lorem ipsum dolor sit amet. {{ counter }} <button @click="increment()">Click</button> <br> -->
             <!-- <button @click="increment()">Click</button> -->
+          </div>
+          <div class="col-md-12">
+            <hr>
           </div>
         </div>
       </div>

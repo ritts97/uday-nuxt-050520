@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="container">
+    <!-- <div class="container">
       <div class="row mt-2">
         <div class="col-md-6 text-left">
           Doctor's Dashboard
@@ -12,12 +12,12 @@
           <hr>
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="container">
       <transition name="u-fade">
         <div class="row mt-2">
           <div class="col-md-3 text-left" style="min-height: 200px;">
-            <nuxt-link to="/ha/profile" class="text-decoration-none text-dark">
+            <nuxt-link to="/md/profile" class="text-decoration-none text-dark">
               <img src="/avatar-super.png">
             </nuxt-link>
           </div>
@@ -52,14 +52,14 @@
         </div>
       </div>
     </div>
-    <div class="container">
-      <div class="row">
+    <!-- <div class="container">
+      <div class="row"> -->
         <!-- <div class="col-md-12">
           <nuxt-link to="/md/register-new">
             <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">Register a New Patient</button>
           </nuxt-link>
         </div> -->
-        <div class="col-md-6 mt-2">
+        <!-- <div class="col-md-6 mt-2">
           <nuxt-link to="/md/register-new">
             <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">Register a New Patient</button>
           </nuxt-link>
@@ -68,9 +68,9 @@
           <nuxt-link to="/md/register-ha">
             <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">Register a New Health Assistant</button>
           </nuxt-link>
-        </div>
-      </div>
-    </div>
+        </div> -->
+      <!-- </div>
+    </div> -->
     <!-- <div class="container">
       <div class="row pt-3">
         <div class="col-md-12 rounded">
@@ -126,7 +126,7 @@
         </div>
       </div>
     </div> -->
-    <div class="container mt-3">
+    <div class="container mt-2">
       <div class="row">
         <div class="col-md-12 rounded">
           <ul class="list-inline mb-2">
@@ -155,17 +155,18 @@
                 </tr>
               </thead>
               <tbody>
-                <tr class="pointer" v-for="(patient, index) in list" :key="index">
-                  <td>{{ patient.id }}</td>
+                
+                <tr class="pointer" v-for="(patient, index) in list.slice().reverse()" :key="index">
+                  <td class="text-uppercase">{{ patient.id }}</td>
                   <td>
-                    <nuxt-link to="/md/profile">{{ patient.name }}
+                    <nuxt-link to="/md/profile">{{ patient.demographics.name }}
                     </nuxt-link>
                   </td>
-                  <td>{{ patient.gender }}</td>
-                  <td>{{ patient.age }}</td>
-                  <td>{{ patient.phone }}</td>
-                  <td>{{ patient.location }}</td>
-                  <td>{{ patient.creator }}</td>
+                  <td>{{ patient.demographics.gender }}</td>
+                  <td>{{ patient.demographics.age }}</td>
+                  <td>{{ patient.demographics.phone }}</td>
+                  <td>{{ patient.demographics.location }}</td>
+                  <td>{{ patient.demographics.creator }}</td>
                   <td class="text-capitalize">
                     <img v-if="patient.status == 'registered'" src="circle-green.svg" class="shape-status" alt="">
                     <img v-if="patient.status == 'released'" src="circle-yellow.svg" class="shape-status" alt="">
@@ -191,7 +192,7 @@ export default {
   layout: 'dashboard',
   computed: {
     patientList () {
-      return this.$store.state.patientList
+      return this.$store.state.udayDb.clusters.cluster001.patients
     },
     filterMyPatients: function () {
       return this.list
@@ -212,7 +213,7 @@ export default {
   mounted () {
     let path = [
       {
-        title: 'Dashboard',
+        title: 'Doctor\'s Dashboard',
         url: '/md'
       },
     ]
@@ -257,15 +258,15 @@ export default {
         // return this.filterAllocated.length
       }
       else if (tabName == 'released') {
-        return 999
+        return this.$store.state.udayDb.clusters.cluster001.patients.length
         // return this.filterReleased.length
       }
       else if (tabName == 'cluster') {
-        return 999
+        return this.$store.state.udayDb.clusters.cluster001.patients.length
         // return this.filterCluster.length
       }
       else if (tabName == 'has') {
-        return 99
+        return this.$store.state.udayDb.clusters.cluster001.has.length
         // return this.filterCluster.length
       }
       else if (tabName == 'global') {
@@ -283,18 +284,18 @@ export default {
           isActive: true,
         },
         {
-          name: 'queue',
-          title: 'Patients in Queue',
+          name: 'released',
+          title: 'All Other Patients',
           isActive: false,
         },
+        // {
+        //   name: 'queue',
+        //   title: 'Patients in Queue',
+        //   isActive: false,
+        // },
         {
           name: 'has',
           title: 'Health Assistants',
-          isActive: false,
-        },
-        {
-          name: 'released',
-          title: 'All Patients',
           isActive: false,
         }
       ]

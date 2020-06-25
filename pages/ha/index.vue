@@ -1,46 +1,33 @@
 <template>
   <div>
     <div class="container">
-      <div class="row mt-2">
-        <div class="col-md-6 text-left">
-          Health Assistant's Dashboard 
-        </div>
-        <div class="col-md-6 text-right">
-          Cluster AAA01 
-        </div>
-        <div class="col-md-12">
-          <hr>
-        </div>
-      </div>
-    </div>
-    <div class="container">
       <transition name="u-fade">
-        <div class="row mt-2">
+        <div class="row mt-3">
           <div class="col-md-3 text-left" style="min-height: 200px;">
             <nuxt-link to="/ha/profile" class="text-decoration-none text-dark">
-              <img src="/avatar-md.png">
+              <img src="/avatar-girl.png">
             </nuxt-link>
           </div>
           <div class="col-md-9">
             <div class="row">
               <div class="col-md-6">
-                <h5 class="d-inline text-decoration-none">Jane Doe (RN)</h5>  
+                <h5 class="d-inline text-decoration-none">{{ currUser.name }}</h5>  
               </div>
-              <div class="col-md-6 text-right">
+              <div class="col-md-6 text-right text-capitalize">
                 <img src="/circle-green.svg" class="shape-status" alt="">
-                Online
+                {{ currUser.status }}
               </div>
             </div>
             <br>
-            Hello, my name is Jane Doe, and I'm studying to become a nurse! I'm happy help you!<br><br>
+            {{ currUser.bio }}<br><br>
             <div class="row">
               <div class="col-md-6">
-                1-415-555-1234 <br>
-                District, State <br><br>
+                {{ currUser.phone }} <br>
+                {{ currUser.address }} <br><br>
               </div>
               <div class="col-md-6">
-                1-415-555-1234 <br>
-                District, State <br><br>
+                <!-- {{ currUser.bio }} <br> -->
+                {{ currUser.location }}
               </div>
             </div>
           </div>
@@ -73,9 +60,9 @@
               <!-- </div> -->
             </li>
           </ul>
-          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3">
+          <div class="w-100 bg-white mb-3 mt-0 px-3 py-1">
             <!-- <input type="text" class="w-100 p-2" placeholder=":: Search by ID, name or phone number"> -->
-            <table class="table table-sm table-hover mt-3">
+            <table class="table table-sm table-hover mt-2">
               <!--  v-if="!tabs[4].isActive" -->
               <thead>
                 <tr>
@@ -90,22 +77,29 @@
                 </tr>
               </thead>
               <tbody>
-                <tr class="pointer" v-for="(patient, index) in list" :key="index">
-                  <th scope="row">{{ patient.id }}</th>
+                <tr class="pointer" v-for="(patient, index) in list.slice().reverse()" :key="index">
+                  <th class="text-uppercase" scope="row">{{ patient.id }}</th>
                   <td>
-                    <nuxt-link :to="'/ha/profile?id=' + patient.id">{{ patient.name }}</nuxt-link>
+                    <nuxt-link :to="'/ha/profile?id=' + patient.id">{{ patient.demographics.name }}</nuxt-link>
                   </td>
-                  <td>{{ patient.gender }}</td>
-                  <td>{{ patient.age }}</td>
-                  <td>{{ patient.phone }}</td>
-                  <td>{{ patient.location }}</td>
-                  <td>{{ patient.creator }}</td>
+                  <td class="text-uppercase">{{ patient.demographics.gender }}</td>
+                  <td>{{ patient.demographics.age }}</td>
+                  <td>{{ patient.demographics.phone }}</td>
+                  <td>{{ patient.demographics.location }}</td>
+                  <td>{{ patient.regBy }}</td>
                   <td class="text-capitalize">
                     <img v-if="patient.status == 'registered'" src="circle-green.svg" class="shape-status" alt="">
                     <img v-if="patient.status == 'released'" src="circle-yellow.svg" class="shape-status" alt="">
                     <img v-if="patient.status == 'allocated'" src="circle-red.svg" class="shape-status" alt="">
                     <img v-if="patient.status == 'queued'" src="circle-orange.svg" class="shape-status" alt="">
                     {{ patient.status }}
+                  </td>
+                </tr>
+                <tr class="pointer" v-if="list.length === 0" style="height: 40px;">
+                  <td class="py-3 px-3 text-center" colspan="9">
+                    <small>
+                      There are no patients in this list. Register a new patient to get started.
+                    </small>
                   </td>
                 </tr>
               </tbody>
@@ -121,22 +115,14 @@
 export default {
   layout: 'dashboard',
   computed: {
-    // get store values
+    currUser () {
+      return this.$store.state.currUser
+    },
     patientList () {
-      return this.$store.state.patientList
+      return this.$store.state.udayDb.clusters['cluster001'].patients
     },
-    counter () {
-      return this.$store.state.counter
-    },
-    // 
     filterMyPatients: function () {
-      return this.patientList.filter(patient => patient.creator == 'Jane Doe')
-    },
-    filterAllocated: function () {
-      return  this.patientList.filter(patient => patient.status == 'allocated')
-    },
-    filterReleased: function () {
-      return this.patientList.filter(patient => patient.status == 'released')
+      return this.patientList.filter(patient => patient.regBy == 'Jane Doe')
     },
     filterCluster: function () {
       return this.patientList
@@ -148,12 +134,12 @@ export default {
   mounted () {
     let path = [
       {
-        title: 'Dashboard',
+        title: 'HA\'s Dashboard',
         url: '/ha'
       },
     ]
 
-    this.list = this.patientList.filter(patient => patient.creator == 'Jane Doe')
+    this.list = this.patientList.filter(patient => patient.regBy == 'Jane Doe')
 
     this.$store.commit('updatePath', path)
   },
@@ -161,12 +147,6 @@ export default {
     getList: function (tabName) {
       if (tabName == 'patients') {
         this.list = this.filterMyPatients
-      }
-      else if (tabName == 'allocated') {
-        this.list = this.filterAllocated
-      }
-      else if (tabName == 'released') {
-        this.list = this.filterReleased
       }
       else if (tabName == 'cluster') {
         this.list = this.filterCluster
@@ -187,21 +167,12 @@ export default {
       if (tabName == 'patients') {
         return this.filterMyPatients.length
       }
-      else if (tabName == 'allocated') {
-        return this.filterAllocated.length
-      }
-      else if (tabName == 'released') {
-        return this.filterReleased.length
-      }
       else if (tabName == 'cluster') {
         return this.filterCluster.length
       }
       else if (tabName == 'global') {
         return this.filterGlobal.length
       }
-    },
-    addCounter: function (payload) {
-      this.$store.dispatch('increment', payload)
     }
   },
   data() {
@@ -213,26 +184,16 @@ export default {
           title: 'My Patients',
           isActive: true,
         },
-        // {
-        //   name: 'allocated',
-        //   title: 'My Allocated Patients',
-        //   isActive: false,
-        // },
-        // {
-        //   name: 'released',
-        //   title: 'My Released Patients',
-        //   isActive: false,
-        // },
         {
           name: 'cluster',
           title: 'My Cluster',
           isActive: false,
         },
-        {
-          name: 'global',
-          title: 'Search Global',
-          isActive: false,
-        }
+        // {
+        //   name: 'global',
+        //   title: 'Search Global',
+        //   isActive: false,
+        // }
       ],
     }
   },

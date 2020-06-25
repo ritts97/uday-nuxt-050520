@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <div class="container">
       <div class="row">
         <div class="col-md-6">
@@ -14,7 +13,6 @@
           </nuxt-link>
         </div>
       </div>
-
       <div class="row">
         <div class="col-md-12">
           <hr>
@@ -47,11 +45,11 @@
                 </tr>
               </thead>
               <tbody>
-                <tr class="pointer" v-for="(visit, index) in filterAllVisits" :key="index" style="height: 40px;">
-                  <td scope="row">{{ visit.episodeID }}</td>
+                <tr class="pointer" v-for="(visit, index) in filterAllVisits.slice().reverse()" :key="index" style="height: 40px;">
+                  <td class="text-uppercase" scope="row">{{ visit.episodeID }}</td>
                   <td>
-                    <div v-if="visit.link">
-                      <nuxt-link :to="visit.link">
+                    <div v-if="visit.title !== 'Registered'">
+                      <nuxt-link :to="'profile/visit?id=' + visit.episodeID">
                         {{ visit.title }}
                       </nuxt-link>
                     </div>
@@ -76,8 +74,41 @@
 <script>
 export default {
   layout: 'dashboard',
+  created() {
+    // let queryID = this.$route.query.id
+
+    // if (!this.queryID) {
+    //   this.$router.push('/ha');
+    // }
+  },
   mounted() {
-    this.list = this.filterAllVisits
+    let queryID = this.$route.query.id
+
+    console.log(queryID)
+    console.log(this.$store.state.currPatient.id)
+    if (queryID !== this.$store.state.currPatient.id) {
+      // get that patient profile
+      // update to currUser
+
+      this.$store.commit('updateCurrPatient', { id: queryID })
+    }
+
+    // if (!queryID) {
+    //   queryID = 'pa001'
+    // }
+    //  get patient data
+    // let queryID = this.$route.query.id
+
+    // // console.log(queryID)
+
+    // if (!queryID) {
+    //   console.log('No QUERY')
+    //   this.$router.push('/ha');
+    // }
+
+    // this.patientData = this.$store.state.udayDb.clusters.cluster001.patients.find(patient => patient.id === queryID)
+
+    // this.list = this.filterAllVisits
 
     this.$store.commit('updatePath', [
       {
@@ -85,22 +116,41 @@ export default {
         url: '/ha'
       },
       {
-        title: 'Patient Profile',
+        title: 'Patient\'s Profile',
         url: '/ha/profile'
       }
     ])
   },
   computed: {
     filterAllVisits: function () {
-      return this.$store.state.currPatient.visits
+      let queryID = this.$route.query.id
+
+      if (!queryID) {
+        queryID = this.$store.state.currPatient.id
+      }
+      
+      // let patientProf = this.$store.state.udayDb.clusters.cluster001.patients.find(patient => patient.id === queryID)
+      let patVisits = [...(this.$store.state.currPatient.episodes), ...(this.$store.state.currPatient.services)]
+
+      // console.log(...(patientProf.episodes), ...(patientProf.services))
+      // console.log(this.$store.state.udayDb.clusters.cluster001.patients.find(patient => patient.id === queryID))
+      // console.log(Array.isArray(episodeList))
+      // console.log(typeof serviceList)
+      // let arr = [1, ...episodeList] || []
+      // console.log(visits)
+      // console.log('xxxxxx')
+      // console.log(arr)
+
+      return patVisits || []
     },
     filterEpisode: function () { 
-      return this.$store.state.currPatient.visits.filter(visit => visit.type == 'episode').reverse()
+      return this.$store.state.currPatient.episodes
     },
     filterService: function () {
-      return this.$store.state.currPatient.visits.filter(visit => visit.type == 'service').reverse()
+      return this.$store.state.currPatient.services
     },
     filterBill: function () {
+      return []
       return this.$store.state.currPatient.visitse.filter(visit => visit.type == 'bill').reverse()
     }
   },
@@ -166,74 +216,24 @@ export default {
   },
   data() {
     return {
-      arr: [1,12,31,23,21,312],
       tabs: [
         {
           name: 'visit',
           title: 'All Visits',
           isActive: true,
         },
-        // {
-        //   name: 'episode',
-        //   title: 'Episodes',
-        //   isActive: false,
-        // },
-        // {
-        //   name: 'service',
-        //   title: 'Direct Services',
-        //   isActive: false,
-        // },
+        {
+          name: 'episode',
+          title: 'Episodes',
+          isActive: false,
+        },
+        {
+          name: 'service',
+          title: 'Services',
+          isActive: false,
+        },
       ],
       list: [],
-      masterList: [
-        {
-          id: 'EP0 FL0',
-          name: 'Patient Registered',
-          type: 'registration',
-          status: '',
-          created: '1 week ago',
-          lastVisited: '1 week ago',
-          followUps: 0,
-        },
-        // {
-        //   id: 'EP1 FL0',
-        //   name: 'Episode 1',
-        //   type: 'episode',
-        //   gender: '4 weeks ago',
-        //   lastVisited: '1 weeks ago',
-        //   status: '',
-        //   billed: '',
-        //   link: '/ha/profile/profile-visit',
-        //   followups: 4,
-        //   age: 'Yes',
-        //   phone: '14155551234'
-        // },
-        // {
-        //   id: 'EP1 SV1',
-        //   name: 'Perform Service',
-        //   type: 'service',
-        //   gender: '2 weeks ago',
-        //   lastVisited: '1 weeks ago',
-        //   status: '',
-        //   billed: 'View Bill',
-        //   link: '/ha/profile/profile-visit-service',
-        //   age: 'Yes',
-        //   phone: '14155551234'
-        // },
-        // {
-        //   id: 'EP2 FL0',
-        //   name: 'Episode 2',
-        //   type: 'episode',
-        //   gender: '1 weeks ago',
-        //   lastVisited: '1 weeks ago',
-        //   status: 'queued',
-        //   followups: 3,
-        //   billed: '',
-        //   link: '/ha/profile/profile-visit',
-        //   age: 'Yes',
-        //   phone: '14155551234'
-        // },
-      ]
     }
   },
   transition: 'u-fade'
