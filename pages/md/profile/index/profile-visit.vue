@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-md-6">
           <nuxt-link to="/md/profile/profile-visit">
-            <button @click="editable = true" :disabled="editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Record Feedback</button>     
+            <button @click="editable = true" :disabled="editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Provide Feedback</button>     
           </nuxt-link>
         </div>
         <div class="col-md-6">

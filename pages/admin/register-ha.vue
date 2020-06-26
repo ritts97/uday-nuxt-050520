@@ -2,14 +2,6 @@
   <div>
     <div class="container">
       <div class="row">
-        <div class="col-md-12 text-center">
-          Register a Health Assistant
-          <hr>
-        </div>
-      </div>
-    </div>
-    <div class="container">
-      <div class="row">
         <div class="col-md-12 rounded">
           <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" v-if="tabs[0].isActive">
             <div class="container">
@@ -34,7 +26,7 @@
       <div class="row">
         <div class="col-md-12">
           <nuxt-link to="/admin">
-            <button @click="showAlert('New Health Assistant has been successfully registered.')" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">
+            <button @click="registerHA()" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">
               Register New Health Assistant
             </button>
           </nuxt-link>
@@ -50,39 +42,38 @@ export default {
   mounted() {
     let path = [
       {
-        title: 'Dashboard',
-        url: '/super'
+        title: 'Admin\'s Dashboard',
+        url: '/admin'
       },
       {
         title: 'Register Health Assistant',
-        url: '/ha/register-new'
+        url: '/admin/register-new'
       },
     ]
 
-    this.$store.commit('increment', path)
+    this.$store.commit('updatePath', path)
   },
   methods: {
-    getTab: function (tabName) {
-      let tabs = this.tabs
-      let ref = 0
-
-      for (let i = 0; i < tabs.length; i++) {
-        if (tabs[i].name === tabName) {
-          tabs[i].isActive = true
-          ref = i
-        } else {
-          tabs[i].isActive = false
-        }
-
-        if (ref == (tabs.length - 1)) {
-          this.showComplete = true
-        } else {
-          this.showComplete = false
-        }
-      }
-    },
     showAlert: function (msg) {
       alert(msg)
+    },
+    registerHA: function (msg) {
+      alert('A new Health Assistant has been registered.')
+
+      let payload = {
+        name: 'Teresa Mendoza (RN)',
+        id: 'ha0001',
+        role: 'ha',
+        status: 'online',
+        cluster: 'cluster0001',
+        bio: 'Hello, my name is Teresa Mendoza, and I\'m studying to become a nurse! I\'m happy help you!',
+        phone: '1-415-555-1234',
+        address: '2222 Market Street',
+        location: 'Calcutta, IN',
+        email: ''
+      }
+
+      this.$store.commit('registerHA', payload)
     }
   },
   data() {

@@ -28,7 +28,7 @@
               Login (as Doct.)
             </button>
           </nuxt-link>
-          <!-- <nuxt-link to="/admin">
+          <nuxt-link to="/admin">
             <button class="btn btn-dark mb-2 p-2 w-100 text-uppercase">
               Login (as Admin)
             </button>
@@ -37,10 +37,11 @@
             <button class="btn btn-dark mb-3 p-2 w-100 text-uppercase">
               Login (as Super)
             </button>
-          </nuxt-link> --><br><br>
-          <nuxt-link to="/register-ha">
+          </nuxt-link>
+          
+          <!-- <nuxt-link to="/register-ha">
             <small class="text-secondary">Register a new Health Assistant?</small>
-          </nuxt-link><br>
+          </nuxt-link><br> -->
           <nuxt-link to="/forgot-pass">
             <small class="text-secondary">Forgot password?</small>
           </nuxt-link>

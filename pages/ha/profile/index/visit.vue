@@ -372,61 +372,127 @@
         <div class="row mb-5">
           <div class="col-md-12">
             <div class="small text-muted">
-              Prescribed Medicines
+              Prescriptions
             </div>
           </div>
           <div class="col-md-12">
-            <div class="w-100 bg-white mb-3 mt-0 pt-3 pb-3">
-              <table class="table table-sm table-hover">
+            <div class="w-100 bg-white mb-3 mt-0 pt-0 pb-0">
+              <table class="table table-sm table-hover mt-3">
                 <thead>
                   <tr>
+                    <th scope="col"></th>
+                    <th scope="col">ID</th>
                     <th scope="col">Medicine</th>
+                    <th scope="col">Type</th>
                     <th scope="col">Batch</th>
-                    <th scope="col">MSRP</th>
-                    <th scope="col">Quantity</th>
-                    <th scope="col">Disc. Rate</th>
-                    <th scope="col">Net</th>
+                    <th scope="col">Expiry</th>
+                    <th scope="col">Stock</th>
+                    <th scope="col">MRP</th>
+                    <th scope="col">GST</th>
+                    <th scope="col">Dis. Rate</th>
+                    <th scope="col">Crit. Value</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr class="pointer" style="height: 40px;">
-                    <td>xxx</td>
-                    <td>xxx</td>
-                    <td>xxx</td>
-                    <td>3</td>
-                    <td>1</td>
-                    <td>Lorem ipsum</td>
+                  <tr class="pointer">
+                    <td><input type="checkbox" name="" id=""></td>
+                    <td>AAU</td>
+                    <td>Lorazepam</td>
+                    <td>AAU</td>
+                    <td>135</td>
+                    <td>12/22</td>
+                    <td>99</td>
+                    <td>$99</td>
+                    <td>$99</td>
+                    <td>0%</td>
+                    <td>10</td>
                   </tr>
-                  <tr class="pointer" style="height: 40px;">
-                    <td>xxx</td>
-                    <td>xxx</td>
-                    <td>xxx</td>
-                    <td>3</td>
-                    <td>1</td>
-                    <td>Lorem ipsum</td>
-                  </tr><tr class="pointer" style="height: 40px;">
-                    <td>xxx</td>
-                    <td>xxx</td>
-                    <td>xxx</td>
-                    <td>3</td>
-                    <td>1</td>
-                    <td>Lorem ipsum</td>
-                  </tr><tr class="pointer" style="height: 40px;">
-                    <td>xxx</td>
-                    <td>xxx</td>
-                    <td>xxx</td>
-                    <td>3</td>
-                    <td>1</td>
-                    <td>Lorem ipsum</td>
+                  <tr class="pointer">
+                    <td><input type="checkbox" name="" id=""></td>
+                    <td>AAU</td>
+                    <td>Lorazepam</td>
+                    <td>AAU</td>
+                    <td>135</td>
+                    <td>12/22</td>
+                    <td>99</td>
+                    <td>$99</td>
+                    <td>$99</td>
+                    <td>0%</td>
+                    <td>10</td>
+                  </tr>
+                  <tr class="pointer">
+                    <td><input type="checkbox" name="" id=""></td>
+                    <td>AAU</td>
+                    <td>Lorazepam</td>
+                    <td>AAU</td>
+                    <td>135</td>
+                    <td>12/22</td>
+                    <td>99</td>
+                    <td>$99</td>
+                    <td>$99</td>
+                    <td>0%</td>
+                    <td>10</td>
+                  </tr>
+                  <tr class="pointer">
+                    <td><input type="checkbox" name="" id=""></td>
+                    <td>AAU</td>
+                    <td>Lorazepam</td>
+                    <td>AAU</td>
+                    <td>135</td>
+                    <td>12/22</td>
+                    <td>99</td>
+                    <td>$99</td>
+                    <td>$99</td>
+                    <td>0%</td>
+                    <td>10</td>
+                  </tr>
+                  <tr class="pointer" style="background-color: salmon;">
+                    <td><input type="checkbox" name="" id=""></td>
+                    <td>AAU</td>
+                    <td>Lorazepam</td>
+                    <td>AAU</td>
+                    <td>135</td>
+                    <td>12/22</td>
+                    <td>99</td>
+                    <td>$99</td>
+                    <td>$99</td>
+                    <td>0%</td>
+                    <td>10</td>
+                  </tr>
+                  <tr class="pointer" style="background-color: salmon;">
+                    <td><input type="checkbox" name="" id=""></td>
+                    <td>AAU</td>
+                    <td>Lorazepam</td>
+                    <td>AAU</td>
+                    <td>135</td>
+                    <td>12/22</td>
+                    <td>99</td>
+                    <td>$99</td>
+                    <td>$99</td>
+                    <td>0%</td>
+                    <td>10</td>
+                  </tr>
+                  <tr class="pointer" style="background-color: salmon;">
+                    <td><input type="checkbox" name="" id=""></td>
+                    <td>AAU</td>
+                    <td>Lorazepam</td>
+                    <td>AAU</td>
+                    <td>135</td>
+                    <td>12/22</td>
+                    <td>99</td>
+                    <td>$99</td>
+                    <td>$99</td>
+                    <td>0%</td>
+                    <td>10</td>
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>
           <div class="col-md-12">
-            <nuxt-link to="/ha/profile/new-episode">
+            <!-- <nuxt-link to="/ha/profile/new-episode"> -->
               <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0  text-uppercase">Print Prescription</button>     
-            </nuxt-link>
+            <!-- </nuxt-link> -->
           </div>
         </div>
         <div class="row">
@@ -434,7 +500,7 @@
             <div class="small text-muted mb-3">
               Investigations
             </div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil vero qui consectetur, eligendi facilis soluta maiores quae sequi eaque. Quia suscipit quaerat deleniti iure aliquid, voluptas repellat delectus ad labore officia nulla voluptatem ratione omnis provident cumque ab quae. Ullam natus sunt atque. Sint ullam autem commodi, corrupti inventore quod!
+            {{ episodeData.visits[0].feedback.investigations }}
           </div>
         </div>
         <div class="row">
@@ -442,7 +508,7 @@
             <div class="small text-muted mb-3">
               Advice
             </div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil vero qui consectetur, eligendi facilis soluta maiores quae sequi eaque. Quia suscipit quaerat deleniti iure aliquid, voluptas repellat delectus ad labore officia nulla voluptatem ratione omnis provident cumque ab quae. Ullam natus sunt atque. Sint ullam autem commodi, corrupti inventore quod!
+            {{ episodeData.visits[0].feedback.advice }}
           </div>
         </div>
         <div class="row">
@@ -466,10 +532,14 @@ export default {
         title: 'Dashboard',
         url: '/ha'
       },
-      // {
-      //   title: 'Patient\'s Profile',
-      //   url: '/ha/profile'
-      // }
+      {
+        title: 'Patient\'s Profile',
+        url: '/ha/profile'
+      },
+      {
+        title: 'Episode 1',
+        url: '/ha/profile'
+      }
     ])
   },
   methods: {
@@ -511,8 +581,31 @@ export default {
   },
   data() {
     return {
-      list: [],
-      showDocsFeedback: false,
+      episodeData: {
+        episodeID: "EP1 FU0",
+        title: "Episode 1",
+        created: "2 days ago",
+        lastUpdated: "Just now",
+        numFollowUps: "0",
+        visits: [
+          {
+            complaint: {
+              chiefComplaint: "",
+              vitals: "",
+              genExams: "",
+              specExams: "",
+              addPhotos: ""
+            },
+            hasFeedback: true,
+            feedback: {
+              medicine: "",
+              advice: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem est placeat perspiciatis vero! Corrupti voluptatum beatae ducimus quod voluptas qui?',
+              investigations: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem est placeat perspiciatis vero! Corrupti voluptatum beatae ducimus quod voluptas qui?',
+            }
+          }
+        ],
+      },
+      showDocsFeedback: true,
       showDemographics: true,
       showComplete: false,
       tabs: [
@@ -588,47 +681,3 @@ export default {
   },
 }
 </script>
-
-<style>
-.list-inline-item {
-  margin-right: 16px !important;
-}
-
-thead tr th {
-  border-top: none !important;
-}
-
-.btn-dark {
-  background-color: #444f5a;
-  border: none;
-}
-
-.btn:focus {
-  outline: none;
-  box-shadow: none;
-}
-
-.btn-dark:hover {
-  background-color: #5d666e;
-  border: none;
-}
-
-.btn-light {
-  background-color: #e4e4e4;
-  border: none;
-}
-
-.shape-status {
-  width: 12px;
-  margin-right: 7px;
-  margin-bottom: 4px;
-}
-
-.pointer:hover {
-  cursor: pointer;
-}
-
-.underline {
-  border-bottom: 2px solid #AAA;
-}
-</style>

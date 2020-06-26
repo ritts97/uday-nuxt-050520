@@ -1,13 +1,5 @@
 <template>
   <div>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12 mb-1 text-center">
-          Edit Profile
-          <hr>
-        </div>
-      </div>
-    </div>
     <div class="container mb-3">
       <div class="row px-3">
         <div class="col-md-12 bg-white rounded py-5 px-5 text-center">
@@ -21,6 +13,16 @@
 <script>
 export default {
   layout: 'dashboard',
+  mounted() {
+    let path = [
+      {
+        title: 'Edit Profile',
+        url: '/ha'
+      },
+    ]
+
+    this.$store.commit('updatePath', path)
+  },
   data() {
     return {}
   },

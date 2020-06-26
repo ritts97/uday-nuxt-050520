@@ -2,16 +2,8 @@
   <div>
     <div class="container">
       <div class="row">
-        <div class="col-md-12 text-center">
-          Register a New Doctor
-          <hr>
-        </div>
-      </div>
-    </div>
-    <div class="container">
-      <div class="row">
         <div class="col-md-12 rounded">
-          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" v-if="tabs[0].isActive">
+          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3">
             <div class="container">
               <div class="row mt-3">
                 <div class="col-md-6">
@@ -34,7 +26,7 @@
       <div class="row">
         <div class="col-md-12">
           <nuxt-link to="/admin">
-            <button @click="showAlert('New Doctor has been successfully registered.')" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">
+            <button @click="registerMD()" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">
               Register New Doctor
             </button>
           </nuxt-link>
@@ -50,52 +42,34 @@ export default {
   mounted() {
     let path = [
       {
-        title: 'Dashboard',
+        title: 'Admin\'s Dashboard',
         url: '/admin'
       },
       {
-        title: 'Register New Doctor',
-        url: '/ha/register-new'
+        title: 'Register Doctor',
+        url: '/admin/register-new'
       },
     ]
 
-    this.$store.commit('increment', path)
+    this.$store.commit('updatePath', path)
   },
   methods: {
-    getTab: function (tabName) {
-      let tabs = this.tabs
-      let ref = 0
+    registerMD: function (msg) {
+      alert('A new Docotor has been registered.')
 
-      for (let i = 0; i < tabs.length; i++) {
-        if (tabs[i].name === tabName) {
-          tabs[i].isActive = true
-          ref = i
-        } else {
-          tabs[i].isActive = false
-        }
-
-        if (ref == (tabs.length - 1)) {
-          this.showComplete = true
-        } else {
-          this.showComplete = false
+      let payload = {
+        id: "md003",
+        status: "offline",
+        demographics: {
+          name: "Jamaica Samsung"
         }
       }
-    },
-    showAlert: function (msg) {
-      alert(msg)
+
+      this.$store.commit('registerMD', payload)
     }
   },
   data() {
-    return {
-      list: [],
-      tabs: [
-        {
-          name: 'patients',
-          title: 'Demographics',
-          isActive: true,
-        }
-      ]
-    }
+    return {}
   },
 }
 </script>

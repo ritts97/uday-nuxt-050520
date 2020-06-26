@@ -1,24 +1,11 @@
 <template>
   <div>
-    <!-- <div class="container">
-      <div class="row mt-2">
-        <div class="col-md-6 text-left">
-          Patient's Profile
-        </div>
-        <div class="col-md-6 text-right">
-          Cluster AAA01 
-        </div>
-        <div class="col-md-12">
-          <hr>
-        </div>
-      </div>
-    </div> -->
     <div class="container">
       <transition name="u-fade">
         <div class="row mt-2">
           <div class="col-md-3 text-left" style="min-height: 200px;">
             <nuxt-link to="/ha/profile" class="text-decoration-none text-dark">
-              <img src="/avatar-woman.png">
+              <img src="/avatar-man_02.png">
             </nuxt-link>
           </div>
           <div class="col-md-9">

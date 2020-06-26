@@ -1,13 +1,5 @@
 <template>
   <div>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12 text-center">
-          Medicine Stock
-          <hr>
-        </div>
-      </div>
-    </div>
     <div class="container mb-3">
       <div class="row">
         <div class="col-md-6 mt-2">
@@ -149,7 +141,7 @@ export default {
   mounted() {
     let path = [
       {
-        title: 'Dashboard',
+        title: 'Admin\s Dashboard',
         url: '/admin'
       },
       {
@@ -158,44 +150,8 @@ export default {
       },
     ]
 
-    this.$store.commit('increment', path)
-  },
-  methods: {
-    getTab: function (tabName) {
-      let tabs = this.tabs
-      let ref = 0
-
-      for (let i = 0; i < tabs.length; i++) {
-        if (tabs[i].name === tabName) {
-          tabs[i].isActive = true
-          ref = i
-        } else {
-          tabs[i].isActive = false
-        }
-
-        if (ref == (tabs.length - 1)) {
-          this.showComplete = true
-        } else {
-          this.showComplete = false
-        }
-      }
-    },
-    showAlert: function (msg) {
-      alert(msg)
-    }
-  },
-  data() {
-    return {
-      list: [],
-      tabs: [
-        {
-          name: 'patients',
-          title: 'Demographics',
-          isActive: true,
-        }
-      ]
-    }
-  },
+    this.$store.commit('updatePath', path)
+  }
 }
 </script>
 

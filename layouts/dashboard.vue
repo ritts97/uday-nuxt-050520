@@ -92,10 +92,10 @@ export default {
   data() {
     return {
       path: [
-        {
-          title: 'Dashboard',
-          url: '/ha'
-        },
+        // {
+        //   title: 'Dashboard',
+        //   url: '/ha'
+        // },
       ]
     }
   },
@@ -118,6 +118,10 @@ export default {
 <style>
 html, body {
   background-color: #eee;
+}
+
+.underline {
+  border-bottom: 2px solid #aaa;
 }
 
 .dropdown-no-caret:after { content: none }

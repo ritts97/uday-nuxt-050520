@@ -9,17 +9,7 @@ export const state = () => ({
     }
   ],
   currCluster: 'cluster001',
-  currUser: {
-    name: 'Jane Doe (RN)',
-    id: 'ha0001',
-    role: 'ha',
-    status: 'online',
-    cluster: 'cluster0001',
-    bio: 'Hello, my name is Jane Doe, and I\'m studying to become a nurse! I\'m happy help you!',
-    phone: '1-415-555-1234',
-    address: '2222 Market Street',
-    location: 'Calcutta, IN'
-  },
+  currUser: {},
   currPatient: {
     id: "",
     status: "",
@@ -68,6 +58,11 @@ export const mutations = {
   updateStatus(state, payload) {
     state.currPatient.status = payload
   },
+  updateCurrUser(state) {
+    let CLUSTER_ID = state.currCluster
+
+    state.currUser = state.udayDb.clusters[CLUSTER_ID].has[0]
+  },
   updateCurrPatient(state, payload) {
     let CLUSTER_ID = state.currCluster
     let PATIENT_ID = payload.id || state.currPatient.id
@@ -92,9 +87,6 @@ export const mutations = {
     let episodeLen = state.udayDb.clusters[CLUSTER_ID].patients.find(patient => patient.id === PATIENT_ID).episodes.length
 
     let d = new Date();
-
-    console.log('recorded new episode', episodeLen)
-    console.log(PATIENT_ID)
 
     state.udayDb.clusters[CLUSTER_ID].patients.find(patient => patient.id === PATIENT_ID).episodes.push(
       {
@@ -126,21 +118,17 @@ export const mutations = {
     let PATIENT_ID = state.currPatient.id
 
     let d = new Date();
-    // get cluster
-    // get patientID
+    let serviceCount = state.udayDb.clusters[CLUSTER_ID].patients.find(patient => patient.id === PATIENT_ID).services.length
 
-    // state.udayDb.clusters[CLUSTER_ID].patients.find(patient => patient.id === PATIENT_ID).services.push
-
-    // find patient
-    // add service to services arr
+    serviceCount++
 
     state.udayDb.clusters[CLUSTER_ID].patients.find(patient => patient.id === PATIENT_ID).services.push(
       {
         type: 'service',
         billed: '',
         link: '/ha/profile/profile-visit',
-        episodeID: 'SV 01',
-        title: 'New Service',
+        episodeID: PATIENT_ID + 'SV' + serviceCount,
+        title: 'Service ' + serviceCount,
         created: d.getTime(),
         lastUpdated: '',
         numFollowUps: '',
@@ -165,9 +153,6 @@ export const mutations = {
 
     let d = new Date();
 
-    // console.log('xxxxxx')
-    // console.log(PATIENT_COUNT)
-
     let baseProfile = {
       id: "pa0" + PATIENT_COUNT,
       status: "registered",
@@ -187,11 +172,29 @@ export const mutations = {
       services: []
     };
 
-
-    console.log('xxxxxx')
     state.udayDb.clusters[CLUSTER_ID].patients.push(
       baseProfile
     )
+  },
+  registerHA(state, payload) {
+    let CLUSTER_ID = state.currCluster
+
+    state.udayDb.clusters[CLUSTER_ID].has.push(
+      payload
+    )
+  },
+  registerMD(state, payload) {
+    let CLUSTER_ID = state.currCluster
+
+    state.udayDb.clusters[CLUSTER_ID].mds.push(
+      payload
+    )
+  },
+  registerCluster(state, payload) {
+    let date = new Date()
+    let CLUSTER_ID = state.currCluster
+
+    state.udayDb.clusters[date.getTime()] = payload
   },
 }
 

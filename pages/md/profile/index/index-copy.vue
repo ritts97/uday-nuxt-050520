@@ -1,7 +1,7 @@
 <template>
   <div>
+    
     <div class="container">
-
       <div class="row">
         <div class="col-md-12">
           <nuxt-link to="/md/profile/profile-visit">
@@ -10,18 +10,6 @@
         </div>
       </div>
 
-      <!-- <div class="row">
-        <div class="col-md-6">
-          <nuxt-link to="/ha/profile/new-episode">
-            <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Record New Episode</button>     
-          </nuxt-link>
-        </div>
-        <div class="col-md-6">
-          <nuxt-link to="/ha/profile/new-service">
-            <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0  text-uppercase">Record New Service</button>     
-          </nuxt-link>
-        </div>
-      </div> -->
       <div class="row">
         <div class="col-md-12">
           <hr>
@@ -38,7 +26,6 @@
             </li>
           </ul>
           <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 10px;">
-             <!-- 1 {{ this.$store.state.currPatient.episodes }} -->
             <table class="table table-sm table-hover mb-0">
               <thead>
                 <tr>
@@ -54,21 +41,31 @@
                 </tr>
               </thead>
               <tbody>
-                <tr class="pointer" v-for="(visit, index) in filterAllVisits.slice().reverse()" :key="index" style="height: 40px;">
-                  <td class="text-uppercase" scope="row">{{ visit.episodeID }}</td>
+                <tr class="pointer" v-for="(visit, index) in list" :key="index" style="height: 40px;">
+                  <td scope="row">{{ visit.id }}</td>
                   <td>
-                    <div v-if="visit.title !== 'Registered'">
-                      <nuxt-link :to="'profile/visit?id=' + visit.episodeID">
-                        {{ visit.title }}
+                    <div v-if="visit.link">
+                      <nuxt-link :to="visit.link">
+                        {{ visit.name }}
                       </nuxt-link>
                     </div>
                     <div v-else>
-                      {{ visit.title }}
+                      {{ visit.name }}
                     </div>
                   </td>
-                  <td>{{ visit.created }}</td>
-                  <td>{{ visit.lastUpdated }}</td>
-                  <td>{{ visit.numFollowUps }}</td>
+                  <!-- <td>
+                    <span v-if="visit.type === 'episode'" class="text-capitalize">
+                      <img v-if="visit.status == 'registered'" src="/circle-green.svg" class="shape-status" alt="">
+                      <img v-if="visit.status == 'released'" src="/circle-yellow.svg" class="shape-status" alt="">
+                      <img v-if="visit.status == 'allocated'" src="/circle-red.svg" class="shape-status" alt="">
+                      <img v-if="visit.status == 'queued'" src="/circle-orange.svg" class="shape-status" alt="">
+                      {{ visit.status }}
+                    </span>
+                  </td> -->
+                  <td>{{ visit.gender }}</td>
+                  <td>{{ visit.lastVisited }}</td>
+                  <td>{{ visit.followups }}</td>
+                  <!-- <td>3</td> -->
                 </tr>
               </tbody>
             </table>
@@ -83,84 +80,32 @@
 <script>
 export default {
   layout: 'dashboard',
-  created() {
-    // let queryID = this.$route.query.id
-
-    // if (!this.queryID) {
-    //   this.$router.push('/ha');
-    // }
-  },
   mounted() {
-    let queryID = this.$route.query.id
-
-    console.log(queryID)
-    console.log(this.$store.state.currPatient.id)
-    if (queryID !== this.$store.state.currPatient.id) {
-      // get that patient profile
-      // update to currUser
-
-      this.$store.commit('updateCurrPatient', { id: queryID })
-    }
-
-    // if (!queryID) {
-    //   queryID = 'pa001'
-    // }
-    //  get patient data
-    // let queryID = this.$route.query.id
-
-    // // console.log(queryID)
-
-    // if (!queryID) {
-    //   console.log('No QUERY')
-    //   this.$router.push('/ha');
-    // }
-
-    // this.patientData = this.$store.state.udayDb.clusters.cluster001.patients.find(patient => patient.id === queryID)
-
-    // this.list = this.filterAllVisits
+    this.list = this.filterAllVisits
 
     this.$store.commit('updatePath', [
       {
         title: 'Dashboard',
-        url: '/ha'
+        url: '/md'
       },
       {
-        title: 'Patient\'s Profile',
-        url: '/ha/profile'
+        title: 'Patient Profile',
+        url: '/md/profile'
       }
     ])
   },
   computed: {
     filterAllVisits: function () {
-      let queryID = this.$route.query.id
-
-      if (!queryID) {
-        queryID = this.$store.state.currPatient.id
-      }
-      
-      // let patientProf = this.$store.state.udayDb.clusters.cluster001.patients.find(patient => patient.id === queryID)
-      let patVisits = [...(this.$store.state.currPatient.episodes), ...(this.$store.state.currPatient.services)]
-
-      // console.log(...(patientProf.episodes), ...(patientProf.services))
-      // console.log(this.$store.state.udayDb.clusters.cluster001.patients.find(patient => patient.id === queryID))
-      // console.log(Array.isArray(episodeList))
-      // console.log(typeof serviceList)
-      // let arr = [1, ...episodeList] || []
-      // console.log(visits)
-      // console.log('xxxxxx')
-      // console.log(arr)
-
-      return patVisits || []
+      return this.masterList.reverse()
     },
     filterEpisode: function () { 
-      return this.$store.state.currPatient.episodes
+      return this.masterList.filter(visit => visit.type == 'episode').reverse()
     },
     filterService: function () {
-      return this.$store.state.currPatient.services
+      return this.masterList.filter(visit => visit.type == 'service').reverse()
     },
     filterBill: function () {
-      return []
-      return this.$store.state.currPatient.visitse.filter(visit => visit.type == 'bill').reverse()
+      return this.masterList.filter(visit => visit.type == 'bill').reverse()
     }
   },
   methods: {
@@ -225,26 +170,119 @@ export default {
   },
   data() {
     return {
+      arr: [1,12,31,23,21,312],
       tabs: [
         {
           name: 'visit',
           title: 'All Visits',
           isActive: true,
         },
-        {
-          name: 'episode',
-          title: 'Episodes',
-          isActive: false,
-        },
-        {
-          name: 'service',
-          title: 'Services',
-          isActive: false,
-        },
+        // {
+        //   name: 'episode',
+        //   title: 'Episodes',
+        //   isActive: false,
+        // },
+        // {
+        //   name: 'service',
+        //   title: 'Direct Services',
+        //   isActive: false,
+        // },
       ],
       list: [],
+      masterList: [
+        {
+          id: 'EP0 FL0',
+          name: 'Patient Registered',
+          type: 'registration',
+          gender: '8 weeks ago',
+          lastVisited: '1 weeks ago',
+          status: 'Released',
+          billed: '',
+          link: '',
+          age: 'Yes',
+          phone: '14155551234'
+        },
+        {
+          id: 'EP1 FL0',
+          name: 'Episode 1',
+          type: 'episode',
+          gender: '4 weeks ago',
+          lastVisited: '1 weeks ago',
+          status: 'released',
+          billed: '',
+          link: '/md/profile/profile-visit',
+          followups: 4,
+          age: 'Yes',
+          phone: '14155551234'
+        },
+        {
+          id: 'EP1 SV1',
+          name: 'Perform Service',
+          type: 'service',
+          gender: '2 weeks ago',
+          lastVisited: '1 weeks ago',
+          status: 'Released',
+          billed: 'View Bill',
+          link: '/md/profile/profile-visit-service',
+          age: 'Yes',
+          phone: '14155551234'
+        },
+        {
+          id: 'EP2 FL0',
+          name: 'Episode 2',
+          type: 'episode',
+          gender: '1 weeks ago',
+          lastVisited: '1 weeks ago',
+          status: 'queued',
+          followups: 3,
+          billed: '',
+          link: '/md/profile/profile-visit',
+          age: 'Yes',
+          phone: '14155551234'
+        },
+      ]
     }
   },
   transition: 'u-fade'
 }
 </script>
+
+<style>
+.list-inline-item {
+  margin-right: 16px !important;
+}
+
+thead tr th {
+  border-top: none !important;
+}
+
+.btn-dark {
+  background-color: #444f5a;
+  border: none;
+}
+
+.btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.btn-dark:hover {
+  background-color: #5d666e;
+  border: none;
+}
+
+.btn-light {
+  background-color: #e4e4e4;
+  border: none;
+}
+
+.shape-status {
+  width: 12px;
+  margin-right: 7px;
+  margin-bottom: 4px;
+}
+
+.pointer:hover {
+  cursor: pointer;
+}
+</style>

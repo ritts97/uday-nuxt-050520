@@ -18,7 +18,7 @@
           <hr>
         </div>
       </div>
-
+      <!-- {{ this.$store.state.currPatient.services }} -->
       <div class="row mt-0">
         <div class="col-md-12">
           <ul class="list-inline mb-2">
@@ -45,7 +45,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr class="pointer" v-for="(visit, index) in filterAllVisits.slice().reverse()" :key="index" style="height: 40px;">
+                <tr class="pointer" v-for="(visit, index) in this.list.slice().reverse()" :key="index" style="height: 40px;">
                   <td class="text-uppercase" scope="row">{{ visit.episodeID }}</td>
                   <td>
                     <div v-if="visit.title !== 'Registered'">
@@ -60,6 +60,13 @@
                   <td>{{ visit.created }}</td>
                   <td>{{ visit.lastUpdated }}</td>
                   <td>{{ visit.numFollowUps }}</td>
+                </tr>
+                <tr class="pointer" v-if="this.list.length === 0" style="height: 40px;">
+                  <td class="py-3 px-3 text-center" colspan="9">
+                    <small>
+                      There are no visits in this list.
+                    </small>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -93,6 +100,7 @@ export default {
       this.$store.commit('updateCurrPatient', { id: queryID })
     }
 
+    this.list = this.filterAllVisits
     // if (!queryID) {
     //   queryID = 'pa001'
     // }
@@ -128,30 +136,14 @@ export default {
       if (!queryID) {
         queryID = this.$store.state.currPatient.id
       }
-      
-      // let patientProf = this.$store.state.udayDb.clusters.cluster001.patients.find(patient => patient.id === queryID)
-      let patVisits = [...(this.$store.state.currPatient.episodes), ...(this.$store.state.currPatient.services)]
 
-      // console.log(...(patientProf.episodes), ...(patientProf.services))
-      // console.log(this.$store.state.udayDb.clusters.cluster001.patients.find(patient => patient.id === queryID))
-      // console.log(Array.isArray(episodeList))
-      // console.log(typeof serviceList)
-      // let arr = [1, ...episodeList] || []
-      // console.log(visits)
-      // console.log('xxxxxx')
-      // console.log(arr)
-
-      return patVisits || []
+      return [...(this.$store.state.currPatient.episodes), ...(this.$store.state.currPatient.services)] || []
     },
     filterEpisode: function () { 
       return this.$store.state.currPatient.episodes
     },
     filterService: function () {
       return this.$store.state.currPatient.services
-    },
-    filterBill: function () {
-      return []
-      return this.$store.state.currPatient.visitse.filter(visit => visit.type == 'bill').reverse()
     }
   },
   methods: {
@@ -184,9 +176,6 @@ export default {
       else if (tabName == 'service') {
         this.list = this.filterService
       }
-      else if (tabName == 'bill') {
-        this.list = this.filterBill
-      }
 
       this.tabs.forEach((tab, index) => {
         if (tab.name == tabName) {
@@ -203,14 +192,8 @@ export default {
       else if (tabName == 'episode') {
         return this.filterEpisode.length
       }
-      else if (tabName == 'prescription') {
-        return this.filterPrescription.length
-      }
       else if (tabName == 'service') {
         return this.filterService.length
-      }
-      else if (tabName == 'bill') {
-        return this.filterBill.length
       }
     },
   },
@@ -239,43 +222,3 @@ export default {
   transition: 'u-fade'
 }
 </script>
-
-<style>
-.list-inline-item {
-  margin-right: 16px !important;
-}
-
-thead tr th {
-  border-top: none !important;
-}
-
-.btn-dark {
-  background-color: #444f5a;
-  border: none;
-}
-
-.btn:focus {
-  outline: none;
-  box-shadow: none;
-}
-
-.btn-dark:hover {
-  background-color: #5d666e;
-  border: none;
-}
-
-.btn-light {
-  background-color: #e4e4e4;
-  border: none;
-}
-
-.shape-status {
-  width: 12px;
-  margin-right: 7px;
-  margin-bottom: 4px;
-}
-
-.pointer:hover {
-  cursor: pointer;
-}
-</style>

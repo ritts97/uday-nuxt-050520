@@ -2,14 +2,6 @@
   <div>
     <div class="container">
       <div class="row">
-        <div class="col-md-12 text-center">
-          Register a New Admin
-          <hr>
-        </div>
-      </div>
-    </div>
-    <div class="container">
-      <div class="row">
         <div class="col-md-12 rounded">
           <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" v-if="tabs[0].isActive">
             <div class="container">
@@ -56,7 +48,7 @@ export default {
   mounted() {
     let path = [
       {
-        title: 'Dashboard',
+        title: 'Super Admin\'s Dashboard',
         url: '/super'
       },
       {
@@ -65,7 +57,7 @@ export default {
       },
     ]
 
-    this.$store.commit('increment', path)
+    this.$store.commit('updatePath', path)
   },
   methods: {
     getTab: function (tabName) {

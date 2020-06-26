@@ -2,13 +2,13 @@
   <div>
     <div class="container">
       <transition name="u-fade">
-        <div class="row mt-3">
-          <div class="col-md-3 text-left" style="min-height: 200px;">
+        <div class="row">
+          <div class="col-md-3  mt-3 text-left" style="min-height: 200px;">
             <nuxt-link to="/ha/profile" class="text-decoration-none text-dark">
-              <img src="/avatar-girl.png">
+              <img src="/avatar-girl_03.png">
             </nuxt-link>
           </div>
-          <div class="col-md-9">
+          <div class="col-md-9 mt-3">
             <div class="row">
               <div class="col-md-6">
                 <h5 class="d-inline text-decoration-none">{{ currUser.name }}</h5>  
@@ -22,12 +22,11 @@
             {{ currUser.bio }}<br><br>
             <div class="row">
               <div class="col-md-6">
-                {{ currUser.phone }} <br>
-                {{ currUser.address }} <br><br>
+                {{ currUser.address }} <br>
+                {{ currUser.location }}<br>
               </div>
               <div class="col-md-6">
-                <!-- {{ currUser.bio }} <br> -->
-                {{ currUser.location }}
+                {{ currUser.phone }} <br>
               </div>
             </div>
           </div>
@@ -139,8 +138,10 @@ export default {
       },
     ]
 
+
     this.list = this.patientList.filter(patient => patient.regBy == 'Jane Doe')
 
+    this.$store.commit('updateCurrUser')
     this.$store.commit('updatePath', path)
   },
   methods: {
@@ -181,12 +182,12 @@ export default {
       tabs: [
         {
           name: 'patients',
-          title: 'My Patients',
+          title: 'My Registered Patients',
           isActive: true,
         },
         {
           name: 'cluster',
-          title: 'My Cluster',
+          title: 'My Cluster Patients',
           isActive: false,
         },
         // {
