@@ -10,6 +10,7 @@ export default {
     clusters: {
       cluster001: {
         admins: [],
+        patientsInQueue: ['pa001', 'pa002'],
         mds: [{
             id: "md001",
             status: "offline",
@@ -159,6 +160,7 @@ export default {
       },
       cluster002: {
         admins: [],
+        patientsInQueue: [],
         mds: [],
         has: [],
         patients: []

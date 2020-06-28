@@ -81,18 +81,8 @@
 <script>
 export default {
   layout: 'dashboard',
-  created() {
-    // let queryID = this.$route.query.id
-
-    // if (!this.queryID) {
-    //   this.$router.push('/ha');
-    // }
-  },
   mounted() {
     let queryID = this.$route.query.id
-
-    console.log(queryID)
-    console.log(this.$store.state.currPatient.id)
     if (queryID !== this.$store.state.currPatient.id) {
       // get that patient profile
       // update to currUser
@@ -101,22 +91,6 @@ export default {
     }
 
     this.list = this.filterAllVisits
-    // if (!queryID) {
-    //   queryID = 'pa001'
-    // }
-    //  get patient data
-    // let queryID = this.$route.query.id
-
-    // // console.log(queryID)
-
-    // if (!queryID) {
-    //   console.log('No QUERY')
-    //   this.$router.push('/ha');
-    // }
-
-    // this.patientData = this.$store.state.udayDb.clusters.cluster001.patients.find(patient => patient.id === queryID)
-
-    // this.list = this.filterAllVisits
 
     this.$store.commit('updatePath', [
       {
@@ -140,7 +114,7 @@ export default {
       return [...(this.$store.state.currPatient.episodes), ...(this.$store.state.currPatient.services)] || []
     },
     filterEpisode: function () { 
-      return this.$store.state.currPatient.episodes
+      return this.$store.state.currPatient.episodes.slice(1)
     },
     filterService: function () {
       return this.$store.state.currPatient.services

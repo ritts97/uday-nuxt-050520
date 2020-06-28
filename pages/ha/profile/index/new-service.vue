@@ -61,13 +61,13 @@
 export default {
   layout: 'dashboard',
   mounted () {
-    this.$store.commit('increment', [
+    this.$store.commit('updatePath', [
       {
-        title: 'Dashboard',
+        title: 'HA\'s Dashboard',
         url: '/ha'
       },
       {
-        title: 'Delores Abernathy',
+        title: 'Patient\'s Profile',
         url: '/ha/profile'
       },
       {

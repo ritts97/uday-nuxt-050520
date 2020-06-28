@@ -1,7 +1,6 @@
 <template>
   <div>
-    <div class="container">
-
+    <div class="container" v-if="this.$store.state.currPatient === 'allocated'">
       <div class="row">
         <div class="col-md-12">
           <nuxt-link to="/md/profile/profile-visit">
@@ -27,7 +26,9 @@
           <hr>
         </div>
       </div>
+  </div>
 
+  <div class="container">
       <div class="row mt-0">
         <div class="col-md-12">
           <ul class="list-inline mb-2">
@@ -54,7 +55,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr class="pointer" v-for="(visit, index) in filterAllVisits.slice().reverse()" :key="index" style="height: 40px;">
+                <tr class="pointer" v-for="(visit, index) in list.slice().reverse()" :key="index" style="height: 40px;">
                   <td class="text-uppercase" scope="row">{{ visit.episodeID }}</td>
                   <td>
                     <div v-if="visit.title !== 'Registered'">
@@ -70,6 +71,13 @@
                   <td>{{ visit.lastUpdated }}</td>
                   <td>{{ visit.numFollowUps }}</td>
                 </tr>
+                <tr class="pointer" v-if="this.list.length === 0" style="height: 40px;">
+                  <td class="py-3 px-3 text-center" colspan="9">
+                    <small>
+                      There are no visits in this list.
+                    </small>
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -83,18 +91,8 @@
 <script>
 export default {
   layout: 'dashboard',
-  created() {
-    // let queryID = this.$route.query.id
-
-    // if (!this.queryID) {
-    //   this.$router.push('/ha');
-    // }
-  },
   mounted() {
     let queryID = this.$route.query.id
-
-    console.log(queryID)
-    console.log(this.$store.state.currPatient.id)
     if (queryID !== this.$store.state.currPatient.id) {
       // get that patient profile
       // update to currUser
@@ -102,32 +100,17 @@ export default {
       this.$store.commit('updateCurrPatient', { id: queryID })
     }
 
-    // if (!queryID) {
-    //   queryID = 'pa001'
-    // }
-    //  get patient data
-    // let queryID = this.$route.query.id
-
-    // // console.log(queryID)
-
-    // if (!queryID) {
-    //   console.log('No QUERY')
-    //   this.$router.push('/ha');
-    // }
-
-    // this.patientData = this.$store.state.udayDb.clusters.cluster001.patients.find(patient => patient.id === queryID)
-
-    // this.list = this.filterAllVisits
+    this.list = this.filterAllVisits
 
     this.$store.commit('updatePath', [
       {
-        title: 'Dashboard',
-        url: '/ha'
+        title: 'Doctor\'s Dashboard',
+        url: '/md'
       },
       {
         title: 'Patient\'s Profile',
-        url: '/ha/profile'
-      }
+        url: '/md/profile'
+      },
     ])
   },
   computed: {
@@ -137,30 +120,14 @@ export default {
       if (!queryID) {
         queryID = this.$store.state.currPatient.id
       }
-      
-      // let patientProf = this.$store.state.udayDb.clusters.cluster001.patients.find(patient => patient.id === queryID)
-      let patVisits = [...(this.$store.state.currPatient.episodes), ...(this.$store.state.currPatient.services)]
 
-      // console.log(...(patientProf.episodes), ...(patientProf.services))
-      // console.log(this.$store.state.udayDb.clusters.cluster001.patients.find(patient => patient.id === queryID))
-      // console.log(Array.isArray(episodeList))
-      // console.log(typeof serviceList)
-      // let arr = [1, ...episodeList] || []
-      // console.log(visits)
-      // console.log('xxxxxx')
-      // console.log(arr)
-
-      return patVisits || []
+      return [...(this.$store.state.currPatient.episodes), ...(this.$store.state.currPatient.services)] || []
     },
     filterEpisode: function () { 
-      return this.$store.state.currPatient.episodes
+      return this.$store.state.currPatient.episodes.slice(1)
     },
     filterService: function () {
       return this.$store.state.currPatient.services
-    },
-    filterBill: function () {
-      return []
-      return this.$store.state.currPatient.visitse.filter(visit => visit.type == 'bill').reverse()
     }
   },
   methods: {
@@ -193,9 +160,6 @@ export default {
       else if (tabName == 'service') {
         this.list = this.filterService
       }
-      else if (tabName == 'bill') {
-        this.list = this.filterBill
-      }
 
       this.tabs.forEach((tab, index) => {
         if (tab.name == tabName) {
@@ -212,14 +176,8 @@ export default {
       else if (tabName == 'episode') {
         return this.filterEpisode.length
       }
-      else if (tabName == 'prescription') {
-        return this.filterPrescription.length
-      }
       else if (tabName == 'service') {
         return this.filterService.length
-      }
-      else if (tabName == 'bill') {
-        return this.filterBill.length
       }
     },
   },

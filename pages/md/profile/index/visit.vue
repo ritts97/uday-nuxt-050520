@@ -1,52 +1,16 @@
 <template>
   <div>
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Select Allocation</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            Allocate to Doctor <br><br>
-            <!-- {{ this.$store.state.clusters[0].mds }} -->
-
-            <span v-for="(md, index) in this.$store.state.udayDb.clusters.cluster001.mds" :key="index">
-              <input type="radio" class="mr-3" name="" id=""> {{ md.demographics.name }} – {{ md.status }} <br>
-            </span><br> or <br><br>
-            <input type="radio" class="mr-3" name="" id=""> Allocate to General Queue
-          </div>
-          <div class="modal-footer">
-            <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-            <nuxt-link to="/ha/profile/visit" class="w-100">
-            <!-- <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0  text-uppercase">Allocate New Episode To Doctor</button>      -->
-              <button @click="addToQueue()" type="button" data-dismiss="modal" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0 text-uppercase">Submit Allocation</button>
-            </nuxt-link>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <div class="container mt-0">
-      <div class="row">
+      
+      <!-- <div class="row">
         <div class="col-md-12">
-          <!-- <nuxt-link to="/ha/profile/"> -->
-          <!-- {{ this.$store.state.currPatient.status === 'allocated'}} -->
-            <button data-toggle="modal" :disabled="this.$store.state.currPatient.status === 'allocated'" data-target="#exampleModal" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Allocate for Doctor's Review</button>     
-          <!-- </nuxt-link> -->
+          <button data-toggle="modal" :disabled="this.$store.state.currPatient.status === 'allocated'" data-target="#exampleModal" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Allocate for Doctor's Review</button>     
         </div>
-        <!-- <div class="col-md-6">
-          <nuxt-link to="/ha/profile/">
-            <button  @click="sendAlert('The patient has been allocated to a doctor.')" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0  text-uppercase">Allocate To Queue</button>     
-          </nuxt-link>
-        </div> -->
         <div class="col-md-12">
           <hr class="mt-2">
         </div>
-      </div>
+      </div> -->
+
       <div class="row">
         <div class="col-md-12 rounded">
           <ul class="list-inline">
@@ -194,7 +158,7 @@
               </div>
             </div>
           </div>
-          <div class="w-100 bg-white mb-2 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="subTabs[2].isActive">
+          <div class="w-100 bg-white mb-2 mt-0 px-3 pt-3 pb-3" style="min-height: 100px;" v-if="subTabs[2].isActive">
             <div class="row mt-1">
               <!-- <div class="col-md-12 mb-5 text-center" style="min-height: 300px;">
                 <img src="/anatomy_sketch.png" alt="">
@@ -380,7 +344,7 @@
               <table class="table table-sm table-hover mt-3">
                 <thead>
                   <tr>
-                    <th scope="col"></th>
+                    <!-- <th scope="col"></th> -->
                     <th scope="col">ID</th>
                     <th scope="col">Medicine</th>
                     <th scope="col">Type</th>
@@ -395,7 +359,7 @@
                 </thead>
                 <tbody>
                   <tr class="pointer">
-                    <td><input type="checkbox" name="" id=""></td>
+                    <!-- <td><input type="checkbox" name="" id=""></td> -->
                     <td>AAU</td>
                     <td>Lorazepam</td>
                     <td>AAU</td>
@@ -408,7 +372,7 @@
                     <td>10</td>
                   </tr>
                   <tr class="pointer">
-                    <td><input type="checkbox" name="" id=""></td>
+                    <!-- <td><input type="checkbox" name="" id=""></td> -->
                     <td>AAU</td>
                     <td>Lorazepam</td>
                     <td>AAU</td>
@@ -421,7 +385,7 @@
                     <td>10</td>
                   </tr>
                   <tr class="pointer">
-                    <td><input type="checkbox" name="" id=""></td>
+                    <!-- <td><input type="checkbox" name="" id=""></td> -->
                     <td>AAU</td>
                     <td>Lorazepam</td>
                     <td>AAU</td>
@@ -434,7 +398,7 @@
                     <td>10</td>
                   </tr>
                   <tr class="pointer">
-                    <td><input type="checkbox" name="" id=""></td>
+                    <!-- <td><input type="checkbox" name="" id=""></td> -->
                     <td>AAU</td>
                     <td>Lorazepam</td>
                     <td>AAU</td>
@@ -447,7 +411,7 @@
                     <td>10</td>
                   </tr>
                   <tr class="pointer" style="background-color: salmon;">
-                    <td><input type="checkbox" name="" id=""></td>
+                    <!-- <td><input type="checkbox" name="" id=""></td> -->
                     <td>AAU</td>
                     <td>Lorazepam</td>
                     <td>AAU</td>
@@ -460,7 +424,7 @@
                     <td>10</td>
                   </tr>
                   <tr class="pointer" style="background-color: salmon;">
-                    <td><input type="checkbox" name="" id=""></td>
+                    <!-- <td><input type="checkbox" name="" id=""></td> -->
                     <td>AAU</td>
                     <td>Lorazepam</td>
                     <td>AAU</td>
@@ -473,7 +437,7 @@
                     <td>10</td>
                   </tr>
                   <tr class="pointer" style="background-color: salmon;">
-                    <td><input type="checkbox" name="" id=""></td>
+                    <!-- <td><input type="checkbox" name="" id=""></td> -->
                     <td>AAU</td>
                     <td>Lorazepam</td>
                     <td>AAU</td>
@@ -529,16 +493,16 @@ export default {
   mounted() {
     this.$store.commit('updatePath', [
       {
-        title: 'Dashboard',
-        url: '/ha'
+        title: 'Doctor\'s Dashboard',
+        url: '/md'
       },
       {
         title: 'Patient\'s Profile',
-        url: '/ha/profile'
+        url: '/md/profile'
       },
       {
         title: 'Episode 1',
-        url: '/ha/profile'
+        url: '/md/profile'
       }
     ])
   },
@@ -634,16 +598,16 @@ export default {
         //   title: 'Billing History',
         //   isActive: false
         // },
-        {
-          name: 'newfollowup',
-          title: 'Record Follow Up',
-          isActive: false
-        },
-        {
-          name: 'newservice',
-          title: 'Record Service',
-          isActive: false
-        },
+        // {
+        //   name: 'newfollowup',
+        //   title: 'Record Follow Up',
+        //   isActive: false
+        // },
+        // {
+        //   name: 'newservice',
+        //   title: 'Record Service',
+        //   isActive: false
+        // },
       ],
       subTabs: [
         {

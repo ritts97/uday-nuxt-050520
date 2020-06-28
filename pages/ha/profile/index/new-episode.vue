@@ -135,6 +135,7 @@
               </div>
             </div>
           </div>
+          
           <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="tabs[3].isActive">
             <!-- Specific Exams
             <br><br> -->
@@ -285,6 +286,7 @@ export default {
     addToQueue: function () {
       // alert('Added to Patient Queue.')
       this.$store.commit('updateStatus', 'allocated')
+      this.$store.commit('addPatientToQueue', this.$store.state.currPatient.id)
       this.$store.commit('recordNewEpisode')
       this.$store.commit('updateCurrPatient')
     },

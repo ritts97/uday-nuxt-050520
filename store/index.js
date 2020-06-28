@@ -196,6 +196,13 @@ export const mutations = {
 
     state.udayDb.clusters[date.getTime()] = payload
   },
+  addPatientToQueue(state, payload) {
+    let CLUSTER_ID = state.currCluster
+
+    state.udayDb.clusters[CLUSTER_ID].patientsInQueue.push(
+      payload
+    )
+  }
 }
 
 export const actions = {

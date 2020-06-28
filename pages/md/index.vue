@@ -69,10 +69,9 @@
                 <tr class="pointer" v-for="(patient, index) in list.slice().reverse()" :key="index">
                   <td class="text-uppercase">{{ patient.id }}</td>
                   <td>
-                    <nuxt-link to="/md/profile">{{ patient.demographics.name }}
-                    </nuxt-link>
+                    <nuxt-link :to="'/md/profile?id=' + patient.id">{{ patient.demographics.name }}</nuxt-link>
                   </td>
-                  <td>{{ patient.demographics.gender }}</td>
+                  <td class="text-uppercase">{{ patient.demographics.gender }}</td>
                   <td>{{ patient.demographics.age }}</td>
                   <td>{{ patient.demographics.phone }}</td>
                   <td>{{ patient.demographics.location }}</td>
@@ -112,12 +111,25 @@ export default {
     filterCluster: function () {
       return this.$store.state.udayDb.clusters.cluster001.patients
     },
-    filterHAs () {
-      return []
-      return this.$store.state.udayDb.clusters.cluster001.has
+    filterQueue () {
+      let patientIDs = this.$store.state.udayDb.clusters.cluster001.patientsInQueue
+      let patientsInCluster = this.$store.state.udayDb.clusters.cluster001.patients
+      const patientsInQueue = []
+
+      for (let x = 0; x < patientIDs.length; x++) {
+        for (let y = 0; y < patientsInCluster.length; y++) {
+          if (patientIDs[x] === patientsInCluster[y].id) {
+            patientsInQueue.push(patientsInCluster[y])
+          }
+        }
+      }
+
+      return patientsInQueue
+      // return []
     },
   },
   mounted () {
+
     let path = [
       {
         title: 'Doctor\'s Dashboard',
@@ -136,7 +148,7 @@ export default {
         this.list = this.filterCluster
       }
       else if (tabName == 'queue') {
-        this.list = this.filterHAs
+        this.list = this.filterQueue
       }
 
       this.tabs.forEach((tab, index) => {
@@ -156,8 +168,7 @@ export default {
         return this.$store.state.udayDb.clusters.cluster001.patients.length
       }
       else if (tabName == 'queue') {
-        return 0
-        return this.$store.state.udayDb.clusters.cluster001.has.length
+        return this.$store.state.udayDb.clusters.cluster001.patientsInQueue.length
       }
     },
   },
@@ -186,3 +197,15 @@ export default {
   transition: 'u-fade'
 }
 </script>
+
+<style>
+.shape-status {
+  width: 12px;
+  margin-right: 7px;
+  margin-bottom: 4px;
+}
+
+.pointer:hover {
+  cursor: pointer;
+}
+</style>
