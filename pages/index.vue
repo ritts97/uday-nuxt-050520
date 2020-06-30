@@ -38,7 +38,6 @@
               Login (as Super)
             </button>
           </nuxt-link>
-          
           <!-- <nuxt-link to="/register-ha">
             <small class="text-secondary">Register a new Health Assistant?</small>
           </nuxt-link><br> -->
@@ -48,7 +47,9 @@
         </div>
       </div>
     </div>
-    <div class="container text-center mt-4 pt-5">
+
+    <!-- Footer -->
+    <div class="container text-center mb-4 mt-5">
       <div class="row">
         <div class="col-md-12 text-secondary">
           <small>
@@ -62,11 +63,12 @@
 
 <script>
 export default {
+  layout: 'default',
 }
 </script>
 
 <style>
-.no-underline {
+/* .no-underline {
 
-}
+} */
 </style>

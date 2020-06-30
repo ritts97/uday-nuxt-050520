@@ -1,15 +1,6 @@
 <template>
   <div>
-    <div class="w-100 bg-dark text-white mb-3">
-      <div class="container bg-dark">
-        <div class="row py-2">
-          <div class="col-md-6 font-weight-bold py-1" style="font-size: 24px;">
-            UD.
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="container">
+    <div class="container" style="margin-top:100px;">
       <div class="row text-center">
         <div class="offset-md-4 col-md-4 bg-white rounded px-4 py-4 mt-4">
           <!-- Login <br> -->
@@ -28,20 +19,13 @@
         </div>
       </div>
     </div>
-    <div class="container text-center pt-5">
-      <div class="row">
-        <div class="col-md-12 text-secondary">
-          <small>
-            UdayHealth.org is a virtual, telemedicine application <br> organized by medical professionals and volunteers worldwide.
-          </small>
-        </div>
-      </div>
-    </div>
+    
   </div>
 </template>
 
 <script>
 export default {
+  layout: 'default',
 }
 </script>
 

@@ -618,15 +618,6 @@ export default {
     showAlert: function (msg) {
       confirm(msg)
     },
-    handleAllocate: function () {
-      if (this.visitStatus === 'queued') {
-        alert('You have allocated this patient.')
-
-        this.visitStatus = 'allocated'
-      } else {
-        alert('This patient has been released.')
-      }
-    },
     getSubTab: function (tabName) {
       let tabs = this.subTabs
       let ref = 0
@@ -666,9 +657,8 @@ export default {
         episodeID: this.$route.query.id
       }
 
+      confirm('By confirming, all current information will be saved, and the episode for this patient will be released back to HA. \n\nYou will not be able to make changes again until a new episode is allocated to you.')
       this.$store.commit('releasePatient', episodeInfo)
-
-      showAlert('By confirming, all current information will be saved, and the episode for this patient will be released back to HA. \n\nYou will not be able to make changes again until a new episode is allocated to you.')
     }
   },
   data() {

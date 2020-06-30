@@ -48,7 +48,7 @@ export default {
         }],
         patients: [
           {
-            id: "pa001",
+            id: "pa01",
             status: "registered",
             regBy: "Charlotte Hale",
             demographics: {
@@ -102,7 +102,7 @@ export default {
             services: []
           },
           {
-            id: "pa002",
+            id: "pa02",
             status: "released",
             regBy: "Charlotte Hale",
             demographics: {
