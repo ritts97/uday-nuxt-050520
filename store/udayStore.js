@@ -10,7 +10,7 @@ export default {
     clusters: {
       cluster001: {
         admins: [],
-        patientsInQueue: ['pa001', 'pa002'],
+        patientsInQueue: [],
         mds: [{
             id: "md001",
             status: "offline",
@@ -93,7 +93,8 @@ export default {
                   medicine: "",
                   advice: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem est placeat perspiciatis vero! Corrupti voluptatum beatae ducimus quod voluptas qui?',
                   investigations: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem est placeat perspiciatis vero! Corrupti voluptatum beatae ducimus quod voluptas qui?',
-                  advice: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem est placeat perspiciatis vero! Corrupti voluptatum beatae ducimus quod voluptas qui?'
+                  advice: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem est placeat perspiciatis vero! Corrupti voluptatum beatae ducimus quod voluptas qui?',
+                  diagnosis: '',
                 },
                 followUps: []
               }
@@ -102,7 +103,7 @@ export default {
           },
           {
             id: "pa002",
-            status: "registered",
+            status: "released",
             regBy: "Charlotte Hale",
             demographics: {
               name: "Delores Abernathy",
@@ -150,7 +151,8 @@ export default {
                 feedback: {
                   medicine: "",
                   investigations: "",
-                  advice: ""
+                  advice: "",
+                  diagnosis: '',
                 }
               }
             ],

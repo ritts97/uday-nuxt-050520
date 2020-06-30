@@ -26,7 +26,8 @@ export const state = () => ({
       phone: "",
       location: ""
     },
-    episodes: [{
+    episodes: [
+      {
         episodeID: "EP0 FL0",
         title: "Registered",
         created: "1 week ago",
@@ -42,7 +43,8 @@ export const state = () => ({
         feedback: {
           medicine: "",
           investigations: "",
-          advice: ""
+          advice: "",
+          diagnosis: ""
         }
       }
     ],
@@ -80,6 +82,18 @@ export const mutations = {
       state.counter++
     }
   },
+  updateFeedback(state, payload) {
+    const clusterID = payload.clusterID
+    const patientID = payload.patientID
+    const episodeID = payload.episodeID
+    const feedback = payload.feedback
+
+    console.log('Ooga booga')
+    console.log(clusterID)
+    // find episode (from clusterID => patientID => episodeID)
+    state.udayDb.clusters[clusterID].patients.find(patient => patient.id === patientID).episodes.find(episode => episode.episodeID === episodeID).feedback = feedback
+    alert('Your feedback has been updated.')
+  },
   recordNewEpisode(state, payload) {    
     let CLUSTER_ID = state.currCluster
     let PATIENT_ID = state.currPatient.id
@@ -98,17 +112,34 @@ export const mutations = {
         created: d.getTime(),
         lastUpdated: '',
         numFollowUps: '',
+        followUps: [],
+        services: [],
         complaint: {
-          chiefComplaint: '',
-          vitals: '',
-          genExams: '',
-          specExams: '',
-          addPhotos: ''
+          chiefComplaint: 'ooga booga',
+          vitals: 'ooga booga',
+          genExams: 'ooga booga',
+          specExams: 'ooga booga',
+          addPhotos: 'ooga booga'
         },
         feedback: {
-          medicine: '',
+          hasFeedback: false,
+          medicine: [
+            {
+              id: 'AAU',
+              name: 'Lorazepam',
+              type: 'AAU',
+              batch: 135,
+              expiry: '12/22',
+              stock: 99,
+              mrp: '$99',
+              gst: '$99',
+              dis: 10,
+              crit: 10
+            }
+          ],
           investigations: '',
           advice: '',
+          diagnosis: '',
         }
       }
     )

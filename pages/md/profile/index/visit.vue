@@ -1,13 +1,31 @@
 <template>
   <div>
     <div class="container mt-0">
-      
+      <div class="row">
+        <div class="col-md-6">
+          <!-- <nuxt-link to="/md/profile/profile-visit"> -->
+            <button @click="showDocsFeedback = true; editable = true" :disabled="editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Update Episode Feedback</button>     
+          <!-- </nuxt-link> -->
+        </div>
+        <div class="col-md-6">
+          <!-- <nuxt-link to="/md/profile/profile-visit"> -->
+            <button @click="showDocsFeedback = true; editable = true" :disabled="!editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Save Episode Feedback</button>     
+          <!-- </nuxt-link> -->
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <hr>
+        </div>
+      </div>
+
       <!-- <div class="row">
         <div class="col-md-12">
-          <button data-toggle="modal" :disabled="this.$store.state.currPatient.status === 'allocated'" data-target="#exampleModal" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Allocate for Doctor's Review</button>     
-        </div>
-        <div class="col-md-12">
-          <hr class="mt-2">
+          Curr Cluster: {{ this.$store.state.currCluster }} <br>
+          Curr Patient: {{ this.$store.state.currPatient.id }} <br>
+          Episode ID: {{ this.$store.state.currPatient.episodes[1].episodeID }}<br>
+          Episode Data: {{ this.$store.state.currPatient.episodes }}
         </div>
       </div> -->
 
@@ -31,16 +49,14 @@
               </div>
             </li>
           </ul>
-          <div class="w-100 bg-white mb-2 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="subTabs[0].isActive">
+          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="subTabs[0].isActive">
             <div class="row mt-1">
               <div class="col-md-12 mb-3">
                 <div class="small text-muted mb-2">
                   Chief Complaint
                 </div>
-                Coughing Problem <br><br>
-                <!-- <div class="small text-muted mb-2">
-                  Notes
-                </div> -->
+                {{ this.$store.state.currPatient.episodes[1].complaint.chiefComplaint }}
+                <!-- Coughing Problem <br><br>
                 <span class="rounded mr-2 p-2 text-white" style="background-color: #a9a9a9;">
                   Lasting 2 days 
                 </span>
@@ -69,82 +85,32 @@
                 <div class="small text-muted mb-2">
                   Description
                 </div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat earum sequi laudantium est consequuntur non natus suscipit quibusdam, hic dolore, quam, quidem nostrum. Incidunt alias eos repellendus quaerat tempore doloremque unde sit, earum maiores facilis beatae vero ex hic eaque necessitatibus nulla consectetur dolorum? Voluptas magnam alias at sed unde!
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat earum sequi laudantium est consequuntur non natus suscipit quibusdam, hic dolore, quam, quidem nostrum. Incidunt alias eos repellendus quaerat tempore doloremque unde sit, earum maiores facilis beatae vero ex hic eaque necessitatibus nulla consectetur dolorum? Voluptas magnam alias at sed unde! -->
               </div>
-              <!-- <div class="col-md-6 mb-3">
-                <div class="small text-muted mb-2">
-                  Complaint 2
-                </div>
-                Fever <br><br>
-                Lasting 3 days <br>
-                Felt on alternate <br>
-                Present all day <br>
-                Low grade <br>
-                Yes shivers <br>
-                Associated with None <br>
-                Haemoptysis No <br>
-                Associated with Gguggu <br>
-                Weakness No <br>
-                Weightloss No <br>
-                Dysuria No <br>
-                Brought on by Ugugu <br>
-                Relieved by Ugiig <br>
-              </div> -->
             </div>
+            <!-- <div class="row mt-1">
+              <div class="col-md-12 text-left">
+                <span>
+                  <small>First Recorded by Jane Doe on January 1, 2022</small>
+                </span>
+                <span class="float-right">
+                  <small>
+                    Last Updated by Jane Doe on January 20, 2022
+                  </small>
+                </span>
+              </div>
+            </div> -->
           </div>
-          <div class="w-100 bg-white mb-2 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="subTabs[1].isActive">
+          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="subTabs[1].isActive">
             <div class="row mt-1">
-              <div class="col-md-6 mb-4">
-                <div class="small text-muted mb-1">
-                  Pulse
+              <div class="col-md-12">
+                <div class="small text-muted mb-2">
+                  Vitals
                 </div>
-                72 BPM
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="BP (___/___ mmHg)"> -->
+                <br><br>
+                <!-- {{ this.$store.state.currPatient.episodes[0].complaint.vitals }} -->
               </div>
-              <div class="col-md-6 mb-4">
-                <div class="small text-muted mb-1">
-                  BP
-                </div>
-                120/80 mmHg
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="BP (___/___ mmHg)"> -->
-              </div>
-              <div class="col-md-6 mb-4">
-                <div class="small text-muted mb-1">
-                  SP02
-                </div>
-                89%
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="SP02 (%)"> -->
-              </div>
-              <div class="col-md-6 mb-4">
-                <div class="small text-muted mb-1">
-                  Temperature
-                </div>
-                98^
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Temperature (‘’ F)"> -->
-              </div>
-              <div class="col-md-6 mb-4">
-                <div class="small text-muted mb-1">
-                  Height
-                </div>
-                180 cm
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Height (cm)"> -->
-              </div>
-              <div class="col-md-6 mb-4">
-                <div class="small text-muted mb-1">
-                  Weight
-                </div>
-                65 kg
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Weight (kg)"> -->
-              </div>
-              <div class="col-md-6 mb-3">
-                <div class="small text-muted mb-1">
-                  BMI
-                </div>
-                20.06 kg/m2
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="BMI (kg/m2) (Auto Calculated)"> -->
-              </div>
-              <div class="col-md-12 mb-4">
-                <hr class="pb-3">
+              <!-- <div class="col-md-12 mb-4">
                 <div class="small text-muted mb-1">
                   Patient Appearance
                 </div>
@@ -156,163 +122,186 @@
                 </div>
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellat voluptatum porro quos error minus iste nesciunt nobis quam vero animi unde deserunt totam modi odio itaque atque perspiciatis voluptatibus ea optio, adipisci nisi iusto id corrupti. Doloribus repudiandae eaque sed hic, perferendis, iure, expedita est pariatur corrupti vitae architecto maxime!
               </div>
+              <div class="col-md-6 mb-4">
+                <div class="small text-muted mb-1">
+                  Pulse
+                </div>
+                72 BPM
+              </div>
+              <div class="col-md-6 mb-4">
+                <div class="small text-muted mb-1">
+                  BP
+                </div>
+                120/80 mmHg
+              </div>
+              <div class="col-md-6 mb-4">
+                <div class="small text-muted mb-1">
+                  SP02
+                </div>
+                89%
+              </div>
+              <div class="col-md-6 mb-4">
+                <div class="small text-muted mb-1">
+                  Temperature
+                </div>
+                98^
+              </div>
+              <div class="col-md-6 mb-4">
+                <div class="small text-muted mb-1">
+                  Height
+                </div>
+                180 cm
+              </div>
+              <div class="col-md-6 mb-4">
+                <div class="small text-muted mb-1">
+                  Weight
+                </div>
+                65 kg
+              </div>
+              <div class="col-md-6 mb-3">
+                <div class="small text-muted mb-1">
+                  BMI
+                </div>
+                20.06 kg/m2
+              </div> -->
             </div>
+            <!-- <div class="row mt-1">
+              <div class="col-md-6 text-left">
+                <small>First Recorded: January 1, 2022</small>
+              </div>
+              <div class="col-md-6 text-right">
+                <small>Last Updated: January 20, 2022</small>
+              </div>
+            </div> -->
           </div>
-          <div class="w-100 bg-white mb-2 mt-0 px-3 pt-3 pb-3" style="min-height: 100px;" v-if="subTabs[2].isActive">
+          <!-- <transition name="u-fade" mode="out-in"> -->
+          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="subTabs[2].isActive">
             <div class="row mt-1">
               <!-- <div class="col-md-12 mb-5 text-center" style="min-height: 300px;">
                 <img src="/anatomy_sketch.png" alt="">
               </div> -->
-              <div class="col-md-6 mb-3">
-                <div class="small text-muted">
+              <div class="col-md-12">
+                <div class="small text-muted mb-2">
+                  General Exams
+                </div>
+                <br><br>
+                <!-- {{ this.$store.state.currPatient.episodes[0].complaint.genExams }} -->
+              </div>
+              <!-- <div class="col-md-6 pb-3 mb-3">
+                <div class="small text-muted mb-3">
                   Eyes
                 </div>
-                Jaundice – Yes <br>
-                Pallor – Mild
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Patient Appearance"> -->
+                <span class="rounded mr-2 p-2 text-white" style="background-color: #a9a9a9;">
+                  Jaundice Yes 
+                </span>
+                <span class="rounded mr-2 p-2 text-white" style="background-color: #a9a9a9;">
+                  Pallor Mild
+                </span>
               </div>
-              <div class="col-md-6 mb-3">
-                <div class="small text-muted">
+              <div class="col-md-6 pb-3 mb-3">
+                <div class="small text-muted mb-3">
                   Hands
                 </div>
-                Nails – Normal <br>
-                Cyanosis – Yes
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Patient Gait"> -->
+                <span class="rounded mr-2 p-2 text-white" style="background-color: #a9a9a9;">
+                  Nails Normal
+                </span>
+                <span class="rounded mr-2 p-2 text-white" style="background-color: #a9a9a9;">
+                  Cyanosis Yes
+                </span>
               </div>
-              <div class="col-md-6 mb-3">
-                <div class="small text-muted">
+              <div class="col-md-6 pb-3 mb-3">
+                <div class="small text-muted mb-3">
                   Lower Leg and Ankle
                 </div>
-                Oedema – Mild
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="BP (___/___ mmHg)"> -->
-              </div>
-            </div>
-          </div>
-          <div class="w-100 bg-white mb-2 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="subTabs[3].isActive">
-            <div class="row mt-1">
-              <div class="col-md-6 mb-4">
-                <div class="small text-muted mb-1">
-                  Pulse
-                </div>
-                72 BPM
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="BP (___/___ mmHg)"> -->
-              </div>
-              <div class="col-md-6 mb-4">
-                <div class="small text-muted mb-1">
-                  BP
-                </div>
-                120/80 mmHg
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="BP (___/___ mmHg)"> -->
-              </div>
-              <div class="col-md-6 mb-4">
-                <div class="small text-muted mb-1">
-                  SP02
-                </div>
-                89%
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="SP02 (%)"> -->
-              </div>
-              <div class="col-md-6 mb-4">
-                <div class="small text-muted mb-1">
-                  Temperature
-                </div>
-                98^
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Temperature (‘’ F)"> -->
-              </div>
-              <div class="col-md-6 mb-4">
-                <div class="small text-muted mb-1">
-                  Height
-                </div>
-                180 cm
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Height (cm)"> -->
-              </div>
-              <div class="col-md-6 mb-4">
-                <div class="small text-muted mb-1">
-                  Weight
-                </div>
-                65 kg
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Weight (kg)"> -->
-              </div>
-              <div class="col-md-6 mb-3">
-                <div class="small text-muted mb-1">
-                  BMI
-                </div>
-                20.06 kg/m2
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="BMI (kg/m2) (Auto Calculated)"> -->
-              </div>
-              <div class="col-md-12 mb-4">
-                <hr class="pb-3">
-                <div class="small text-muted mb-1">
-                  Patient Appearance
-                </div>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quas fuga modi necessitatibus, similique explicabo quae aliquid nostrum velit dolorem veniam fugit temporibus hic ut quia et obcaecati consequatur libero possimus animi exercitationem omnis ducimus culpa nisi enim. Optio, similique. Veniam, tempore et architecto voluptates nisi odit expedita illo ipsam incidunt!
-              </div>
-              <div class="col-md-12 mb-4">
-                <div class="small text-muted mb-1">
-                  Patient Gait
-                </div>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellat voluptatum porro quos error minus iste nesciunt nobis quam vero animi unde deserunt totam modi odio itaque atque perspiciatis voluptatibus ea optio, adipisci nisi iusto id corrupti. Doloribus repudiandae eaque sed hic, perferendis, iure, expedita est pariatur corrupti vitae architecto maxime!
-              </div>
-            </div>
-          </div>
-          <div class="w-100 bg-white mb-2 mt-0 px-3 pt-3 pb-1" style="min-height: 200px;" v-if="subTabs[4].isActive">
-            <div class="row mt-1">
-              <div class="col-md-12 mb-3 text-center">
-                Additional Photos
-              </div>
-              <div class="col-md-3 mb-4">
-                <img src="/square-grey.jpg" class="w-100" alt="">
-              </div>
-              <div class="col-md-3 mb-4">
-                <img src="/square-grey.jpg" class="w-100" alt="">
-              </div>
-              <div class="col-md-3 mb-4">
-                <img src="/square-grey.jpg" class="w-100" alt="">
-              </div>
-              <div class="col-md-3 mb-4">
-                <img src="/square-grey.jpg" class="w-100" alt="">
-              </div>
-              <div class="col-md-3 mb-4">
-                <img src="/square-grey.jpg" class="w-100" alt="">
-              </div>
-              <div class="col-md-3 mb-4">
-                <img src="/square-grey.jpg" class="w-100" alt="">
-              </div>
-              <!-- <div class="col-md-3 mb-4">
-                <img src="/square-grey.jpg" class="w-100" alt="">
-              </div> -->
-              <div class="col-md-3 mb-4">
-                <img src="/square-grey-add.jpg" class="w-100" alt="">
-              </div>
-              <!-- <div class="col-md-3 mb-4">
-                <img src="/square-grey.jpg" alt="">
-              </div>
-              <div class="col-md-3 mb-4">
-                <img src="/square-grey.jpg" alt="">
+                <span class="rounded mr-2 p-2 text-white" style="background-color: #a9a9a9;">
+                Oedema Mild
+                </span>
               </div> -->
             </div>
+            <!-- <div class="row mt-1">
+              <div class="col-md-6 text-left">
+                <small>First Recorded: January 1, 2022</small>
+              </div>
+              <div class="col-md-6 text-right">
+                <small>Last Updated: January 20, 2022</small>
+              </div>
+            </div> -->
           </div>
-          <!-- <div class="row px-2 mb-2">
-            <div class="col-md-12 text-left">
-              <span>
-                <small>First Recorded on January 1, 2022</small>
-              </span>
-              <span class="float-right">
-                <small>
-                  Last Updated by Jane Doe on January 20, 2022
-                </small>
-              </span>
+          <!-- </transition> -->
+          <!-- <transition name="u-fade" mode="out-in"> -->
+            <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="subTabs[3].isActive">
+              <div class="row mt-1">
+                <div class="col-md-12">
+                  <div class="small text-muted mb-2">
+                    Specific Exams
+                  </div>
+                  <br><br>
+                  <!-- {{ this.$store.state.currPatient.episodes[0].complaint.genExams }} -->
+                </div>
+                <!-- <div class="col-md-12 mb-4">
+                  <div class="small text-muted mb-1">
+                    Patient Appearance
+                  </div>
+                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quas fuga modi necessitatibus, similique explicabo quae aliquid nostrum velit dolorem veniam fugit temporibus hic ut quia et obcaecati consequatur libero possimus animi exercitationem omnis ducimus culpa nisi enim. Optio, similique. Veniam, tempore et architecto voluptates nisi odit expedita illo ipsam incidunt!
+                </div>
+                <div class="col-md-12 mb-4">
+                  <div class="small text-muted mb-1">
+                    Patient Gait
+                  </div>
+                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellat voluptatum porro quos error minus iste nesciunt nobis quam vero animi unde deserunt totam modi odio itaque atque perspiciatis voluptatibus ea optio, adipisci nisi iusto id corrupti. Doloribus repudiandae eaque sed hic, perferendis, iure, expedita est pariatur corrupti vitae architecto maxime!
+                </div>
+              </div>
+              <div class="row mt-1">
+                <div class="col-md-6 text-left">
+                  <small>First Recorded: January 1, 2022</small>
+                </div>
+                <div class="col-md-6 text-right">
+                  <small>Last Updated: January 20, 2022</small>
+                </div> -->
+              </div>
+            </div>
+          <!-- </transition> -->
+          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="subTabs[4].isActive">
+            <div class="row mt-1">
+              <div class="col-md-12">
+                <div class="small text-muted mb-2">
+                  Additional Photos
+                </div>
+                <br><br>
+                <!-- {{ this.$store.state.currPatient.episodes[0].complaint.addPhotos }} -->
+              </div>
+            </div>
+            <!-- <div class="row mt-1">
+              <div class="col-md-12 text-left">
+                <span>
+                  <small>First Recorded on January 1, 2022</small>
+                </span>
+                <span class="float-right">
+                  <small>
+                    Last Updated by Jane Doe on January 20, 2022
+                  </small>
+                </span>
+              </div>
+            </div> -->
+          </div>
+          <!-- <div v-if="editable" class="container px-0">
+            <div class="row">
+              <div class="col-md-6">
+                <button class="w-100 btn btn-dark rounded font-weight-bold py-3 px-0 mb-2 text-uppercase">Edit Complaint</button>     
+              </div>
+              <div class="col-md-6">
+                <button disabled class="w-100 btn btn-dark rounded font-weight-bold py-3 px-0 mb-2 text-uppercase">Save Changes</button>     
+              </div>
             </div>
           </div> -->
         </div>
       </div>
     </div>
-
-
     <div>
       <div class="container mt-3 mb-3">
         <div class="row">
           <div class="col-md-12">
-            <h5 class="d-inline">Feedback</h5> 
+            <h5 class="d-inline">Doctor's Feedback</h5> 
             <!-- [ <div class="d-inline pointer text-muted" @click="showDocsFeedback = !showDocsFeedback">
               <span v-if="!showDocsFeedback">show</span>
               <span v-else>hide</span>
@@ -322,157 +311,157 @@
       </div>
     </div>
 
-    <div class="w-100 bg-white pt-4 pb-3 mb-4" style="min-height: 30px;">
-      <div class="container" v-if="!showDocsFeedback">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="small text-center">
-              This patient visit does not yet have feedback.
-            </div>
+
+    <!-- {{ showDocsFeedback }} -->
+    <div v-if="!showDocsFeedback" class="w-100 bg-white py-4 mb-3">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="small text-center">
+            This patient visit does not yet have feedback.
           </div>
         </div>
       </div>
-      <div class="container" v-else>
-        <div class="row mb-5">
+    </div>
+
+    <div v-else class="w-100 bg-white pt-3 pb-3 mb-3" style="min-height: 30px;">
+      <div class="container">
+        <div class="row mb-4">
           <div class="col-md-12">
             <div class="small text-muted">
               Prescriptions
             </div>
           </div>
           <div class="col-md-12">
-            <div class="w-100 bg-white mb-3 mt-0 pt-0 pb-0">
-              <table class="table table-sm table-hover mt-3">
+            <div class="w-100 bg-white mt-0 pt-3">
+              <table class="table table-sm table-hover">
                 <thead>
                   <tr>
-                    <!-- <th scope="col"></th> -->
-                    <th scope="col">ID</th>
+                    <th scope="col"></th>
                     <th scope="col">Medicine</th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Batch</th>
-                    <th scope="col">Expiry</th>
-                    <th scope="col">Stock</th>
-                    <th scope="col">MRP</th>
-                    <th scope="col">GST</th>
-                    <th scope="col">Dis. Rate</th>
-                    <th scope="col">Crit. Value</th>
+                    <th scope="col">Unit</th>
+                    <th scope="col">Morning</th>
+                    <!-- <th scope="col">Morning Ins</th> -->
+                    <th scope="col">Afternoon</th>
+                    <!-- <th scope="col">Afternoon Ins</th> -->
+                    <th scope="col">Evening</th>
+                    <!-- <th scope="col">Evening Ins</th> -->
+                    <th scope="col">Dinner</th>
+                    <th scope="col">Other</th>
+                    <!-- <th scope="col">Other Ins</th> -->
+                    <th scope="col">Duration</th>
+                    <th scope="col">Time</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr class="pointer">
-                    <!-- <td><input type="checkbox" name="" id=""></td> -->
-                    <td>AAU</td>
-                    <td>Lorazepam</td>
-                    <td>AAU</td>
-                    <td>135</td>
-                    <td>12/22</td>
-                    <td>99</td>
-                    <td>$99</td>
-                    <td>$99</td>
-                    <td>0%</td>
-                    <td>10</td>
+                  <!-- <tr class="pointer" style="height: 40px;">
+                    <td class="py-3 px-3 text-center" colspan="9">
+                      <small>
+                        Medicine has not yet been prescribed.
+                      </small>
+                    </td>
+                  </tr> -->
+                  <tr class="pointer" style="height: 40px;">
+                    <td><input type="checkbox" name="" id=""></td>
+                    <td>Lorazopram</td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>1</td>
+                    <td>Lorem ipsum</td>
+                    <td>3</td>
+                    <td>1</td>
+                    <td>Lorem ipsum</td>
                   </tr>
-                  <tr class="pointer">
-                    <!-- <td><input type="checkbox" name="" id=""></td> -->
-                    <td>AAU</td>
-                    <td>Lorazepam</td>
-                    <td>AAU</td>
-                    <td>135</td>
-                    <td>12/22</td>
-                    <td>99</td>
-                    <td>$99</td>
-                    <td>$99</td>
-                    <td>0%</td>
-                    <td>10</td>
-                  </tr>
-                  <tr class="pointer">
-                    <!-- <td><input type="checkbox" name="" id=""></td> -->
-                    <td>AAU</td>
-                    <td>Lorazepam</td>
-                    <td>AAU</td>
-                    <td>135</td>
-                    <td>12/22</td>
-                    <td>99</td>
-                    <td>$99</td>
-                    <td>$99</td>
-                    <td>0%</td>
-                    <td>10</td>
-                  </tr>
-                  <tr class="pointer">
-                    <!-- <td><input type="checkbox" name="" id=""></td> -->
-                    <td>AAU</td>
-                    <td>Lorazepam</td>
-                    <td>AAU</td>
-                    <td>135</td>
-                    <td>12/22</td>
-                    <td>99</td>
-                    <td>$99</td>
-                    <td>$99</td>
-                    <td>0%</td>
-                    <td>10</td>
-                  </tr>
-                  <tr class="pointer" style="background-color: salmon;">
-                    <!-- <td><input type="checkbox" name="" id=""></td> -->
-                    <td>AAU</td>
-                    <td>Lorazepam</td>
-                    <td>AAU</td>
-                    <td>135</td>
-                    <td>12/22</td>
-                    <td>99</td>
-                    <td>$99</td>
-                    <td>$99</td>
-                    <td>0%</td>
-                    <td>10</td>
-                  </tr>
-                  <tr class="pointer" style="background-color: salmon;">
-                    <!-- <td><input type="checkbox" name="" id=""></td> -->
-                    <td>AAU</td>
-                    <td>Lorazepam</td>
-                    <td>AAU</td>
-                    <td>135</td>
-                    <td>12/22</td>
-                    <td>99</td>
-                    <td>$99</td>
-                    <td>$99</td>
-                    <td>0%</td>
-                    <td>10</td>
-                  </tr>
-                  <tr class="pointer" style="background-color: salmon;">
-                    <!-- <td><input type="checkbox" name="" id=""></td> -->
-                    <td>AAU</td>
-                    <td>Lorazepam</td>
-                    <td>AAU</td>
-                    <td>135</td>
-                    <td>12/22</td>
-                    <td>99</td>
-                    <td>$99</td>
-                    <td>$99</td>
-                    <td>0%</td>
-                    <td>10</td>
+                  <tr class="pointer" style="height: 40px;" v-if="editable">
+                    <td></td>
+                    <td><input type="text" class="w-100"></td>
+                    <td><input type="text" class="w-100"></td>
+                    <td><input type="text" class="w-100"></td>
+                    <td><input type="text" class="w-100"></td>
+                    <td><input type="text" class="w-100"></td>
+                    <td><input type="text" class="w-100"></td>
+                    <td><input type="text" class="w-100"></td>
+                    <td><input type="text" class="w-100"></td>
+                    <td><input type="text" class="w-100"></td>
                   </tr>
                 </tbody>
               </table>
             </div>
+            <!-- <div class="text-right w-100">
+              <button class="btn btn-dark text-center px-5">Edit Medicine</button>
+              <button class="btn btn-dark text-center px-5">Save Medicine</button>
+            </div> -->
           </div>
-          <div class="col-md-12">
-            <!-- <nuxt-link to="/ha/profile/new-episode"> -->
-              <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0  text-uppercase">Print Prescription</button>     
-            <!-- </nuxt-link> -->
+          <div class="col-md-6" v-if="editable">
+            <button class="w-100 btn btn-dark rounded font-weight-bold py-3 px-0 mb-2 text-uppercase">Save New Medicine</button>     
+          </div>
+          <div class="col-md-6" v-if="editable">
+            <nuxt-link to="/ha/profile/new-episode">
+              <button disabled class="w-100 btn btn-dark rounded font-weight-bold py-3 px-0 mb-2 text-uppercase">Delete Medicine</button>     
+            </nuxt-link>
           </div>
         </div>
-        <div class="row">
-          <div class="col-md-12 mb-5">
+        <div v-if="this.visitStatus === 'allocated'" class="row">
+          <div class="col-md-12 my-3">
             <div class="small text-muted mb-3">
               Investigations
             </div>
-            {{ episodeData.visits[0].feedback.investigations }}
+            <div v-if="feedbackEditable === false">
+              <span v-if="episodeData.feedback.investigations === ''">
+                There are no current investigations.
+              </span>
+              <span>
+                {{ episodeData.feedback.investigations }}
+              </span>
+            </div>
+            <textarea v-else v-model="episodeData.feedback.investigations" class="w-100 p-2 mb-3" rows="3" placeholder="Provide a description of your current investigations...">
+           </textarea>
+           <!-- <div class="text-right w-100">
+              <button class="btn btn-dark text-center px-5">Edit Advice</button>
+              <button class="btn btn-dark text-center px-5">Save Advice</button>
+            </div> -->
           </div>
         </div>
-        <div class="row">
-          <div class="col-md-12 mb-5">
+        <div v-if="this.visitStatus === 'allocated'" class="row">
+          <div class="col-md-12 my-3">
             <div class="small text-muted mb-3">
               Advice
             </div>
-            {{ episodeData.visits[0].feedback.advice }}
+            <div v-if="feedbackEditable === false">
+              <span v-if="episodeData.feedback.advice === ''">
+                There is no current advice.
+              </span>
+              <span>
+                {{ episodeData.feedback.advice }}
+              </span>
+            </div>
+            <textarea v-else v-model="episodeData.feedback.advice" class="w-100 p-2 mb-3" rows="3"  placeholder="Provide a description of your current advice...">
+            </textarea>
+            <!-- <div class="text-right w-100">
+              <button class="btn btn-dark text-center px-5">Edit Advice</button>
+              <button class="btn btn-dark text-center px-5">Save Advice</button>
+            </div> -->
+          </div>
+        </div>
+        <div v-if="this.visitStatus === 'allocated'" class="row">
+          <div class="col-md-12 my-3">
+            <div class="small text-muted mb-3">
+              Diagnosis
+            </div>
+            <div v-if="feedbackEditable === false">
+              <span v-if="episodeData.feedback.diagnosis === ''">
+                There is not a current diagnosis.
+              </span>
+              <span>
+                {{ episodeData.feedback.diagnosis }}
+              </span>
+            </div>
+            <textarea v-else v-model="episodeData.feedback.diagnosis" class="w-100 p-2" rows="3"  placeholder="Provide a description of your current diagnosis...">
+            </textarea>
+            <!-- <div class="text-right w-100">
+              <button class="btn btn-dark text-center px-5">Edit Feedback</button>
+              <button class="btn btn-dark text-center px-5">Save Feedback</button>
+            </div> -->
           </div>
         </div>
         <!-- <div class="row">
@@ -482,14 +471,70 @@
             </div>
           </div>
         </div> -->
+        <div class="row mt-1">
+          <div class="col-md-12 text-right">
+            <span>
+              <!-- <small>Last Updated by Dr. Suresh on January 1, 2022</small> -->
+            </span>
+            <!-- <span class="float-right"> -->
+              <!-- <small>
+                Last Updated: January 20, 2022
+              </small> -->
+            <!-- </span> -->
+          </div>
+          <!-- <div class="col-md-6 text-right">
+            <small>Last Updated: January 20, 2022</small>
+          </div> -->
+        </div>
+      </div>
+      <div class="container">
+        <div class="row mt-3">
+          <div class="col-md-6" v-if="editable">
+            <!-- <nuxt-link to="/ha/profile/new-episode"> -->
+              <button :disabled="feedbackEditable" @click="feedbackEditable = true" class="w-100 btn btn-dark rounded font-weight-bold py-3 px-0 mb-2 text-uppercase">Edit Investigations, Advice, Diagnosis</button>     
+            <!-- </nuxt-link> -->
+          </div>
+          <div class="col-md-6" v-if="editable">
+            <!-- <nuxt-link to="/ha/profile/new-episode"> -->
+            <!-- :disabled="myFeedback.investigations === '' && myFeedback.advice === '' && myFeedback.diagnosis === ''" -->
+              <button @click="updateFeedback(); feedbackEditable = false" :disabled="!feedbackEditable" class="w-100 btn btn-dark rounded font-weight-bold py-3 px-0 mb-2 text-uppercase">Save Investigations, Advice, Diagnosis</button>     
+            <!-- </nuxt-link> -->
+          </div>
+        </div>
+        
       </div>
     </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 mb-3">
+          <nuxt-link to="/md/">
+            <button @click="editable = false; showAlert('By confirming, all current information will be saved, and the episode for this patient will be released back to HA. \n\nYou will not be able to make changes again until a new episode is allocated to you.')" :disabled="!editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Mark Patient Released</button>     
+          </nuxt-link>
+        </div>
+      </div>
+    </div>
+    <!-- <div v-if="editable" class="container mb-3">
+      <div class="row">
+        <div class="col-md-12">
+          <nuxt-link to="/ha/profile/new-episode">
+            <button class="w-100 btn btn-dark rounded font-weight-bold py-3 px-0 mb-2 text-uppercase">Save All Feedback</button>     
+          </nuxt-link>
+        </div>
+      </div>
+    </div> -->
   </div>
 </template>
 
 <script>
 export default {
   layout: 'dashboard',
+  computed: {
+    currEpisodeGetter () {
+      const episodeID = this.$route.query.id
+
+      return this.$store.state.currPatient.episodes.find(episode => episode.episodeID === episodeID)
+    }
+  },
   mounted() {
     this.$store.commit('updatePath', [
       {
@@ -505,8 +550,48 @@ export default {
         url: '/md/profile'
       }
     ])
+
+    // get episode data
+    // set episode data
+    const episodeID = this.$route.query.id
+
+    if ( this.$store.state.currPatient.id !== '') {
+      // const copy = Object.assign({}, )
+      this.episodeData = JSON.parse(JSON.stringify(this.currEpisodeGetter))
+
+      if (this.episodeData.feedback.hasFeedback ) {
+        this.showDocsFeedback = true
+      }
+    }
   },
   methods: {
+    updateFeedback() {
+      const clusterID = this.$store.state.currCluster
+      const patientID = this.$store.state.currPatient.id
+      const episodeID = this.$store.state.currPatient.episodes[1].episodeID
+      const feedback = this.episodeData.feedback
+
+      feedback.hasFeedback = true
+
+      this.$store.commit('updateFeedback', {
+        clusterID: clusterID,
+        patientID: patientID,
+        episodeID: episodeID,
+        feedback: feedback
+      })
+    },
+    showAlert: function (msg) {
+      confirm(msg)
+    },
+    handleAllocate: function () {
+      if (this.visitStatus === 'queued') {
+        alert('You have allocated this patient.')
+
+        this.visitStatus = 'allocated'
+      } else {
+        alert('This patient has been released.')
+      }
+    },
     getSubTab: function (tabName) {
       let tabs = this.subTabs
       let ref = 0
@@ -538,38 +623,40 @@ export default {
           tabs[i].isActive = false
         }
       }
-    },
-    addToQueue: function (msg) {
-      this.$store.commit("updateStatus", 'allocated')
     }
   },
   data() {
     return {
       episodeData: {
-        episodeID: "EP1 FU0",
-        title: "Episode 1",
-        created: "2 days ago",
-        lastUpdated: "Just now",
-        numFollowUps: "0",
-        visits: [
-          {
-            complaint: {
-              chiefComplaint: "",
-              vitals: "",
-              genExams: "",
-              specExams: "",
-              addPhotos: ""
-            },
-            hasFeedback: true,
-            feedback: {
-              medicine: "",
-              advice: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem est placeat perspiciatis vero! Corrupti voluptatum beatae ducimus quod voluptas qui?',
-              investigations: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem est placeat perspiciatis vero! Corrupti voluptatum beatae ducimus quod voluptas qui?',
-            }
-          }
-        ],
+        type: '',
+        billed: '',
+        link: '',
+        episodeID: '',
+        title: '',
+        created: '',
+        lastUpdated: '',
+        numFollowUps: '',
+        followUps: [],
+        services: [],
+        complaint: {
+          chiefComplaint: '',
+          vitals: '',
+          genExams: '',
+          specExams: '',
+          addPhotos: ''
+        },
+        feedback: {
+          medicine: [],
+          investigations: '',
+          advice: '',
+          diagnosis: ''
+        }
       },
-      showDocsFeedback: true,
+      editable: false,
+      list: [],
+      feedbackEditable: false,
+      visitStatus: 'allocated',
+      showDocsFeedback: false,
       showDemographics: true,
       showComplete: false,
       tabs: [
@@ -600,12 +687,12 @@ export default {
         // },
         // {
         //   name: 'newfollowup',
-        //   title: 'Record Follow Up',
+        //   title: '+ New Follow Up',
         //   isActive: false
         // },
         // {
         //   name: 'newservice',
-        //   title: 'Record Service',
+        //   title: '+ New Service',
         //   isActive: false
         // },
       ],
@@ -645,3 +732,47 @@ export default {
   },
 }
 </script>
+
+<style>
+.list-inline-item {
+  margin-right: 16px !important;
+}
+
+thead tr th {
+  border-top: none !important;
+}
+
+.btn-dark {
+  background-color: #444f5a;
+  border: none;
+}
+
+.btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.btn-dark:hover {
+  background-color: #5d666e;
+  border: none;
+}
+
+.btn-light {
+  background-color: #e4e4e4;
+  border: none;
+}
+
+.shape-status {
+  width: 12px;
+  margin-right: 7px;
+  margin-bottom: 4px;
+}
+
+.pointer:hover {
+  cursor: pointer;
+}
+
+.underline {
+  border-bottom: 2px solid #AAA;
+}
+</style>

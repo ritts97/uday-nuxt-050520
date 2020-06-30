@@ -9,11 +9,11 @@
                 New Service
               </button>
             </li>
-            <li class="list-inline-item">
+            <!-- <li class="list-inline-item">
               <button class="btn btn-light px-3" role="button">
                 Billing
               </button>
-            </li>
+            </li> -->
           </ul>
         </div>
       </div>

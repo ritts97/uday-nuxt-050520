@@ -1,13 +1,13 @@
 <template>
   <div>
-    <div class="container" v-if="this.$store.state.currPatient === 'allocated'">
-      <div class="row">
+    <div class="container" v-if="this.$store.state.currPatient.status === 'allocated'">
+      <!-- <div class="row">
         <div class="col-md-12">
           <nuxt-link to="/md/profile/profile-visit">
             <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Review Latest Complaint</button>     
           </nuxt-link>
         </div>
-      </div>
+      </div> -->
 
       <!-- <div class="row">
         <div class="col-md-6">
@@ -21,11 +21,11 @@
           </nuxt-link>
         </div>
       </div> -->
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-md-12">
           <hr>
         </div>
-      </div>
+      </div> -->
   </div>
 
   <div class="container">

@@ -1,58 +1,28 @@
 <template>
   <div>
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Select Allocation</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            Allocate to Doctor <br><br>
-            <!-- {{ this.$store.state.clusters[0].mds }} -->
-
-            <span v-for="(md, index) in this.$store.state.udayDb.clusters.cluster001.mds" :key="index">
-              <input type="radio" class="mr-3" name="" id=""> {{ md.demographics.name }} – {{ md.status }} <br>
-            </span><br> or <br><br>
-            <input type="radio" class="mr-3" name="" id=""> Allocate to General Queue
-          </div>
-          <div class="modal-footer">
-            <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-            <nuxt-link to="/ha/profile/visit" class="w-100">
-            <!-- <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0  text-uppercase">Allocate New Episode To Doctor</button>      -->
-              <button @click="addToQueue()" type="button" data-dismiss="modal" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0 text-uppercase">Submit Allocation</button>
-            </nuxt-link>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <div class="container mt-0">
-      <div class="row" v-if="this.$store.state.currPatient.status !== 'allocated'">
-        <div class="col-md-12">
-          <!-- <nuxt-link to="/ha/profile/"> -->
-          <!-- {{ this.$store.state.currPatient.status === 'allocated'}} -->
-            <button data-toggle="modal" :disabled="this.$store.state.currPatient.status === 'allocated'" data-target="#exampleModal" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Allocate for Doctor's Review</button>     
+      <div class="row">
+        <div class="col-md-6">
+          <!-- <nuxt-link to="/md/profile/profile-visit"> -->
+            <button @click="editable = true" :disabled="editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Provide Feedback</button>     
           <!-- </nuxt-link> -->
         </div>
-        <!-- <div class="col-md-6">
-          <nuxt-link to="/ha/profile/">
-            <button  @click="sendAlert('The patient has been allocated to a doctor.')" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0  text-uppercase">Allocate To Queue</button>     
+        <div class="col-md-6">
+          <nuxt-link to="/md/">
+            <button @click="showAlert('Your feedback has been recorded, and the patient has been released.')" :disabled="!editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Release Patient</button>     
           </nuxt-link>
-        </div> -->
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12" v-if="this.$store.state.currPatient.status === 'allocated'">
+          <button data-toggle="modal" data-target="#exampleModal" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Review and Provide Feedback</button>     
+        </div>
         <div class="col-md-12">
           <hr class="mt-2">
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-12">
-          <!-- Episode ID: {{ this.$route.query.id }} <br>
-          Curr Patient: {{ this.$store.state.currPatient.episodes.find(episode => episode.episodeID === this.$route.query.id ) }} -->
-        </div>
-      </div>
+
       <div class="row">
         <div class="col-md-12 rounded">
           <ul class="list-inline">
@@ -200,7 +170,7 @@
               </div>
             </div>
           </div>
-          <div class="w-100 bg-white mb-2 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="subTabs[2].isActive">
+          <div class="w-100 bg-white mb-2 mt-0 px-3 pt-3 pb-3" style="min-height: 100px;" v-if="subTabs[2].isActive">
             <div class="row mt-1">
               <!-- <div class="col-md-12 mb-5 text-center" style="min-height: 300px;">
                 <img src="/anatomy_sketch.png" alt="">
@@ -298,16 +268,10 @@
           </div>
           <div class="w-100 bg-white mb-2 mt-0 px-3 pt-3 pb-1" style="min-height: 200px;" v-if="subTabs[4].isActive">
             <div class="row mt-1">
-              <!-- <div class="col-md-12 mb-3 text-center">
+              <div class="col-md-12 mb-3 text-center">
                 Additional Photos
-              </div> -->
-              <div class="col-md-3 mb-4">
-                <img src="/square-grey.jpg" class="w-100" alt="">
               </div>
               <div class="col-md-3 mb-4">
-                <img src="/square-grey.jpg" class="w-100" alt="">
-              </div>
-              <!-- <div class="col-md-3 mb-4">
                 <img src="/square-grey.jpg" class="w-100" alt="">
               </div>
               <div class="col-md-3 mb-4">
@@ -318,7 +282,13 @@
               </div>
               <div class="col-md-3 mb-4">
                 <img src="/square-grey.jpg" class="w-100" alt="">
-              </div> -->
+              </div>
+              <div class="col-md-3 mb-4">
+                <img src="/square-grey.jpg" class="w-100" alt="">
+              </div>
+              <div class="col-md-3 mb-4">
+                <img src="/square-grey.jpg" class="w-100" alt="">
+              </div>
               <!-- <div class="col-md-3 mb-4">
                 <img src="/square-grey.jpg" class="w-100" alt="">
               </div> -->
@@ -386,7 +356,7 @@
               <table class="table table-sm table-hover mt-3">
                 <thead>
                   <tr>
-                    <th scope="col"></th>
+                    <!-- <th scope="col"></th> -->
                     <th scope="col">ID</th>
                     <th scope="col">Medicine</th>
                     <th scope="col">Type</th>
@@ -401,7 +371,7 @@
                 </thead>
                 <tbody>
                   <tr class="pointer">
-                    <td><input type="checkbox" name="" id=""></td>
+                    <!-- <td><input type="checkbox" name="" id=""></td> -->
                     <td>AAU</td>
                     <td>Lorazepam</td>
                     <td>AAU</td>
@@ -414,7 +384,7 @@
                     <td>10</td>
                   </tr>
                   <tr class="pointer">
-                    <td><input type="checkbox" name="" id=""></td>
+                    <!-- <td><input type="checkbox" name="" id=""></td> -->
                     <td>AAU</td>
                     <td>Lorazepam</td>
                     <td>AAU</td>
@@ -427,7 +397,7 @@
                     <td>10</td>
                   </tr>
                   <tr class="pointer">
-                    <td><input type="checkbox" name="" id=""></td>
+                    <!-- <td><input type="checkbox" name="" id=""></td> -->
                     <td>AAU</td>
                     <td>Lorazepam</td>
                     <td>AAU</td>
@@ -440,7 +410,7 @@
                     <td>10</td>
                   </tr>
                   <tr class="pointer">
-                    <td><input type="checkbox" name="" id=""></td>
+                    <!-- <td><input type="checkbox" name="" id=""></td> -->
                     <td>AAU</td>
                     <td>Lorazepam</td>
                     <td>AAU</td>
@@ -453,7 +423,7 @@
                     <td>10</td>
                   </tr>
                   <tr class="pointer" style="background-color: salmon;">
-                    <td><input type="checkbox" name="" id=""></td>
+                    <!-- <td><input type="checkbox" name="" id=""></td> -->
                     <td>AAU</td>
                     <td>Lorazepam</td>
                     <td>AAU</td>
@@ -466,7 +436,7 @@
                     <td>10</td>
                   </tr>
                   <tr class="pointer" style="background-color: salmon;">
-                    <td><input type="checkbox" name="" id=""></td>
+                    <!-- <td><input type="checkbox" name="" id=""></td> -->
                     <td>AAU</td>
                     <td>Lorazepam</td>
                     <td>AAU</td>
@@ -479,7 +449,7 @@
                     <td>10</td>
                   </tr>
                   <tr class="pointer" style="background-color: salmon;">
-                    <td><input type="checkbox" name="" id=""></td>
+                    <!-- <td><input type="checkbox" name="" id=""></td> -->
                     <td>AAU</td>
                     <td>Lorazepam</td>
                     <td>AAU</td>
@@ -506,7 +476,7 @@
             <div class="small text-muted mb-3">
               Investigations
             </div>
-            {{ episodeData.feedback.investigations }}
+            {{ episodeData.visits[0].feedback.investigations }}
           </div>
         </div>
         <div class="row">
@@ -514,7 +484,7 @@
             <div class="small text-muted mb-3">
               Advice
             </div>
-            {{ episodeData.feedback.advice }}
+            {{ episodeData.visits[0].feedback.advice }}
           </div>
         </div>
         <!-- <div class="row">
@@ -535,16 +505,16 @@ export default {
   mounted() {
     this.$store.commit('updatePath', [
       {
-        title: 'Dashboard',
-        url: '/ha'
+        title: 'Doctor\'s Dashboard',
+        url: '/md'
       },
       {
         title: 'Patient\'s Profile',
-        url: '/ha/profile'
+        url: '/md/profile'
       },
       {
         title: 'Episode 1',
-        url: '/ha/profile'
+        url: '/md/profile'
       }
     ])
 
@@ -691,7 +661,7 @@ export default {
         // },
         {
           name: 'photos',
-          title: 'Photos',
+          title: 'Add. Photos',
           isActive: false,
         }
       ]

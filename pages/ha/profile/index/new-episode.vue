@@ -15,7 +15,8 @@
             <span v-for="(md, index) in this.$store.state.udayDb.clusters['cluster001'].mds" :key="index">
               <input type="radio" class="mr-3" name="" id=""> {{ md.demographics.name }} ({{ md.status }})<br>
             </span>
-            <input type="radio" class="mr-3" name="" id=""> or add to General Queue
+            <input type="radio" class="mt-1 mr-3" name="" id=""> 
+            <i>Add to General Queue</i>
           </div>
           <div class="modal-footer">
             <nuxt-link to="/ha/profile" class="w-100"><button @click="addToQueue" type="button" data-dismiss="modal" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0 text-uppercase">Submit Allocation</button>
@@ -285,6 +286,8 @@ export default {
     },
     addToQueue: function () {
       // alert('Added to Patient Queue.')
+      alert('The patient has been allocated to the general queue.')
+
       this.$store.commit('updateStatus', 'allocated')
       this.$store.commit('addPatientToQueue', this.$store.state.currPatient.id)
       this.$store.commit('recordNewEpisode')
