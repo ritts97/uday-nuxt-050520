@@ -2,14 +2,9 @@
   <div>
     <div class="container mt-0">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
           <!-- <nuxt-link to="/md/profile/profile-visit"> -->
             <button @click="showDocsFeedback = true; editable = true" :disabled="editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Update Episode Feedback</button>     
-          <!-- </nuxt-link> -->
-        </div>
-        <div class="col-md-6">
-          <!-- <nuxt-link to="/md/profile/profile-visit"> -->
-            <button @click="showDocsFeedback = true; editable = true" :disabled="!editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Save Episode Feedback</button>     
           <!-- </nuxt-link> -->
         </div>
       </div>
@@ -55,7 +50,7 @@
                 <div class="small text-muted mb-2">
                   Chief Complaint
                 </div>
-                {{ this.$store.state.currPatient.episodes[1].complaint.chiefComplaint }}
+                {{ this.$store.state.currPatient.episodes[1].complaint.chiefComplaint.name }}
                 <!-- Coughing Problem <br><br>
                 <span class="rounded mr-2 p-2 text-white" style="background-color: #a9a9a9;">
                   Lasting 2 days 
@@ -81,11 +76,17 @@
                 <span class="rounded mr-2 p-2 text-white" style="background-color: #a9a9a9;">
                   No Pain in throat
                 </span>
-                <br><br>
+                -->
+                <br><br> 
                 <div class="small text-muted mb-2">
                   Description
                 </div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat earum sequi laudantium est consequuntur non natus suscipit quibusdam, hic dolore, quam, quidem nostrum. Incidunt alias eos repellendus quaerat tempore doloremque unde sit, earum maiores facilis beatae vero ex hic eaque necessitatibus nulla consectetur dolorum? Voluptas magnam alias at sed unde! -->
+                {{ this.$store.state.currPatient.episodes[1].complaint.chiefComplaint.symptons }}
+                <br><br> 
+                <div class="small text-muted mb-2">
+                  Description
+                </div>
+                {{ this.$store.state.currPatient.episodes[1].complaint.chiefComplaint.addInformation }}
               </div>
             </div>
             <!-- <div class="row mt-1">
@@ -297,6 +298,20 @@
         </div>
       </div>
     </div>
+
+    <div class="container" v-if="showDocsFeedback">
+      <div class="row">
+        <div class="col-md-6">
+          <button @click="showDocsFeedback = true; editable = true" :disabled="!editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Edit Complaint Description</button>     
+        </div>
+        <div class="col-md-6 mb-3">
+          <nuxt-link to="/md/">
+            <button @click="editable = false;" :disabled="!editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Save Complaint Description</button>     
+          </nuxt-link>
+        </div>
+      </div>
+    </div>
+
     <div>
       <div class="container mt-3 mb-3">
         <div class="row">
@@ -313,7 +328,8 @@
 
 
     <!-- {{ showDocsFeedback }} -->
-    <div v-if="!showDocsFeedback" class="w-100 bg-white py-4 mb-3">
+    <transition name="u-fade" mode="out-in"> 
+    <div v-if="!showDocsFeedback" class="w-100 bg-white py-4 mb-3" key="no-feedback">
       <div class="row">
         <div class="col-md-12">
           <div class="small text-center">
@@ -322,8 +338,8 @@
         </div>
       </div>
     </div>
-
-    <div v-else class="w-100 bg-white pt-3 pb-3 mb-3" style="min-height: 30px;">
+    
+    <div v-else class="w-100 bg-white pt-3 pb-3 mb-3" style="min-height: 30px;" key="has-feedback">
       <div class="container">
         <div class="row mb-4">
           <div class="col-md-12">
@@ -406,17 +422,20 @@
             <div class="small text-muted mb-3">
               Investigations
             </div>
-            <div v-if="feedbackEditable === false">
+            <transition name="u-fade" mode="out-in">
+            <div v-if="feedbackEditable === false" key="not-editable">
               <span v-if="episodeData.feedback.investigations === ''">
                 There are no current investigations.
               </span>
-              <span>
+              <span v-else key="has-investigations">
                 {{ episodeData.feedback.investigations }}
               </span>
             </div>
-            <textarea v-else v-model="episodeData.feedback.investigations" class="w-100 p-2 mb-3" rows="3" placeholder="Provide a description of your current investigations...">
+            <textarea v-else v-model="episodeData.feedback.investigations" key="editable" class="w-100 p-2 mb-3" rows="3" placeholder="Provide a description of your current investigations...">
            </textarea>
-           <!-- <div class="text-right w-100">
+
+            </transition>
+            <!-- <div class="text-right w-100">
               <button class="btn btn-dark text-center px-5">Edit Advice</button>
               <button class="btn btn-dark text-center px-5">Save Advice</button>
             </div> -->
@@ -427,6 +446,7 @@
             <div class="small text-muted mb-3">
               Advice
             </div>
+            <transition name="u-fade" mode="out-in">
             <div v-if="feedbackEditable === false">
               <span v-if="episodeData.feedback.advice === ''">
                 There is no current advice.
@@ -437,6 +457,7 @@
             </div>
             <textarea v-else v-model="episodeData.feedback.advice" class="w-100 p-2 mb-3" rows="3"  placeholder="Provide a description of your current advice...">
             </textarea>
+            </transition>
             <!-- <div class="text-right w-100">
               <button class="btn btn-dark text-center px-5">Edit Advice</button>
               <button class="btn btn-dark text-center px-5">Save Advice</button>
@@ -448,6 +469,8 @@
             <div class="small text-muted mb-3">
               Diagnosis
             </div>
+
+            <transition name="u-fade" mode="out-in">
             <div v-if="feedbackEditable === false">
               <span v-if="episodeData.feedback.diagnosis === ''">
                 There is not a current diagnosis.
@@ -458,6 +481,7 @@
             </div>
             <textarea v-else v-model="episodeData.feedback.diagnosis" class="w-100 p-2" rows="3"  placeholder="Provide a description of your current diagnosis...">
             </textarea>
+            </transition>
             <!-- <div class="text-right w-100">
               <button class="btn btn-dark text-center px-5">Edit Feedback</button>
               <button class="btn btn-dark text-center px-5">Save Feedback</button>
@@ -504,11 +528,16 @@
         
       </div>
     </div>
+    </transition>
+
     <div class="container">
       <div class="row">
+        <div class="col-md-12">
+          <button @click="showDocsFeedback = false; editable = true" :disabled="!editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Save Episode Feedback</button>     
+        </div>
         <div class="col-md-12 mb-3">
           <nuxt-link to="/md/">
-            <button @click="editable = false; showAlert('By confirming, all current information will be saved, and the episode for this patient will be released back to HA. \n\nYou will not be able to make changes again until a new episode is allocated to you.')" :disabled="!editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Mark Patient Released</button>     
+            <button @click="editable = false; releasePatient()" :disabled="!editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Mark Patient Released</button>     
           </nuxt-link>
         </div>
       </div>
@@ -553,18 +582,21 @@ export default {
 
     // get episode data
     // set episode data
-    const episodeID = this.$route.query.id
-
-    if ( this.$store.state.currPatient.id !== '') {
-      // const copy = Object.assign({}, )
-      this.episodeData = JSON.parse(JSON.stringify(this.currEpisodeGetter))
-
-      if (this.episodeData.feedback.hasFeedback ) {
-        this.showDocsFeedback = true
-      }
-    }
+    this.getEpisodeData()
   },
   methods: {
+    getEpisodeData() {
+      const episodeID = this.$route.query.id
+
+      if ( this.$store.state.currPatient.id !== '') {
+        // const copy = Object.assign({}, )
+        this.episodeData = JSON.parse(JSON.stringify(this.currEpisodeGetter))
+
+        if (this.episodeData.feedback.hasFeedback ) {
+          this.showDocsFeedback = true
+        }
+      }
+    },
     updateFeedback() {
       const clusterID = this.$store.state.currCluster
       const patientID = this.$store.state.currPatient.id
@@ -579,6 +611,9 @@ export default {
         episodeID: episodeID,
         feedback: feedback
       })
+
+
+      this.getEpisodeData()
     },
     showAlert: function (msg) {
       confirm(msg)
@@ -623,6 +658,17 @@ export default {
           tabs[i].isActive = false
         }
       }
+    },
+    releasePatient: function () {
+      const episodeInfo = {
+        clusterID: this.$store.state.currCluster,
+        patientID: this.$store.state.currPatient.id,
+        episodeID: this.$route.query.id
+      }
+
+      this.$store.commit('releasePatient', episodeInfo)
+
+      showAlert('By confirming, all current information will be saved, and the episode for this patient will be released back to HA. \n\nYou will not be able to make changes again until a new episode is allocated to you.')
     }
   },
   data() {

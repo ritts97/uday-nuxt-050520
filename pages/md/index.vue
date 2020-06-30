@@ -77,10 +77,10 @@
                   <td>{{ patient.demographics.location }}</td>
                   <td>{{ patient.demographics.creator }}</td>
                   <td class="text-capitalize">
-                    <img v-if="patient.status == 'registered'" src="circle-green.svg" class="shape-status" alt="">
-                    <img v-if="patient.status == 'released'" src="circle-yellow.svg" class="shape-status" alt="">
-                    <img v-if="patient.status == 'allocated'" src="circle-red.svg" class="shape-status" alt="">
-                    <img v-if="patient.status == 'queued'" src="circle-orange.svg" class="shape-status" alt="">
+                    <img v-if="patient.status == 'registered'" src="/circle-green.svg" class="shape-status" alt="">
+                    <img v-if="patient.status == 'released'" src="/circle-yellow.svg" class="shape-status" alt="">
+                    <img v-if="patient.status == 'allocated'" src="/circle-red.svg" class="shape-status" alt="">
+                    <img v-if="patient.status == 'queued'" src="/circle-orange.svg" class="shape-status" alt="">
                     {{ patient.status }}
                   </td>
                 </tr>

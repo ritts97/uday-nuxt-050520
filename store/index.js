@@ -92,7 +92,7 @@ export const mutations = {
     console.log(clusterID)
     // find episode (from clusterID => patientID => episodeID)
     state.udayDb.clusters[clusterID].patients.find(patient => patient.id === patientID).episodes.find(episode => episode.episodeID === episodeID).feedback = feedback
-    alert('Your feedback has been updated.')
+    // alert('Your feedback has been updated.')
   },
   recordNewEpisode(state, payload) {    
     let CLUSTER_ID = state.currCluster
@@ -107,7 +107,7 @@ export const mutations = {
         type: 'episode',
         billed: '',
         link: '/ha/profile/profile-visit?id=AAA1&visit=ep0fl01',
-        episodeID: 'PA001EP1',
+        episodeID: 'PA01EP1',
         title: 'Episode ' + episodeLen,
         created: d.getTime(),
         lastUpdated: '',
@@ -115,7 +115,11 @@ export const mutations = {
         followUps: [],
         services: [],
         complaint: {
-          chiefComplaint: 'ooga booga',
+          chiefComplaint: {
+            name: 'Ooga booga',
+            symptons: 'Ooga booga',
+            addInformation: 'Ooga booga'
+          },
           vitals: 'ooga booga',
           genExams: 'ooga booga',
           specExams: 'ooga booga',
@@ -233,6 +237,15 @@ export const mutations = {
     state.udayDb.clusters[CLUSTER_ID].patientsInQueue.push(
       payload
     )
+  },
+  releasePatient(state, payload) {
+    const clusterID = payload.clusterID
+    const patientID = payload.patientID
+
+    const filteredPatients = state.udayDb.clusters[clusterID].patientsInQueue.filter(allocatedID => allocatedID !== patientID)
+    
+    state.udayDb.clusters[clusterID].patientsInQueue = filteredPatients
+    state.udayDb.clusters[clusterID].patients.find(patient => patient.id === patientID).status = 'released'
   }
 }
 
