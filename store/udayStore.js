@@ -62,12 +62,14 @@ export default {
               phone: "1-415-555-5555",
               location: "Hyderabad, IN"
             },
-            episodes: [{
+            episodes: [
+              {
                 episodeID: "EP0 FU0",
                 title: "Registered",
                 created: "1 week ago",
                 lastUpdated: "1 week ago",
                 numFollowUps: "3",
+                allocated: false,
                 complaint: {
                   chiefComplaint: "",
                   vitals: "",
@@ -82,6 +84,7 @@ export default {
                 created: "2 days ago",
                 lastUpdated: "Just now",
                 numFollowUps: "0",
+                allocated: false,
                 complaint: {
                   chiefComplaint: "",
                   vitals: "",
@@ -121,6 +124,7 @@ export default {
                 title: "Registered",
                 created: "1 week ago",
                 lastUpdated: "1 week ago",
+                allocated: false,
                 numFollowUps: "3",
                 complaint: {
                   chiefComplaint: "",
@@ -141,6 +145,7 @@ export default {
                 created: "2 days ago",
                 lastUpdated: "2 days ago",
                 numFollowUps: "0",
+                allocated: false,
                 complaint: {
                   chiefComplaint: "",
                   vitals: "",

@@ -45,7 +45,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr class="pointer" v-for="(visit, index) in this.list.slice().reverse()" :key="index" style="height: 40px;">
+                <tr class="pointer" v-for="(visit, index) in this.list.slice().reverse()" :key="index" style="height: 40px;" :class="{ 'bg-red' : visit.allocated }">
                   <td class="text-uppercase" scope="row">{{ visit.episodeID }}</td>
                   <td>
                     <div v-if="visit.title !== 'Registered'">
@@ -57,7 +57,7 @@
                       {{ visit.title }}
                     </div>
                   </td>
-                  <td>{{ visit.created }}</td>
+                  <td>{{ visit.allocated }}</td>
                   <td>{{ visit.lastUpdated }}</td>
                   <td>{{ visit.numFollowUps }}</td>
                 </tr>
@@ -196,3 +196,9 @@ export default {
   transition: 'u-fade'
 }
 </script>
+
+<style>
+.bg-red {
+  background-color: #ffb6b5;
+}
+</style>

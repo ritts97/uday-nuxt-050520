@@ -56,6 +56,7 @@ export default {
       created: d.getTime(),
       lastUpdated: '',
       numFollowUps: '',
+      allocated: true,
       followUps: [],
       services: [],
       complaint: {

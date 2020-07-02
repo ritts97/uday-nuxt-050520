@@ -1,15 +1,12 @@
 <template>
   <div>
     <div class="container mt-0">
-      <div class="row">
+      <div class="row" v-if="this.$store.state.currPatient.status === 'allocated'">
         <div class="col-md-12">
           <!-- <nuxt-link to="/md/profile/profile-visit"> -->
             <button @click="showDocsFeedback = true; editable = true" :disabled="editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Update Episode Feedback</button>     
           <!-- </nuxt-link> -->
         </div>
-      </div>
-
-      <div class="row">
         <div class="col-md-12">
           <hr>
         </div>
@@ -530,7 +527,7 @@
     </div>
     </transition>
 
-    <div class="container">
+    <div class="container" v-if="this.$store.state.currPatient.status === 'allocated'">
       <div class="row">
         <div class="col-md-12">
           <button @click="showDocsFeedback = false; editable = true" :disabled="!editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Save Episode Feedback</button>     

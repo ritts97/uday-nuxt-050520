@@ -127,6 +127,19 @@ export default {
       return patientsInQueue
       // return []
     },
+    filterReleased () {
+      let patientIDs = this.$store.state.udayDb.clusters.cluster001.patientsInQueue
+      let patientsInCluster = this.$store.state.udayDb.clusters.cluster001.patients
+      const patientsReleased = []
+
+      for (let y = 0; y < patientsInCluster.length; y++) {
+        if (patientsInCluster[y].status === 'released') {
+          patientsReleased.push(patientsInCluster[y])
+        }
+      }
+
+      return patientsReleased
+    },
   },
   mounted () {
 
@@ -150,6 +163,9 @@ export default {
       else if (tabName == 'queue') {
         this.list = this.filterQueue
       }
+      else if (tabName == 'released') {
+        this.list = this.filterReleased
+      }
 
       this.tabs.forEach((tab, index) => {
         if (tab.name == tabName) {
@@ -170,6 +186,9 @@ export default {
       else if (tabName == 'queue') {
         return this.$store.state.udayDb.clusters.cluster001.patientsInQueue.length
       }
+      else if (tabName == 'released') {
+        return this.filterReleased.length
+      }
     },
   },
   data() {
@@ -187,8 +206,13 @@ export default {
           isActive: false,
         },
         {
+          name: 'released',
+          title: 'Recently Released',
+          isActive: false,
+        },
+        {
           name: 'cluster',
-          title: 'My Cluster Patients',
+          title: 'All Cluster Patients',
           isActive: false,
         }
       ]

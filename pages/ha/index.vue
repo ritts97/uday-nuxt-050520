@@ -128,7 +128,34 @@ export default {
     },
     filterGlobal: function () {
       return this.patientList.filter(patient => patient.status == 'global')
-    }
+    },
+    filterQueue () {
+      let patientIDs = this.$store.state.udayDb.clusters.cluster001.patientsInQueue
+      let patientsInCluster = this.$store.state.udayDb.clusters.cluster001.patients
+      const patientsInQueue = []
+
+      for (let x = 0; x < patientIDs.length; x++) {
+        for (let y = 0; y < patientsInCluster.length; y++) {
+          if (patientIDs[x] === patientsInCluster[y].id) {
+            patientsInQueue.push(patientsInCluster[y])
+          }
+        }
+      }
+
+      return patientsInQueue
+    },
+    filterReleased () {
+      let patientsInCluster = this.$store.state.udayDb.clusters.cluster001.patients
+      const patientsReleased = []
+
+      for (let y = 0; y < patientsInCluster.length; y++) {
+        if (patientsInCluster[y].status === 'released') {
+          patientsReleased.push(patientsInCluster[y])
+        }
+      }
+
+      return patientsReleased
+    },
   },
   mounted () {
     let path = [
@@ -155,6 +182,12 @@ export default {
       else if (tabName == 'global') {
         this.list = this.filterGlobal
       }
+      else if (tabName == 'queue') {
+        this.list = this.filterQueue
+      }
+      else if (tabName == 'released') {
+        this.list = this.filterReleased
+      }
 
       this.tabs.forEach((tab, index) => {
         if (tab.name == tabName) {
@@ -174,6 +207,12 @@ export default {
       else if (tabName == 'global') {
         return this.filterGlobal.length
       }
+      else if (tabName == 'queue') {
+        return this.$store.state.udayDb.clusters.cluster001.patientsInQueue.length
+      }
+      else if (tabName == 'released') {
+        return this.filterReleased.length
+      }
     }
   },
   data() {
@@ -186,10 +225,20 @@ export default {
           isActive: true,
         },
         {
-          name: 'cluster',
-          title: 'My Cluster Patients',
+          name: 'queue',
+          title: 'My Cluster Queue',
           isActive: false,
         },
+        {
+          name: 'released',
+          title: 'Recently Released',
+          isActive: false,
+        },
+        {
+          name: 'cluster',
+          title: 'All Cluster Patients',
+          isActive: false,
+        }
         // {
         //   name: 'global',
         //   title: 'Search Global',

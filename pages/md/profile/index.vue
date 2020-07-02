@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="container mt-3">
+    <div class="container">
       <transition name="u-fade">
         <div class="row">
           <div class="col-md-3 mt-2 text-left" style="min-height: 200px;">

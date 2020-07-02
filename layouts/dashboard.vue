@@ -132,4 +132,8 @@ html, body {
 .u-fade-enter, .u-fade-leave-active {
   opacity: 0;
 }
+
+tr.pointer td, tr.pointer th {
+  padding-top: 7px;
+}
 </style>
