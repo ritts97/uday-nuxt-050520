@@ -1,7 +1,7 @@
 <template>
   <div>
-        <!-- Header -->
-    <div class="fixed-top">
+    <!-- Header -->
+    <!-- <div class="fixed-top">
       <div class="w-100 bg-dark text-white">
         <div class="container bg-dark">
           <div class="row py-2">
@@ -13,7 +13,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <transition name="u-fade" mode="out-in">
       <nuxt  />

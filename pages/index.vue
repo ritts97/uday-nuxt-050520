@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="w-100 bg-dark text-white mb-3">
+  <div class="d-flex align-items-center">
+    <!-- <div class="w-100 bg-dark text-white mb-3">
       <div class="container bg-dark">
         <div class="row py-2">
           <div class="col-md-6 font-weight-bold py-1" style="font-size: 24px;">
@@ -8,10 +8,10 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="container">
       <div class="row text-center">
-        <div class="offset-md-4 col-md-4 bg-white rounded px-4 py-4 mt-4">
+        <div class="offset-md-4 col-md-4 bg-white rounded px-4 py-4">
           <!-- Login <br> -->
           <img src="/uday-logo-orig.png" class="p-3" alt=""><br>
           <small class="text-secondary">We are grateful for your support.</small><br>
@@ -28,7 +28,7 @@
               Login (as Doct.)
             </button>
           </nuxt-link>
-          <nuxt-link to="/admin">
+          <!-- <nuxt-link to="/admin">
             <button class="btn btn-dark mb-2 p-2 w-100 text-uppercase">
               Login (as Admin)
             </button>
@@ -37,7 +37,7 @@
             <button class="btn btn-dark mb-3 p-2 w-100 text-uppercase">
               Login (as Super)
             </button>
-          </nuxt-link>
+          </nuxt-link> -->
           <!-- <nuxt-link to="/register-ha">
             <small class="text-secondary">Register a new Health Assistant?</small>
           </nuxt-link><br> -->
@@ -49,7 +49,7 @@
     </div>
 
     <!-- Footer -->
-    <div class="container text-center mb-4 mt-5">
+    <!-- <div class="container text-center mb-4 mt-5">
       <div class="row">
         <div class="col-md-12 text-secondary">
           <small>
@@ -57,7 +57,7 @@
           </small>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -71,4 +71,8 @@ export default {
 /* .no-underline {
 
 } */
+
+html, body, #__nuxt, #__layout, #__layout > div, #__layout > div > div {
+  height: 100%;
+}
 </style>

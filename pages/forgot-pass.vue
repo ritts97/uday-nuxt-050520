@@ -1,8 +1,8 @@
 <template>
-  <div>
-    <div class="container" style="margin-top:100px;">
+  <div class="d-flex align-items-center">
+    <div class="container">
       <div class="row text-center">
-        <div class="offset-md-4 col-md-4 bg-white rounded px-4 py-4 mt-4">
+        <div class="offset-md-4 col-md-4 bg-white rounded px-4 py-4">
           <!-- Login <br> -->
           Forgot Password
           <hr>

@@ -87,7 +87,7 @@
                 <tr class="pointer" v-if="list.length === 0" style="height: 40px;">
                   <td class="py-3 px-3 text-center" colspan="9">
                     <small>
-                      There are no patients in this list. Register a new patient to get started.
+                      There are no currently patients in allocated to you.
                     </small>
                   </td>
                 </tr>
@@ -125,7 +125,6 @@ export default {
       }
 
       return patientsInQueue
-      // return []
     },
     filterReleased () {
       let patientIDs = this.$store.state.udayDb.clusters.cluster001.patientsInQueue

@@ -296,7 +296,7 @@
       </div>
     </div>
 
-    <div class="container" v-if="showDocsFeedback">
+    <div class="container" v-if="this.$store.state.currPatient.status === 'allocated'">
       <div class="row">
         <div class="col-md-6">
           <button @click="showDocsFeedback = true; editable = true" :disabled="!editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Edit Complaint Description</button>     

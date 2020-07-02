@@ -55,7 +55,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr class="pointer" v-for="(visit, index) in list.slice().reverse()" :key="index" style="height: 40px;">
+                <tr class="pointer" v-for="(visit, index) in list.slice().reverse()" :key="index" style="height: 40px;" :class="{ 'bg-red' : visit.allocated }">
                   <td class="text-uppercase" scope="row">{{ visit.episodeID }}</td>
                   <td>
                     <div v-if="visit.title !== 'Registered'">

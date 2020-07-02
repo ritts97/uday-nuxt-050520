@@ -1,5 +1,6 @@
 <template>
   <div>
+    <form v-on:submit.prevent="registerPatient">
     <div class="container">
       <div class="row mt-2">
         <div class="col-md-12 rounded">
@@ -66,14 +67,13 @@
     <div class="container mb-3">
       <div class="row">
         <div class="col-md-12">
-          <nuxt-link to="/ha">
-            <button @click="registerPatient()" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">
-              Register New Patient
-            </button>
-          </nuxt-link>
+          <button type="submit" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">
+            Register New Patient
+          </button>
         </div>
       </div>
     </div>
+    </form>
   </div>
 </template>
 
@@ -114,11 +114,17 @@ export default {
         }
       }
     },
-    registerPatient: function () {
+    registerPatient: function (event) {
       let payload = this.patientData
+
+      // event.preventDefault()
 
       this.$store.commit('registerPatient', payload)
       this.$store.commit('updateCurrPat', payload)
+
+      alert('A new patient has been registered.')
+      
+      this.$router.push({path: '/ha'})
     }
   },
   data() {
