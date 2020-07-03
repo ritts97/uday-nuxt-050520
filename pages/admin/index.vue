@@ -92,7 +92,16 @@
                 <div class="col-md-12 px-0">
                   
                   <ul class="list-inline mb-2">
-                    <li class="list-inline-item pointer">
+                    <li class="list-inline-item pointer" v-for="(tab, index) in tabs" :key="index">
+                      <!-- <div style="border-bottom: 2px solid #ccc;"> -->
+                        <div class="px-2 mr-2 pb-1 mb-1" @click="getList(tab.name)" :class="{ underline: tab.isActive }" role="button">
+                          {{ tab.title }} <span v-if="tab.name !== 'global'">(0)
+                            <!-- {{ getListLength(tab.name) }} -->
+                          </span>
+                        </div>
+                      <!-- </div> -->
+                    </li>
+                    <!-- <li class="list-inline-item pointer">
                       <div class="px-2 mr-2 pb-1 mb-1" role="button">
                         All Cluster Doctors
                       </div>
@@ -106,7 +115,7 @@
                       <div class="px-2 mr-2 pb-1 mb-1 underline" role="button">
                         All Cluster Patients
                       </div>
-                    </li>
+                    </li> -->
                   </ul>
           <div class="w-100 bg-white mb-3 mt-0 px-3 py-1">
             <!-- <input type="text" class="w-100 p-2" placeholder=":: Search by ID, name or phone number"> -->
@@ -116,12 +125,11 @@
                 <tr>
                   <th scope="col">ID</th>
                   <th scope="col">Name</th>
-                  <th scope="col">Gender</th>
-                  <th scope="col">Age</th>
-                  <th scope="col">Phone</th>
+                  <th scope="col">Registered</th>
+                  <th scope="col">Contact</th>
                   <th scope="col">Location</th>
-                  <th scope="col">Reg. By</th>
-                  <th scope="col">Patient Status</th>
+                  <th scope="col">Phone</th>
+                  <th scope="col">Status</th>
                 </tr>
               </thead>
               <tbody>
@@ -130,12 +138,8 @@
                   <td>xx</td>
                   <td>xx</td>
                   <td>xx</td>
-                  <td>xx</td>
-                  <td>xx</td>
-                  <td>xx</td>
-                  <td>xx</td>
-                  <td>xx</td>
-                  
+                  <td>xx</td> 
+                  <td>xx</td>                 
                 </tr>
               </tbody>
             </table>
@@ -181,9 +185,53 @@ export default {
 
     this.$store.commit('updatePath', path)
   },
-  methods: {},
+  methods: {
+    getList: function (tabName) {
+      // if (tabName == 'patients') {
+      //   this.list = this.filterMyPatients
+      // }
+      // else if (tabName == 'cluster') {
+      //   this.list = this.filterCluster
+      // }
+      // else if (tabName == 'global') {
+      //   this.list = this.filterGlobal
+      // }
+      // else if (tabName == 'queue') {
+      //   this.list = this.filterQueue
+      // }
+      // else if (tabName == 'released') {
+      //   this.list = this.filterReleased
+      // }
+
+      this.tabs.forEach((tab, index) => {
+        if (tab.name == tabName) {
+          this.tabs[index].isActive = true
+        } else {
+          this.tabs[index].isActive = false
+        }
+      })
+    },
+  },
   data() {
-    return {}
+    return {
+      tabs: [
+        {
+          name: 'patients',
+          title: 'All Cluster Doctors',
+          isActive: true,
+        },
+        {
+          name: 'queue',
+          title: 'All Cluster Health Assistants',
+          isActive: false,
+        },
+        {
+          name: 'released',
+          title: 'All Cluster Patients',
+          isActive: false,
+        },
+      ]
+    }
   },
   transition: 'u-fade'
 }

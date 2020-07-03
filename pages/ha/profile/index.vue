@@ -1,14 +1,14 @@
 <template>
   <div>
-    <div class="container mt-3">
+    <div class="container">
       <transition name="u-fade">
-        <div class="row">
-          <div class="col-md-3 mt-2 text-left" style="min-height: 200px;">
-            <nuxt-link to="/ha/profile" class="text-decoration-none text-dark">
+        <div class="row mt-2">
+          <div class="col-md-3 text-left" style="min-height: 200px;">
+            <nuxt-link to="/md/profile" class="text-decoration-none text-dark">
               <img src="/avatar-man_02.png">
             </nuxt-link>
           </div>
-          <div class="col-md-9 mt-2">
+          <div class="col-md-9">
             <div class="row">
               <div class="col-md-6">
                 <h5 class="d-inline text-decoration-none">{{ currPatient.demographics.name }} (::{{ this.$store.state.currPatient.id }})</h5>  

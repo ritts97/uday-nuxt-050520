@@ -59,10 +59,19 @@
                   Please complete to the best of your ability.
                 </div>
               <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="What is the major complaint?">
+                <label for="exampleFormControlSelect1">What is the major complaint?</label>
+                <select class="form-control" id="exampleFormControlSelect1">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </select>
+                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="What is the major complaint?"> -->
               </div>
               <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="What are the symptoms?">
+                <label for="exampleFormControlSelect1">What are the symptoms?</label>
+                <input type="text" class="w-100 p-2 mb-3" placeholder="Short of breath, anxiety, sweating...">
               </div>
               <div class="col-md-12">
                 <textarea class="w-100 p-2" rows="5" placeholder="Please provide any additional information..."></textarea>
