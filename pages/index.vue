@@ -14,21 +14,23 @@
         <div class="offset-md-4 col-md-4 bg-white rounded px-4 py-4">
           <!-- Login <br> -->
           <img src="/uday-logo-orig.png" class="p-3" alt=""><br>
-          <small class="text-secondary">We are grateful for your support.</small><br>
+          <div class="text-secondary mt-1 pb-0">Welcome to Uday. 
+            <!-- <br>We are grateful for your support. -->
+            </div>
           <hr>
           <input type="text" name="" class="w-100 mb-2 p-2" placeholder="Username or Email" id=""><br>
           <input type="text" name="" class="w-100 p-2" placeholder="Password" id=""><br>
           <nuxt-link to="/ha">
             <button class="btn btn-dark mt-3 mb-2 p-2 w-100 text-uppercase">
-              Login (as HA)
+              Login
             </button>
           </nuxt-link>
-          <nuxt-link to="/md">
+          <!-- <nuxt-link to="/md">
             <button class="btn btn-dark mb-2 p-2 w-100 text-uppercase">
               Login (as Doct.)
             </button>
-          </nuxt-link>
-          <nuxt-link to="/admin">
+          </nuxt-link> -->
+          <!-- <nuxt-link to="/admin">
             <button class="btn btn-dark mb-2 p-2 w-100 text-uppercase">
               Login (as Admin)
             </button>
@@ -37,7 +39,7 @@
             <button class="btn btn-dark mb-3 p-2 w-100 text-uppercase">
               Login (as Super)
             </button>
-          </nuxt-link>
+          </nuxt-link> -->
           <nuxt-link to="/forgot-pass">
             <small class="text-secondary">Forgot password?</small>
           </nuxt-link>
