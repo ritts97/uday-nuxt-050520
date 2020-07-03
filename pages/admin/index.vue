@@ -86,12 +86,68 @@
     </div>
     <div class="container">
       <div class="row">
-        <div class="col-md-12 rounded">
-          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-2 pb-3">
-            <div class="container">
+        <div class="col-md-12">
+          <div class="container">
               <div class="row my-3">
-                <div class="col-md-12">
+                <div class="col-md-12 px-0">
                   
+                  <ul class="list-inline mb-2">
+                    <li class="list-inline-item pointer">
+                      <div class="px-2 mr-2 pb-1 mb-1" role="button">
+                        All Cluster Doctors
+                      </div>
+                    </li>
+                    <li class="list-inline-item pointer">
+                      <div class="px-2 mr-2 pb-1 mb-1" role="button">
+                        All Cluster Health Assistants
+                      </div>
+                    </li>
+                    <li class="list-inline-item pointer">
+                      <div class="px-2 mr-2 pb-1 mb-1 underline" role="button">
+                        All Cluster Patients
+                      </div>
+                    </li>
+                  </ul>
+          <div class="w-100 bg-white mb-3 mt-0 px-3 py-1">
+            <!-- <input type="text" class="w-100 p-2" placeholder=":: Search by ID, name or phone number"> -->
+            <table class="table table-sm table-hover">
+              <!--  v-if="!tabs[2].isActive" -->
+              <thead>
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Gender</th>
+                  <th scope="col">Age</th>
+                  <th scope="col">Phone</th>
+                  <th scope="col">Location</th>
+                  <th scope="col">Reg. By</th>
+                  <th scope="col">Patient Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="pointer">
+                  <td>xx</td>
+                  <td>xx</td>
+                  <td>xx</td>
+                  <td>xx</td>
+                  <td>xx</td>
+                  <td>xx</td>
+                  <td>xx</td>
+                  <td>xx</td>
+                  <td>xx</td>
+                  
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 px-0 rounded">
+          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-2 pb-3">
+            
                   PAs <br>
                   {{ this.$store.state.udayDb.clusters.cluster001.patients }}
                   <br><br>

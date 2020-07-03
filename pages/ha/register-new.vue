@@ -124,7 +124,7 @@ export default {
 
       alert('A new patient has been registered.')
       
-      this.$router.push({path: '/ha'})
+      
     }
   },
   data() {

@@ -73,16 +73,16 @@ export default {
       feedback: {
         hasFeedback: false,
         medicine: [{
-          id: 'AAU',
-          name: 'Lorazepam',
-          type: 'AAU',
-          batch: 135,
-          expiry: '12/22',
-          stock: 99,
-          mrp: '$99',
-          gst: '$99',
-          dis: 10,
-          crit: 10
+          id: 'hashID',
+          medicine: 'Lorazopram',
+          unit: '1',
+          morning: '2',
+          afternoon: '3',
+          evening: '4',
+          dinner: '5',
+          other: '6',
+          duration: '7',
+          time: '8'
         }],
         investigations: '',
         advice: '',
@@ -148,6 +148,8 @@ export default {
     state.udayDb.clusters[CLUSTER_ID].patients.push(
       baseProfile
     )
+
+    this.$router.push({path: '/ha/profile?id=' + "pa0" + PATIENT_COUNT})
   },
   registerHA(state, payload) {
     let CLUSTER_ID = state.currCluster
@@ -175,6 +177,20 @@ export default {
     state.udayDb.clusters[CLUSTER_ID].patientsInQueue.push(
       payload
     )
+  },
+  addMedicineToEpisode(state, payload) {
+    const CLUSTER_ID = payload.clusterID
+    const PATIENT_ID = payload.patientID
+    const EPISODE_ID = payload.episodeID
+
+    console.log(CLUSTER_ID)
+    console.log(PATIENT_ID)
+    console.log(EPISODE_ID)
+    console.log(payload.newMedicine)
+    console.log(state.udayDb.clusters[CLUSTER_ID].patients.find(patient => patient.id === PATIENT_ID).episodes.find(episode => episode.episodeID === EPISODE_ID).feedback)
+
+    state.udayDb.clusters[CLUSTER_ID].patients.find(patient => patient.id === PATIENT_ID).episodes.find(episode => episode.episodeID === EPISODE_ID).feedback.medicine.push(payload.newMedicine)
+    state.udayDb.clusters[CLUSTER_ID].patients.find(patient => patient.id === PATIENT_ID).episodes.find(episode => episode.episodeID === EPISODE_ID).feedback.hasFeedback = true
   },
   releasePatient(state, payload) {
     const clusterID = payload.clusterID

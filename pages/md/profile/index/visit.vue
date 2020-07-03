@@ -295,11 +295,11 @@
         </div>
       </div>
     </div>
-
-    <div class="container" v-if="this.$store.state.currPatient.status === 'allocated'">
+    <!-- {{ editable }} -->
+    <div class="container" v-if="editable === true">
       <div class="row">
         <div class="col-md-6">
-          <button @click="showDocsFeedback = true; editable = true" :disabled="!editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Edit Complaint Description</button>     
+          <button @click="editable = true" :disabled="!editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Edit Complaint Description</button>     
         </div>
         <div class="col-md-6 mb-3">
           <nuxt-link to="/md/">
@@ -346,7 +346,7 @@
           </div>
           <div class="col-md-12">
             <div class="w-100 bg-white mt-0 pt-3">
-              <table class="table table-sm table-hover">
+              <table class="table table-sm table-hover w-100 table-responsive-01">
                 <thead>
                   <tr>
                     <th scope="col"></th>
@@ -373,40 +373,36 @@
                       </small>
                     </td>
                   </tr> -->
-                  <tr class="pointer" style="height: 40px;">
+                  <tr class="pointer" v-for="(medicine, index) in episodeData.feedback.medicine" :key="index" style="height: 40px;">
                     <td><input type="checkbox" name="" id=""></td>
-                    <td>Lorazopram</td>
-                    <td>1</td>
-                    <td>2</td>
-                    <td>3</td>
-                    <td>1</td>
-                    <td>Lorem ipsum</td>
-                    <td>3</td>
-                    <td>1</td>
-                    <td>Lorem ipsum</td>
+                    <td style="width: 17%;">{{ medicine.medicine }}</td>
+                    <td style="width: 8%;">{{ medicine.unit }}</td>
+                    <td style="width: 11%;">{{ medicine.morning }}</td>
+                    <td style="width: 11%;">{{ medicine.afternoon }}</td>
+                    <td style="width: 11%;">{{ medicine.evening }}</td>
+                    <td style="width: 11%;">{{ medicine.dinner }}</td>
+                    <td style="width: 11%;">{{ medicine.other }}</td>
+                    <td style="width: 11%;">{{ medicine.duration }}</td>
+                    <td style="width: 11%;">{{ medicine.time }}</td>
                   </tr>
                   <tr class="pointer" style="height: 40px;" v-if="editable">
                     <td></td>
-                    <td><input type="text" class="w-100"></td>
-                    <td><input type="text" class="w-100"></td>
-                    <td><input type="text" class="w-100"></td>
-                    <td><input type="text" class="w-100"></td>
-                    <td><input type="text" class="w-100"></td>
-                    <td><input type="text" class="w-100"></td>
-                    <td><input type="text" class="w-100"></td>
-                    <td><input type="text" class="w-100"></td>
-                    <td><input type="text" class="w-100"></td>
+                    <td><input type="text" class="w-100" placeholder="Medicine" v-model="newMedicineData.medicine"></td>
+                    <td><input type="text" class="w-100" placeholder="Unit" v-model="newMedicineData.unit"></td>
+                    <td><input type="text" class="w-100" placeholder="Morning" v-model="newMedicineData.morning"></td>
+                    <td><input type="text" class="w-100" placeholder="Afternoon" v-model="newMedicineData.afternoon"></td>
+                    <td><input type="text" class="w-100" placeholder="Evening" v-model="newMedicineData.evening"></td>
+                    <td><input type="text" class="w-100" placeholder="Dinner" v-model="newMedicineData.dinner"></td>
+                    <td><input type="text" class="w-100" placeholder="Other" v-model="newMedicineData.other"></td>
+                    <td><input type="text" class="w-100" placeholder="Duration" v-model="newMedicineData.duration"></td>
+                    <td><input type="text" class="w-100" placeholder="Time" v-model="newMedicineData.time"></td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <!-- <div class="text-right w-100">
-              <button class="btn btn-dark text-center px-5">Edit Medicine</button>
-              <button class="btn btn-dark text-center px-5">Save Medicine</button>
-            </div> -->
           </div>
-          <div class="col-md-6" v-if="editable">
-            <button class="w-100 btn btn-dark rounded font-weight-bold py-3 px-0 mb-2 text-uppercase">Save New Medicine</button>     
+          <div class="col-md-6" v-if="editable" @click="saveMedicine()">
+            <button class="w-100 btn btn-dark rounded font-weight-bold py-3 px-0 mb-2 text-uppercase">Add New Medicine</button>     
           </div>
           <div class="col-md-6" v-if="editable">
             <nuxt-link to="/ha/profile/new-episode">
@@ -512,7 +508,7 @@
         <div class="row mt-3">
           <div class="col-md-6" v-if="editable">
             <!-- <nuxt-link to="/ha/profile/new-episode"> -->
-              <button :disabled="feedbackEditable" @click="feedbackEditable = true" class="w-100 btn btn-dark rounded font-weight-bold py-3 px-0 mb-2 text-uppercase">Edit Investigations, Advice, Diagnosis</button>     
+              <button :disabled="feedbackEditable" @click="feedbackEditable = !feedbackEditable" class="w-100 btn btn-dark rounded font-weight-bold py-3 px-0 mb-2 text-uppercase">Edit Investigations, Advice, Diagnosis</button>     
             <!-- </nuxt-link> -->
           </div>
           <div class="col-md-6" v-if="editable">
@@ -530,7 +526,7 @@
     <div class="container" v-if="this.$store.state.currPatient.status === 'allocated'">
       <div class="row">
         <div class="col-md-12">
-          <button @click="showDocsFeedback = false; editable = true" :disabled="!editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Save Episode Feedback</button>     
+          <button @click="showDocsFeedback = false; editable = !editable" :disabled="!editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Save Episode Feedback</button>     
         </div>
         <div class="col-md-12 mb-3">
           <nuxt-link to="/md/">
@@ -647,6 +643,21 @@ export default {
         }
       }
     },
+    saveMedicine: function () {
+      let clusterID = this.$store.state.currCluster
+      let patientID = this.$store.state.currPatient.id
+      let episodeID = this.$route.query.id
+
+      let newMedicine = {
+        clusterID: clusterID,
+        patientID: patientID,
+        episodeID: episodeID,
+        newMedicine: this.newMedicineData
+      }
+
+      this.$store.commit('addMedicineToEpisode', newMedicine)
+      this.getEpisodeData() 
+    },
     releasePatient: function () {
       const episodeInfo = {
         clusterID: this.$store.state.currCluster,
@@ -660,6 +671,17 @@ export default {
   },
   data() {
     return {
+      newMedicineData: {
+        medicine: 'Ooga booga',
+        unit: '',
+        morning: '',
+        afternoon: '',
+        evening: '',
+        dinner: '',
+        other: '',
+        duration: '',
+        time: ''
+      },
       episodeData: {
         type: '',
         billed: '',
@@ -807,5 +829,10 @@ thead tr th {
 
 .underline {
   border-bottom: 2px solid #AAA;
+}
+
+.table-responsive-01 {
+  display: block;
+  width: 100%;
 }
 </style>

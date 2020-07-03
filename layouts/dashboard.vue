@@ -55,7 +55,7 @@
           </div>
         </div>
       </div>
-      <transition name="u-fade" mode="out-in">
+      <transition appear name="u-fade" mode="out-in">
         <nuxt  />
         <!-- :key="routerViewKey" -->
       </transition>
@@ -101,8 +101,6 @@ export default {
   },
   mounted () {
     this.setPath()
-
-    // alert('123')
   },
   methods: {
     setPath () {
@@ -111,7 +109,8 @@ export default {
     sendAlert (msg) {
       alert(msg)
     }
-  }
+  },
+  transition: 'u-fade'
 }
 </script>
 
@@ -135,5 +134,9 @@ html, body {
 
 tr.pointer td, tr.pointer th {
   padding-top: 7px;
+}
+
+.__layout {
+  height: none;
 }
 </style>
