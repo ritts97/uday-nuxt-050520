@@ -75,7 +75,9 @@
                   <th scope="col">Patient Status</th>
                 </tr>
               </thead>
-              <tbody>
+              <!-- <tbody> -->
+
+                    <transition-group name="u-fade"  mode="in-out" tag="tbody">
                 <tr class="pointer" v-for="(patient, index) in list.slice().reverse()" :key="index">
                   <th class="text-uppercase" scope="row">{{ patient.id }}</th>
                   <td>
@@ -94,14 +96,15 @@
                     {{ patient.status }}
                   </td>
                 </tr>
-                <tr class="pointer" v-if="list.length === 0" style="height: 40px;">
+
+                <tr v-show="list.length === 0" class="pointer" key="empty" style="height: 40px;">
                   <td class="py-3 px-3 text-center" colspan="9">
                     <small>
                       There are no patients in this list. Register a new patient to get started.
                     </small>
                   </td>
                 </tr>
-              </tbody>
+              </transition-group>
             </table>
           </div>
         </div>

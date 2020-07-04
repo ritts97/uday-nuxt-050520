@@ -25,12 +25,17 @@
               Login
             </button>
           </nuxt-link>
-          <!-- <nuxt-link to="/md">
+          <nuxt-link to="/ha">
+            <button class="btn btn-dark mt-3 mb-2 p-2 w-100 text-uppercase">
+              Login (as HA)
+            </button>
+          </nuxt-link>
+          <nuxt-link to="/md">
             <button class="btn btn-dark mb-2 p-2 w-100 text-uppercase">
               Login (as Doct.)
             </button>
-          </nuxt-link> -->
-          <!-- <nuxt-link to="/admin">
+          </nuxt-link>
+          <nuxt-link to="/admin">
             <button class="btn btn-dark mb-2 p-2 w-100 text-uppercase">
               Login (as Admin)
             </button>
@@ -39,7 +44,7 @@
             <button class="btn btn-dark mb-3 p-2 w-100 text-uppercase">
               Login (as Super)
             </button>
-          </nuxt-link> -->
+          </nuxt-link>
           <nuxt-link to="/forgot-pass">
             <small class="text-secondary">Forgot password?</small>
           </nuxt-link>

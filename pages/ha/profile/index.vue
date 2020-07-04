@@ -70,7 +70,7 @@ export default {
       showDemographics: true,
       fullPath: [
         {
-          title: 'Dashboard',
+          title: 'HA\'s Dashboard',
           url: '/ha'
         },
         {
