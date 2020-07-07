@@ -5,7 +5,7 @@
         <div class="row mt-2">
           <div class="col-md-3 text-left" style="min-height: 200px;">
             <nuxt-link to="/md/profile" class="text-decoration-none text-dark">
-              <img src="/avatar-man_03.png">
+              <img src="/avatar-design_01.png">
             </nuxt-link>
           </div>
           <div class="col-md-9">
@@ -75,7 +75,7 @@
                   <td>{{ patient.demographics.age }}</td>
                   <td>{{ patient.demographics.phone }}</td>
                   <td>{{ patient.demographics.location }}</td>
-                  <td>{{ patient.demographics.creator }}</td>
+                  <td>{{ patient.regBy }}</td>
                   <td class="text-capitalize">
                     <img v-if="patient.status == 'registered'" src="/circle-green.svg" class="shape-status" alt="">
                     <img v-if="patient.status == 'released'" src="/circle-yellow.svg" class="shape-status" alt="">

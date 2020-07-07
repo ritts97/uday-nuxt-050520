@@ -5,7 +5,7 @@
         <div class="row mt-2">
           <div class="col-md-3 text-left" style="min-height: 200px;">
             <nuxt-link to="/md/profile" class="text-decoration-none text-dark">
-              <img src="/avatar-girl_03.png">
+              <img src="/avatar-child_01.png">
             </nuxt-link>
           </div>
         <div class="col-md-9">
@@ -124,7 +124,7 @@ export default {
       return this.$store.state.udayDb.clusters['cluster001'].patients
     },
     filterMyPatients: function () {
-      return this.patientList.filter(patient => patient.regBy == 'Jane Doe')
+      return this.patientList.filter(patient => patient.regBy == this.$store.state.currUser.name)
     },
     filterCluster: function () {
       return this.patientList
@@ -169,7 +169,7 @@ export default {
     ]
 
 
-    this.list = this.patientList.filter(patient => patient.regBy == 'Jane Doe')
+    this.list = this.patientList.filter(patient => patient.regBy ==  this.$store.state.currUser.name)
 
     this.$store.commit('updateCurrUser')
     this.$store.commit('updatePath', path)

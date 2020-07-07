@@ -131,9 +131,9 @@ export default {
     let baseProfile = {
       id: "pa0" + PATIENT_COUNT,
       status: "registered",
-      regBy: "Jane Doe",
+      regBy: payload.regBy,
       demographics: {
-        ...payload
+        ...payload.demographics
       },
       episodes: [{
         episodeID: "PA01EP0",

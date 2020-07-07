@@ -35,7 +35,7 @@
         <div class="col-md-12">
           <!-- <nuxt-link to="/ha/profile/"> -->
           <!-- {{ this.$store.state.currPatient.status === 'allocated'}} -->
-            <button data-toggle="modal" :disabled="this.$store.state.currPatient.status === 'allocated'" data-target="#exampleModal" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Allocate for Doctor's Review</button>     
+            <!-- <button data-toggle="modal" :disabled="this.$store.state.currPatient.status === 'allocated'" data-target="#exampleModal" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Allocate for Doctor's Review</button>      -->
           <!-- </nuxt-link> -->
         </div>
         <!-- <div class="col-md-6">
@@ -43,9 +43,9 @@
             <button  @click="sendAlert('The patient has been allocated to a doctor.')" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0  text-uppercase">Allocate To Queue</button>     
           </nuxt-link>
         </div> -->
-        <div class="col-md-12">
+        <!-- <div class="col-md-12">
           <hr class="mt-2">
-        </div>
+        </div> -->
       </div>
       <div class="row">
         <div class="col-md-12">
@@ -73,7 +73,9 @@
               </div>
             </li>
           </ul>
-          <div class="w-100 bg-white mb-2 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="subTabs[0].isActive">
+          <transition name="u-fade"  mode="out-in">
+
+          <div class="w-100 bg-white mb-2 mt-0 px-3 pt-3 pb-3" key="complaint" style="min-height: 200px;" v-if="subTabs[0].isActive">
             <div class="row mt-1">
               <div class="col-md-12 mb-3">
                 <div class="small text-muted mb-2">
@@ -134,7 +136,7 @@
               </div> -->
             </div>
           </div>
-          <div class="w-100 bg-white mb-2 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="subTabs[1].isActive">
+          <div class="w-100 bg-white mb-2 mt-0 px-3 pt-3 pb-3" key="vitals" style="min-height: 200px;" v-if="subTabs[1].isActive">
             <div class="row mt-1">
               <div class="col-md-6 mb-4">
                 <div class="small text-muted mb-1">
@@ -200,7 +202,7 @@
               </div>
             </div>
           </div>
-          <div class="w-100 bg-white mb-2 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="subTabs[2].isActive">
+          <div class="w-100 bg-white mb-2 mt-0 px-3 pt-3 pb-3" key="general-exams" style="min-height: 200px;" v-if="subTabs[2].isActive">
             <div class="row mt-1">
               <!-- <div class="col-md-12 mb-5 text-center" style="min-height: 300px;">
                 <img src="/anatomy_sketch.png" alt="">
@@ -230,7 +232,7 @@
               </div>
             </div>
           </div>
-          <div class="w-100 bg-white mb-2 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="subTabs[3].isActive">
+          <div class="w-100 bg-white mb-2 mt-0 px-3 pt-3 pb-3" key="specific-exams" style="min-height: 200px;" v-if="subTabs[3].isActive">
             <div class="row mt-1">
               <div class="col-md-6 mb-4">
                 <div class="small text-muted mb-1">
@@ -296,7 +298,7 @@
               </div>
             </div>
           </div>
-          <div class="w-100 bg-white mb-2 mt-0 px-3 pt-3 pb-1" style="min-height: 200px;" v-if="subTabs[4].isActive">
+          <div class="w-100 bg-white mb-2 mt-0 px-3 pt-3 pb-1" key="photo" style="min-height: 200px;" v-if="subTabs[4].isActive">
             <div class="row mt-1">
               <!-- <div class="col-md-12 mb-3 text-center">
                 Additional Photos
@@ -333,6 +335,7 @@
               </div> -->
             </div>
           </div>
+          </transition>
           <!-- <div class="row px-2 mb-2">
             <div class="col-md-12 text-left">
               <span>
@@ -349,6 +352,34 @@
       </div>
     </div>
 
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 rounded">
+          <ul class="list-inline mt-2 mb-2">
+            <li class="list-inline-item pointer">
+              <div class="px-2 mr-2 pb-1 mb-1 underline" role="button">
+                Billing this Visit
+              </div>
+            </li>
+            <li class="list-inline-item pointer">
+              <div class="px-2 mr-2 pb-1 mb-1 underline" role="button">
+                All Episode Billing
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+        <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-1">
+          <div class="row mt-1 mb-3">
+            <div class="col-md-12">
+              Costs Accrued: $99
+            </div>
+          </div>
+        </div>
+      <!-- </fieldset> -->
+    </div>
 
     <div>
       <div class="container mt-3 mb-3">
@@ -632,21 +663,21 @@ export default {
           title: 'Episode 1',
           isActive: true
         },
-        // {
-        //   name: 'followup1',
-        //   title: 'Follow Up 1',
-        //   isActive: false
-        // },
-        // {
-        //   name: 'followup2',
-        //   title: 'Follow Up 2',
-        //   isActive: false
-        // },
-        // {
-        //   name: 'service1',
-        //   title: 'Perform ECG',
-        //   isActive: false
-        // },
+        {
+          name: 'followup1',
+          title: 'Follow Up 1',
+          isActive: false
+        },
+        {
+          name: 'followup2',
+          title: 'Follow Up 2',
+          isActive: false
+        },
+        {
+          name: 'service1',
+          title: 'Perform ECG',
+          isActive: false
+        },
         // {
         //   name: 'billing',
         //   title: 'Billing History',

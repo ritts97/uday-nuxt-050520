@@ -296,9 +296,6 @@
           </div>
           <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-1" key="addPhotos" style="min-height: 200px;" v-if="tabs[4].isActive">
             <div class="row mt-1">
-              <div class="col-md-12 mb-3 text-center">
-                Additional Photos
-              </div>
               <div class="col-md-3 mb-4">
                 <img src="/square-grey.jpg" class="w-100" alt="">
               </div>
@@ -363,7 +360,10 @@
         </div> -->
         <div class="col-md-12">
           <!-- <nuxt-link to="/ha/profile/"> -->
-            <button data-toggle="modal" data-target="#exampleModal" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0  text-uppercase">Allocate for Feedback</button>     
+
+            <nuxt-link to="/ha/profile" class="w-100"><button @click="addToQueue" type="button" data-dismiss="modal" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0 text-uppercase">Submit Allocation</button>
+            </nuxt-link>
+            <!-- <button data-toggle="modal" data-target="#exampleModal" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0  text-uppercase">Allocate for Feedback</button>      -->
           <!-- </nuxt-link> -->
         </div>
         <div class="col-md-12">
@@ -441,7 +441,7 @@ export default {
     },
     addToQueue: function () {
       // alert('Added to Patient Queue.')
-      alert('The patient has been allocated to the general queue.')
+      alert('The patient has been allocated.')
 
       this.$store.commit('updateStatus', 'allocated')
       this.$store.commit('addPatientToQueue', this.$store.state.currPatient.id)

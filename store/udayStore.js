@@ -86,11 +86,11 @@ export default {
                 numFollowUps: "0",
                 allocated: false,
                 complaint: {
-                  chiefComplaint: "",
-                  vitals: "",
-                  genExams: "",
-                  specExams: "",
-                  addPhotos: ""
+                  chiefComplaint: "Episode 1",
+                  vitals: "Episode 1",
+                  genExams: "Episode 1",
+                  specExams: "Episode 1",
+                  addPhotos: "Episode 1"
                 },
                 feedback: {
                   medicine: "",
@@ -99,7 +99,65 @@ export default {
                   advice: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem est placeat perspiciatis vero! Corrupti voluptatum beatae ducimus quod voluptas qui?',
                   diagnosis: '',
                 },
-                followUps: []
+                followUps: [
+                  {
+                    name: 'Follow Up 1',
+                    type: 'followup',
+                    complaint: {
+                      chiefComplaint: "Follow Up 1",
+                      vitals: "Follow Up 1",
+                      genExams: "Follow Up 1",
+                      specExams: "Follow Up 1",
+                      addPhotos: "Follow Up 1"
+                    },
+                    feedback: {
+                      hasFeedback: false,
+                      medicine: "",
+                      advice: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem est placeat perspiciatis vero! Corrupti voluptatum beatae ducimus quod voluptas qui?',
+                      investigations: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem est placeat perspiciatis vero! Corrupti voluptatum beatae ducimus quod voluptas qui?',
+                      advice: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem est placeat perspiciatis vero! Corrupti voluptatum beatae ducimus quod voluptas qui?',
+                      diagnosis: '',
+                    }
+                  },
+                  {
+                    name: 'Follow Up 2',
+                    type: 'followup',
+                    complaint: {
+                      chiefComplaint: "Follow Up 2",
+                      vitals: "Follow Up 2",
+                      genExams: "Follow Up 2",
+                      specExams: "Follow Up 2",
+                      addPhotos: "Follow Up 2"
+                    },
+                    feedback: {
+                      hasFeedback: false,
+                      medicine: "",
+                      advice: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem est placeat perspiciatis vero! Corrupti voluptatum beatae ducimus quod voluptas qui?',
+                      investigations: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem est placeat perspiciatis vero! Corrupti voluptatum beatae ducimus quod voluptas qui?',
+                      advice: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem est placeat perspiciatis vero! Corrupti voluptatum beatae ducimus quod voluptas qui?',
+                      diagnosis: '',
+                    }
+                  },
+                  {
+                    name: 'Perform ECG',
+                    type: 'service',
+                    complaint: {
+                      chiefComplaint: "Perform ECG",
+                      vitals: "Perform ECG",
+                      genExams: "Perform ECG",
+                      specExams: "Perform ECG",
+                      addPhotos: "Perform ECG"
+                    },
+                    feedback: {
+                      hasFeedback: false,
+                      medicine: "",
+                      advice: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem est placeat perspiciatis vero! Corrupti voluptatum beatae ducimus quod voluptas qui?',
+                      investigations: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem est placeat perspiciatis vero! Corrupti voluptatum beatae ducimus quod voluptas qui?',
+                      advice: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem est placeat perspiciatis vero! Corrupti voluptatum beatae ducimus quod voluptas qui?',
+                      diagnosis: '',
+                    }
+                  }
+                ]
               }
             ],
             services: []
@@ -109,15 +167,15 @@ export default {
             status: "released",
             regBy: "Charlotte Hale",
             demographics: {
-              name: "Delores Abernathy",
+              name: "Charlotte Hale",
               occupation: 'Industrial Worker',
-              gender: "m",
-              age: "29",
+              gender: "f",
+              age: "27",
               address: "4444 Market St.",
               address2: "Address 2",
               police: "Police Station",
               phone: "1-415-555-5555",
-              location: "Hyderabad, IN"
+              location: "New Southwick, Germany"
             },
             episodes: [{
                 episodeID: "EP0 FU0",

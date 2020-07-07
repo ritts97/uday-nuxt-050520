@@ -7,10 +7,40 @@
             <div class="container">
               <div class="row mt-3">
                 <div class="col-md-6">
+                  <input type="text" class="w-100 p-2 mb-3" placeholder="Cluster ID">
+                </div>
+                <div class="col-md-6">
+                  <input type="text" class="w-100 p-2 mb-3" placeholder="Cluster Code">
+                </div>
+                <div class="col-md-6">
                   <input type="text" class="w-100 p-2 mb-3" placeholder="Cluster Name">
                 </div>
                 <div class="col-md-6">
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="Location">
+                  <input type="text" class="w-100 p-2 mb-3" placeholder="City/Village">
+                </div>
+                <div class="col-md-6">
+                  <input type="text" class="w-100 p-2 mb-3" placeholder="State ID">
+                </div>
+                <div class="col-md-6">
+                  <input type="text" class="w-100 p-2 mb-3" placeholder="District ID">
+                </div>
+                <div class="col-md-6">
+                  <input type="text" class="w-100 p-2 mb-3" placeholder="PS ID">
+                </div>
+                <div class="col-md-6">
+                  <input type="text" class="w-100 p-2 mb-3" placeholder="Country">
+                </div>
+                <div class="col-md-6">
+                  <input type="text" class="w-100 p-2 mb-3" placeholder="Supervisor">
+                </div>
+                <div class="col-md-6">
+                  <input type="text" class="w-100 p-2 mb-3" placeholder="Services">
+                </div>
+                <div class="col-md-6">
+                  <input type="text" class="w-100 p-2 mb-3" placeholder="Created By">
+                </div>
+                <div class="col-md-6">
+                  <input type="text" class="w-100 p-2 mb-3" placeholder="Date Created">
                 </div>
               </div>
             </div>

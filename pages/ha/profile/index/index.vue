@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-md-6">
           <nuxt-link to="/ha/profile/new-episode">
-            <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Record New Episode</button>     
+            <button :disabled="this.$store.state.currPatient.status == 'allocated'" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Record New Episode</button>     
           </nuxt-link>
         </div>
         <div class="col-md-6">
@@ -57,7 +57,7 @@
                       {{ visit.title }}
                     </div>
                   </td>
-                  <td>{{ visit.allocated }}</td>
+                  <td>{{ visit.created }}</td>
                   <td>{{ visit.lastUpdated }}</td>
                   <td>{{ visit.numFollowUps }}</td>
                 </tr>

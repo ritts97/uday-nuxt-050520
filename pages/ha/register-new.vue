@@ -14,7 +14,8 @@
               </div>
               <div class="row mt-3">
                 <div class="col-md-12 mb-3">
-                  General Information
+                  General Information 
+                  <!-- {{ this.$store.state.currUser }} -->
                 </div>
                 <div class="col-md-6">
                   <input type="text" class="w-100 p-2 mb-3" v-model="patientData.name" placeholder="Full Name">
@@ -78,6 +79,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   layout: 'dashboard',
   mounted() {
@@ -93,8 +96,24 @@ export default {
     ]
 
     this.$store.commit('updatePath', path)
+
+    this.generateFakeCredentials()
   },
   methods: {
+    generateFakeCredentials: function name(params) {
+      let self = this
+      axios.get('https://cors-anywhere.herokuapp.com/https://randomuser.me/api/').then(res => {
+        
+        const profile = res.data.results[0]
+        console.log(profile)
+        self.patientData.name = profile.name.first + ' ' + profile.name.last
+        self.patientData.address = profile.location.street.number + ' ' + profile.location.street.name
+        self.patientData.age = profile.dob.age
+        self.patientData.phone = profile.phone
+        self.patientData.gender = profile.gender[0].toUpperCase()
+        self.patientData.location = profile.location.city + ', ' + profile.location.state + ', ' + profile.location.country
+      })
+    },
     getTab: function (tabName) {
       let tabs = this.tabs
       let ref = 0
@@ -115,12 +134,15 @@ export default {
       }
     },
     registerPatient: function (event) {
-      let payload = this.patientData
+      let payload = {
+        regBy: this.$store.state.currUser.name,
+        demographics: this.patientData
+      }
 
       // event.preventDefault()
 
       this.$store.commit('registerPatient', payload)
-      this.$store.commit('updateCurrPat', payload)
+      this.$store.commit('updateCurrPatient', payload)
 
       alert('A new patient has been registered.')
       
@@ -130,8 +152,8 @@ export default {
   data() {
     return {
       patientData: {
-        name: "Delores Abernathy",
-        occupation: 'Industrial Worker',
+        name: "",
+        occupation: 'Truck Driver',
         gender: "m",
         age: "29",
         hswd: 'H/S/W/D',
