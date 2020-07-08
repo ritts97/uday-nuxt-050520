@@ -58,16 +58,17 @@
           <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" key="chiefComplaints" v-if="tabs[0].isActive">
             <!-- Chief Complaints<br><br> -->
             <div class="row mt-1">
-              <div class="col-md-12 text-muted small mb-3">
-                  Please complete to the best of your ability.
-                </div>
+              <div class="col-md-12 text-muted small mb-0">
+                General Information
+                <hr>
+              </div>
               <div class="col-md-12 mb-3">
                 <label for="exampleFormControlSelect1">What is the category of the complaint?</label><br>
                 <button  v-for="(category, index) in categories" :class="category.isActive ? 'btn-dark text-white' : 'btn-light'" class="btn mb-2 mr-2" @click="makeCategoryActive(category.name)" :key="index">{{category.name}}</button>
               </div>
               <div class="col-md-12 mb-3" v-if="currCategory !== ''">
                 <label for="exampleFormControlSelect1">What is the specific complaint?</label><br>
-    <transition  appear name="u-fade"  mode="out-in" tag="div">
+                <transition  appear name="u-fade"  mode="out-in" tag="div">
 
                 <div v-if="currCategory === 'Pain'" key="pain" class="w-100">
                   <button class="btn btn-light mb-2 mr-2" @click="handleSubCategory('Headache')">Headache</button>
@@ -143,82 +144,119 @@
                 </div>
 
 
-    </transition> 
+                </transition> 
 
               </div>
               <div v-if="subCategory !== ''" class="col-md-12 mb-3">
                 <label for="exampleFormControlSelect1">Please examine these organs fully.</label><br>
                 Eye, Head, Hand
               </div>
-              <div class="col-md-12 mb-3">
+              <div class="col-md-12 mb-4">
                 <label for="exampleFormControlSelect1">Please examine these organs partially.</label><br>
-                Pupil
+                <button class="btn btn-light mb-2 mr-2">Pupil</button>
               </div>
-              <div class="col-md-12 mb-3">
-                <label for="exampleFormControlSelect1">What has been the duration of this complaint?</label>
+              <div class="col-md-12 text-muted small mb-0">
+                Detailed Information
+                <hr>
+              </div>
+              <div class="col-md-6 mb-4">
+                <label for="exampleFormControlSelect1">What has been the duration of this complaint?</label><br>
+                <input type="text" class="p-2 w-25"> Days
+              </div>
+              <div class="col-md-6 mb-4">
+                <label for="exampleFormControlSelect1">Where did this complaint start?</label><br>  
+                <button class="btn btn-light mb-2 mr-2">Front</button>
+                <button class="btn btn-light mb-2 mr-2">Left</button>
+                <button class="btn btn-light mb-2 mr-2">Back</button>
+                <button class="btn btn-light mb-2 mr-2">Middle</button>
+                <button class="btn btn-light mb-2 mr-2">All Over</button>
+              </div>
+              <div class="col-md-6 mb-4">
+                <label for="exampleFormControlSelect1">How did the pain start?</label><br>
+                <button class="btn btn-light mb-2 mr-2">Sudden</button>
+                <button class="btn btn-light mb-2 mr-2">Gradual</button>
+                <button class="btn btn-light mb-2 mr-2">Other (describe)</button>
                 <input type="text" class="p-2 w-100">
               </div>
-              <div class="col-md-12 mb-3">
-                <label for="exampleFormControlSelect1">Where did this complaint start?</label>
-                <input type="text" class="p-2 w-100">
+              <div class="col-md-6 mb-4">
+                <label for="exampleFormControlSelect1">Please describe the intensity of the pain.</label><br>
+                <button class="btn btn-light mb-2 mr-2">Mild</button>
+                <button class="btn btn-light mb-2 mr-2">Moderate</button>
+                <button class="btn btn-light mb-2 mr-2">Severe</button>
+                <button class="btn btn-light mb-2 mr-2">Varies</button>
               </div>
-              <div class="col-md-12 mb-3">
-                <label for="exampleFormControlSelect1">Please describe the intensity of the pain.</label>
-                <input type="text" class="p-2 w-100">
+              <div class="col-md-6 mb-4">
+                <label for="exampleFormControlSelect1">Please describe the nature of the pain.</label><br>
+                <button class="btn btn-light mb-2 mr-2">Continuous</button>
+                <button class="btn btn-light mb-2 mr-2">Comes and goes</button>
+                <button class="btn btn-light mb-2 mr-2">Always there but sometimes worse</button>
               </div>
-              <div class="col-md-12 mb-3">
-                <label for="exampleFormControlSelect1">Please describe the nature of the pain.</label>
-                <input type="text" class="p-2 w-100">
+              <div class="col-md-6 mb-4">
+                <label for="exampleFormControlSelect1">Please describe what brings the pain on.</label><br>
+                <button class="btn btn-light mb-2 mr-2">Injury</button>
+                <button class="btn btn-light mb-2 mr-2">Bright Light</button>
+                <button class="btn btn-light mb-2 mr-2">Loud noice</button>
+                <button class="btn btn-light mb-2 mr-2">None</button>
+                <button class="btn btn-light mb-2 mr-2">Other (describe)</button>
               </div>
-              <div class="col-md-12 mb-3">
-                <label for="exampleFormControlSelect1">Please describe what brings the pain on.</label>
-                <input type="text" class="p-2 w-100">
+              <div class="col-md-12 mb-4">
+                <label for="exampleFormControlSelect1">Please describe any relief.</label><br>
+                <button class="btn btn-light mb-2 mr-2">None</button>
+                <button class="btn btn-light mb-2 mr-2">Other (describe)</button>
               </div>
-              <div class="col-md-12 mb-3">
-                <label for="exampleFormControlSelect1">Please describe any relief.</label>
-                <input type="text" class="p-2 w-100">
+              <div class="col-md-12 mb-4">
+                <label for="exampleFormControlSelect1">Please describe any associated symptons.</label><br>
+                <button class="btn btn-light mb-2 mr-2">Vomiting</button>
+                <button class="btn btn-light mb-2 mr-2">Vertigo</button>
+                <button class="btn btn-light mb-2 mr-2">None</button>
+                <button class="btn btn-light mb-2 mr-2">Other (describe)</button>
               </div>
-              <div class="col-md-12 mb-3">
-                <label for="exampleFormControlSelect1">Please describe any associated symptons.</label>
-                <input type="text" class="p-2 w-100">
-              </div>
-              <div class="col-md-12 mb-3">
+              <!-- <div class="col-md-12 mb-3">
                 <label for="exampleFormControlSelect1">Please provide any further information that might be relevant.</label>
-              </div>
-              <div class="col-md-12">
+              </div> -->
+              <!-- <div class="col-md-12">
                 <textarea class="w-100 p-2" rows="5" placeholder="Please provide any additional information..."></textarea>
-              </div>
+              </div> -->
             </div>
           </div>
 
           <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" key="vitals" style="min-height: 200px;" v-if="tabs[1].isActive">
             <!-- Vitals<br><br> -->
             <div class="row mt-1">
-              <div class="col-md-12 text-muted small mb-3">
+              <div class="col-md-12 text-muted small mb-0">
                   Please complete to the best of your ability.
+                  <hr>
                 </div>
               <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Patient Appearance">
+                <label for="exampleFormControlSelect1">Patient Appearance</label><br>
+                <input type="text" class="w-100 p-2 mb-3" placeholder="Tired, out of breath, pale">
               </div>
               <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Patient Gait">
+                <label for="exampleFormControlSelect1">Patient Gait</label><br>
+                <input type="text" class="w-100 p-2 mb-3" placeholder="Walks with a limp">
               </div>
               <div class="col-md-6">
+                <label for="exampleFormControlSelect1">Blood Pressure</label><br>
                 <input type="text" class="w-100 p-2 mb-3" placeholder="BP (___/___ mmHg)">
               </div>
               <div class="col-md-6">
+                <label for="exampleFormControlSelect1">Oxygen</label><br>
                 <input type="text" class="w-100 p-2 mb-3" placeholder="SP02 (%)">
               </div>
               <div class="col-md-6">
+                <label for="exampleFormControlSelect1">Patient Temperature</label><br>
                 <input type="text" class="w-100 p-2 mb-3" placeholder="Temperature (‘’ F)">
               </div>
               <div class="col-md-6">
+                <label for="exampleFormControlSelect1">Patient Height</label><br>
                 <input type="text" class="w-100 p-2 mb-3" placeholder="Height (cm)">
               </div>
               <div class="col-md-6">
+                <label for="exampleFormControlSelect1">Patient Weight</label><br>
                 <input type="text" class="w-100 p-2 mb-3" placeholder="Weight (kg)">
               </div>
               <div class="col-md-6">
+                <label for="exampleFormControlSelect1">Body Mass Index</label><br>
                 <input type="text" class="w-100 p-2 mb-3" placeholder="BMI (kg/m2) (Auto Calculated)">
               </div>
             </div>
@@ -230,31 +268,33 @@
                 <img src="/anatomy_sketch.png" alt="">
               </div> -->
               <div class="col-md-12 text-muted small mb-3">
-                  Please complete to the best of your ability.
-                </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Patient Appearance">
+                General Physical Examinations
               </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Patient Gait">
+              <div class="col-md-6 mb-3">
+                <label for="exampleFormControlSelect1">Eyes – Jaundice</label><br>  
+                <button class="btn btn-light mb-2 mr-2">Yes</button>
+                <button class="btn btn-light mb-2 mr-2">No</button>
               </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="BP (___/___ mmHg)">
+              <div class="col-md-6 mb-3">
+                <label for="exampleFormControlSelect1">Eyes – Pallor</label><br> 
+                <button class="btn btn-light mb-2 mr-2">No</button>
+                <button class="btn btn-light mb-2 mr-2">Mild.Moderate</button>
+                <button class="btn btn-light mb-2 mr-2">Severe</button>
               </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="SP02 (%)">
+              <div class="col-md-6 mb-3">
+                <label for="exampleFormControlSelect1">Hands – Cyanosis</label><br>
+                <button class="btn btn-light mb-2 mr-2">Yes</button>
+                <button class="btn btn-light mb-2 mr-2">No</button>
               </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Temperature (‘’ F)">
+              <div class="col-md-6 mb-3">
+                <label for="exampleFormControlSelect1">Hands – Clubbing</label><br>  
+                <button class="btn btn-light mb-2 mr-2">Yes</button>
+                <button class="btn btn-light mb-2 mr-2">No</button>
               </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Height (cm)">
-              </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Weight (kg)">
-              </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="BMI (kg/m2) (Auto Calculated)">
+              <div class="col-md-6 mb-3">
+                <label for="exampleFormControlSelect1">Legs – Oedema</label><br> 
+                <button class="btn btn-light mb-2 mr-2">Yes</button>
+                <button class="btn btn-light mb-2 mr-2">No</button>
               </div>
             </div>
           </div>   

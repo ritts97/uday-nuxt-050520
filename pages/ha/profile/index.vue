@@ -5,7 +5,7 @@
         <div class="row mt-2">
           <div class="col-md-3 text-left" style="min-height: 200px;">
             <nuxt-link to="/md/profile" class="text-decoration-none text-dark">
-              <img src="/avatar-child_02.png">
+              <img src="/avatar-design_02.png">
             </nuxt-link>
           </div>
           <div class="col-md-9">
