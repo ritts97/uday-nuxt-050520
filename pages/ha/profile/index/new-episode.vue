@@ -199,12 +199,12 @@
                 <button class="btn btn-light mb-2 mr-2">None</button>
                 <button class="btn btn-light mb-2 mr-2">Other (describe)</button>
               </div>
-              <div class="col-md-12 mb-4">
+              <div class="col-md-6 mb-4">
                 <label for="exampleFormControlSelect1">Please describe any relief.</label><br>
                 <button class="btn btn-light mb-2 mr-2">None</button>
                 <button class="btn btn-light mb-2 mr-2">Other (describe)</button>
               </div>
-              <div class="col-md-12 mb-4">
+              <div class="col-md-6 mb-4">
                 <label for="exampleFormControlSelect1">Please describe any associated symptons.</label><br>
                 <button class="btn btn-light mb-2 mr-2">Vomiting</button>
                 <button class="btn btn-light mb-2 mr-2">Vertigo</button>
@@ -267,34 +267,50 @@
               <!-- <div class="col-md-12 mb-5 text-center">
                 <img src="/anatomy_sketch.png" alt="">
               </div> -->
-              <div class="col-md-12 text-muted small mb-3">
+              <div class="col-md-12 text-muted small">
                 General Physical Examinations
+                <hr>
               </div>
               <div class="col-md-6 mb-3">
-                <label for="exampleFormControlSelect1">Eyes – Jaundice</label><br>  
-                <button class="btn btn-light mb-2 mr-2">Yes</button>
-                <button class="btn btn-light mb-2 mr-2">No</button>
+                <label for="exampleFormControlSelect1">Eyes – Jaundice</label><br>
+                <button class="btn mb-2 mr-2" :class="[ generalExams.eyesJaundice === false ?  'btn-dark' : 'btn-light' ]" @click="generalExams.eyesJaundice = false">No</button>
+                <button class="btn mb-2 mr-2" :class="[ generalExams.eyesJaundice === true ?  'btn-dark' : 'btn-light' ]" @click="generalExams.eyesJaundice = true">Yes</button>
               </div>
               <div class="col-md-6 mb-3">
-                <label for="exampleFormControlSelect1">Eyes – Pallor</label><br> 
-                <button class="btn btn-light mb-2 mr-2">No</button>
-                <button class="btn btn-light mb-2 mr-2">Mild.Moderate</button>
-                <button class="btn btn-light mb-2 mr-2">Severe</button>
+                <label for="exampleFormControlSelect1">Eyes – Pallor</label><br>
+                <button class="btn mb-2 mr-2" :class="[ generalExams.eyesPallor === 'none' ?  'btn-dark' : 'btn-light' ]"  @click="generalExams.eyesPallor = 'none'">None</button>
+                <button class="btn mb-2 mr-2" :class="[ generalExams.eyesPallor === 'mild' ?  'btn-dark' : 'btn-light' ]"  @click="generalExams.eyesPallor = 'mild'">Mild</button>
+                <button class="btn mb-2 mr-2" :class="[ generalExams.eyesPallor === 'moderate' ?  'btn-dark' : 'btn-light' ]"  @click="generalExams.eyesPallor = 'moderate'">Moderate</button>
+                <button class="btn mb-2 mr-2" :class="[ generalExams.eyesPallor === 'severe' ?  'btn-dark' : 'btn-light' ]" @click="generalExams.eyesPallor = 'severe'">Severe</button>
               </div>
               <div class="col-md-6 mb-3">
                 <label for="exampleFormControlSelect1">Hands – Cyanosis</label><br>
-                <button class="btn btn-light mb-2 mr-2">Yes</button>
-                <button class="btn btn-light mb-2 mr-2">No</button>
+                <button class="btn mb-2 mr-2" :class="[ generalExams.handsCyanosis === false ?  'btn-dark' : 'btn-light' ]" @click="generalExams.handsCyanosis = false">No</button>
+                <button class="btn mb-2 mr-2" :class="[ generalExams.handsCyanosis === true ?  'btn-dark' : 'btn-light' ]" @click="generalExams.handsCyanosis = true">Yes</button>
               </div>
-              <div class="col-md-6 mb-3">
+              <!-- <div class="col-md-6 mb-3">
                 <label for="exampleFormControlSelect1">Hands – Clubbing</label><br>  
-                <button class="btn btn-light mb-2 mr-2">Yes</button>
-                <button class="btn btn-light mb-2 mr-2">No</button>
+                <button class="btn btn-light mb-2 mr-2">Normal</button>
+                <button class="btn btn-light mb-2 mr-2">Clubbing</button>
+                <button class="btn btn-light mb-2 mr-2">Spooning</button>
+                <button class="btn btn-light mb-2 mr-2">Cyanosis</button>
+                <button class="btn btn-light mb-2 mr-2">None</button>
+              </div> -->
+
+              <div class="col-md-6 mb-3">
+                <label for="exampleFormControlSelect1">Hands – Clubbing</label><br>
+                <button class="btn mb-2 mr-2" :class="[ generalExams.handsClubbing === 'none' ?  'btn-dark' : 'btn-light' ]"  @click="generalExams.handsClubbing = 'none'">None</button>
+                <button class="btn mb-2 mr-2" :class="[ generalExams.handsClubbing === 'normal' ?  'btn-dark' : 'btn-light' ]"  @click="generalExams.handsClubbing = 'normal'">Normal</button>
+                <button class="btn mb-2 mr-2" :class="[ generalExams.handsClubbing === 'clubbing' ?  'btn-dark' : 'btn-light' ]"  @click="generalExams.handsClubbing = 'clubbing'">Clubbing</button>
+                <button class="btn mb-2 mr-2" :class="[ generalExams.handsClubbing === 'spooning' ?  'btn-dark' : 'btn-light' ]" @click="generalExams.handsClubbing = 'spooning'">Spooning</button>
+                <button class="btn mb-2 mr-2" :class="[ generalExams.handsClubbing === 'cyanosis' ?  'btn-dark' : 'btn-light' ]" @click="generalExams.handsClubbing = 'cyanosis'">Cyanosis</button>
               </div>
               <div class="col-md-6 mb-3">
-                <label for="exampleFormControlSelect1">Legs – Oedema</label><br> 
-                <button class="btn btn-light mb-2 mr-2">Yes</button>
-                <button class="btn btn-light mb-2 mr-2">No</button>
+                <label for="exampleFormControlSelect1">Legs – Oedema</label><br>
+                <button class="btn mb-2 mr-2" :class="[ generalExams.legsOedema === 'none' ?  'btn-dark' : 'btn-light' ]"  @click="generalExams.legsOedema = 'none'">None</button>
+                <button class="btn mb-2 mr-2" :class="[ generalExams.legsOedema === 'mild' ?  'btn-dark' : 'btn-light' ]"  @click="generalExams.legsOedema = 'mild'">Mild</button>
+                <button class="btn mb-2 mr-2" :class="[ generalExams.legsOedema === 'moderate' ?  'btn-dark' : 'btn-light' ]"  @click="generalExams.legsOedema = 'moderate'">Moderate</button>
+                <button class="btn mb-2 mr-2" :class="[ generalExams.legsOedema === 'severe' ?  'btn-dark' : 'btn-light' ]" @click="generalExams.legsOedema = 'severe'">Severe</button>
               </div>
             </div>
           </div>   
@@ -305,32 +321,13 @@
               <!-- <div class="col-md-12 mb-5 text-center">
                 <img src="/anatomy_sketch.png" alt="">
               </div> -->
-              <div class="col-md-12 text-muted small mb-3">
-                  Please complete to the best of your ability.
-                </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Patient Appearance">
+              <div class="col-md-12 text-muted small">
+                Specific Physical Examinations
+                <hr>
               </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Patient Gait">
-              </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="BP (___/___ mmHg)">
-              </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="SP02 (%)">
-              </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Temperature (‘’ F)">
-              </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Height (cm)">
-              </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Weight (kg)">
-              </div>
-              <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="BMI (kg/m2) (Auto Calculated)">
+              <div class="col-md-6 mb-3">
+                <label for="exampleFormControlSelect1">Specific Examination</label><br>  
+                <button class="btn btn-dark mb-2 mr-2">Eyes</button>
               </div>
             </div>
           </div>
@@ -496,6 +493,13 @@ export default {
     return {
       currCategory: '',
       subCategory: '',
+      generalExams: {
+        eyesJaundice: null,
+        eyesPallor: null,
+        handsCyanosis: null,
+        handsClubbing: null,
+        legsOedema: null,
+      },
       categories: [
         {
           name: 'Pain',
