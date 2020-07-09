@@ -32,13 +32,16 @@
                   Please complete to the best of your ability.
                 </div>
               <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="What service did you provide?">
+                <label for="">What service did you provide?</label>
+                <input type="text" class="w-100 p-2 mb-3" placeholder="ECG, etc.">
               </div>
               <div class="col-md-6">
-                <input type="text" class="w-100 p-2 mb-3" placeholder="What were the results?">
+                <label for="">What were the results?</label>
+                <input type="text" class="w-100 p-2 mb-3" placeholder="Positive, negative, other">
               </div>
               <div class="col-md-12">
-                <textarea class="w-100 p-2" rows="5" placeholder="Please provide any additional information..."></textarea>
+                <label for="">Please provide any additional information</label>
+                <textarea class="w-100 p-2" rows="5" placeholder="Additional information..."></textarea>
               </div>
             </div>
           </div>

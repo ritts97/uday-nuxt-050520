@@ -38,6 +38,15 @@
                 {{ currPatient.demographics.police }}<br><br>
               </div>
             </div>
+            <div class="row">
+              <div class="col-md-6">
+                > View Family History... <br>
+                > Edit Family History... <br>
+              </div>
+              <div class="col-md-6">
+                > Edit Demographics...
+              </div>
+            </div>
           </div>
         </div>
       </transition>

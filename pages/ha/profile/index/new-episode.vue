@@ -189,7 +189,7 @@
                 <label for="exampleFormControlSelect1">Please describe the nature of the pain.</label><br>
                 <button class="btn btn-light mb-2 mr-2">Continuous</button>
                 <button class="btn btn-light mb-2 mr-2">Comes and goes</button>
-                <button class="btn btn-light mb-2 mr-2">Always there but sometimes worse</button>
+                <button class="btn btn-light mb-2 mr-2">Always there, but sometimes worse</button>
               </div>
               <div class="col-md-6 mb-4">
                 <label for="exampleFormControlSelect1">Please describe what brings the pain on.</label><br>
@@ -227,35 +227,35 @@
                   Please complete to the best of your ability.
                   <hr>
                 </div>
-              <div class="col-md-6">
+              <div class="col-md-6 mb-3">
                 <label for="exampleFormControlSelect1">Patient Appearance</label><br>
                 <input type="text" class="w-100 p-2 mb-3" placeholder="Tired, out of breath, pale">
               </div>
-              <div class="col-md-6">
+              <div class="col-md-6 mb-3">
                 <label for="exampleFormControlSelect1">Patient Gait</label><br>
                 <input type="text" class="w-100 p-2 mb-3" placeholder="Walks with a limp">
               </div>
-              <div class="col-md-6">
+              <div class="col-md-6 mb-3">
                 <label for="exampleFormControlSelect1">Blood Pressure</label><br>
                 <input type="text" class="w-100 p-2 mb-3" placeholder="BP (___/___ mmHg)">
               </div>
-              <div class="col-md-6">
+              <div class="col-md-6 mb-3">
                 <label for="exampleFormControlSelect1">Oxygen</label><br>
                 <input type="text" class="w-100 p-2 mb-3" placeholder="SP02 (%)">
               </div>
-              <div class="col-md-6">
+              <div class="col-md-6 mb-3">
                 <label for="exampleFormControlSelect1">Patient Temperature</label><br>
                 <input type="text" class="w-100 p-2 mb-3" placeholder="Temperature (‘’ F)">
               </div>
-              <div class="col-md-6">
+              <div class="col-md-6 mb-3">
                 <label for="exampleFormControlSelect1">Patient Height</label><br>
                 <input type="text" class="w-100 p-2 mb-3" placeholder="Height (cm)">
               </div>
-              <div class="col-md-6">
+              <div class="col-md-6 mb-3">
                 <label for="exampleFormControlSelect1">Patient Weight</label><br>
                 <input type="text" class="w-100 p-2 mb-3" placeholder="Weight (kg)">
               </div>
-              <div class="col-md-6">
+              <div class="col-md-6 mb-3">
                 <label for="exampleFormControlSelect1">Body Mass Index</label><br>
                 <input type="text" class="w-100 p-2 mb-3" placeholder="BMI (kg/m2) (Auto Calculated)">
               </div>
@@ -625,7 +625,7 @@ export default {
         },
         {
           name: 'photos',
-          title: 'Add. Photos',
+          title: 'Photos',
           isActive: false,
         }
       ]
