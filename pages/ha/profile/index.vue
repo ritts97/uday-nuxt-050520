@@ -2,10 +2,10 @@
   <div>
     <div class="container">
       <transition appear name="u-fade">
-        <div class="row mt-2">
+        <div class="row my-2">
           <div class="col-md-3 text-left" style="min-height: 200px;">
             <nuxt-link to="/md/profile" class="text-decoration-none text-dark">
-              <img src="/avatar-design_04.png">
+              <img class="w-100" src="/avatar-design_04.png">
             </nuxt-link>
           </div>
           <div class="col-md-9">
@@ -35,16 +35,23 @@
                 {{ currPatient.demographics.address2 }} <br>
                 {{ currPatient.demographics.age }} years old <br>
                 <br>
-                {{ currPatient.demographics.police }}<br><br>
+                {{ currPatient.demographics.police }}
               </div>
             </div>
             <div class="row">
-              <div class="col-md-6">
-                > View Family History... <br>
-                > Edit Family History... <br>
+              <div class="col-md-12">
+                <hr>
               </div>
               <div class="col-md-6">
-                > Edit Demographics...
+                <small>
+                  Edit Demographics...
+                </small>
+              </div>
+              <div class="col-md-6">
+                <small>
+                  View Family History... <br>
+                  Edit Family History... <br>
+                </small>
               </div>
             </div>
           </div>

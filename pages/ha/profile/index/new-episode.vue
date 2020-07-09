@@ -322,12 +322,73 @@
                 <img src="/anatomy_sketch.png" alt="">
               </div> -->
               <div class="col-md-12 text-muted small">
+                Pre-check Questions		
+                <hr>
+              </div>
+              <div class="col-md-12 mb-3">
+                Have you washed your hands?<br>		
+                Is there a female chaperon in the room, if you are examning a female patient?<br>	
+                Greet the patient by name<br>	
+                Ask the patient to sit/lie down comfortably, assist if necessary<br>	
+                Watch as the patient walks to the chair/couch<br>	
+                Ask the patient if there is any pain anywhere, and if so, approach that region last and very slowly<br>	
+              </div>
+              <div class="col-md-12 text-muted small">
                 Specific Physical Examinations
                 <hr>
               </div>
+              <div class="col-md-12 mb-3">
+                <label for="exampleFormControlSelect1">Specific Examination</label><br>
+                <button class="btn btn-light mb-2 mr-2">Eyes</button>
+                <button class="btn btn-light mb-2 mr-2">Hands</button>
+                <button class="btn btn-light mb-2 mr-2">Lower Leg and Ankle</button>
+                <button class="btn btn-light mb-2 mr-2">Cheek & Mouth</button>
+                <button class="btn btn-light mb-2 mr-2">Chest</button>
+                <button class="btn btn-light mb-2 mr-2">Neck Region</button>
+                <button class="btn btn-light mb-2 mr-2">Abdomen</button>
+                <button class="btn btn-light mb-2 mr-2">Back</button>
+                <button class="btn btn-light mb-2 mr-2">Head</button>
+                <button class="btn btn-light mb-2 mr-2">Ear</button>
+                <button class="btn btn-light mb-2 mr-2">Examination of a Joint</button>
+                <button class="btn btn-light mb-2 mr-2">Examination of an Ulcer</button>
+                <button class="btn btn-light mb-2 mr-2">Examination of a Lump/Swelling</button>
+                <button class="btn btn-light mb-2 mr-2">Examination of a 'Rash'</button>
+                <button class="btn btn-light mb-2 mr-2">Examination of 'Injuries'</button>
+              </div>
+
+              <div class="col-md-12 text-muted small">
+                Output
+                <hr>
+              </div>
               <div class="col-md-6 mb-3">
-                <label for="exampleFormControlSelect1">Specific Examination</label><br>  
-                <button class="btn btn-dark mb-2 mr-2">Eyes</button>
+                <label for="exampleFormControlSelect1">Jaundice</label><br>
+                <button class="btn btn-light mb-2 mr-2">Eyes</button>
+                <button class="btn btn-light mb-2 mr-2">Hands</button>
+                <button class="btn btn-light mb-2 mr-2">Lower Leg and Ankle</button>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="exampleFormControlSelect1">Pallor</label><br>
+                <button class="btn btn-light mb-2 mr-2">Eyes</button>
+                <button class="btn btn-light mb-2 mr-2">Hands</button>
+                <button class="btn btn-light mb-2 mr-2">Lower Leg and Ankle</button>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="exampleFormControlSelect1">Cyanosis</label><br>
+                <button class="btn btn-light mb-2 mr-2">Eyes</button>
+                <button class="btn btn-light mb-2 mr-2">Hands</button>
+                <button class="btn btn-light mb-2 mr-2">Lower Leg and Ankle</button>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="exampleFormControlSelect1">Nails</label><br>
+                <button class="btn btn-light mb-2 mr-2">Eyes</button>
+                <button class="btn btn-light mb-2 mr-2">Hands</button>
+                <button class="btn btn-light mb-2 mr-2">Lower Leg and Ankle</button>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="exampleFormControlSelect1">Oedema</label><br>
+                <button class="btn btn-light mb-2 mr-2">Eyes</button>
+                <button class="btn btn-light mb-2 mr-2">Hands</button>
+                <button class="btn btn-light mb-2 mr-2">Lower Leg and Ankle</button>
               </div>
             </div>
           </div>

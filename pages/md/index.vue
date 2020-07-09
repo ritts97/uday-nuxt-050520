@@ -2,10 +2,10 @@
   <div>
     <div class="container">
       <transition name="u-fade">
-        <div class="row mt-2">
+        <div class="row my-2">
           <div class="col-md-3 text-left" style="min-height: 200px;">
             <nuxt-link to="/md/profile" class="text-decoration-none text-dark">
-              <img src="/avatar-design_01.png">
+              <img class="w-100" src="/avatar-design_01.png">
             </nuxt-link>
           </div>
           <div class="col-md-9">

@@ -2,8 +2,25 @@
   <div>
     <div class="container mb-3">
       <div class="row px-3">
-        <div class="col-md-12 bg-white rounded py-5 px-5 text-center">
-          Edit Profile
+        <div class="col-md-12 bg-white rounded py-5 px-5">
+          Edit Profile <br><br>
+          Ha ID <br>
+          Current Cluster <br>
+          Cluster ID <br>
+          Name <br>
+          Gender <br>
+          City <br>
+          DOB <br>
+          State, State ID <br>
+          Country <br>
+          Language <br>
+          Emergency Contact (name, relation, number) <br>
+          Courses Completed <br>
+          Govt. ID <br>
+          Is Verified <br>
+          Direct Supervisor <br>
+          Created By <br>
+          Date Registered <br>
         </div>
       </div>
     </div>

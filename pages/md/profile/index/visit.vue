@@ -665,7 +665,7 @@ export default {
         episodeID: this.$route.query.id
       }
 
-      confirm('By confirming, all current information will be saved, and the episode for this patient will be released back to HA. \n\nYou will not be able to make changes again until a new episode is allocated to you.')
+      confirm('The patient episode has been released.')
       this.$store.commit('releasePatient', episodeInfo)
     }
   },

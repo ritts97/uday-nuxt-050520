@@ -35,6 +35,7 @@
                 <tr>
                   <th scope="col">Visit ID</th>
                   <th scope="col">Visit Type</th>
+                  <th scope="col">Complaint (or Service)</th>
                   <!-- <th scope="col">Status</th> -->
                   <th scope="col">Date Created</th>
                   <th scope="col">Last Updated</th>
@@ -57,6 +58,7 @@
                       {{ visit.title }}
                     </div>
                   </td>
+                  <td></td>
                   <td>{{ visit.created }}</td>
                   <td>{{ visit.lastUpdated }}</td>
                   <td>{{ visit.numFollowUps }}</td>
@@ -199,6 +201,6 @@ export default {
 
 <style>
 .bg-red {
-  background-color: #ffb6b5;
+  background-color: #eee;
 }
 </style>
