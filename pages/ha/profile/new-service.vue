@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="container mt-2">
-      <div class="row">
+    <div class="container">
+      <!-- <div class="row">
         <div class="col-md-12 rounded">
           <ul class="list-inline">
             <li class="list-inline-item">
@@ -9,14 +9,9 @@
                 New Service
               </button>
             </li>
-            <!-- <li class="list-inline-item">
-              <button class="btn btn-light px-3" role="button">
-                Billing
-              </button>
-            </li> -->
           </ul>
         </div>
-      </div>
+      </div> -->
       <div class="row">
         <div class="col-md-12 rounded">
           <!-- <ul class="list-inline mb-2">

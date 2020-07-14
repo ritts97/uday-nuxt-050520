@@ -13,23 +13,33 @@
                 </div>
               </div>
               <div class="row mt-3">
-                <div class="col-md-12 mb-3">
-                  General Information 
-                  <!-- {{ this.$store.state.currUser }} -->
+                <div class="col-md-12 text-muted small mb-0">
+                  Demographic Information
+                  <hr>
                 </div>
                 <div class="col-md-6">
+                  <label for="">Name</label>
                   <input type="text" class="w-100 p-2 mb-3" v-model="patientData.name" placeholder="Full Name">
+                  
+                  <label for="">Gender</label>
                   <select class="custom-select mb-3">
                     <option selected disabled>Gender</option>
                     <option value="1">Male</option>
                     <option value="2">Female</option>
                     <option value="3">Other</option>
                   </select>
+                  <label for="">Phone Number</label>
                   <input type="text" class="w-100 p-2 mb-3" v-model="patientData.phone" placeholder="Phone Number">
-                  <input type="text" class="w-100 p-2 mb-3" v-model="patientData.hswd" placeholder="H/W/S/D of">
+                  
+                  <!-- <label for="">Current Date</label>
+                  <input type="text" class="w-100 p-2 mb-3" placeholder="Current Date">
+                 -->
                 </div>
                 <div class="col-md-6">
+                  <label for="">Age</label>
                   <input type="text" class="w-100 p-2 mb-3" v-model="patientData.age" placeholder="Age">
+                  
+                  <label for="">Occupation</label>
                   <select class="custom-select mb-3">
                     <option selected disabled>Occupation</option>
                     <option value="1">Industrial Farmer</option>
@@ -37,27 +47,42 @@
                     <option value="2">Student</option>
                     <option value="3">Other</option>
                   </select>
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="Current Date">
+                  <label for="">Husband/Wife/Son/Daughter of</label>
+                  <input type="text" class="w-100 p-2 mb-3" v-model="patientData.hswd" placeholder="Family Members's Name">
+                
                 </div>
               </div>
               <div class="row mt-3">
-                <div class="col-md-12 mb-3">
-                  Location Information
+                <div class="col-md-12 text-muted small mb-0">
+                  Geographic Information
+                  <hr>
                 </div>
                 <div class="col-md-6">
+
+                  <label for="">Address</label>
                   <input type="text" class="w-100 p-2 mb-3" v-model="patientData.address" placeholder="Address 1">
+                  
+                  <label for="">District</label>
                   <input type="text" class="w-100 p-2 mb-3" placeholder="District">
+                  <label for="">Police Station</label>
                   <input type="text" class="w-100 p-2 mb-3" v-model="patientData.police" placeholder="Police Station">
                 </div>
                 <div class="col-md-6">
+
+                  <label for="">Address 2</label>
                   <input type="text" class="w-100 p-2 mb-3" v-model="patientData.address2" placeholder="Address 2">
-                  <select class="custom-select mb-3">
+                  
+                  <label for="">State</label>
+                  <select class="custom-select mb-4">
                     <option selected disabled>State</option>
                     <option value="1">Maharashtra</option>
                     <option value="2">Kerala</option>
                     <option value="2">Tamila Nadu</option>
                     <option value="3">Other</option>
                   </select>
+                  <label for="">Country</label>
+                  <input type="text" class="w-100 p-2 mb-3" v-model="patientData.country" placeholder="India">
+                  
                 </div>
               </div>
             </div>
@@ -156,12 +181,13 @@ export default {
         occupation: 'Truck Driver',
         gender: "m",
         age: "29",
-        hswd: 'H/S/W/D',
+        hswd: '',
         address: "4444 Market St.",
         address2: "Address 2",
         police: "Police Station",
         phone: "1-415-555-5555",
-        location: "Hyderabad, IN"
+        location: "Hyderabad, IN",
+        country: ''
       }
     }
   }

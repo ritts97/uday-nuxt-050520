@@ -11,7 +11,7 @@
           <div class="col-md-9">
             <div class="row">
               <div class="col-md-6">
-                <h5 class="d-inline text-decoration-none">{{ currPatient.demographics.name }} (::{{ this.$store.state.currPatient.id }})</h5>  
+                <h5 class="d-inline text-decoration-none">{{ currPatient.demographics.name }} ({{ currPatient.demographics.age }} years old)</h5>  
               </div>
               <div class="col-md-6 text-right text-capitalize">
                 <img v-if="currPatient.status == 'registered'" src="/circle-green.svg" class="shape-status" alt="">
@@ -33,7 +33,7 @@
               <div class="col-md-6">
                 {{ currPatient.demographics.address }} <br>
                 {{ currPatient.demographics.address2 }} <br>
-                {{ currPatient.demographics.age }} years old <br>
+                :: {{ this.$store.state.currPatient.id }}<br>
                 <br>
                 {{ currPatient.demographics.police }}
               </div>

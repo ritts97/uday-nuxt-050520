@@ -26,8 +26,8 @@
       </div>
     </div>
 
-    <div class="container mt-2">
-      <div class="row">
+    <div class="container">
+      <!-- <div class="row">
         <div class="col-md-12 rounded">
           <ul class="list-inline">
             <li class="list-inline-item">
@@ -35,14 +35,9 @@
                 New Episode
               </button>
             </li>
-            <!-- <li class="list-inline-item">
-              <button class="btn btn-light px-3" role="button">
-                Billing
-              </button>
-            </li> -->
           </ul>
         </div>
-      </div>
+      </div> -->
       <div class="row">
         <div class="col-md-12 rounded">
           <ul class="list-inline mb-2">
@@ -147,20 +142,20 @@
                 </transition> 
 
               </div>
-              <div v-if="subCategory !== ''" class="col-md-12 mb-3">
+              <!-- <div v-if="subCategory !== ''" class="col-md-12 mb-3">
                 <label for="exampleFormControlSelect1">Please examine these organs fully.</label><br>
                 Eye, Head, Hand
               </div>
               <div class="col-md-12 mb-4">
                 <label for="exampleFormControlSelect1">Please examine these organs partially.</label><br>
                 <button class="btn btn-light mb-2 mr-2">Pupil</button>
-              </div>
+              </div> -->
               <div class="col-md-12 text-muted small mb-0">
-                Detailed Information
+                Questionnaire
                 <hr>
               </div>
               <div class="col-md-6 mb-4">
-                <label for="exampleFormControlSelect1">What has been the duration of this complaint?</label><br>
+                <label for="exampleFormControlSelect1">Duration?</label><br>
                 <input type="text" class="p-2 w-25"> Days
               </div>
               <div class="col-md-6 mb-4">
@@ -326,12 +321,12 @@
                 <hr>
               </div>
               <div class="col-md-12 mb-3">
-                Have you washed your hands?<br>		
-                Is there a female chaperon in the room, if you are examning a female patient?<br>	
-                Greet the patient by name<br>	
-                Ask the patient to sit/lie down comfortably, assist if necessary<br>	
-                Watch as the patient walks to the chair/couch<br>	
-                Ask the patient if there is any pain anywhere, and if so, approach that region last and very slowly<br>	
+                <input type="checkbox" class="mr-2" name="" id=""> Have you washed your hands?<br>		
+                <input type="checkbox" class="mr-2" name="" id=""> Is there a female chaperon in the room, if you are examning a female patient?<br>	
+                <input type="checkbox" class="mr-2" name="" id=""> Greet the patient by name<br>	
+                <input type="checkbox" class="mr-2" name="" id=""> Ask the patient to sit/lie down comfortably, assist if necessary<br>	
+                <input type="checkbox" class="mr-2" name="" id=""> Watch as the patient walks to the chair/couch<br>	
+                <input type="checkbox" class="mr-2" name="" id=""> Ask the patient if there is any pain anywhere, and if so, approach that region last and very slowly<br>	
               </div>
               <div class="col-md-12 text-muted small">
                 Specific Physical Examinations

@@ -20,11 +20,11 @@
           <hr>
           <input type="text" name="" class="w-100 mb-2 p-2" placeholder="Username or Email" id=""><br>
           <input type="text" name="" class="w-100 p-2" placeholder="Password" id=""><br>
-          <nuxt-link to="/ha">
+          <!-- <nuxt-link to="/ha">
             <button class="btn btn-dark mt-3 mb-2 p-2 w-100 text-uppercase">
               Login
             </button>
-          </nuxt-link>
+          </nuxt-link> -->
           <nuxt-link to="/ha">
             <button class="btn btn-dark mt-3 mb-2 p-2 w-100 text-uppercase">
               Login (as HA)
