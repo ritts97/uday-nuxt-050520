@@ -77,7 +77,7 @@
               </thead>
               <!-- <tbody> -->
 
-                    <transition-group name="u-fade"  mode="in-out" tag="tbody">
+              <transition-group name="u-fade"  mode="in-out" tag="tbody">
                 <tr class="pointer" v-for="(patient, index) in list.slice().reverse()" :key="index">
                   <th class="text-uppercase" scope="row">{{ patient.id }}</th>
                   <td>

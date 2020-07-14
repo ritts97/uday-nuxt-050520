@@ -45,6 +45,11 @@
               Login (as Super)
             </button>
           </nuxt-link>
+
+          <button @click="makeRequest()" class="btn btn-dark mb-3 p-2 w-100 text-uppercase">
+            Make Request 123
+          </button>
+
           <nuxt-link to="/forgot-pass">
             <small class="text-secondary">Forgot password?</small>
           </nuxt-link>
@@ -66,8 +71,18 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   layout: 'default',
+  methods: {
+    makeRequest: function () {
+      axios.get('http://localhost:5000/').then(function(res){
+        console.log(res)
+        console.log('Success 123s')
+      })
+    }
+  }
 }
 </script>
 

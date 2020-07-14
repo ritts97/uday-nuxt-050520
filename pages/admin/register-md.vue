@@ -23,7 +23,8 @@
                 </div>
                 <div class="col-md-6">
                   <input type="text" class="w-100 p-2 mb-3" placeholder="DOB">
-                </div><div class="col-md-6">
+                </div>
+                <div class="col-md-6">
                   <input type="text" class="w-100 p-2 mb-3" placeholder="Phone Number">
                 </div>
                 <div class="col-md-6">
