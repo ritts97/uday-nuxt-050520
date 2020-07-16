@@ -1,31 +1,5 @@
 <template>
   <div>
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Select Allocation</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body mb-2">
-            Allocate to an available doctor:<br><br>
-            <span v-for="(md, index) in this.$store.state.udayDb.clusters['cluster001'].mds" :key="index">
-              <input type="radio" class="mr-3" name="" id=""> {{ md.demographics.name }} ({{ md.status }})<br>
-            </span>
-            <input type="radio" class="mt-1 mr-3" name="" id=""> 
-            <i>Add to General Queue</i>
-          </div>
-          <div class="modal-footer">
-            <nuxt-link to="/ha/profile" class="w-100"><button @click="addToQueue" type="button" data-dismiss="modal" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0 text-uppercase">Submit Allocation</button>
-            </nuxt-link>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <div class="container">
       <div class="row">
         <div class="col-md-12 rounded">
@@ -37,7 +11,7 @@
             </li>
           </ul>
 
-          <transition  appear name="u-fade"  mode="in-out">
+          <transition  appear name="u-fade"  mode="out-in">
 
           <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" key="chiefComplaints" v-if="tabs[0].isActive">
             <!-- Chief Complaints<br><br> -->
@@ -46,86 +20,47 @@
                 General Information {{ categoryItemInd }}
                 <hr>
               </div>
+
+              <!-- General Category -->
               <div class="col-md-12 mb-3">
                 <label for="exampleFormControlSelect1">What is the category of the complaint?</label><br>
                 <button  v-for="(category, index) in categories" :class="category.isActive ? 'btn-dark text-white' : 'btn-light'" class="btn mb-2 mr-2" @click="makeCategoryActive(category.name)" :key="index">{{category.name}}</button>
               </div>
 
+              <!-- General SubCategory -->
               <transition  appear name="u-fade"  mode="out-in" tag="div">
                 <div class="col-md-12 mb-3" v-if="hasSubCategory">
                   <label for="exampleFormControlSelect1">What is the specific complaint?</label><br>
-
-                  <!-- {{ categories[categoryItemInd].subCategories }} -->
                   <div v-if="categoryItemInd !== null" class="w-100">
                     <button v-for="(complaintItem, index) in categories[categoryItemInd].subCategories" :key="index" class="btn mb-2 mr-2" :class="complaintItem.isActive ? 'btn-dark text-white' : 'btn-light'" @click="handleSubCategory('Headache', categoryItemInd, index)">{{ complaintItem.name }}</button>
                   </div>
                 </div>
               </transition> 
 
-
+              <!-- Complaint Questions -->
               <transition  appear name="u-fade"  mode="out-in" tag="div">
+                <div v-show="showQuestions" class="w-100">
+                  <div class="col-md-12 text-muted small mb-0 w-100">
+                    Fixed Questions
+                    <hr>
+                  </div>
+                  <div class="container">
+                    <div class="row">
+                      <div v-for="(question, index) in questions" class="col-md-12 mb-4" :key="index">
+                        <div v-if="question.type === 'text'">
+                          <label for="exampleFormControlSelect1">{{ question.question }}</label><br>
+                          <input type="text" class="p-2 w-100" placeholder="Text input...">
+                        </div>
+                        <div v-if="question.type === 'button'">
+                          <label for="exampleFormControlSelect1">{{ question.question }}</label><br>
+                          <button class="btn mb-2 btn-light mr-2" v-for="(option, index) in question.options" :key="index">{{ option.name }}</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
-              <div v-show="showQuestions">
-                <div class="col-md-12 text-muted small mb-0">
-                  Fixed Questions
-                  <hr>
-                </div>
-                <div class="col-md-12 mb-4">
-                  <label for="exampleFormControlSelect1">How long has this been happening?</label><br>
-                  <input type="text" class="p-2 w-100" placeholder="# of days..">
-                </div>
-                <div class="col-md-12 mb-4">
-                  <label for="exampleFormControlSelect1">Where did this complaint start?</label><br>   
-                  <button class="btn btn-light mb-2 mr-2">Does not move</button>
-                  <button class="btn btn-light mb-2 mr-2">Front</button>
-                  <button class="btn btn-light mb-2 mr-2">Left</button>
-                  <button class="btn btn-light mb-2 mr-2">Back</button>
-                  <button class="btn btn-light mb-2 mr-2">Middle</button>
-                  <button class="btn btn-light mb-2 mr-2">All Over</button>
-                </div>
-                <div class="col-md-12 mb-4">
-                  <label for="exampleFormControlSelect1">How did the pain start?</label><br>
-                  <button class="btn btn-light mb-2 mr-2">Sudden</button>
-                  <button class="btn btn-light mb-2 mr-2">Gradual</button>
-                  <button class="btn btn-light mb-2 mr-2">Other (describe)</button>
-                  <input type="text" class="p-2 w-100">
-                </div>
-                <div class="col-md-12 mb-4">
-                  <label for="exampleFormControlSelect1">Please describe the intensity of the pain.</label><br>
-                  <button class="btn btn-light mb-2 mr-2">Mild</button>
-                  <button class="btn btn-light mb-2 mr-2">Moderate</button>
-                  <button class="btn btn-light mb-2 mr-2">Severe</button>
-                  <button class="btn btn-light mb-2 mr-2">Varies</button>
-                </div>
-                <div class="col-md-12 mb-4">
-                  <label for="exampleFormControlSelect1">Please describe the nature of the pain.</label><br>
-                  <button class="btn btn-light mb-2 mr-2">Continuous</button>
-                  <button class="btn btn-light mb-2 mr-2">Comes and goes</button>
-                  <button class="btn btn-light mb-2 mr-2">Always there, but sometimes worse</button>
-                </div>
-                <div class="col-md-12 mb-4">
-                  <label for="exampleFormControlSelect1">Please describe what brings the pain on.</label><br>
-                  <button class="btn btn-light mb-2 mr-2">Injury</button>
-                  <button class="btn btn-light mb-2 mr-2">Bright Light</button>
-                  <button class="btn btn-light mb-2 mr-2">Loud noice</button>
-                  <button class="btn btn-light mb-2 mr-2">None</button>
-                  <button class="btn btn-light mb-2 mr-2">Other (describe)</button>
-                </div>
-                <div class="col-md-12 mb-4">
-                  <label for="exampleFormControlSelect1">Please describe any reliefs.</label><br>
-                  <button class="btn btn-light mb-2 mr-2">None</button>
-                  <button class="btn btn-light mb-2 mr-2">Other (describe)</button>
-                </div>
-                <div class="col-md-12 mb-4">
-                  <label for="exampleFormControlSelect1">Please describe any associated symptons.</label><br>
-                  <button class="btn btn-light mb-2 mr-2">Vomiting</button>
-                  <button class="btn btn-light mb-2 mr-2">Vertigo</button>
-                  <button class="btn btn-light mb-2 mr-2">None</button>
-                  <button class="btn btn-light mb-2 mr-2">Other (describe)</button>
-                </div>
-              </div>
-
-                </transition>
+              </transition>
 
             </div>
           </div>
@@ -398,10 +333,12 @@ export default {
     makeCategoryActive: function (clickedCategory) {
       let self = this
 
+    
       this.categories.forEach((category, index) => {
         if (category.name == clickedCategory) {
           this.categories[index].isActive = true
           this.currCategory = clickedCategory
+          this.subCategory = ''
 
           if (this.categories[index].subCategories) {
             self.hasSubCategory = true
@@ -410,14 +347,17 @@ export default {
           } else {
             self.hasSubCategory = false
             self.showQuestions = true
+            self.questions = this.categories[index].questions
             self.categoryItemInd = null
           }
+
         } else {
           this.categories[index].isActive = false
         }
       })
     },
     handleSubCategory: function (categoryName, categoryInd, subCategoryInd) {
+      const self = this
       this.complaintItem = categoryName
       this.showQuestions = true
 
@@ -425,6 +365,7 @@ export default {
         console.log(index + ' : ' + subCategoryInd)
         if (index === subCategoryInd) {
           subCategory.isActive = true
+          self.questions = subCategory.questions
         } else {
           subCategory.isActive = false
         }
@@ -497,6 +438,7 @@ export default {
         handsClubbing: null,
         legsOedema: null,
       },
+      questions: [],
       categories: [
         {
           name: 'Pain',
@@ -505,46 +447,2416 @@ export default {
             {
               name: 'Headache',
               isActive: false,
+              questions: [
+                {
+                  question: "What how long has this been going on?",
+                  type: 'text'
+                },
+                {
+                  question: "Where did it start?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Front (R)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Front (L)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Back (R)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Back (L)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Middle',
+                      isActive: false
+                    },
+                    {
+                      name: 'All Over',
+                      isActive: false
+                    },
+                  ]
+                },
+                {
+                  question: "Where is it now?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Front (R)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Front (L)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Back (R)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Back (L)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Middle',
+                      isActive: false
+                    },
+                    {
+                      name: 'Did Not Move',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    },
+                  ]
+                },
+                {
+                  question: "How did the pain start?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Sudden',
+                      isActive: false
+                    },
+                    {
+                      name: 'Gradual',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    },
+                  ]
+                },
+                {
+                  question: "What is the intensity of the pain?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "What is the nature of the pain?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Continuous',
+                      isActive: false
+                    },
+                    {
+                      name: 'Comes and Goes',
+                      isActive: false
+                    },
+                    {
+                      name: 'Always there, but sometimes worse',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "What brings it on?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Injury',
+                      isActive: false
+                    },
+                    {
+                      name: 'Bright Light',
+                      isActive: false
+                    },
+                    {
+                      name: 'Loud Noise',
+                      isActive: false
+                    },
+                    {
+                      name: 'None',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "What is the pain relieved by?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'None',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "Are there any associated symptoms?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Vomiting',
+                      isActive: false
+                    },
+                    {
+                      name: 'Vertigo',
+                      isActive: false
+                    },
+                    {
+                      name: 'None',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    }
+                  ]
+                },
+              ]
             },
             {
               name: 'Ear Pain',
               isActive: false,
+              questions: [
+                {
+                  question: "What how long has this been going on?",
+                  type: 'text'
+                },
+                {
+                  question: "Where did it start?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Right',
+                      isActive: false
+                    },
+                    {
+                      name: 'Left',
+                      isActive: false
+                    },
+                    {
+                      name: 'Both',
+                      isActive: false
+                    },
+                  ]
+                },
+                {
+                  question: "Where is it now?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Has Not Moved',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    },
+                  ]
+                },
+                {
+                  question: "How did the pain start?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Sudden',
+                      isActive: false
+                    },
+                    {
+                      name: 'Gradual',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    },
+                  ]
+                },
+                {
+                  question: "What is the intensity of the pain?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "What is the nature of the pain?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Continouos',
+                      isActive: false
+                    },
+                    {
+                      name: 'Comes and Goes',
+                      isActive: false
+                    },
+                    {
+                      name: 'Always there, but sometimes worse',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "What brings it on?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'None',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "What is the pain relieved by?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'None',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "Are there any associated symptoms?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'H/O Injury',
+                      isActive: false
+                    },
+                    {
+                      name: 'Discharge from Ear',
+                      isActive: false
+                    },
+                    {
+                      name: 'Bleeding from Ear',
+                      isActive: false
+                    },
+                    {
+                      name: 'Diminished Hearing',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    },
+                    {
+                      name: 'None',
+                      isActive: false
+                    },
+                  ]
+                },
+              ]
             },
             {
               name: 'Teeth Pain',
               isActive: false,
+              questions: [
+                {
+                  question: "What how long has this been going on?",
+                  type: 'text'
+                },
+                {
+                  question: "Where did it start?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Upper Right',
+                      isActive: false
+                    },
+                    {
+                      name: 'Upper Left',
+                      isActive: false
+                    },
+                    {
+                      name: 'Lower Right',
+                      isActive: false
+                    },
+                    {
+                      name: 'Lower Left',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "Where is it now?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Has Not Moved',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    },
+                  ]
+                },
+                {
+                  question: "How did the pain start?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Sudden',
+                      isActive: false
+                    },
+                    {
+                      name: 'Gradual',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    },
+                  ]
+                },
+                {
+                  question: "What is the intensity of the pain?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "What is the nature of the pain?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Continuous',
+                      isActive: false
+                    },
+                    {
+                      name: 'Comes and Goes',
+                      isActive: false
+                    },
+                    {
+                      name: 'Always there, but sometimes worse',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "What brings it on?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'None',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "What is the pain relieved by?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'None',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "Are there any associated symptoms?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'H/O Injury',
+                      isActive: false
+                    },
+                    {
+                      name: 'Bad Smell',
+                      isActive: false
+                    },
+                    {
+                      name: 'Swelling in Gum',
+                      isActive: false
+                    },
+                    {
+                      name: 'Bleeding from Gum',
+                      isActive: false
+                    },
+                    {
+                      name: 'None',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    }
+                  ]
+                },
+              ]
             },
             {
               name: 'Throat Pain',
               isActive: false,
+              questions: [
+                {
+                  question: "What how long has this been going on?",
+                  type: 'text'
+                },
+                {
+                  question: "Where did it start?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Back of Mouth',
+                      isActive: false
+                    },
+                    {
+                      name: 'Front of Throat',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "Where is it now?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Has Not Moved',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    },
+                  ]
+                },
+                {
+                  question: "How did the pain start?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Sudden',
+                      isActive: false
+                    },
+                    {
+                      name: 'Gradual',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    },
+                  ]
+                },
+                {
+                  question: "What is the intensity of the pain?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "What is the nature of the pain?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Continuous',
+                      isActive: false
+                    },
+                    {
+                      name: 'Comes and Goes',
+                      isActive: false
+                    },
+                    {
+                      name: 'Always there, but sometimes worse',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "What brings it on?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'None',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "What is the pain relieved by?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'None',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "Are there any associated symptoms?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Cough',
+                      isActive: false
+                    },
+                    {
+                      name: 'Fever',
+                      isActive: false
+                    },
+                    {
+                      name: 'Change of Voice',
+                      isActive: false
+                    },
+                    {
+                      name: 'Difficulty Swallowing',
+                      isActive: false
+                    },
+                    {
+                      name: 'None',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    }
+                  ]
+                },
+              ]
             },
             {
               name: 'Back Pain',
               isActive: false,
+              questions: [
+                {
+                  question: "What how long has this been going on?",
+                  type: 'text'
+                },
+                {
+                  question: "Where did it start?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Upper Right',
+                      isActive: false
+                    },
+                    {
+                      name: 'Upper Center',
+                      isActive: false
+                    },
+                    {
+                      name: 'Upper Left',
+                      isActive: false
+                    },
+                    {
+                      name: 'Lower Right',
+                      isActive: false
+                    },
+                    {
+                      name: 'Lower Center',
+                      isActive: false
+                    },
+                    {
+                      name: 'Lower Left',
+                      isActive: false
+                    },
+                    {
+                      name: 'All Over',
+                      isActive: false
+                    },
+                  ]
+                },
+                {
+                  question: "Where is it now?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Moved to the Front Right',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moved to the Front Left',
+                      isActive: false
+                    },
+                    {
+                      name: 'Front of Leg (Right)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Back of Leg (Right)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Front of Leg (Left)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Back of Leg (Left)',
+                      isActive: false
+                    },
+                    {
+                      name: 'All Over',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    },
+                  ]
+                },
+                {
+                  question: "How did the pain start?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Sudden',
+                      isActive: false
+                    },
+                    {
+                      name: 'Gradual',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    },
+                  ]
+                },
+                {
+                  question: "What is the intensity of the pain?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "What is the nature of the pain?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Continuous',
+                      isActive: false
+                    },
+                    {
+                      name: 'Comes and Goes',
+                      isActive: false
+                    },
+                    {
+                      name: 'Always there, but sometimes worse',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "What brings it on?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Injury',
+                      isActive: false
+                    },
+                    {
+                      name: 'Bright Light',
+                      isActive: false
+                    },
+                    {
+                      name: 'Loud Noise',
+                      isActive: false
+                    },
+                    {
+                      name: 'None',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "What is the pain relieved by?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Rest',
+                      isActive: false
+                    },
+                    {
+                      name: 'None',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "Are there any associated symptoms?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'H/O Injury',
+                      isActive: false
+                    },
+                    {
+                      name: 'Weakness of Legs',
+                      isActive: false
+                    },
+                    {
+                      name: 'Difficult to Control Urine',
+                      isActive: false
+                    },
+                    {
+                      name: 'None',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    }
+                  ]
+                },
+              ]
             },
             {
               name: 'Joint Pain',
               isActive: false,
+              questions: [
+                {
+                  question: "What how long has this been going on?",
+                  type: 'text'
+                },
+                {
+                  question: "Where did it start?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Neck',
+                      isActive: false
+                    },
+                    {
+                      name: 'Shoulder (Right)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Shoulder (Left)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Shoulder (Back)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Elbow (Right)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Elbow (Left)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Elbow (Back)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Wrist (Right)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Wrist (Left)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Wrist (Back)',
+                      isActive: false
+                    },
+                    {
+                      name: 'All Fingers (Right)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Thumb (Right)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Index Finger (Right)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Middle Finger (Right)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Right Finger (Right)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Little Finger (Right)',
+                      isActive: false
+                    },
+                    {
+                      name: 'All Fingers (Left)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Thumb (Left)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Index Finger (Left)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Middle Finger (Left)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Ring Finger (Left)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Little Finger (Left)',
+                      isActive: false
+                    },
+                    {
+                      name: 'All Fingers (Back)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Thumb (Back)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Index Finger (Back)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Middle Finger (Back)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Ring Finger (Back)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Little Finger (Back)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Hip (Right)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Hip (Left)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Hip (Back)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Knee (Right)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Knee (Left)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Knee (Back)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Ankle (Right)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Ankle (Left)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Ankle (Back)',
+                      isActive: false
+                    },
+                    {
+                      name: 'All Toes (Right)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Great Toe (Right)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other Toes (Right)',
+                      isActive: false
+                    },
+                    {
+                      name: 'All Toes (Left)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Great Toe (Left)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other Toes (Left)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other Toes',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    },
+                  ]
+                },
+                {
+                  question: "Where is it now?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Neck',
+                      isActive: false
+                    },
+                    {
+                      name: 'Shoulder (Right)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Shoulder (Left)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Shoulder (Back)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Elbow (Right)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Elbow (Left)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Elbow (Back)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Wrist (Right)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Wrist (Left)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Wrist (Back)',
+                      isActive: false
+                    },
+                    {
+                      name: 'All Fingers (Right)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Thumb (Right)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Index Finger (Right)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Middle Finger (Right)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Right Finger (Right)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Little Finger (Right)',
+                      isActive: false
+                    },
+                    {
+                      name: 'All Fingers (Left)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Thumb (Left)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Index Finger (Left)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Middle Finger (Left)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Ring Finger (Left)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Little Finger (Left)',
+                      isActive: false
+                    },
+                    {
+                      name: 'All Fingers (Back)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Thumb (Back)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Index Finger (Back)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Middle Finger (Back)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Ring Finger (Back)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Little Finger (Back)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Hip (Right)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Hip (Left)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Hip (Back)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Knee (Right)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Knee (Left)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Knee (Back)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Ankle (Right)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Ankle (Left)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Ankle (Back)',
+                      isActive: false
+                    },
+                    {
+                      name: 'All Toes (Right)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Great Toe (Right)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other Toes (Right)',
+                      isActive: false
+                    },
+                    {
+                      name: 'All Toes (Left)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Great Toe (Left)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other Toes (Left)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other Toes',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    },
+                  ]
+                },
+                {
+                  question: "How did the pain start?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Sudden',
+                      isActive: false
+                    },
+                    {
+                      name: 'Gradual',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    },
+                  ]
+                },
+                {
+                  question: "What is the intensity of the pain?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "What is the nature of the pain?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Continuous',
+                      isActive: false
+                    },
+                    {
+                      name: 'Comes and Goes',
+                      isActive: false
+                    },
+                    {
+                      name: 'Always there, but sometimes worse',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "What brings it on?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Activity',
+                      isActive: false
+                    },
+                    {
+                      name: 'Inactivity',
+                      isActive: false
+                    },
+                    {
+                      name: 'None',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "What is the pain relieved by?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Activity',
+                      isActive: false
+                    },
+                    {
+                      name: 'Inactivity',
+                      isActive: false
+                    },
+                    {
+                      name: 'None',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "Are there any associated symptoms?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'H/O Injury',
+                      isActive: false
+                    },
+                    {
+                      name: 'Swelling',
+                      isActive: false
+                    },
+                    {
+                      name: 'Inability to Move',
+                      isActive: false
+                    },
+                    {
+                      name: 'None',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    }
+                  ]
+                },
+              ]
             },
             {
               name: 'Chest Pain',
               isActive: false,
+              questions: [
+                {
+                  question: "What how long has this been going on?",
+                  type: 'text'
+                },
+                {
+                  question: "Where did it start?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Upper (R)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Upper (C)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Upper (L)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Lower (R)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Lower (C)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Lower (L)',
+                      isActive: false
+                    },
+                    {
+                      name: 'All Over',
+                      isActive: false
+                    },
+                  ]
+                },
+                {
+                  question: "Where is it now?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Upper (R)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Upper (C)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Upper (L)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Lower (R)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Lower (C)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Lower (L)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Arm (L)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Lower (R)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Neck/Jaw',
+                      isActive: false
+                    },
+                    {
+                      name: 'All Over',
+                      isActive: false
+                    },
+                    {
+                      name: 'Did Not Move',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    },
+                  ]
+                },
+                {
+                  question: "How did the pain start?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Sudden',
+                      isActive: false
+                    },
+                    {
+                      name: 'Gradual',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    },
+                  ]
+                },
+                {
+                  question: "What is the intensity of the pain?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "What is the nature of the pain?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Dull',
+                      isActive: false
+                    },
+                    {
+                      name: 'Sharp',
+                      isActive: false
+                    },
+                    {
+                      name: 'Sense of Pressure',
+                      isActive: false
+                    },
+                    {
+                      name: 'Constant',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "What brings it on?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Exertion',
+                      isActive: false
+                    },
+                    {
+                      name: 'Cough',
+                      isActive: false
+                    },
+                    {
+                      name: 'Injury',
+                      isActive: false
+                    },
+                    {
+                      name: 'None',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    },
+                  ]
+                },
+                {
+                  question: "What is the pain relieved by?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Rest',
+                      isActive: false
+                    },
+                    {
+                      name: 'None',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "Are there any associated symptoms?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Sweating',
+                      isActive: false
+                    },
+                    {
+                      name: 'Extreme Anxiety',
+                      isActive: false
+                    },
+                    {
+                      name: 'Unconsciousness',
+                      isActive: false
+                    },
+                    {
+                      name: 'Difficulty Breathing',
+                      isActive: false
+                    },
+                    {
+                      name: 'None',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    }
+                  ]
+                },
+              ]
             },
             {
               name: 'Abdominal Pain',
-              isActive: false,
+              isActive: false,isActive: false,
+              questions: [
+                {
+                  question: "What how long has this been going on?",
+                  type: 'text'
+                },
+                {
+                  question: "Where did it start?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Upper (R)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Upper (C)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Upper (L)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Middle (R)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Middle (C)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Middle (L)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Lower (R)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Lower (C)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Lower (L)',
+                      isActive: false
+                    },
+                    {
+                      name: 'All Over',
+                      isActive: false
+                    },
+                  ]
+                },
+                {
+                  question: "Where is it now?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Upper (R)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Upper (C)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Upper (L)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Middle (R)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Middle (C)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Middle (L)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Lower (R)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Lower (C)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Lower (L)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Has Not Moved',
+                      isActive: false
+                    },
+                    {
+                      name: 'All Over',
+                      isActive: false
+                    },
+                  ]
+                },
+                {
+                  question: "How did the pain start?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Sudden',
+                      isActive: false
+                    },
+                    {
+                      name: 'Gradual',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    },
+                  ]
+                },
+                {
+                  question: "What is the intensity of the pain?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "What is the nature of the pain?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Continuous',
+                      isActive: false
+                    },
+                    {
+                      name: 'Comes and Goes',
+                      isActive: false
+                    },
+                    {
+                      name: 'Always there, but sometimes worse',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "What brings it on?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Food',
+                      isActive: false
+                    },
+                    {
+                      name: 'Empty Stomach',
+                      isActive: false
+                    },
+                    {
+                      name: 'Period',
+                      isActive: false
+                    },
+                    {
+                      name: 'None',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "What is the pain relieved by?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Food',
+                      isActive: false
+                    },
+                    {
+                      name: 'Vomiting',
+                      isActive: false
+                    },
+                    {
+                      name: 'None',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "Are there any associated symptoms?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Constipation',
+                      isActive: false
+                    },
+                    {
+                      name: 'Diarrhea',
+                      isActive: false
+                    },
+                    {
+                      name: 'Vomiting',
+                      isActive: false
+                    },
+                    {
+                      name: 'Loss of Appetite',
+                      isActive: false
+                    },
+                    {
+                      name: 'None',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    }
+                  ]
+                },
+              ]
             },
             {
               name: 'Breast Pain',
               isActive: false,
+              questions: [
+                {
+                  question: "What how long has this been going on?",
+                  type: 'text'
+                },
+                {
+                  question: "Where did it start?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'RUO (R)',
+                      isActive: false
+                    },
+                    {
+                      name: 'RLO (R)',
+                      isActive: false
+                    },
+                    {
+                      name: 'LUO (R)',
+                      isActive: false
+                    },
+                    {
+                      name: 'LLO (R)',
+                      isActive: false
+                    },
+                    {
+                      name: 'C (R)',
+                      isActive: false
+                    },
+                    {
+                      name: 'RUO (L)',
+                      isActive: false
+                    },
+                    {
+                      name: 'RLO (L)',
+                      isActive: false
+                    },
+                    {
+                      name: 'LUO (L)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Back (L)',
+                      isActive: false
+                    },
+                  ]
+                },
+                {
+                  question: "Where is it now?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'RUO (R)',
+                      isActive: false
+                    },
+                    {
+                      name: 'RLO (R)',
+                      isActive: false
+                    },
+                    {
+                      name: 'LUO (R)',
+                      isActive: false
+                    },
+                    {
+                      name: 'LLO (R)',
+                      isActive: false
+                    },
+                    {
+                      name: 'C (R)',
+                      isActive: false
+                    },
+                    {
+                      name: 'RUO (L)',
+                      isActive: false
+                    },
+                    {
+                      name: 'RLO (L)',
+                      isActive: false
+                    },
+                    {
+                      name: 'LUO (L)',
+                      isActive: false
+                    },
+                    {
+                      name: 'Back (L)',
+                      isActive: false
+                    },
+                  ]
+                },
+                {
+                  question: "How did the pain start?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Sudden',
+                      isActive: false
+                    },
+                    {
+                      name: 'Gradual',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    },
+                  ]
+                },
+                {
+                  question: "What is the intensity of the pain?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "What is the nature of the pain?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Continuous',
+                      isActive: false
+                    },
+                    {
+                      name: 'Comes and Goes',
+                      isActive: false
+                    },
+                    {
+                      name: 'Always there, but sometimes worse',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "What brings it on?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Period',
+                      isActive: false
+                    },
+                    {
+                      name: 'Activity',
+                      isActive: false
+                    },
+                    {
+                      name: 'None',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "What is the pain relieved by?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Period',
+                      isActive: false
+                    },
+                    {
+                      name: 'Rest',
+                      isActive: false
+                    },
+                    {
+                      name: 'None',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "Are there any associated symptoms?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Discharge from Nipple',
+                      isActive: false
+                    },
+                    {
+                      name: 'Bleeding from Nipple',
+                      isActive: false
+                    },
+                    {
+                      name: 'None',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    }
+                  ]
+                },
+              ]
             },
             {
               name: 'Scrotal Pain',
-              isActive: false,
+              isActive: false,isActive: false,
+              questions: [
+                {
+                  question: "What how long has this been going on?",
+                  type: 'text'
+                },
+                {
+                  question: "Where did it start?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Left',
+                      isActive: false
+                    },
+                    {
+                      name: 'Right',
+                      isActive: false
+                    },
+                    {
+                      name: 'Both',
+                      isActive: false
+                    },
+                  ]
+                },
+                {
+                  question: "Where is it now?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Did Not Move',
+                      isActive: false
+                    },
+                    {
+                      name: 'Spread to Groin',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    },
+                  ]
+                },
+                {
+                  question: "How did the pain start?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Sudden',
+                      isActive: false
+                    },
+                    {
+                      name: 'Gradual',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    },
+                  ]
+                },
+                {
+                  question: "What is the intensity of the pain?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "What is the nature of the pain?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Continuous',
+                      isActive: false
+                    },
+                    {
+                      name: 'Comes and Goes',
+                      isActive: false
+                    },
+                    {
+                      name: 'Always there, but sometimes worse',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "What brings it on?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Injury',
+                      isActive: false
+                    },
+                    {
+                      name: 'None',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "What is the pain relieved by?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Rest',
+                      isActive: false
+                    },
+                    {
+                      name: 'None',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "Are there any associated symptoms?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Swelling',
+                      isActive: false
+                    },
+                    {
+                      name: 'Dysuria',
+                      isActive: false
+                    },
+                    {
+                      name: 'None',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    }
+                  ]
+                },
+              ]
             },
             {
               name: 'Perianal Pain',
-              isActive: false,
+              isActive: false,isActive: false,
+              questions: [
+                {
+                  question: "What how long has this been going on?",
+                  type: 'text'
+                },
+                {
+                  question: "Where did it start?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Anal Region',
+                      isActive: false
+                    },
+                    {
+                      name: 'Around the Anal Region',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "Where is it now?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Has Not Moved',
+                      isActive: false
+                    },
+                    {
+                      name: 'Anal Region',
+                      isActive: false
+                    },
+                    {
+                      name: 'Around the Anal Region',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "How did the pain start?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Sudden',
+                      isActive: false
+                    },
+                    {
+                      name: 'Gradual',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    },
+                  ]
+                },
+                {
+                  question: "What is the intensity of the pain?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "What is the nature of the pain?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Continuous',
+                      isActive: false
+                    },
+                    {
+                      name: 'Comes and Goes',
+                      isActive: false
+                    },
+                    {
+                      name: 'Always there, but sometimes worse',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "What brings it on?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Passage of Stool',
+                      isActive: false
+                    },
+                    {
+                      name: 'None',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "What is the pain relieved by?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Rest',
+                      isActive: false
+                    },
+                    {
+                      name: 'None',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    }
+                  ]
+                },
+                {
+                  question: "Are there any associated symptoms?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Fever',
+                      isActive: false
+                    },
+                    {
+                      name: 'Discharge',
+                      isActive: false
+                    },
+                    {
+                      name: 'Bleeding',
+                      isActive: false
+                    },
+                    {
+                      name: 'None',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    }
+                  ]
+                },
+              ]
             }
           ]
         },
@@ -569,6 +2881,37 @@ export default {
         {
           name: 'Difficulty Breathing',
           isActive: false,
+          questions: [
+            {
+              question: "What how long has this been going on?",
+              // type:
+              options: ['Red', 'Green', 'Blue']
+            },
+            {
+              question: "How has it progressed?",
+              options: ['Red', 'Green', 'Blue']
+            },
+            {
+              question: "What brings it on?",
+              options: ['Red', 'Green', 'Blue']
+            },
+            {
+              question: "What relieves it?",
+              options: ['Red', 'Green', 'Blue']
+            },
+            {
+              question: "Does it wake you up at night?",
+              options: ['Red', 'Green', 'Blue']
+            },
+            {
+              question: "Is there any chest pain?",
+              options: ['Red', 'Green', 'Blue']
+            },
+            {
+              question: "Are there any associated symptons?",
+              options: ['Red', 'Green', 'Blue']
+            },
+          ]
         },
         {
           name: 'Fever',
