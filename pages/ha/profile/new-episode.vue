@@ -113,6 +113,18 @@
                 <img src="/anatomy_sketch.png" alt="">
               </div> -->
               <div class="col-md-12 text-muted small">
+                Pre-check Questions		
+                <hr>
+              </div>
+              <div class="col-md-12 mb-3">
+                <input type="checkbox" class="mr-2" name="" id=""> Have you washed your hands?<br>		
+                <input type="checkbox" class="mr-2" name="" id=""> Is there a female chaperon in the room, if you are examning a female patient?<br>	
+                <input type="checkbox" class="mr-2" name="" id=""> Greet the patient by name<br>	
+                <input type="checkbox" class="mr-2" name="" id=""> Ask the patient to sit/lie down comfortably, assist if necessary<br>	
+                <input type="checkbox" class="mr-2" name="" id=""> Watch as the patient walks to the chair/couch<br>	
+                <input type="checkbox" class="mr-2" name="" id=""> Ask the patient if there is any pain anywhere, and if so, approach that region last and very slowly<br>	
+              </div>
+              <div class="col-md-12 text-muted small">
                 General Physical Examinations
                 <hr>
               </div>
@@ -163,20 +175,8 @@
             <!-- Specific Exams
             <br><br> -->
             <div class="row mt-1">
-              <!-- <div class="col-md-12 mb-5 text-center">
+              <div class="col-md-12 mb-5 text-center">
                 <img src="/anatomy_sketch.png" alt="">
-              </div> -->
-              <div class="col-md-12 text-muted small">
-                Pre-check Questions		
-                <hr>
-              </div>
-              <div class="col-md-12 mb-3">
-                <input type="checkbox" class="mr-2" name="" id=""> Have you washed your hands?<br>		
-                <input type="checkbox" class="mr-2" name="" id=""> Is there a female chaperon in the room, if you are examning a female patient?<br>	
-                <input type="checkbox" class="mr-2" name="" id=""> Greet the patient by name<br>	
-                <input type="checkbox" class="mr-2" name="" id=""> Ask the patient to sit/lie down comfortably, assist if necessary<br>	
-                <input type="checkbox" class="mr-2" name="" id=""> Watch as the patient walks to the chair/couch<br>	
-                <input type="checkbox" class="mr-2" name="" id=""> Ask the patient if there is any pain anywhere, and if so, approach that region last and very slowly<br>	
               </div>
               <div class="col-md-12 text-muted small">
                 Specific Physical Examinations
@@ -247,79 +247,36 @@
               </div>
             </div>
           </div>
+          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-1" key="allocation" style="min-height: 160px;" v-if="tabs[5].isActive">
+            <div class="row mt-1">
+              <div class="col-md-12 mb-2">
+                Please select an available allocation:
+                <!-- <div class="pl-4">
+                  <span v-for="(md, index) in this.$store.state.udayDb.clusters['cluster001'].mds" :key="index">
+                    <input type="radio" class="mr-3" name="" id=""> {{ md.demographics.name }} ({{ md.status }})<br>
+                  </span>
+                </div> -->
+              </div>
+              <div v-for="(md, index) in this.$store.state.udayDb.clusters['cluster001'].mds" :key="index" class="col-md-6 pl-5">
+                <input type="radio" class="mr-3" name="" id=""> {{ md.demographics.name }} ({{ md.status }})<br>
+              </div>
+              <div class="col-md-6 pl-5">
+                <input type="radio" class="mt-1 mr-3" name="" id=""> 
+                <i>Add to General Queue</i>
+              </div>
+            </div>
+          </div>
           </transition>
         </div>
       </div>
     </div>
-    <div class="container">
+    <div class="container mb-3" v-if="tabs[5].isActive">
       <div class="row">
-        <div class="col-md-12 rounded">
-          <ul class="list-inline mb-2">
-            <li class="list-inline-item pointer">
-              <div class="px-2 mr-2 pb-1 mb-1 underline" role="button">
-                Allocation
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="container">
-        <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-1" style="min-height: 100px;">
-          <div class="row mt-1 mb-3">
-            <div class="col-md-12 mb-2">
-              Please select an available allocation:
-              <!-- <div class="pl-4">
-                <span v-for="(md, index) in this.$store.state.udayDb.clusters['cluster001'].mds" :key="index">
-                  <input type="radio" class="mr-3" name="" id=""> {{ md.demographics.name }} ({{ md.status }})<br>
-                </span>
-              </div> -->
-            </div>
-            <div v-for="(md, index) in this.$store.state.udayDb.clusters['cluster001'].mds" :key="index" class="col-md-6 pl-5">
-              <input type="radio" class="mr-3" name="" id=""> {{ md.demographics.name }} ({{ md.status }})<br>
-            </div>
-            <div class="col-md-6 pl-5">
-              <input type="radio" class="mt-1 mr-3" name="" id=""> 
-              <i>Add to General Queue</i>
-            </div>
-          </div>
-        </div>
-      <!-- </fieldset> -->
-    </div>
-    <div class="container mb-3">
-      <!-- <div class="row">
         <div class="col-md-12">
-          <hr>
-        </div>
-        <div class="col-md-12 mb-3">
-          Record New Episode
-        </div>
-      </div> -->
-      <div class="row">
-        <!-- <div class="col-md-6">
-          <nuxt-link to="/ha/profile/new-episode">
-            <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Allocate to Doctor</button>     
-          </nuxt-link>
-        </div> -->
-        <div class="col-md-12">
-          <!-- <nuxt-link to="/ha/profile/"> -->
-
             <nuxt-link to="/ha/profile" class="w-100"><button @click="addToQueue" type="button" data-dismiss="modal" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0 text-uppercase">Submit Allocation</button>
             </nuxt-link>
-            <!-- <button data-toggle="modal" data-target="#exampleModal" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0  text-uppercase">Allocate for Feedback</button>      -->
-          <!-- </nuxt-link> -->
         </div>
         <div class="col-md-12">
-          <!-- <div v-if="showComplete">
-            <button @click="goToNext()" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">GO TO NEXT</button>
-          </div>
-          <div v-else>
-            <nuxt-link to="/ha/profile">
-              <button @click="showAlert()" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">
-                Record New Episode
-              </button>
-            </nuxt-link>
-          </div> -->
         </div>
       </div>
     </div>
@@ -341,10 +298,12 @@ export default {
           this.subCategory = ''
 
           if (this.categories[index].subCategories) {
+            // has sub-category
             self.hasSubCategory = true
             self.showQuestions = false
             self.categoryItemInd = index
           } else {
+            // does not have sub-category
             self.hasSubCategory = false
             self.showQuestions = true
             self.questions = this.categories[index].questions
@@ -2867,14 +2826,168 @@ export default {
             {
               name: 'Throat Swelling',
               isActive: false,
+              questions: [
+                {
+                  question: "Where is it swelling?",
+                  type: 'text'
+                },
+                {
+                  question: "How many tumors are there?",
+                  type: 'text'
+                },
+                {
+                  question: "How long has it been there?",
+                  type: 'text'
+                },
+                {
+                  question: "How did it start?",
+                  type: 'text'
+                },
+                {
+                  question: "Is it painful?",
+                  type: 'text'
+                },
+                {
+                  question: "Has it changed in size?",
+                  type: 'text'
+                },
+                {
+                  question: "Are there any other symptoms?",
+                  type: 'text'
+                },
+                {
+                  question: "Is there any history of injury?",
+                  type: 'text'
+                },
+                {
+                  question: "Is there excessive sweating?",
+                  type: 'text'
+                },
+                {
+                  question: "Is there constipation?",
+                  type: 'text'
+                },
+                {
+                  question: "Are there any period problems?",
+                  type: 'text'
+                },
+                {
+                  question: "Has there been an excess in appetite?",
+                  type: 'text'
+                },
+                {
+                  question: "Is there a general weakness?",
+                  type: 'text'
+                },
+              ]
             },
             {
               name: 'Abdomen Swelling',
               isActive: false,
+              questions: [
+                {
+                  question: "Where is the swelling?",
+                  type: 'text'
+                },
+                {
+                  question: "How many tumors are there?",
+                  type: 'text'
+                },
+                {
+                  question: "How long has it been there?",
+                  type: 'text'
+                },
+                {
+                  question: "How did it start?",
+                  type: 'text'
+                },
+                {
+                  question: "Is it painful?",
+                  type: 'text'
+                },
+                {
+                  question: "Has it changed in size?",
+                  type: 'text'
+                },
+                {
+                  question: "Are there any other symptoms?",
+                  type: 'text'
+                },
+                {
+                  question: "Is there any history of injury?",
+                  type: 'text'
+                },
+                {
+                  question: "Is it general abdoinal pain?",
+                  type: 'text'
+                },
+                {
+                  question: "Has there been a change in weight?",
+                  type: 'text'
+                },
+                {
+                  question: "What is the bowel habit?",
+                  type: 'text'
+                },
+                {
+                  question: "Is there yellow colour in urine?",
+                  type: 'text'
+                },
+                {
+                  question: "Has there been any vomiting?",
+                  type: 'text'
+                },
+                {
+                  question: "Has there been a change in appetite?",
+                  type: 'text'
+                },
+                {
+                  question: "Are there any flucuations in size?",
+                  type: 'text'
+                },
+              ]
             },
             {
               name: 'Swelling (Others)',
               isActive: false,
+              questions: [
+                {
+                  question: "Where is the swelling?",
+                  type: 'text'
+                },
+                {
+                  question: "How many swellings are there?",
+                  type: 'text'
+                },
+                {
+                  question: "How long has it been there?",
+                  type: 'text'
+                },
+                {
+                  question: "How did it start?",
+                  type: 'text'
+                }, 
+                {
+                  question: "Is it painful?",
+                  type: 'text'
+                },
+                {
+                  question: "Has it changed in size?",
+                  type: 'text'
+                },
+                {
+                  question: "Has there been a change in skin color?",
+                  type: 'text'
+                },
+                {
+                  question: "Are there any other symptoms?",
+                  type: 'text'
+                },
+                {
+                  question: "Is there any history of injury?",
+                  type: 'text'
+                },
+              ]
             },
           ]
         },
@@ -2884,66 +2997,631 @@ export default {
           questions: [
             {
               question: "What how long has this been going on?",
-              // type:
-              options: ['Red', 'Green', 'Blue']
+              type: 'text'
             },
             {
               question: "How has it progressed?",
-              options: ['Red', 'Green', 'Blue']
+              type: 'button',
+              options: [
+                {
+                  name: 'Same as Before',
+                  isActive: false
+                },
+                {
+                  name: 'Worsening',
+                  isActive: false
+                },
+                {
+                  name: 'Improving',
+                  isActive: false
+                },
+                {
+                  name: 'Varies with Season',
+                  isActive: false
+                },
+                {
+                  name: 'Other',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "What brings it on?",
-              options: ['Red', 'Green', 'Blue']
+              type: 'button',
+              options: [
+                {
+                  name: 'Exertion',
+                  isActive: false
+                },
+                {
+                  name: 'Climbing Stairs',
+                  isActive: false
+                },
+                {
+                  name: 'None',
+                  isActive: false
+                },
+                {
+                  name: 'Other',
+                  isActive: false
+                }
+              ]
             },
             {
-              question: "What relieves it?",
-              options: ['Red', 'Green', 'Blue']
+              question: "What is the difficulty relieved?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Resting',
+                  isActive: false
+                },
+                {
+                  name: 'Sitting Up',
+                  isActive: false
+                },
+                {
+                  name: 'None',
+                  isActive: false
+                },
+                {
+                  name: 'Other',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "Does it wake you up at night?",
-              options: ['Red', 'Green', 'Blue']
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                }
+              ]
             },
             {
-              question: "Is there any chest pain?",
-              options: ['Red', 'Green', 'Blue']
+              question: "Is there a cough?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                }
+              ]
             },
             {
-              question: "Are there any associated symptons?",
-              options: ['Red', 'Green', 'Blue']
-            },
+              question: "Are there any associated symptoms?",
+              type: 'button',
+              options: [
+                {
+                  name: 'General Weakness',
+                  isActive: false
+                },
+                {
+                  name: 'Fever',
+                  isActive: false
+                },
+                {
+                  name: 'None',
+                  isActive: false
+                },
+                {
+                  name: 'Other',
+                  isActive: false
+                }
+              ]
+            }
           ]
         },
         {
           name: 'Fever',
           isActive: false,
+          questions: [
+            {
+              question: "What how long has this been going on?",
+              type: 'text'
+            },
+            {
+              question: "How has it progressed?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Same as Before',
+                  isActive: false
+                },
+                {
+                  name: 'Worsening',
+                  isActive: false
+                },
+                {
+                  name: 'Improving',
+                  isActive: false
+                },
+                {
+                  name: 'Varies with Season',
+                  isActive: false
+                },
+                {
+                  name: 'Other',
+                  isActive: false
+                }
+              ]
+            },
+            {
+              question: "What is the nature of the fever?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Everyday',
+                  isActive: false
+                },
+                {
+                  name: 'Alternate',
+                  isActive: false
+                },
+                {
+                  name: 'Irregular',
+                  isActive: false
+                },
+                {
+                  name: 'Other',
+                  isActive: false
+                }
+              ]
+            },
+            {
+              question: "What is the type?",
+              type: 'button',
+              options: [
+                {
+                  name: 'All Day',
+                  isActive: false
+                },
+                {
+                  name: 'Part of the Day (morning)',
+                  isActive: false
+                },
+                {
+                  name: 'Part of the Day (evening)',
+                  isActive: false
+                },
+                {
+                  name: 'Part of the Day (night)',
+                  isActive: false
+                },
+                {
+                  name: 'Other',
+                  isActive: false
+                }
+              ]
+            },
+            {
+              question: "What is the temperature of the patient?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Low',
+                  isActive: false
+                },
+                {
+                  name: 'Medium',
+                  isActive: false
+                },
+                {
+                  name: 'High',
+                  isActive: false
+                },
+                {
+                  name: 'Combined High and Low',
+                  isActive: false
+                },
+                {
+                  name: 'Other',
+                  isActive: false
+                },
+              ]
+            },
+            {
+              question: "Is there shivering?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                }
+              ]
+            },
+            {
+              question: "Is there a cough?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                }
+              ]
+            },
+            {
+              question: "Is there a cough with blood?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                }
+              ]
+            },
+            {
+              question: "Is there pain?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                }
+              ]
+            },
+            {
+              question: "Is there general weakness?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                }
+              ]
+            },
+            {
+              question: "Is there loss of weight?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                }
+              ]
+            },
+            {
+              question: "Is there a burning or more frequency in urine?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                },
+                {
+                  name: 'Other',
+                  isActive: false
+                }
+              ]
+            },
+            {
+              question: "Are there any reliefs?",
+              type: 'button',
+              options: [
+                {
+                  name: 'None',
+                  isActive: false
+                },
+                {
+                  name: 'Other',
+                  isActive: false
+                }
+              ]
+            },
+            {
+              question: "Describe any possible causes.",
+              type: 'button',
+              options: [
+                {
+                  name: 'General Weakness',
+                  isActive: false
+                },
+                {
+                  name: 'Fever',
+                  isActive: false
+                },
+                {
+                  name: 'None',
+                  isActive: false
+                },
+                {
+                  name: 'Other',
+                  isActive: false
+                }
+              ]
+            },
+          ]
         },
         {
           name: 'Diarrhoea',
           isActive: false,
+          questions: [
+            {
+              question: "How long has this been happening?",
+              type: 'text'
+            },
+            {
+              question: "What is the stool type?",
+              type: 'text'
+            },
+            {
+              question: "What is the nature of this complaint?",
+              type: 'text'
+            },
+            {
+              question: "How is the frequency?",
+              type: 'text'
+            }, 
+            {
+              question: "Is there blood in the stool?",
+              type: 'text'
+            },
+            {
+              question: "Does the complaint intensify with food?",
+              type: 'text'
+            },
+            {
+              question: "Are there any current medications?",
+              type: 'text'
+            },
+          ]
         },
         {
           name: 'Vomiting',
           isActive: false,
+          questions: [
+            {
+              question: "How long has this been happening?",
+              type: 'text'
+            },
+            {
+              question: "What is the nature of the vomiting?",
+              type: 'text'
+            },
+            {
+              question: "What is the frequency?",
+              type: 'text'
+            },
+            {
+              question: "Has appetitie changed?",
+              type: 'text'
+            }, 
+            {
+              question: "What causes the vomiting?",
+              type: 'text'
+            },
+            {
+              question: "What provides relief?",
+              type: 'text'
+            },
+            {
+              question: "Is there blood?",
+              type: 'text'
+            },
+            {
+              question: "Any associated symptoms?",
+              type: 'text'
+            },
+          ]
         },
         {
           name: 'Dizziness',
           isActive: false,
+          questions: [
+            {
+              question: "How long has this been happening?",
+              type: 'text'
+            },
+            {
+              question: "What is the nature of the dizziness?",
+              type: 'text'
+            },
+            {
+              question: "When does the dizziness occur?",
+              type: 'text'
+            },
+            {
+              question: "What causes the dizziness?",
+              type: 'text'
+            },
+            {
+              question: "What provides relief?",
+              type: 'text'
+            },
+            {
+              question: "Is there a relation with positioning?",
+              type: 'text'
+            },
+            {
+              question: "Is there H/O fainting?",
+              type: 'text'
+            },
+            {
+              question: "Is there H/O fall?",
+              type: 'text'
+            },
+            {
+              question: "Any associated symptoms?",
+              type: 'text'
+            },
+            {
+              question: "Has there been a change in hearing?",
+              type: 'text'
+            },
+            {
+              question: "Has there been a change in vision?",
+              type: 'text'
+            },
+          ]
         },
         {
           name: 'Acidity/Indigestion',
           isActive: false,
+          questions: [
+            {
+              question: "How long has this been happening?",
+              type: 'text'
+            },
+            {
+              question: "Is there any abdominal pain?",
+              type: 'text'
+            },
+            {
+              question: "Is there any vomiting?",
+              type: 'text'
+            },
+            {
+              question: "Is there any nausea?",
+              type: 'text'
+            },
+            {
+              question: "Is there a loss of appetite?",
+              type: 'text'
+            },
+            {
+              question: "Is there constipation?",
+              type: 'text'
+            },
+            {
+              question: "Is there diarrhea?",
+              type: 'text'
+            },
+            {
+              question: "What causes the complaint?",
+              type: 'text'
+            },
+            {
+              question: "Is there H/O jaundice?",
+              type: 'text'
+            },
+            {
+              question: "Is there H/O alcohol ingestion?",
+              type: 'text'
+            },
+            {
+              question: "Has there been a change weight?",
+              type: 'text'
+            },
+          ]
         },
         {
           name: 'Yellow Urine',
           isActive: false,
+          questions: [
+            {
+              question: "How long has this been happening?",
+              type: 'text'
+            },
+            {
+              question: "Is there any abdominal pain?",
+              type: 'text'
+            },
+            {
+              question: "Is there any fever?",
+              type: 'text'
+            },
+            {
+              question: "What is the color of stool?",
+              type: 'text'
+            },
+            {
+              question: "Is there any bleeding with urine?",
+              type: 'text'
+            },
+            {
+              question: "Is there a general weakness?",
+              type: 'text'
+            },
+          ]
         },
         {
           name: 'Skin Rash',
           isActive: false,
+          questions: [
+            {
+              question: "Where is the rash located?",
+              type: 'text'
+            },
+            {
+              question: "How big is the rash?",
+              type: 'text'
+            },
+            {
+              question: "How many are there?",
+              type: 'text'
+            },
+            {
+              question: "Provide a description of the surface.",
+              type: 'text'
+            },
+            {
+              question: "Provide a description of the color.",
+              type: 'text'
+            },
+          ]
         },
         {
           name: 'Bleeding with Stool',
           isActive: false,
+          questions: [
+            {
+              question: "Where is the color of the stool?",
+              type: 'text'
+            },
+            {
+              question: "What is the amount of stool?",
+              type: 'text'
+            },
+            {
+              question: "Is there pain during the passing of stool?",
+              type: 'text'
+            },
+            {
+              question: "Is there any constipation",
+              type: 'text'
+            },
+            {
+              question: "Is there any diarrhea?",
+              type: 'text'
+            },
+          ]
         },
         {
           name: 'Gynae Problems',
@@ -2952,22 +3630,292 @@ export default {
             {
               name: 'Period Problem',
               isActive: false,
+              questions: [
+                {
+                  question: "Is the patient married?",
+                  type: 'text'
+                },
+                {
+                  question: "When was the last LMP?",
+                  type: 'text'
+                },
+                {
+                  question: "What is the duration of the patient's period?",
+                  type: 'text'
+                },
+                {
+                  question: "What is the interval between periods?",
+                  type: 'text'
+                },
+                {
+                  question: "Flow?",
+                  type: 'text'
+                },
+                {
+                  question: "How many of children are there?",
+                  type: 'text'
+                },
+                {
+                  question: "How many pregnancies?",
+                  type: 'text'
+                },
+                {
+                  question: "What age was the patient at first childbirth?",
+                  type: 'text'
+                },
+                {
+                  question: "What age was the patient at the last childbirth?",
+                  type: 'text'
+                },
+                {
+                  question: "Please describe any contraception practice?",
+                  type: 'text'
+                },
+                {
+                  question: "What was the age of onset?",
+                  type: 'text'
+                },
+                {
+                  question: "Are there any associated symptoms?",
+                  type: 'text'
+                },
+                {
+                  question: "Is there any pain?",
+                  type: 'text'
+                },
+              ]
             },
             {
               name: 'Ante-natal Problem',
               isActive: false,
+              questions: [
+                {
+                  question: "Is the patient married?",
+                  type: 'text'
+                },
+                {
+                  question: "When was the last LMP?",
+                  type: 'text'
+                },
+                {
+                  question: "What is the duration of the patient's period?",
+                  type: 'text'
+                },
+                {
+                  question: "What is the interval between periods?",
+                  type: 'text'
+                },
+                {
+                  question: "Flow?",
+                  type: 'text'
+                },
+                {
+                  question: "How many of children are there?",
+                  type: 'text'
+                },
+                {
+                  question: "How many pregnancies?",
+                  type: 'text'
+                },
+                {
+                  question: "What age was the patient at first childbirth?",
+                  type: 'text'
+                },
+                {
+                  question: "What age was the patient at the last childbirth?",
+                  type: 'text'
+                },
+                {
+                  question: "Please describe any contraception practice?",
+                  type: 'text'
+                },
+                {
+                  question: "What was the age of onset?",
+                  type: 'text'
+                },
+                {
+                  question: "Are there any associated symptoms?",
+                  type: 'text'
+                },
+                {
+                  question: "Is there any pain?",
+                  type: 'text'
+                },
+              ]
             },
             {
               name: 'Infertility Problem',
               isActive: false,
+              questions: [
+                {
+                  question: "Is the patient married?",
+                  type: 'text'
+                },
+                {
+                  question: "When was the last LMP?",
+                  type: 'text'
+                },
+                {
+                  question: "What is the duration of the patient's period?",
+                  type: 'text'
+                },
+                {
+                  question: "What is the interval between periods?",
+                  type: 'text'
+                },
+                {
+                  question: "Flow?",
+                  type: 'text'
+                },
+                {
+                  question: "How many of children are there?",
+                  type: 'text'
+                },
+                {
+                  question: "How many pregnancies?",
+                  type: 'text'
+                },
+                {
+                  question: "What age was the patient at first childbirth?",
+                  type: 'text'
+                },
+                {
+                  question: "What age was the patient at the last childbirth?",
+                  type: 'text'
+                },
+                {
+                  question: "Please describe any contraception practice?",
+                  type: 'text'
+                },
+                {
+                  question: "What was the age of onset?",
+                  type: 'text'
+                },
+                {
+                  question: "Are there any associated symptoms?",
+                  type: 'text'
+                },
+                {
+                  question: "Is there any pain?",
+                  type: 'text'
+                },
+              ]
             },
             {
               name: 'Intercourse Problem',
               isActive: false,
+              questions: [
+                {
+                  question: "Is the patient married?",
+                  type: 'text'
+                },
+                {
+                  question: "When was the last LMP?",
+                  type: 'text'
+                },
+                {
+                  question: "What is the duration of the patient's period?",
+                  type: 'text'
+                },
+                {
+                  question: "What is the interval between periods?",
+                  type: 'text'
+                },
+                {
+                  question: "Flow?",
+                  type: 'text'
+                },
+                {
+                  question: "How many of children are there?",
+                  type: 'text'
+                },
+                {
+                  question: "How many pregnancies?",
+                  type: 'text'
+                },
+                {
+                  question: "What age was the patient at first childbirth?",
+                  type: 'text'
+                },
+                {
+                  question: "What age was the patient at the last childbirth?",
+                  type: 'text'
+                },
+                {
+                  question: "Please describe any contraception practice?",
+                  type: 'text'
+                },
+                {
+                  question: "What was the age of onset?",
+                  type: 'text'
+                },
+                {
+                  question: "Are there any associated symptoms?",
+                  type: 'text'
+                },
+                {
+                  question: "Is there any pain?",
+                  type: 'text'
+                },
+              ]
             },
             {
               name: 'Problem with Private Parts',
               isActive: false,
+              questions: [
+                {
+                  question: "Is the patient married?",
+                  type: 'text'
+                },
+                {
+                  question: "When was the last LMP?",
+                  type: 'text'
+                },
+                {
+                  question: "What is the duration of the patient's period?",
+                  type: 'text'
+                },
+                {
+                  question: "What is the interval between periods?",
+                  type: 'text'
+                },
+                {
+                  question: "Flow?",
+                  type: 'text'
+                },
+                {
+                  question: "How many of children are there?",
+                  type: 'text'
+                },
+                {
+                  question: "How many pregnancies?",
+                  type: 'text'
+                },
+                {
+                  question: "What age was the patient at first childbirth?",
+                  type: 'text'
+                },
+                {
+                  question: "What age was the patient at the last childbirth?",
+                  type: 'text'
+                },
+                {
+                  question: "Please describe any contraception practice?",
+                  type: 'text'
+                },
+                {
+                  question: "What was the age of onset?",
+                  type: 'text'
+                },
+                {
+                  question: "Are there any associated symptoms?",
+                  type: 'text'
+                },
+                {
+                  question: "Is there any pain?",
+                  type: 'text'
+                },
+              ]
             },
           ]
         },
@@ -2978,14 +3926,104 @@ export default {
         {
           name: 'Boils',
           isActive: false,
+          questions: [
+            {
+              question: "How long have the boils been there?",
+              type: 'text'
+            },
+            {
+              question: "Where is are the boils located?",
+              type: 'text'
+            },
+            {
+              question: "How did the boils start?",
+              type: 'text'
+            },
+            {
+              question: "Is there any pain or discomfort?",
+              type: 'text'
+            },
+            {
+              question: "Describe the color of the skin over the boils.",
+              type: 'text'
+            }
+          ]
         },
         {
           name: 'Ulcer',
           isActive: false,
+          questions: [
+            {
+              question: "How long has the ulcer been there?",
+              type: 'text'
+            },
+            {
+              question: "Where is the ulcer located?",
+              type: 'text'
+            },
+            {
+              question: "How did the ulcer start?",
+              type: 'text'
+            },
+            {
+              question: "Is there any pain or discomfort?",
+              type: 'text'
+            },
+            {
+              question: "Describe the surface of the ulcer.",
+              type: 'text'
+            },
+            {
+              question: "Describe the edges of the ulcer.",
+              type: 'text'
+            },
+            {
+              question: "What is the size of the ulcer??",
+              type: 'text'
+            },
+            {
+              question: "How is the fainting relieved?",
+              type: 'text'
+            }
+          ]
         },
         {
           name: 'Fainting',
           isActive: false,
+          questions: [
+            {
+              question: "How many episodes have there been?",
+              type: 'text'
+            },
+            {
+              question: "What is the interavl between episodes?",
+              type: 'text'
+            },
+            {
+              question: "Is consciousness loss during fainting?",
+              type: 'text'
+            },
+            {
+              question: "Are there any associated fits?",
+              type: 'text'
+            },
+            {
+              question: "Is there dizziness?",
+              type: 'text'
+            },
+            {
+              question: "Was there a fall?",
+              type: 'text'
+            },
+            {
+              question: "What brings on the fainting?",
+              type: 'text'
+            },
+            {
+              question: "How is the fainting relieved?",
+              type: 'text'
+            }
+          ]
         },
         {
           name:  'Weakness',
@@ -2994,10 +4032,62 @@ export default {
             {
               name: 'General Weakness',
               isActive: false,
+              questions: [
+                {
+                  question: "What is the duration?",
+                  type: 'text'
+                },
+                {
+                  question: "Is there an appetite?",
+                  type: 'text'
+                },
+                {
+                  question: "Has there been a change in weight?",
+                  type: 'text'
+                },
+                {
+                  question: "Is there any abdominal pain?",
+                  type: 'text'
+                },
+                {
+                  question: "Is there any chest pain?",
+                  type: 'text'
+                },
+                {
+                  question: "Are there any associated symptoms?",
+                  type: 'text'
+                }
+              ]
             },
             {
               name: 'Particular Weakness',
               isActive: false,
+              questions: [
+                {
+                  question: "What is the duration?",
+                  type: 'text'
+                },
+                {
+                  question: "Is there an appetite?",
+                  type: 'text'
+                },
+                {
+                  question: "Has there been a change in weight?",
+                  type: 'text'
+                },
+                {
+                  question: "Is there any abdominal pain?",
+                  type: 'text'
+                },
+                {
+                  question: "Is there any chest pain?",
+                  type: 'text'
+                },
+                {
+                  question: "Are there any associated symptoms?",
+                  type: 'text'
+                }
+              ]
             }
           ]
         },
@@ -3060,6 +4150,11 @@ export default {
         {
           name: 'photos',
           title: 'Photos',
+          isActive: false,
+        },
+        {
+          name: 'allocation',
+          title: 'Allocation',
           isActive: false,
         }
       ]
