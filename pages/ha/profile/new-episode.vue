@@ -46,14 +46,14 @@
                   </div>
                   <div class="container">
                     <div class="row">
-                      <div v-for="(question, index) in questions" class="col-md-12 mb-4" :key="index">
+                      <div v-for="(question, indexQuestion) in questions" class="col-md-12 mb-4" :key="indexQuestion">
                         <div v-if="question.type === 'text'">
                           <label for="exampleFormControlSelect1">{{ question.question }}</label><br>
                           <input type="text" class="p-2 w-100" placeholder="Text input...">
                         </div>
                         <div v-if="question.type === 'button'">
                           <label for="exampleFormControlSelect1">{{ question.question }}</label><br>
-                          <button class="btn mb-2 btn-light mr-2" v-for="(option, index) in question.options" :key="index">{{ option.name }}</button>
+                          <button class="btn mb-2 btn-light mr-2" v-for="(option, indexAnswer) in question.options" :key="indexAnswer" @click="handleSelectAnswer(indexQuestion, indexAnswer)">{{ option.name }}</button>
                         </div>
                       </div>
                     </div>
@@ -330,6 +330,9 @@ export default {
         }
       })
     },
+    handleSelectAnswer: function (indexQuestion, indexAnswer) {
+      console.log(indexQuestion, indexAnswer)
+    },
     showAlert: function () {
       alert(`This episode has been recorded.`)
     },
@@ -409,7 +412,33 @@ export default {
               questions: [
                 {
                   question: "What how long has this been going on?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'A few days',
+                      isActive: false
+                    },
+                    {
+                      name: '1 week',
+                      isActive: false
+                    },
+                    {
+                      name: 'A few weeks',
+                      isActive: false
+                    },
+                    {
+                      name: '1 month',
+                      isActive: false
+                    },
+                    {
+                      name: 'A few months',
+                      isActive: false
+                    },
+                    {
+                      name: 'More than a few months',
+                      isActive: false
+                    },
+                  ]
                 },
                 {
                   question: "Where did it start?",
@@ -3375,31 +3404,157 @@ export default {
           questions: [
             {
               question: "How long has this been happening?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "What is the stool type?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "What is the nature of this complaint?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "How is the frequency?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             }, 
             {
               question: "Is there blood in the stool?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "Does the complaint intensify with food?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "Are there any current medications?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
           ]
         },
@@ -3409,35 +3564,179 @@ export default {
           questions: [
             {
               question: "How long has this been happening?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "What is the nature of the vomiting?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "What is the frequency?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "Has appetitie changed?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             }, 
             {
               question: "What causes the vomiting?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "What provides relief?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "Is there blood?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "Any associated symptoms?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
           ]
         },
@@ -3447,47 +3746,245 @@ export default {
           questions: [
             {
               question: "How long has this been happening?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "What is the nature of the dizziness?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "When does the dizziness occur?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "What causes the dizziness?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "What provides relief?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "Is there a relation with positioning?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "Is there H/O fainting?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "Is there H/O fall?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "Any associated symptoms?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "Has there been a change in hearing?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "Has there been a change in vision?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
           ]
         },
@@ -3497,47 +3994,245 @@ export default {
           questions: [
             {
               question: "How long has this been happening?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "Is there any abdominal pain?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "Is there any vomiting?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "Is there any nausea?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "Is there a loss of appetite?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "Is there constipation?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "Is there diarrhea?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "What causes the complaint?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "Is there H/O jaundice?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "Is there H/O alcohol ingestion?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "Has there been a change weight?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
           ]
         },
@@ -3547,27 +4242,135 @@ export default {
           questions: [
             {
               question: "How long has this been happening?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "Is there any abdominal pain?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "Is there any fever?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "What is the color of stool?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "Is there any bleeding with urine?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "Is there a general weakness?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
           ]
         },
@@ -3577,23 +4380,113 @@ export default {
           questions: [
             {
               question: "Where is the rash located?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "How big is the rash?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "How many are there?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "Provide a description of the surface.",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "Provide a description of the color.",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
           ]
         },
@@ -3603,23 +4496,113 @@ export default {
           questions: [
             {
               question: "Where is the color of the stool?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "What is the amount of stool?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "Is there pain during the passing of stool?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "Is there any constipation",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "Is there any diarrhea?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
           ]
         },
@@ -3633,55 +4616,289 @@ export default {
               questions: [
                 {
                   question: "Is the patient married?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "When was the last LMP?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "What is the duration of the patient's period?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "What is the interval between periods?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "Flow?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "How many of children are there?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "How many pregnancies?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "What age was the patient at first childbirth?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "What age was the patient at the last childbirth?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "Please describe any contraception practice?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "What was the age of onset?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "Are there any associated symptoms?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "Is there any pain?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
               ]
             },
@@ -3691,55 +4908,289 @@ export default {
               questions: [
                 {
                   question: "Is the patient married?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "When was the last LMP?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "What is the duration of the patient's period?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "What is the interval between periods?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "Flow?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "How many of children are there?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "How many pregnancies?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "What age was the patient at first childbirth?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "What age was the patient at the last childbirth?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "Please describe any contraception practice?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "What was the age of onset?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "Are there any associated symptoms?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "Is there any pain?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
               ]
             },
@@ -3749,55 +5200,289 @@ export default {
               questions: [
                 {
                   question: "Is the patient married?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "When was the last LMP?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "What is the duration of the patient's period?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "What is the interval between periods?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "Flow?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "How many of children are there?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "How many pregnancies?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "What age was the patient at first childbirth?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "What age was the patient at the last childbirth?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "Please describe any contraception practice?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "What was the age of onset?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "Are there any associated symptoms?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "Is there any pain?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
               ]
             },
@@ -3807,55 +5492,289 @@ export default {
               questions: [
                 {
                   question: "Is the patient married?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "When was the last LMP?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "What is the duration of the patient's period?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "What is the interval between periods?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "Flow?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "How many of children are there?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "How many pregnancies?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "What age was the patient at first childbirth?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "What age was the patient at the last childbirth?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "Please describe any contraception practice?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "What was the age of onset?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "Are there any associated symptoms?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "Is there any pain?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
               ]
             },
@@ -3865,55 +5784,289 @@ export default {
               questions: [
                 {
                   question: "Is the patient married?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "When was the last LMP?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "What is the duration of the patient's period?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "What is the interval between periods?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "Flow?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "How many of children are there?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "How many pregnancies?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "What age was the patient at first childbirth?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "What age was the patient at the last childbirth?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "Please describe any contraception practice?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "What was the age of onset?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "Are there any associated symptoms?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "Is there any pain?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
               ]
             },
@@ -3922,6 +6075,118 @@ export default {
         {
           name: 'Injury',
           isActive: false,
+          questions: [
+            {
+              question: "Where is the injury located?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
+            },
+            {
+              question: "How was the injury sustained?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
+            },
+            {
+              question: "When was the injury sustained?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
+            },
+            {
+              question: "Describe other problems and issues resulting from the injury.",
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
+            },
+            {
+              question: "Is there any bleeding?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
+            }
+          ]
         },
         {
           name: 'Boils',
@@ -3929,23 +6194,113 @@ export default {
           questions: [
             {
               question: "How long have the boils been there?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "Where is are the boils located?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "How did the boils start?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "Is there any pain or discomfort?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "Describe the color of the skin over the boils.",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             }
           ]
         },
@@ -3955,35 +6310,179 @@ export default {
           questions: [
             {
               question: "How long has the ulcer been there?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "Where is the ulcer located?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "How did the ulcer start?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "Is there any pain or discomfort?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "Describe the surface of the ulcer.",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "Describe the edges of the ulcer.",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "What is the size of the ulcer??",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "How is the fainting relieved?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             }
           ]
         },
@@ -3993,35 +6492,179 @@ export default {
           questions: [
             {
               question: "How many episodes have there been?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "What is the interavl between episodes?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "Is consciousness loss during fainting?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "Are there any associated fits?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "Is there dizziness?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "Was there a fall?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "What brings on the fainting?",
-              type: 'text'
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
             },
             {
               question: "How is the fainting relieved?",
-              type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
             }
           ]
         },
@@ -4035,27 +6678,135 @@ export default {
               questions: [
                 {
                   question: "What is the duration?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "Is there an appetite?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "Has there been a change in weight?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "Is there any abdominal pain?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "Is there any chest pain?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "Are there any associated symptoms?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 }
               ]
             },
@@ -4065,27 +6816,135 @@ export default {
               questions: [
                 {
                   question: "What is the duration?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "Is there an appetite?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "Has there been a change in weight?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "Is there any abdominal pain?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "Is there any chest pain?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "Are there any associated symptoms?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Mild',
+                      isActive: false
+                    },
+                    {
+                      name: 'Moderate',
+                      isActive: false
+                    },
+                    {
+                      name: 'Severe',
+                      isActive: false
+                    },
+                    {
+                      name: 'Varies',
+                      isActive: false
+                    }
+                  ]
                 }
               ]
             }
@@ -4094,20 +6953,105 @@ export default {
         {
           name: 'Palpitation',
           isActive: false,
+          questions: [
+            {
+              question: "What is the duration?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
+            },
+            {
+              question: "What is the type of palpitation?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
+            },
+            {
+              question: "How long do the palpitations last?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
+            },
+            {
+              question: "Are there any associated symptoms?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Mild',
+                  isActive: false
+                },
+                {
+                  name: 'Moderate',
+                  isActive: false
+                },
+                {
+                  name: 'Severe',
+                  isActive: false
+                },
+                {
+                  name: 'Varies',
+                  isActive: false
+                }
+              ]
+            }
+          ]
         },
-        {
-          name: 'Mental Health Problem',
-          isActive: false,
-        },
-
-        {
-          name: 'Coughing, Throat Problem',
-          isActive: false,
-        },
-        {
-          name: 'Other Category',
-          isActive: false,
-        },
+        // {
+        //   name: 'Mental Health Problem',
+        //   isActive: false,
+        // },
+        // {
+        //   name: 'Other Category',
+        //   isActive: false,
+        // },
       ],
       fullPath: [
         {
