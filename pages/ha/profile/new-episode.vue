@@ -4,8 +4,8 @@
       <div class="row">
         <div class="col-md-12 rounded">
           <ul class="list-inline mb-2">
-            <li class="list-inline-item pointer" v-for="(tab, index) in tabs" :key="index">
-              <div class="px-2 mr-2 pb-1 mb-1" @click="getTab(tab.name)" :class="{ underline: tab.isActive }" role="button">
+            <li class="list-inline-item" v-for="(tab, index) in tabs" :key="index">
+              <div class="px-2 mr-2 pb-1 mb-1" @click="getTab(tab.name, tab.isEnabled)" :class="{ underline: tab.isActive,  'text-muted': !tab.isEnabled, 'pointer': tab.isEnabled }" role="button">
                 {{ tab.title }}
               </div>
             </li>
@@ -13,273 +13,297 @@
 
           <transition  appear name="u-fade"  mode="out-in">
 
-          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" key="chiefComplaints" v-if="tabs[0].isActive">
-            <!-- Chief Complaints<br><br> -->
-            <div class="row mt-1">
-              <div class="col-md-12 text-muted small mb-0">
-                General Information {{ categoryItemInd }}
-                <hr>
-              </div>
+          <div key="chiefComplaints" v-if="tabs[0].isActive">
+            <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;">
+              <!-- Chief Complaints<br><br> -->
+              <div class="row mt-1">
+                <div class="col-md-12 text-muted small mb-0">
+                  General Information <br>
+                  Sub category: {{ subCategoryInd }}
 
-              <!-- General Category -->
-              <div class="col-md-12 mb-3">
-                <label for="exampleFormControlSelect1">What is the category of the complaint?</label><br>
-                <button  v-for="(category, index) in categories" :class="category.isActive ? 'btn-dark text-white' : 'btn-light'" class="btn mb-2 mr-2" @click="makeCategoryActive(category.name)" :key="index">{{category.name}}</button>
-              </div>
-
-              <!-- General SubCategory -->
-              <transition  appear name="u-fade"  mode="out-in" tag="div">
-                <div class="col-md-12 mb-3" v-if="hasSubCategory">
-                  <label for="exampleFormControlSelect1">What is the specific complaint?</label><br>
-                  <div v-if="categoryItemInd !== null" class="w-100">
-                    <button v-for="(complaintItem, index) in categories[categoryItemInd].subCategories" :key="index" class="btn mb-2 mr-2" :class="complaintItem.isActive ? 'btn-dark text-white' : 'btn-light'" @click="handleSubCategory('Headache', categoryItemInd, index)">{{ complaintItem.name }}</button>
-                  </div>
+                  <hr>
                 </div>
-              </transition> 
+                <!-- General Category -->
+                <div class="col-md-12 mb-3">
+                  <label for="exampleFormControlSelect1">What is the category of the complaint? {{ categoryIndex }}</label><br>
+                  <button  v-for="(category, index) in categories" :class="category.isActive ? 'btn-dark text-white' : 'btn-light'" class="btn mb-2 mr-2" @click="makeCategoryActive(category.name)" :key="index">{{category.name}}</button>
+                </div>
+                <!-- General SubCategory -->
+                <transition  appear name="u-fade"  mode="out-in" tag="div">
+                  <div class="col-md-12 mb-3" v-if="hasSubCategory">
+                    <label for="exampleFormControlSelect1">What is the specific complaint? {{ subCategoryInd }} </label><br>
+                    <div v-if="categoryItemInd !== null" class="w-100">
+                      <button v-for="(complaintItem, index) in categories[categoryItemInd].subCategories" :key="index" class="btn mb-2 mr-2" :class="complaintItem.isActive ? 'btn-dark text-white' : 'btn-light'" @click="handleSubCategory(currCategory, categoryItemInd, index)">{{ complaintItem.name }}</button>
+                    </div>
+                  </div>
+                </transition> 
+              </div>
+            </div>
+            <!-- Button: Go to Next Section -->
+            <div class="container mb-3">
+              <div class="row">
+                <div class="col-md-12 px-0">
+                  {{ subCategoryInd }}
+                    <button @click="goToNext()" :disabled="(!categoryIndex && !hasSubCategory) || (hasSubCategory && subCategoryInd <= -1)" type="button" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0 text-uppercase">
+                      Go to Fixed Questions
+                    </button>
+                </div>
+              </div>
+            </div>
+          </div>
 
-              <!-- Complaint Questions -->
-              <transition  appear name="u-fade"  mode="out-in" tag="div">
-                <div v-show="showQuestions" class="w-100">
+          <div key="fixed-questions" v-if="tabs[1].isActive">
+            <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;">
+              <div class="row mt-1">
+                <div class="col-md-12 mb-0 px-0">
                   <div class="col-md-12 text-muted small mb-0 w-100">
                     Fixed Questions
                     <hr>
                   </div>
-                  <div class="container">
-                    <div class="row">
-                      <div v-for="(question, indexQuestion) in questions" class="col-md-12 mb-4" :key="indexQuestion">
-                        <div v-if="question.type === 'text'">
-                          <label for="exampleFormControlSelect1">{{ question.question }}</label><br>
-                          <input type="text" class="p-2 w-100" placeholder="Text input...">
-                        </div>
-                        <div v-if="question.type === 'button'">
-                          <label for="exampleFormControlSelect1">{{ question.question }}</label><br>
-                          <button class="btn mb-2 btn-light mr-2" v-for="(option, indexAnswer) in question.options" :key="indexAnswer" @click="handleSelectAnswer(indexQuestion, indexAnswer)">{{ option.name }}</button>
+                  <transition  appear name="u-fade"  mode="out-in" tag="div">
+                    <div v-show="showQuestions" class="w-100">
+                      <div class="container">
+                        <div class="row">
+                          <div class="col-md-12 mb-3">
+                            <button class="btn mb-2 btn-dark mr-2" v-if="currCategory">{{ currCategory }}</button>
+                            <button class="btn mb-2 btn-dark mr-2" v-if="subCategory">{{ subCategory }}</button><br>
+                          </div>
+                          <div v-for="(question, indexQuestion) in questions" class="col-md-6 mb-4" :key="indexQuestion">
+                            <div v-if="question.type === 'text'">
+                              <label for="exampleFormControlSelect1">{{ question.question }}</label><br>
+                              <input type="text" class="p-2 w-100" placeholder="Text input...">
+                            </div>
+                            <div v-if="question.type === 'button'">
+                              <label for="exampleFormControlSelect1">{{ question.question }}</label><br>
+                              <button class="btn mb-2 mr-2" v-for="(option, indexAnswer) in question.options" :key="indexAnswer" :class="option.isActive ? 'btn-dark text-white' : 'btn-light'" @click="handleSelectAnswer(indexQuestion, indexAnswer)">{{ option.name }}</button>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </transition>
                 </div>
-
-              </transition>
-
+              </div>
+            </div>
+            <!-- Button: Go to Next Section -->
+            <div class="container mb-3">
+              <div class="row">
+                <div class="col-md-12 px-0">
+                    <button @click="goToNext()" type="button" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0 text-uppercase">
+                      Go to Vitals
+                    </button>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" key="vitals" style="min-height: 200px;" v-if="tabs[1].isActive">
-            <!-- Vitals<br><br> -->
-            <div class="row mt-1">
-              <div class="col-md-12 text-muted small mb-0">
-                  Please complete to the best of your ability.
+          <div key="vitals" v-if="tabs[2].isActive">
+            <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;">
+              <div class="row mt-1">
+                <div class="col-md-12 text-muted small mb-0">
+                    Please complete to the best of your ability.
+                    <hr>
+                  </div>
+                <div class="col-md-6 mb-3">
+                  <label for="exampleFormControlSelect1">Patient Appearance</label><br>
+                  <input type="text" class="w-100 p-2 mb-3" placeholder="Tired, out of breath, pale">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="exampleFormControlSelect1">Patient Gait</label><br>
+                  <input type="text" class="w-100 p-2 mb-3" placeholder="Walks with a limp">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="exampleFormControlSelect1">Blood Pressure</label><br>
+                  <input type="text" class="w-100 p-2 mb-3" placeholder="BP (___/___ mmHg)">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="exampleFormControlSelect1">Oxygen</label><br>
+                  <input type="text" class="w-100 p-2 mb-3" placeholder="SP02 (%)">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="exampleFormControlSelect1">Patient Temperature</label><br>
+                  <input type="text" class="w-100 p-2 mb-3" placeholder="Temperature (‘’ F)">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="exampleFormControlSelect1">Patient Height</label><br>
+                  <input type="text" class="w-100 p-2 mb-3" placeholder="Height (cm)">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="exampleFormControlSelect1">Patient Weight</label><br>
+                  <input type="text" class="w-100 p-2 mb-3" placeholder="Weight (kg)">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="exampleFormControlSelect1">Body Mass Index</label><br>
+                  <input type="text" class="w-100 p-2 mb-3" placeholder="BMI (kg/m2) (Auto Calculated)">
+                </div>
+              </div>
+            </div>
+            <!-- Button: Go to Next Section -->
+            <div class="container mb-3">
+              <div class="row">
+                <div class="col-md-12 px-0">
+                    <button @click="goToNext()" type="button" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0 text-uppercase">
+                      Go to General Exams
+                    </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div key="generalExams" v-if="tabs[3].isActive">
+            <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;">
+              <div class="row mt-1">
+                <div class="col-md-12 mb-5 text-center">
+                  <img src="/anatomy_sketch.png" alt="">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="exampleFormControlSelect1">Hands – Clubbing</label><br>
+                  <button class="btn mb-2 mr-2" :class="[ generalExams.handsClubbing === 'none' ?  'btn-dark' : 'btn-light' ]"  @click="generalExams.handsClubbing = 'none'">None</button>
+                  <button class="btn mb-2 mr-2" :class="[ generalExams.handsClubbing === 'normal' ?  'btn-dark' : 'btn-light' ]"  @click="generalExams.handsClubbing = 'normal'">Normal</button>
+                  <button class="btn mb-2 mr-2" :class="[ generalExams.handsClubbing === 'clubbing' ?  'btn-dark' : 'btn-light' ]"  @click="generalExams.handsClubbing = 'clubbing'">Clubbing</button>
+                  <button class="btn mb-2 mr-2" :class="[ generalExams.handsClubbing === 'spooning' ?  'btn-dark' : 'btn-light' ]" @click="generalExams.handsClubbing = 'spooning'">Spooning</button>
+                  <button class="btn mb-2 mr-2" :class="[ generalExams.handsClubbing === 'cyanosis' ?  'btn-dark' : 'btn-light' ]" @click="generalExams.handsClubbing = 'cyanosis'">Cyanosis</button>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="exampleFormControlSelect1">Legs – Oedema</label><br>
+                  <button class="btn mb-2 mr-2" :class="[ generalExams.legsOedema === 'none' ?  'btn-dark' : 'btn-light' ]"  @click="generalExams.legsOedema = 'none'">None</button>
+                  <button class="btn mb-2 mr-2" :class="[ generalExams.legsOedema === 'mild' ?  'btn-dark' : 'btn-light' ]"  @click="generalExams.legsOedema = 'mild'">Mild</button>
+                  <button class="btn mb-2 mr-2" :class="[ generalExams.legsOedema === 'moderate' ?  'btn-dark' : 'btn-light' ]"  @click="generalExams.legsOedema = 'moderate'">Moderate</button>
+                  <button class="btn mb-2 mr-2" :class="[ generalExams.legsOedema === 'severe' ?  'btn-dark' : 'btn-light' ]" @click="generalExams.legsOedema = 'severe'">Severe</button>
+                </div>
+              </div>
+            </div>   
+            <!-- Button: Go to Next Section -->
+            <div class="container mb-3">
+              <div class="row">
+                <div class="col-md-12 px-0">
+                    <button @click="goToNext()" type="button" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0 text-uppercase">
+                      Go to Specific Exams
+                    </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div key="specificExams" v-if="tabs[4].isActive">
+            <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;">
+              <!-- Specific Exams
+              <br><br> -->
+              <div class="row mt-1">
+                <div class="col-md-12 mb-5 text-center">
+                  <img src="/anatomy_sketch.png" alt="">
+                </div>
+                <div class="col-md-12 text-muted small">
+                  Output
                   <hr>
                 </div>
-              <div class="col-md-6 mb-3">
-                <label for="exampleFormControlSelect1">Patient Appearance</label><br>
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Tired, out of breath, pale">
+                <div class="col-md-6 mb-3">
+                  <label for="exampleFormControlSelect1">Jaundice</label><br>
+                  <button class="btn btn-light mb-2 mr-2">Eyes</button>
+                  <button class="btn btn-light mb-2 mr-2">Hands</button>
+                  <button class="btn btn-light mb-2 mr-2">Lower Leg and Ankle</button>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="exampleFormControlSelect1">Pallor</label><br>
+                  <button class="btn btn-light mb-2 mr-2">Eyes</button>
+                  <button class="btn btn-light mb-2 mr-2">Hands</button>
+                  <button class="btn btn-light mb-2 mr-2">Lower Leg and Ankle</button>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="exampleFormControlSelect1">Cyanosis</label><br>
+                  <button class="btn btn-light mb-2 mr-2">Eyes</button>
+                  <button class="btn btn-light mb-2 mr-2">Hands</button>
+                  <button class="btn btn-light mb-2 mr-2">Lower Leg and Ankle</button>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="exampleFormControlSelect1">Nails</label><br>
+                  <button class="btn btn-light mb-2 mr-2">Eyes</button>
+                  <button class="btn btn-light mb-2 mr-2">Hands</button>
+                  <button class="btn btn-light mb-2 mr-2">Lower Leg and Ankle</button>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="exampleFormControlSelect1">Oedema</label><br>
+                  <button class="btn btn-light mb-2 mr-2">Eyes</button>
+                  <button class="btn btn-light mb-2 mr-2">Hands</button>
+                  <button class="btn btn-light mb-2 mr-2">Lower Leg and Ankle</button>
+                </div>
               </div>
-              <div class="col-md-6 mb-3">
-                <label for="exampleFormControlSelect1">Patient Gait</label><br>
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Walks with a limp">
-              </div>
-              <div class="col-md-6 mb-3">
-                <label for="exampleFormControlSelect1">Blood Pressure</label><br>
-                <input type="text" class="w-100 p-2 mb-3" placeholder="BP (___/___ mmHg)">
-              </div>
-              <div class="col-md-6 mb-3">
-                <label for="exampleFormControlSelect1">Oxygen</label><br>
-                <input type="text" class="w-100 p-2 mb-3" placeholder="SP02 (%)">
-              </div>
-              <div class="col-md-6 mb-3">
-                <label for="exampleFormControlSelect1">Patient Temperature</label><br>
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Temperature (‘’ F)">
-              </div>
-              <div class="col-md-6 mb-3">
-                <label for="exampleFormControlSelect1">Patient Height</label><br>
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Height (cm)">
-              </div>
-              <div class="col-md-6 mb-3">
-                <label for="exampleFormControlSelect1">Patient Weight</label><br>
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Weight (kg)">
-              </div>
-              <div class="col-md-6 mb-3">
-                <label for="exampleFormControlSelect1">Body Mass Index</label><br>
-                <input type="text" class="w-100 p-2 mb-3" placeholder="BMI (kg/m2) (Auto Calculated)">
+            </div>
+            <!-- Button: Go to Next Section -->
+            <div class="container mb-3">
+              <div class="row">
+                <div class="col-md-12 px-0">
+                    <button @click="goToNext()" type="button" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0 text-uppercase">
+                      Go to Photos
+                    </button>
+                </div>
               </div>
             </div>
           </div>
-          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" key="generalExams" style="min-height: 200px;" v-if="tabs[2].isActive">
-            <!-- General Exams<br><br> -->
-            <div class="row mt-1">
-              <!-- <div class="col-md-12 mb-5 text-center">
-                <img src="/anatomy_sketch.png" alt="">
-              </div> -->
-              <div class="col-md-12 text-muted small">
-                Pre-check Questions		
-                <hr>
-              </div>
-              <div class="col-md-12 mb-3">
-                <input type="checkbox" class="mr-2" name="" id=""> Have you washed your hands?<br>		
-                <input type="checkbox" class="mr-2" name="" id=""> Is there a female chaperon in the room, if you are examning a female patient?<br>	
-                <input type="checkbox" class="mr-2" name="" id=""> Greet the patient by name<br>	
-                <input type="checkbox" class="mr-2" name="" id=""> Ask the patient to sit/lie down comfortably, assist if necessary<br>	
-                <input type="checkbox" class="mr-2" name="" id=""> Watch as the patient walks to the chair/couch<br>	
-                <input type="checkbox" class="mr-2" name="" id=""> Ask the patient if there is any pain anywhere, and if so, approach that region last and very slowly<br>	
-              </div>
-              <div class="col-md-12 text-muted small">
-                General Physical Examinations
-                <hr>
-              </div>
-              <div class="col-md-6 mb-3">
-                <label for="exampleFormControlSelect1">Eyes – Jaundice</label><br>
-                <button class="btn mb-2 mr-2" :class="[ generalExams.eyesJaundice === false ?  'btn-dark' : 'btn-light' ]" @click="generalExams.eyesJaundice = false">No</button>
-                <button class="btn mb-2 mr-2" :class="[ generalExams.eyesJaundice === true ?  'btn-dark' : 'btn-light' ]" @click="generalExams.eyesJaundice = true">Yes</button>
-              </div>
-              <div class="col-md-6 mb-3">
-                <label for="exampleFormControlSelect1">Eyes – Pallor</label><br>
-                <button class="btn mb-2 mr-2" :class="[ generalExams.eyesPallor === 'none' ?  'btn-dark' : 'btn-light' ]"  @click="generalExams.eyesPallor = 'none'">None</button>
-                <button class="btn mb-2 mr-2" :class="[ generalExams.eyesPallor === 'mild' ?  'btn-dark' : 'btn-light' ]"  @click="generalExams.eyesPallor = 'mild'">Mild</button>
-                <button class="btn mb-2 mr-2" :class="[ generalExams.eyesPallor === 'moderate' ?  'btn-dark' : 'btn-light' ]"  @click="generalExams.eyesPallor = 'moderate'">Moderate</button>
-                <button class="btn mb-2 mr-2" :class="[ generalExams.eyesPallor === 'severe' ?  'btn-dark' : 'btn-light' ]" @click="generalExams.eyesPallor = 'severe'">Severe</button>
-              </div>
-              <div class="col-md-6 mb-3">
-                <label for="exampleFormControlSelect1">Hands – Cyanosis</label><br>
-                <button class="btn mb-2 mr-2" :class="[ generalExams.handsCyanosis === false ?  'btn-dark' : 'btn-light' ]" @click="generalExams.handsCyanosis = false">No</button>
-                <button class="btn mb-2 mr-2" :class="[ generalExams.handsCyanosis === true ?  'btn-dark' : 'btn-light' ]" @click="generalExams.handsCyanosis = true">Yes</button>
-              </div>
-              <!-- <div class="col-md-6 mb-3">
-                <label for="exampleFormControlSelect1">Hands – Clubbing</label><br>  
-                <button class="btn btn-light mb-2 mr-2">Normal</button>
-                <button class="btn btn-light mb-2 mr-2">Clubbing</button>
-                <button class="btn btn-light mb-2 mr-2">Spooning</button>
-                <button class="btn btn-light mb-2 mr-2">Cyanosis</button>
-                <button class="btn btn-light mb-2 mr-2">None</button>
-              </div> -->
 
-              <div class="col-md-6 mb-3">
-                <label for="exampleFormControlSelect1">Hands – Clubbing</label><br>
-                <button class="btn mb-2 mr-2" :class="[ generalExams.handsClubbing === 'none' ?  'btn-dark' : 'btn-light' ]"  @click="generalExams.handsClubbing = 'none'">None</button>
-                <button class="btn mb-2 mr-2" :class="[ generalExams.handsClubbing === 'normal' ?  'btn-dark' : 'btn-light' ]"  @click="generalExams.handsClubbing = 'normal'">Normal</button>
-                <button class="btn mb-2 mr-2" :class="[ generalExams.handsClubbing === 'clubbing' ?  'btn-dark' : 'btn-light' ]"  @click="generalExams.handsClubbing = 'clubbing'">Clubbing</button>
-                <button class="btn mb-2 mr-2" :class="[ generalExams.handsClubbing === 'spooning' ?  'btn-dark' : 'btn-light' ]" @click="generalExams.handsClubbing = 'spooning'">Spooning</button>
-                <button class="btn mb-2 mr-2" :class="[ generalExams.handsClubbing === 'cyanosis' ?  'btn-dark' : 'btn-light' ]" @click="generalExams.handsClubbing = 'cyanosis'">Cyanosis</button>
-              </div>
-              <div class="col-md-6 mb-3">
-                <label for="exampleFormControlSelect1">Legs – Oedema</label><br>
-                <button class="btn mb-2 mr-2" :class="[ generalExams.legsOedema === 'none' ?  'btn-dark' : 'btn-light' ]"  @click="generalExams.legsOedema = 'none'">None</button>
-                <button class="btn mb-2 mr-2" :class="[ generalExams.legsOedema === 'mild' ?  'btn-dark' : 'btn-light' ]"  @click="generalExams.legsOedema = 'mild'">Mild</button>
-                <button class="btn mb-2 mr-2" :class="[ generalExams.legsOedema === 'moderate' ?  'btn-dark' : 'btn-light' ]"  @click="generalExams.legsOedema = 'moderate'">Moderate</button>
-                <button class="btn mb-2 mr-2" :class="[ generalExams.legsOedema === 'severe' ?  'btn-dark' : 'btn-light' ]" @click="generalExams.legsOedema = 'severe'">Severe</button>
+          <div key="addPhotos" v-if="tabs[5].isActive">
+            <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-1" style="min-height: 200px;">
+              <div class="row mt-1">
+                <div class="col-md-3 mb-4">
+                  <img src="/square-grey.jpg" class="w-100" alt="">
+                </div>
+                <div class="col-md-3 mb-4">
+                  <img src="/square-grey-add.jpg" class="w-100" alt="">
+                </div>
               </div>
             </div>
-          </div>   
-          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" key="specificExams" style="min-height: 200px;" v-if="tabs[3].isActive">
-            <!-- Specific Exams
-            <br><br> -->
-            <div class="row mt-1">
-              <div class="col-md-12 mb-5 text-center">
-                <img src="/anatomy_sketch.png" alt="">
+            <!-- Button: Go to Next Section -->
+            <div class="container mb-3">
+              <div class="row">
+                <div class="col-md-12 px-0">
+                    <button @click="goToNext()" type="button" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0 text-uppercase">
+                      Go to Allocations
+                    </button>
+                </div>
               </div>
-              <div class="col-md-12 text-muted small">
-                Specific Physical Examinations
-                <hr>
-              </div>
-              <div class="col-md-12 mb-3">
-                <label for="exampleFormControlSelect1">Specific Examination</label><br>
-                <button class="btn btn-light mb-2 mr-2">Eyes</button>
-                <button class="btn btn-light mb-2 mr-2">Hands</button>
-                <button class="btn btn-light mb-2 mr-2">Lower Leg and Ankle</button>
-                <button class="btn btn-light mb-2 mr-2">Cheek & Mouth</button>
-                <button class="btn btn-light mb-2 mr-2">Chest</button>
-                <button class="btn btn-light mb-2 mr-2">Neck Region</button>
-                <button class="btn btn-light mb-2 mr-2">Abdomen</button>
-                <button class="btn btn-light mb-2 mr-2">Back</button>
-                <button class="btn btn-light mb-2 mr-2">Head</button>
-                <button class="btn btn-light mb-2 mr-2">Ear</button>
-                <button class="btn btn-light mb-2 mr-2">Examination of a Joint</button>
-                <button class="btn btn-light mb-2 mr-2">Examination of an Ulcer</button>
-                <button class="btn btn-light mb-2 mr-2">Examination of a Lump/Swelling</button>
-                <button class="btn btn-light mb-2 mr-2">Examination of a 'Rash'</button>
-                <button class="btn btn-light mb-2 mr-2">Examination of 'Injuries'</button>
-              </div>
+            </div>
+          </div>
 
-              <div class="col-md-12 text-muted small">
-                Output
-                <hr>
+
+          <div key="allocation" v-if="tabs[6].isActive">
+            <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-1" style="min-height: 160px;">
+              <div class="row mt-1">
+                <div class="col-md-12 mb-2">
+                  Please select an available allocation:
+                  <!-- <div class="pl-4">
+                    <span v-for="(md, index) in this.$store.state.udayDb.clusters['cluster001'].mds" :key="index">
+                      <input type="radio" class="mr-3" name="" id=""> {{ md.demographics.name }} ({{ md.status }})<br>
+                    </span>
+                  </div> -->
+                </div>
+                <div v-for="(md, index) in this.$store.state.udayDb.clusters['cluster001'].mds" :key="index" class="col-md-6 pl-5">
+                  <input type="radio" class="mr-3" name="" id=""> {{ md.demographics.name }} ({{ md.status }})<br>
+                </div>
+                <div class="col-md-6 pl-5">
+                  <input type="radio" class="mt-1 mr-3" name="" id=""> 
+                  <i>Add to General Queue</i>
+                </div>
               </div>
-              <div class="col-md-6 mb-3">
-                <label for="exampleFormControlSelect1">Jaundice</label><br>
-                <button class="btn btn-light mb-2 mr-2">Eyes</button>
-                <button class="btn btn-light mb-2 mr-2">Hands</button>
-                <button class="btn btn-light mb-2 mr-2">Lower Leg and Ankle</button>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                  <nuxt-link to="/ha/profile" class="w-100">
+                    <button @click="addToQueue" type="button" data-dismiss="modal" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0 text-uppercase">
+                      Submit Allocation
+                    </button>
+                  </nuxt-link>
               </div>
-              <div class="col-md-6 mb-3">
-                <label for="exampleFormControlSelect1">Pallor</label><br>
-                <button class="btn btn-light mb-2 mr-2">Eyes</button>
-                <button class="btn btn-light mb-2 mr-2">Hands</button>
-                <button class="btn btn-light mb-2 mr-2">Lower Leg and Ankle</button>
-              </div>
-              <div class="col-md-6 mb-3">
-                <label for="exampleFormControlSelect1">Cyanosis</label><br>
-                <button class="btn btn-light mb-2 mr-2">Eyes</button>
-                <button class="btn btn-light mb-2 mr-2">Hands</button>
-                <button class="btn btn-light mb-2 mr-2">Lower Leg and Ankle</button>
-              </div>
-              <div class="col-md-6 mb-3">
-                <label for="exampleFormControlSelect1">Nails</label><br>
-                <button class="btn btn-light mb-2 mr-2">Eyes</button>
-                <button class="btn btn-light mb-2 mr-2">Hands</button>
-                <button class="btn btn-light mb-2 mr-2">Lower Leg and Ankle</button>
-              </div>
-              <div class="col-md-6 mb-3">
-                <label for="exampleFormControlSelect1">Oedema</label><br>
-                <button class="btn btn-light mb-2 mr-2">Eyes</button>
-                <button class="btn btn-light mb-2 mr-2">Hands</button>
-                <button class="btn btn-light mb-2 mr-2">Lower Leg and Ankle</button>
+              <div class="col-md-12">
               </div>
             </div>
           </div>
-          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-1" key="addPhotos" style="min-height: 200px;" v-if="tabs[4].isActive">
-            <div class="row mt-1">
-              <div class="col-md-3 mb-4">
-                <img src="/square-grey.jpg" class="w-100" alt="">
-              </div>
-              <div class="col-md-3 mb-4">
-                <img src="/square-grey-add.jpg" class="w-100" alt="">
-              </div>
-            </div>
-          </div>
-          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-1" key="allocation" style="min-height: 160px;" v-if="tabs[5].isActive">
-            <div class="row mt-1">
-              <div class="col-md-12 mb-2">
-                Please select an available allocation:
-                <!-- <div class="pl-4">
-                  <span v-for="(md, index) in this.$store.state.udayDb.clusters['cluster001'].mds" :key="index">
-                    <input type="radio" class="mr-3" name="" id=""> {{ md.demographics.name }} ({{ md.status }})<br>
-                  </span>
-                </div> -->
-              </div>
-              <div v-for="(md, index) in this.$store.state.udayDb.clusters['cluster001'].mds" :key="index" class="col-md-6 pl-5">
-                <input type="radio" class="mr-3" name="" id=""> {{ md.demographics.name }} ({{ md.status }})<br>
-              </div>
-              <div class="col-md-6 pl-5">
-                <input type="radio" class="mt-1 mr-3" name="" id=""> 
-                <i>Add to General Queue</i>
-              </div>
-            </div>
-          </div>
+
           </transition>
         </div>
       </div>
     </div>
-    <div class="container mb-3" v-if="tabs[5].isActive">
-      <div class="row">
-        <div class="col-md-12">
-            <nuxt-link to="/ha/profile" class="w-100"><button @click="addToQueue" type="button" data-dismiss="modal" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0 text-uppercase">Submit Allocation</button>
-            </nuxt-link>
-        </div>
-        <div class="col-md-12">
-        </div>
-      </div>
-    </div>
+    
+    
   </div>
 </template>
 
@@ -295,64 +319,140 @@ export default {
         if (category.name == clickedCategory) {
           this.categories[index].isActive = true
           this.currCategory = clickedCategory
-          this.subCategory = ''
+          // this.subCategory = ''
+          self.categoryIndex = index
 
           if (this.categories[index].subCategories) {
             // has sub-category
             self.hasSubCategory = true
             self.showQuestions = false
             self.categoryItemInd = index
+            self.subCategoryInd = -1
+
+            this.categories[index].subCategories.forEach(function(subCategory, index){
+              subCategory.isActive = false
+            })
           } else {
             // does not have sub-category
             self.hasSubCategory = false
             self.showQuestions = true
             self.questions = this.categories[index].questions
             self.categoryItemInd = null
+            self.subCategoryInd = -1
           }
 
         } else {
           this.categories[index].isActive = false
         }
+
       })
     },
     handleSubCategory: function (categoryName, categoryInd, subCategoryInd) {
       const self = this
       this.complaintItem = categoryName
       this.showQuestions = true
+      // this.subCategory = categoryName
+      this.subCategoryInd = subCategoryInd
+
+      // console.log(categoryName)
 
       this.categories[categoryInd].subCategories.forEach(function(subCategory, index){
-        console.log(index + ' : ' + subCategoryInd)
+        // console.log(self.subCategory)
         if (index === subCategoryInd) {
           subCategory.isActive = true
           self.questions = subCategory.questions
+          self.subCategory = subCategory.name
         } else {
           subCategory.isActive = false
         }
       })
     },
     handleSelectAnswer: function (indexQuestion, indexAnswer) {
+      // currCategory
+      // subCategory
+      // let questions
+
+      // // if (this.categories[this.currCategory].subCategories !== undefined) {
+      // //   // questions = this.categories[this.currCategory].subCategories[self.subCategoryIndex].questions
+      // // // } else {
+      // //   questions = this.categories[this.currCategory].questions
+      // // }
+      // // console.log(this.categories[this.categoryIndex])
+
+      // if ('subCategories' in this.categories[this.categoryIndex]) {
+      // //   console.log('Subcategories exist')
+      // //   console.log(this.categories[this.categoryIndex].subCategories[this.subCategoryInd])
+      //   questions = this.categories[this.categoryIndex].subCategories[this.subCategoryInd].questions
+      // } else {
+      //   questions = this.categories[this.categoryIndex].questions
+      // }
+
+      // console.log(questions[indexQuestion].options)
+
+      this.questions[indexQuestion].options.forEach((question, index) => {
+        if (indexAnswer === index) {
+          question.isActive = true
+        } else {
+          question.isActive = false
+        }
+      })
+
       console.log(indexQuestion, indexAnswer)
     },
     showAlert: function () {
       alert(`This episode has been recorded.`)
     },
-    getTab: function (tabName) {
+    getTab: function (tabName, tabIsEnabled) {
       let tabs = this.tabs
       let ref = 0
 
-      for (let i = 0; i < tabs.length; i++) {
-        if (tabs[i].name === tabName) {
-          tabs[i].isActive = true
-          ref = i
-        } else {
-          tabs[i].isActive = false
+      if (tabIsEnabled) {
+        for (let i = 0; i < tabs.length; i++) {
+        console.log('----')
+        console.log(tabName, i)
+        console.log(tabs[i].isEnabled)
+        console.log('----')
+        // if (tabs[i].name === tabName) {
+        //   if (tabs[i].isEnabled) {
+        //     tabs[i].isActive = true 
+        //   }
+        // } else if (tabs[i].name === tabName && !tabs[i].isEnabled) {
+        //   tabs[i].isActive = false 
+        // }
+        if (tabs[i].isEnabled) {
+          if (tabs[i].name === tabName) {
+            tabs[i].isActive = true
+          } else {
+            tabs[i].isActive = false
+          }
         }
+      }
+      
+        //   // if (tabs[i].name === tabName) {
+        //   //   tabs[i].isActive = true
+        //   //   // ref = i
+        //   // } else {
+        //   //   tabs[i].isActive = false
+        //   // }
+        // } 
+        
+        // if (tabs[i].isEnabled && tabs[i].name !== tabName) {
+        //   tabs[i].isActive = false
+        // }
+        // if (tabs[i].isEnabled) {
+          // if (tabs[i].name === tabName) {
+          //   tabs[i].isActive = true
+          //   // ref = i
+          // } else {
+          //   tabs[i].isActive = false
+          // }
+        // } 
 
-        if (ref == (tabs.length - 1)) {
-          this.showComplete = true
-        } else {
-          this.showComplete = false
-        }
+        // if (ref == (tabs.length - 1)) {
+        //   this.showComplete = true
+        // } else {
+        //   this.showComplete = false
+        // }
       }
     },
     goToNext: function () {
@@ -366,11 +466,12 @@ export default {
         }
       }
 
-      if ((ref + 1) >= (tabs.length-1)) {
-        this.showComplete = true
-      } 
+      // if ((ref + 1) >= (tabs.length-1)) {
+      //   this.showComplete = true
+      // } 
 
       tabs[ref + 1].isActive = true
+      tabs[ref + 1].isEnabled = true
     },
     addToQueue: function () {
       // alert('Added to Patient Queue.')
@@ -388,7 +489,9 @@ export default {
   data() {
     return {
       currCategory: '',
+      categoryIndex: null,
       subCategory: '',
+      subCategoryInd: null,
       categoryItemInd: null,
       hasSubCategory: false,
       showQuestions: false,
@@ -2858,11 +2961,17 @@ export default {
               questions: [
                 {
                   question: "Where is it swelling?",
-                  type: 'text'
-                },
-                {
-                  question: "How many tumors are there?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Back of Motuh',
+                      isActive: false
+                    },
+                    {
+                      name: 'Front of Throat',
+                      isActive: false
+                    },
+                  ]
                 },
                 {
                   question: "How long has it been there?",
@@ -2870,43 +2979,169 @@ export default {
                 },
                 {
                   question: "How did it start?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Gradually',
+                      isActive: false
+                    },
+                    {
+                      name: 'Suddenly',
+                      isActive: false
+                    },
+                  ]
                 },
                 {
                   question: "Is it painful?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Yes',
+                      isActive: false
+                    },
+                    {
+                      name: 'No',
+                      isActive: false
+                    },
+                  ]
                 },
                 {
                   question: "Has it changed in size?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'No Change',
+                      isActive: false
+                    },
+                    {
+                      name: 'Increased',
+                      isActive: false
+                    },
+                    {
+                      name: 'Decreased',
+                      isActive: false
+                    },
+                  ]
+                },
+                {
+                  question: "Has there been a change in skin color?",
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'No Change',
+                      isActive: false
+                    },
+                    {
+                      name: 'Change',
+                      isActive: false
+                    },
+                  ]
                 },
                 {
                   question: "Are there any other symptoms?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Difficulty in Work',
+                      isActive: false
+                    },
+                    {
+                      name: 'Difficulty in Movement',
+                      isActive: false
+                    },
+                    {
+                      name: 'None',
+                      isActive: false
+                    },
+                    {
+                      name: 'Other',
+                      isActive: false
+                    },
+                  ]
                 },
                 {
                   question: "Is there any history of injury?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Yes',
+                      isActive: false
+                    },
+                    {
+                      name: 'No',
+                      isActive: false
+                    },
+                  ]
                 },
                 {
                   question: "Is there excessive sweating?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Yes',
+                      isActive: false
+                    },
+                    {
+                      name: 'No',
+                      isActive: false
+                    },
+                  ]
                 },
                 {
                   question: "Is there constipation?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Yes',
+                      isActive: false
+                    },
+                    {
+                      name: 'No',
+                      isActive: false
+                    },
+                  ]
                 },
                 {
                   question: "Are there any period problems?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Yes',
+                      isActive: false
+                    },
+                    {
+                      name: 'No',
+                      isActive: false
+                    },
+                  ]
                 },
                 {
                   question: "Has there been an excess in appetite?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Yes',
+                      isActive: false
+                    },
+                    {
+                      name: 'No',
+                      isActive: false
+                    },
+                  ]
                 },
                 {
                   question: "Is there a general weakness?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Yes',
+                      isActive: false
+                    },
+                    {
+                      name: 'No',
+                      isActive: false
+                    },
+                  ]
                 },
               ]
             },
@@ -2916,7 +3151,17 @@ export default {
               questions: [
                 {
                   question: "Where is the swelling?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Yes',
+                      isActive: false
+                    },
+                    {
+                      name: 'No',
+                      isActive: false
+                    },
+                  ]
                 },
                 {
                   question: "How many tumors are there?",
@@ -2924,55 +3169,185 @@ export default {
                 },
                 {
                   question: "How long has it been there?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Yes',
+                      isActive: false
+                    },
+                    {
+                      name: 'No',
+                      isActive: false
+                    },
+                  ]
                 },
                 {
                   question: "How did it start?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Yes',
+                      isActive: false
+                    },
+                    {
+                      name: 'No',
+                      isActive: false
+                    },
+                  ]
                 },
                 {
                   question: "Is it painful?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Yes',
+                      isActive: false
+                    },
+                    {
+                      name: 'No',
+                      isActive: false
+                    },
+                  ]
                 },
                 {
                   question: "Has it changed in size?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Yes',
+                      isActive: false
+                    },
+                    {
+                      name: 'No',
+                      isActive: false
+                    },
+                  ]
                 },
                 {
                   question: "Are there any other symptoms?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Yes',
+                      isActive: false
+                    },
+                    {
+                      name: 'No',
+                      isActive: false
+                    },
+                  ]
                 },
                 {
                   question: "Is there any history of injury?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Yes',
+                      isActive: false
+                    },
+                    {
+                      name: 'No',
+                      isActive: false
+                    },
+                  ]
                 },
                 {
                   question: "Is it general abdoinal pain?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Yes',
+                      isActive: false
+                    },
+                    {
+                      name: 'No',
+                      isActive: false
+                    },
+                  ]
                 },
                 {
                   question: "Has there been a change in weight?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Yes',
+                      isActive: false
+                    },
+                    {
+                      name: 'No',
+                      isActive: false
+                    },
+                  ]
                 },
                 {
                   question: "What is the bowel habit?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Yes',
+                      isActive: false
+                    },
+                    {
+                      name: 'No',
+                      isActive: false
+                    },
+                  ]
                 },
                 {
                   question: "Is there yellow colour in urine?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Yes',
+                      isActive: false
+                    },
+                    {
+                      name: 'No',
+                      isActive: false
+                    },
+                  ]
                 },
                 {
                   question: "Has there been any vomiting?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Yes',
+                      isActive: false
+                    },
+                    {
+                      name: 'No',
+                      isActive: false
+                    },
+                  ]
                 },
                 {
                   question: "Has there been a change in appetite?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Yes',
+                      isActive: false
+                    },
+                    {
+                      name: 'No',
+                      isActive: false
+                    },
+                  ]
                 },
                 {
                   question: "Are there any flucuations in size?",
-                  type: 'text'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Yes',
+                      isActive: false
+                    },
+                    {
+                      name: 'No',
+                      isActive: false
+                    },
+                  ]
                 },
               ]
             },
@@ -3404,22 +3779,10 @@ export default {
           questions: [
             {
               question: "How long has this been happening?",
-              type: 'button',
+              type: 'text',
               options: [
                 {
                   name: 'Mild',
-                  isActive: false
-                },
-                {
-                  name: 'Moderate',
-                  isActive: false
-                },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
                   isActive: false
                 }
               ]
@@ -3429,19 +3792,19 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Watery',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'Soft',
                   isActive: false
                 },
                 {
-                  name: 'Severe',
+                  name: 'Ill-formed',
                   isActive: false
                 },
                 {
-                  name: 'Varies',
+                  name: 'Other',
                   isActive: false
                 }
               ]
@@ -3451,87 +3814,72 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Happens Everyday',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'Happens Somedays',
                   isActive: false
                 },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
             {
               question: "How is the frequency?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Mild',
-                  isActive: false
-                },
-                {
-                  name: 'Moderate',
-                  isActive: false
-                },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
-              ]
+              type: 'text',
+              options: []
             }, 
             {
               question: "Is there blood in the stool?",
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Yes',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'No',
+                  isActive: false
+                },
+              ]
+            },
+            {
+              question: "Are there any associated symptoms?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Abdominal Pain',
                   isActive: false
                 },
                 {
-                  name: 'Severe',
+                  name: 'Vomiting',
                   isActive: false
                 },
                 {
-                  name: 'Varies',
+                  name: 'Fever',
+                  isActive: false
+                },
+                {
+                  name: 'None',
+                  isActive: false
+                },
+                {
+                  name: 'Other',
                   isActive: false
                 }
               ]
             },
             {
-              question: "Does the complaint intensify with food?",
+              question: "Is there any relation to food?",
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Yes',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'No',
                   isActive: false
                 },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
             {
@@ -3539,21 +3887,13 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Yes',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'No',
                   isActive: false
                 },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
           ]
@@ -3564,156 +3904,78 @@ export default {
           questions: [
             {
               question: "How long has this been happening?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Mild',
-                  isActive: false
-                },
-                {
-                  name: 'Moderate',
-                  isActive: false
-                },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
-              ]
+              type: 'text',
             },
             {
               question: "What is the nature of the vomiting?",
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Happens Everyday',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'Happens Somedays',
                   isActive: false
                 },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
             {
               question: "What is the frequency?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Mild',
-                  isActive: false
-                },
-                {
-                  name: 'Moderate',
-                  isActive: false
-                },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
-              ]
+              type: 'text',
             },
             {
               question: "Has appetitie changed?",
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Normal',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'Less',
                   isActive: false
                 },
                 {
-                  name: 'Severe',
+                  name: 'More',
                   isActive: false
                 },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             }, 
             {
               question: "What causes the vomiting?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Mild',
-                  isActive: false
-                },
-                {
-                  name: 'Moderate',
-                  isActive: false
-                },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
-              ]
+              type: 'text',
             },
             {
               question: "What provides relief?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Mild',
-                  isActive: false
-                },
-                {
-                  name: 'Moderate',
-                  isActive: false
-                },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
-              ]
+              type: 'text',
             },
             {
               question: "Is there blood?",
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Yes',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'No',
+                  isActive: false
+                },
+              ]
+            },
+            {
+              question: "Is there nausea?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
                   isActive: false
                 },
                 {
-                  name: 'Severe',
+                  name: 'No',
                   isActive: false
                 },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
             {
@@ -3721,19 +3983,31 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Abdominal Pain',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'Loss of Weight',
                   isActive: false
                 },
                 {
-                  name: 'Severe',
+                  name: 'Headache',
                   isActive: false
                 },
                 {
-                  name: 'Varies',
+                  name: 'Diarrhoea',
+                  isActive: false
+                },
+                {
+                  name: 'Constipation',
+                  isActive: false
+                },
+                {
+                  name: 'None',
+                  isActive: false
+                },
+                {
+                  name: 'Other',
                   isActive: false
                 }
               ]
@@ -3746,46 +4020,20 @@ export default {
           questions: [
             {
               question: "How long has this been happening?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Mild',
-                  isActive: false
-                },
-                {
-                  name: 'Moderate',
-                  isActive: false
-                },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
-              ]
+              type: 'text',
             },
             {
               question: "What is the nature of the dizziness?",
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Happens Everyday',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'Happens Somedays',
                   isActive: false
                 },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
             {
@@ -3793,85 +4041,57 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Whole Day',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'Part of Day (morning)',
                   isActive: false
                 },
                 {
-                  name: 'Severe',
+                  name: 'Part of Day (evening)',
                   isActive: false
                 },
                 {
-                  name: 'Varies',
+                  name: 'Part of Day (night)',
                   isActive: false
-                }
+                },
+                {
+                  name: 'Other',
+                  isActive: false
+                },
               ]
             },
             {
               question: "What causes the dizziness?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Mild',
-                  isActive: false
-                },
-                {
-                  name: 'Moderate',
-                  isActive: false
-                },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
-              ]
+              type: 'text',
             },
             {
               question: "What provides relief?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Mild',
-                  isActive: false
-                },
-                {
-                  name: 'Moderate',
-                  isActive: false
-                },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
-              ]
+              type: 'text',
             },
             {
               question: "Is there a relation with positioning?",
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Lying Down',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'Standing Up',
                   isActive: false
                 },
                 {
-                  name: 'Severe',
+                  name: 'Moving Neck',
                   isActive: false
                 },
                 {
-                  name: 'Varies',
+                  name: 'Opening Eyes',
+                  isActive: false
+                },
+                {
+                  name: 'Other',
                   isActive: false
                 }
               ]
@@ -3881,21 +4101,13 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Yes',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'No',
                   isActive: false
                 },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
             {
@@ -3903,21 +4115,13 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Yes',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'No',
                   isActive: false
                 },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
             {
@@ -3925,19 +4129,27 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Vomiting',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'Chest Pain',
                   isActive: false
                 },
                 {
-                  name: 'Severe',
+                  name: 'Breathlessness',
                   isActive: false
                 },
                 {
-                  name: 'Varies',
+                  name: 'Pain in Ear',
+                  isActive: false
+                },
+                {
+                  name: 'None',
+                  isActive: false
+                },
+                {
+                  name: 'Other',
                   isActive: false
                 }
               ]
@@ -3947,21 +4159,13 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'All Right',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'Diminished',
                   isActive: false
                 },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
             {
@@ -3969,21 +4173,13 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Normal',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'Less',
                   isActive: false
                 },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
           ]
@@ -3994,46 +4190,20 @@ export default {
           questions: [
             {
               question: "How long has this been happening?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Mild',
-                  isActive: false
-                },
-                {
-                  name: 'Moderate',
-                  isActive: false
-                },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
-              ]
+              type: 'text',
             },
             {
               question: "Is there any abdominal pain?",
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Yes',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'No',
                   isActive: false
                 },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
             {
@@ -4041,21 +4211,13 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Yes',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'No',
                   isActive: false
                 },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
             {
@@ -4063,21 +4225,13 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Yes',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'No',
                   isActive: false
                 },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
             {
@@ -4085,21 +4239,13 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Normal',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'Less',
                   isActive: false
                 },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
             {
@@ -4107,21 +4253,13 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Yes',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'No',
                   isActive: false
                 },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
             {
@@ -4129,65 +4267,31 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Yes',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'No',
                   isActive: false
                 },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
             {
               question: "What causes the complaint?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Mild',
-                  isActive: false
-                },
-                {
-                  name: 'Moderate',
-                  isActive: false
-                },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
-              ]
+              type: 'text',
             },
             {
               question: "Is there H/O jaundice?",
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Yes',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'No',
                   isActive: false
                 },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
             {
@@ -4195,21 +4299,27 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Yes',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'No',
+                  isActive: false
+                },
+              ]
+            },
+            {
+              question: "Is there H/O smoking?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
                   isActive: false
                 },
                 {
-                  name: 'Severe',
+                  name: 'No',
                   isActive: false
                 },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
             {
@@ -4217,21 +4327,13 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Yes',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'No',
                   isActive: false
                 },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
           ]
@@ -4242,46 +4344,20 @@ export default {
           questions: [
             {
               question: "How long has this been happening?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Mild',
-                  isActive: false
-                },
-                {
-                  name: 'Moderate',
-                  isActive: false
-                },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
-              ]
+              type: 'text',
             },
             {
               question: "Is there any abdominal pain?",
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Yes',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'No',
                   isActive: false
                 },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
             {
@@ -4289,65 +4365,31 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Yes',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'No',
                   isActive: false
                 },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
             {
               question: "What is the color of stool?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Mild',
-                  isActive: false
-                },
-                {
-                  name: 'Moderate',
-                  isActive: false
-                },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
-              ]
+              type: 'text',
             },
             {
               question: "Is there any bleeding with urine?",
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Yes',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'No',
                   isActive: false
                 },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
             {
@@ -4355,21 +4397,13 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Yes',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'No',
                   isActive: false
                 },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
           ]
@@ -4380,25 +4414,7 @@ export default {
           questions: [
             {
               question: "Where is the rash located?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Mild',
-                  isActive: false
-                },
-                {
-                  name: 'Moderate',
-                  isActive: false
-                },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
-              ]
+              type: 'text',
             },
             {
               question: "How big is the rash?",
@@ -4449,44 +4465,18 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Smooth',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'Rough',
                   isActive: false
                 },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
             {
               question: "Provide a description of the color.",
-              type: 'button',
-              options: [
-                {
-                  name: 'Mild',
-                  isActive: false
-                },
-                {
-                  name: 'Moderate',
-                  isActive: false
-                },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
-              ]
+              type: 'text',
             },
           ]
         },
@@ -4495,47 +4485,21 @@ export default {
           isActive: false,
           questions: [
             {
-              question: "Where is the color of the stool?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Mild',
-                  isActive: false
-                },
-                {
-                  name: 'Moderate',
-                  isActive: false
-                },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
-              ]
+              question: "What is the color of the stool?",
+              type: 'text',
             },
             {
               question: "What is the amount of stool?",
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Lots',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'Droplets',
                   isActive: false
                 },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
             {
@@ -4543,21 +4507,27 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Yes',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'No',
+                  isActive: false
+                },
+              ]
+            },
+            {
+              question: "Has there been a change in bowel habit?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
                   isActive: false
                 },
                 {
-                  name: 'Severe',
+                  name: 'No',
                   isActive: false
                 },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
             {
@@ -4565,21 +4535,13 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Yes',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'No',
                   isActive: false
                 },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
             {
@@ -4587,21 +4549,13 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Yes',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'No',
                   isActive: false
                 },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
           ]
@@ -4619,26 +4573,18 @@ export default {
                   type: 'button',
                   options: [
                     {
-                      name: 'Mild',
+                      name: 'Yes',
                       isActive: false
                     },
                     {
-                      name: 'Moderate',
+                      name: 'No',
                       isActive: false
                     },
-                    {
-                      name: 'Severe',
-                      isActive: false
-                    },
-                    {
-                      name: 'Varies',
-                      isActive: false
-                    }
                   ]
                 },
                 {
                   question: "When was the last LMP?",
-                  type: 'button',
+                  type: 'text',
                   options: [
                     {
                       name: 'Mild',
@@ -4660,7 +4606,7 @@ export default {
                 },
                 {
                   question: "What is the duration of the patient's period?",
-                  type: 'button',
+                  type: 'text',
                   options: [
                     {
                       name: 'Mild',
@@ -5787,21 +5733,13 @@ export default {
                   type: 'button',
                   options: [
                     {
-                      name: 'Mild',
+                      name: 'Yes',
                       isActive: false
                     },
                     {
-                      name: 'Moderate',
+                      name: 'No',
                       isActive: false
                     },
-                    {
-                      name: 'Severe',
-                      isActive: false
-                    },
-                    {
-                      name: 'Varies',
-                      isActive: false
-                    }
                   ]
                 },
                 {
@@ -5809,21 +5747,9 @@ export default {
                   type: 'button',
                   options: [
                     {
-                      name: 'Mild',
+                      name: 'Description of Date',
                       isActive: false
                     },
-                    {
-                      name: 'Moderate',
-                      isActive: false
-                    },
-                    {
-                      name: 'Severe',
-                      isActive: false
-                    },
-                    {
-                      name: 'Varies',
-                      isActive: false
-                    }
                   ]
                 },
                 {
@@ -5831,21 +5757,13 @@ export default {
                   type: 'button',
                   options: [
                     {
-                      name: 'Mild',
+                      name: '# of Days',
                       isActive: false
                     },
                     {
-                      name: 'Moderate',
+                      name: 'Varies Day to Day',
                       isActive: false
                     },
-                    {
-                      name: 'Severe',
-                      isActive: false
-                    },
-                    {
-                      name: 'Varies',
-                      isActive: false
-                    }
                   ]
                 },
                 {
@@ -5853,21 +5771,13 @@ export default {
                   type: 'button',
                   options: [
                     {
-                      name: 'Mild',
+                      name: '# of Days',
                       isActive: false
                     },
                     {
-                      name: 'Moderate',
+                      name: 'Varies Day to Day',
                       isActive: false
                     },
-                    {
-                      name: 'Severe',
-                      isActive: false
-                    },
-                    {
-                      name: 'Varies',
-                      isActive: false
-                    }
                   ]
                 },
                 {
@@ -5875,15 +5785,15 @@ export default {
                   type: 'button',
                   options: [
                     {
-                      name: 'Mild',
+                      name: 'Normal',
                       isActive: false
                     },
                     {
-                      name: 'Moderate',
+                      name: 'Heavy',
                       isActive: false
                     },
                     {
-                      name: 'Severe',
+                      name: 'Low',
                       isActive: false
                     },
                     {
@@ -5897,21 +5807,9 @@ export default {
                   type: 'button',
                   options: [
                     {
-                      name: 'Mild',
+                      name: 'Description',
                       isActive: false
                     },
-                    {
-                      name: 'Moderate',
-                      isActive: false
-                    },
-                    {
-                      name: 'Severe',
-                      isActive: false
-                    },
-                    {
-                      name: 'Varies',
-                      isActive: false
-                    }
                   ]
                 },
                 {
@@ -5919,21 +5817,9 @@ export default {
                   type: 'button',
                   options: [
                     {
-                      name: 'Mild',
+                      name: 'Description',
                       isActive: false
                     },
-                    {
-                      name: 'Moderate',
-                      isActive: false
-                    },
-                    {
-                      name: 'Severe',
-                      isActive: false
-                    },
-                    {
-                      name: 'Varies',
-                      isActive: false
-                    }
                   ]
                 },
                 {
@@ -5941,21 +5827,9 @@ export default {
                   type: 'button',
                   options: [
                     {
-                      name: 'Mild',
+                      name: 'Description',
                       isActive: false
                     },
-                    {
-                      name: 'Moderate',
-                      isActive: false
-                    },
-                    {
-                      name: 'Severe',
-                      isActive: false
-                    },
-                    {
-                      name: 'Varies',
-                      isActive: false
-                    }
                   ]
                 },
                 {
@@ -5963,21 +5837,9 @@ export default {
                   type: 'button',
                   options: [
                     {
-                      name: 'Mild',
+                      name: 'Description',
                       isActive: false
                     },
-                    {
-                      name: 'Moderate',
-                      isActive: false
-                    },
-                    {
-                      name: 'Severe',
-                      isActive: false
-                    },
-                    {
-                      name: 'Varies',
-                      isActive: false
-                    }
                   ]
                 },
                 {
@@ -5985,21 +5847,13 @@ export default {
                   type: 'button',
                   options: [
                     {
-                      name: 'Mild',
+                      name: 'Yes',
                       isActive: false
                     },
                     {
-                      name: 'Moderate',
+                      name: 'No',
                       isActive: false
                     },
-                    {
-                      name: 'Severe',
-                      isActive: false
-                    },
-                    {
-                      name: 'Varies',
-                      isActive: false
-                    }
                   ]
                 },
                 {
@@ -6007,21 +5861,9 @@ export default {
                   type: 'button',
                   options: [
                     {
-                      name: 'Mild',
+                      name: 'Description',
                       isActive: false
                     },
-                    {
-                      name: 'Moderate',
-                      isActive: false
-                    },
-                    {
-                      name: 'Severe',
-                      isActive: false
-                    },
-                    {
-                      name: 'Varies',
-                      isActive: false
-                    }
                   ]
                 },
                 {
@@ -6103,19 +5945,39 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Fall (at home)',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'Fall (on road)',
                   isActive: false
                 },
                 {
-                  name: 'Severe',
+                  name: 'Fall (on height)',
                   isActive: false
                 },
                 {
-                  name: 'Varies',
+                  name: 'Hit by Car',
+                  isActive: false
+                },
+                {
+                  name: 'Hit by Bike',
+                  isActive: false
+                },
+                {
+                  name: 'Hit by Bicycle',
+                  isActive: false
+                },
+                {
+                  name: 'Hit by Machine',
+                  isActive: false
+                },
+                {
+                  name: 'Cut',
+                  isActive: false
+                },
+                {
+                  name: 'Violence',
                   isActive: false
                 }
               ]
@@ -6147,21 +6009,17 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Can\'t Walk',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'Can\t move',
                   isActive: false
                 },
                 {
-                  name: 'Severe',
+                  name: 'Pain',
                   isActive: false
                 },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
             {
@@ -6169,21 +6027,13 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Yes',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'No',
                   isActive: false
                 },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             }
           ]
@@ -6197,21 +6047,9 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Description',
                   isActive: false
                 },
-                {
-                  name: 'Moderate',
-                  isActive: false
-                },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
             {
@@ -6219,21 +6057,9 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Description',
                   isActive: false
                 },
-                {
-                  name: 'Moderate',
-                  isActive: false
-                },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
             {
@@ -6241,21 +6067,17 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Injury',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'On its Own',
                   isActive: false
                 },
                 {
-                  name: 'Severe',
+                  name: 'Other',
                   isActive: false
                 },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
             {
@@ -6263,21 +6085,13 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Yes',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'No',
                   isActive: false
                 },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
             {
@@ -6285,21 +6099,13 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Red',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'Normal',
                   isActive: false
                 },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             }
           ]
@@ -6335,21 +6141,9 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Description',
                   isActive: false
                 },
-                {
-                  name: 'Moderate',
-                  isActive: false
-                },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
             {
@@ -6357,21 +6151,17 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Injury',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'On its Own',
                   isActive: false
                 },
                 {
-                  name: 'Severe',
+                  name: 'Other',
                   isActive: false
                 },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
             {
@@ -6379,21 +6169,13 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Yes',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'No',
                   isActive: false
                 },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
             {
@@ -6401,19 +6183,27 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Clean',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'Dirty',
                   isActive: false
                 },
                 {
-                  name: 'Severe',
+                  name: 'Pink',
                   isActive: false
                 },
                 {
-                  name: 'Varies',
+                  name: 'Black',
+                  isActive: false
+                },
+                {
+                  name: 'Green',
+                  isActive: false
+                },
+                {
+                  name: 'Mixed',
                   isActive: false
                 }
               ]
@@ -6423,21 +6213,13 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Raised',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'Flat with Surface',
                   isActive: false
                 },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
             {
@@ -6445,21 +6227,9 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Provide Measurement',
                   isActive: false
                 },
-                {
-                  name: 'Moderate',
-                  isActive: false
-                },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
             {
@@ -6495,19 +6265,19 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: '1',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: '2',
                   isActive: false
                 },
                 {
-                  name: 'Severe',
+                  name: '3',
                   isActive: false
                 },
                 {
-                  name: 'Varies',
+                  name: '4',
                   isActive: false
                 }
               ]
@@ -6517,19 +6287,19 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: '1',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: '2',
                   isActive: false
                 },
                 {
-                  name: 'Severe',
+                  name: '3',
                   isActive: false
                 },
                 {
-                  name: 'Varies',
+                  name: '4',
                   isActive: false
                 }
               ]
@@ -6539,21 +6309,13 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Yes',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'No',
                   isActive: false
                 },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
             {
@@ -6561,21 +6323,13 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Yes',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'No',
                   isActive: false
                 },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
             {
@@ -6583,21 +6337,13 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Yes',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'No',
                   isActive: false
                 },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
             {
@@ -6605,21 +6351,13 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Yes',
                   isActive: false
                 },
                 {
-                  name: 'Moderate',
+                  name: 'No',
                   isActive: false
                 },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
             {
@@ -6627,21 +6365,9 @@ export default {
               type: 'button',
               options: [
                 {
-                  name: 'Mild',
+                  name: 'Description',
                   isActive: false
                 },
-                {
-                  name: 'Moderate',
-                  isActive: false
-                },
-                {
-                  name: 'Severe',
-                  isActive: false
-                },
-                {
-                  name: 'Varies',
-                  isActive: false
-                }
               ]
             },
             {
@@ -6649,21 +6375,9 @@ export default {
                   type: 'button',
                   options: [
                     {
-                      name: 'Mild',
+                      name: 'Description',
                       isActive: false
                     },
-                    {
-                      name: 'Moderate',
-                      isActive: false
-                    },
-                    {
-                      name: 'Severe',
-                      isActive: false
-                    },
-                    {
-                      name: 'Varies',
-                      isActive: false
-                    }
                   ]
             }
           ]
@@ -6841,21 +6555,13 @@ export default {
                   type: 'button',
                   options: [
                     {
-                      name: 'Mild',
+                      name: 'Normal',
                       isActive: false
                     },
                     {
-                      name: 'Moderate',
+                      name: 'Decreased',
                       isActive: false
                     },
-                    {
-                      name: 'Severe',
-                      isActive: false
-                    },
-                    {
-                      name: 'Varies',
-                      isActive: false
-                    }
                   ]
                 },
                 {
@@ -6863,21 +6569,17 @@ export default {
                   type: 'button',
                   options: [
                     {
-                      name: 'Mild',
+                      name: 'No Change',
                       isActive: false
                     },
                     {
-                      name: 'Moderate',
+                      name: 'Decreased',
                       isActive: false
                     },
                     {
-                      name: 'Severe',
+                      name: 'Increased',
                       isActive: false
                     },
-                    {
-                      name: 'Varies',
-                      isActive: false
-                    }
                   ]
                 },
                 {
@@ -6885,21 +6587,13 @@ export default {
                   type: 'button',
                   options: [
                     {
-                      name: 'Mild',
+                      name: 'Yes',
                       isActive: false
                     },
                     {
-                      name: 'Moderate',
+                      name: 'No',
                       isActive: false
                     },
-                    {
-                      name: 'Severe',
-                      isActive: false
-                    },
-                    {
-                      name: 'Varies',
-                      isActive: false
-                    }
                   ]
                 },
                 {
@@ -6907,21 +6601,13 @@ export default {
                   type: 'button',
                   options: [
                     {
-                      name: 'Mild',
+                      name: 'Yes',
                       isActive: false
                     },
                     {
-                      name: 'Moderate',
+                      name: 'No',
                       isActive: false
                     },
-                    {
-                      name: 'Severe',
-                      isActive: false
-                    },
-                    {
-                      name: 'Varies',
-                      isActive: false
-                    }
                   ]
                 },
                 {
@@ -6929,19 +6615,19 @@ export default {
                   type: 'button',
                   options: [
                     {
-                      name: 'Mild',
+                      name: 'Fever',
                       isActive: false
                     },
                     {
-                      name: 'Moderate',
+                      name: 'Cough',
                       isActive: false
                     },
                     {
-                      name: 'Severe',
+                      name: 'Diarrhea',
                       isActive: false
                     },
                     {
-                      name: 'Varies',
+                      name: 'Constipation',
                       isActive: false
                     }
                   ]
@@ -7072,34 +6758,46 @@ export default {
       showComplete: false,
       tabs: [
         {
-          name: 'allocated',
+          name: 'chiefComplaints',
           title: 'Chief Complaints',
           isActive: true,
+          isEnabled: true
         },
         {
-          name: 'cluster',
+          name: 'fixedQuestions',
+          title: 'Fixed Questions',
+          isActive: false,
+          isEnabled: false
+        },
+        {
+          name: 'vitals',
           title: 'Vitals',
           isActive: false,
+          isEnabled: false
         },
         {
-          name: 'general',
+          name: 'generalExams',
           title: 'General Exams',
           isActive: false,
+          isEnabled: false
         },
         {
-          name: 'specific',
+          name: 'specificExams',
           title: 'Specific Exams',
           isActive: false,
+          isEnabled: false
         },
         {
           name: 'photos',
           title: 'Photos',
           isActive: false,
+          isEnabled: false
         },
         {
           name: 'allocation',
           title: 'Allocation',
           isActive: false,
+          isEnabled: false 
         }
       ]
     }
