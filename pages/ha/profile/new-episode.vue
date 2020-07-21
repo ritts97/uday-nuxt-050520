@@ -305,6 +305,9 @@
           </transition>
         </div>
       </div>
+
+
+      <img src="/anatomy_sketch.png" class="d-none" alt="">
     </div>
     
     
