@@ -19,19 +19,23 @@
               <div class="row mt-1">
                 <div class="col-md-12 text-muted small mb-0">
                   General Information <br>
-                  Sub category: {{ subCategoryInd }}
+                  <!-- Sub category: {{ subCategoryInd }} -->
 
                   <hr>
                 </div>
                 <!-- General Category -->
                 <div class="col-md-12 mb-3">
-                  <label for="exampleFormControlSelect1">What is the category of the complaint? {{ categoryIndex }}</label><br>
+                  <label for="exampleFormControlSelect1">What is the category of the complaint?
+                     <!-- {{ categoryIndex }} -->
+                     </label><br>
                   <button  v-for="(category, index) in categories" :class="category.isActive ? 'btn-dark text-white' : 'btn-light'" class="btn mb-2 mr-2" @click="makeCategoryActive(category.name)" :key="index">{{category.name}}</button>
                 </div>
                 <!-- General SubCategory -->
                 <transition  appear name="u-fade"  mode="out-in" tag="div">
                   <div class="col-md-12 mb-3" v-if="hasSubCategory">
-                    <label for="exampleFormControlSelect1">What is the specific complaint? {{ subCategoryInd }} </label><br>
+                    <label for="exampleFormControlSelect1">What is the specific complaint? 
+                      <!-- {{ subCategoryInd }}  -->
+                      </label><br>
                     <div v-if="categoryItemInd !== null" class="w-100">
                       <button v-for="(complaintItem, index) in categories[categoryItemInd].subCategories" :key="index" class="btn mb-2 mr-2" :class="complaintItem.isActive ? 'btn-dark text-white' : 'btn-light'" @click="handleSubCategory(currCategory, categoryItemInd, index)">{{ complaintItem.name }}</button>
                     </div>
@@ -43,7 +47,7 @@
             <div class="container mb-3">
               <div class="row">
                 <div class="col-md-12 px-0">
-                  {{ subCategoryInd }}
+                  <!-- {{ subCategoryInd }} -->
                     <button @click="goToNext()" :disabled="(!categoryIndex && !hasSubCategory) || (hasSubCategory && subCategoryInd <= -1)" type="button" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0 text-uppercase">
                       Go to Fixed Questions
                     </button>
@@ -66,7 +70,7 @@
                         <div class="row">
                           <div class="col-md-12 mb-3">
                             <button class="btn mb-2 btn-dark mr-2" v-if="currCategory">{{ currCategory }}</button>
-                            <button class="btn mb-2 btn-dark mr-2" v-if="subCategory">{{ subCategory }}</button><br>
+                            <button class="btn mb-2 btn-dark mr-2" v-if="subCategoryInd >= 0">{{ subCategory }}</button><br>
                           </div>
                           <div v-for="(question, indexQuestion) in questions" class="col-md-6 mb-4" :key="indexQuestion">
                             <div v-if="question.type === 'text'">
@@ -318,7 +322,7 @@ export default {
       this.categories.forEach((category, index) => {
         if (category.name == clickedCategory) {
           this.categories[index].isActive = true
-          this.currCategory = clickedCategory
+          self.currCategory = clickedCategory
           // this.subCategory = ''
           self.categoryIndex = index
 
