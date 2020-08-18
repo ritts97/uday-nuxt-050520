@@ -58,7 +58,7 @@
               <div class="row mt-1">
                 <div class="col-md-12 mb-0 px-0">
                   <div class="col-md-12 text-muted small mb-0 w-100">
-                    Chief Complain, Fixed Questions
+                    Chief Complain, whFixed Questions
                     <hr>
                   </div>
                   <transition  appear name="u-fade"  mode="out-in" tag="div">
@@ -3290,7 +3290,7 @@ export default {
                   ]
                 },
                 {
-                  question: "Is it general abdoinal pain?",
+                  question: "Is it general abdominal pain?",
                   type: 'button',
                   options: [
                     {
@@ -3319,17 +3319,8 @@ export default {
                 },
                 {
                   question: "What is the bowel habit?",
-                  type: 'button',
-                  options: [
-                    {
-                      name: 'Yes',
-                      isActive: false
-                    },
-                    {
-                      name: 'No',
-                      isActive: false
-                    },
-                  ]
+                  type: 'text',
+                  placeholder: 'Please describe the # of times per day'
                 },
                 {
                   question: "Is there yellow colour in urine?",
@@ -3374,7 +3365,7 @@ export default {
                   ]
                 },
                 {
-                  question: "Are there any flucuations in size?",
+                  question: "Are there any flucuations in swelling size?",
                   type: 'button',
                   options: [
                     {
