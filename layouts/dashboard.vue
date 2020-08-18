@@ -62,7 +62,7 @@
     </div>
 
     <!-- Footer -->
-    <div class="container text-center mb-4">
+    <!-- <div class="container text-center mb-4">
       <div class="row">
         <div class="col-md-12 text-secondary">
           <small>
@@ -70,7 +70,7 @@
           </small>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 

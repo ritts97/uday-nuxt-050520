@@ -4,7 +4,8 @@
       <div class="row">
         <div class="col-md-6">
           <nuxt-link to="/ha/profile/new-episode">
-            <button @click="console.log('123')" :disabled="this.$store.state.currPatient.status == 'allocated'" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Record New Episode</button>     
+           <!-- :disabled="this.$store.state.currPatient.status == 'allocated'" -->
+            <button @click="console.log('123')" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Record New Episode</button>     
           </nuxt-link>
         </div>
         <div class="col-md-6">
@@ -201,6 +202,6 @@ export default {
 
 <style>
 .bg-red {
-  background-color: #eee;
+  /* background-color: #eee; */
 }
 </style>

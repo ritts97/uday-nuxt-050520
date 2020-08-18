@@ -35,7 +35,7 @@
               Login (as Doct.)
             </button>
           </nuxt-link>
-          <nuxt-link to="/admin">
+          <!-- <nuxt-link to="/admin">
             <button class="btn btn-dark mb-2 p-2 w-100 text-uppercase">
               Login (as Admin)
             </button>
@@ -44,11 +44,11 @@
             <button class="btn btn-dark mb-3 p-2 w-100 text-uppercase">
               Login (as Super)
             </button>
-          </nuxt-link>
+          </nuxt-link> -->
 
-          <button @click="makeRequest()" class="btn btn-dark mb-3 p-2 w-100 text-uppercase">
+          <!-- <button @click="makeRequest()" class="btn btn-dark mb-3 p-2 w-100 text-uppercase">
             Make Request 123
-          </button>
+          </button> -->
 
           <nuxt-link to="/forgot-pass">
             <small class="text-secondary">Forgot password?</small>

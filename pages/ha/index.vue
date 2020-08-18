@@ -65,36 +65,36 @@
               <!--  v-if="!tabs[4].isActive" -->
               <thead>
                 <tr>
-                  <th scope="col">ID</th>
+                  <!-- <th scope="col">ID</th> -->
                   <th scope="col">Name</th>
-                  <th scope="col">Gender</th>
-                  <th scope="col">Age</th>
-                  <th scope="col">Phone</th>
-                  <th scope="col">Location</th>
-                  <th scope="col">Reg. By</th>
                   <th scope="col">Patient Status</th>
+                  <!-- <th scope="col">Gender</th> -->
+                  <!-- <th scope="col">Age</th> -->
+                  <th scope="col">Date Registered</th>
+                  <th scope="col">Last Visited</th>
+                  <th scope="col">Reg. By</th>
                 </tr>
               </thead>
               <!-- <tbody> -->
 
               <transition-group name="u-fade"  mode="in-out" tag="tbody">
                 <tr class="pointer" v-for="(patient, index) in list.slice().reverse()" :key="index">
-                  <th class="text-uppercase" scope="row">{{ patient.id }}</th>
+                  <!-- <th class="text-uppercase" scope="row">{{ patient.id }}</th> -->
                   <td>
-                    <nuxt-link :to="'/ha/profile?id=' + patient.id">{{ patient.demographics.name }}</nuxt-link>
+                    <nuxt-link :to="'/ha/profile?id=' + patient.id">{{ patient.demographics.name }} ({{ patient.demographics.age }})</nuxt-link>
                   </td>
-                  <td class="text-uppercase">{{ patient.demographics.gender }}</td>
-                  <td>{{ patient.demographics.age }}</td>
+                  <td class="text-capitalize">
+                    <img v-if="patient.status == 'registered'" src="/circle-green.svg" class="shape-status" alt="">
+                    <img v-if="patient.status == 'released'" src="/circle-yellow.svg" class="shape-status" alt="">
+                    <img v-if="patient.status == 'allocated'" src="/circle-red.svg" class="shape-status" alt="">
+                    <img v-if="patient.status == 'queued'" src="/circle-orange.svg" class="shape-status" alt="">
+                    {{ patient.status }}
+                  </td>
+                  <!-- <td class="text-uppercase">{{ patient.demographics.gender }}</td> -->
+                  <!-- <td>{{ patient.demographics.age }}</td> -->
                   <td>{{ patient.demographics.phone }}</td>
                   <td>{{ patient.demographics.location }}</td>
                   <td>{{ patient.regBy }}</td>
-                  <td class="text-capitalize">
-                    <img v-if="patient.status == 'registered'" src="circle-green.svg" class="shape-status" alt="">
-                    <img v-if="patient.status == 'released'" src="circle-yellow.svg" class="shape-status" alt="">
-                    <img v-if="patient.status == 'allocated'" src="circle-red.svg" class="shape-status" alt="">
-                    <img v-if="patient.status == 'queued'" src="circle-orange.svg" class="shape-status" alt="">
-                    {{ patient.status }}
-                  </td>
                 </tr>
 
                 <tr v-show="list.length === 0" class="pointer" key="empty" style="height: 40px;">

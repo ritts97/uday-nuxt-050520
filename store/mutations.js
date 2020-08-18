@@ -149,7 +149,8 @@ export default {
       baseProfile
     )
 
-    this.$router.push({path: '/ha/profile?id=' + "pa0" + PATIENT_COUNT})
+    this.$router.push({path: '/ha/'})
+    // this.$router.push({path: '/ha/profile?id=' + "pa0" + PATIENT_COUNT})
   },
   registerHA(state, payload) {
     let CLUSTER_ID = state.currCluster

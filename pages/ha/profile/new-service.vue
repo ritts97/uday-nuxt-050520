@@ -26,15 +26,15 @@
               <div class="col-md-12 text-muted small mb-3">
                   Please complete to the best of your ability.
                 </div>
-              <div class="col-md-6">
-                <label for="">What service did you provide?</label>
-                <input type="text" class="w-100 p-2 mb-3" placeholder="ECG, etc.">
+              <div class="col-md-12">
+                <label for="">What service did you provide?</label><br>
+                <button class="btn mb-2 mr-2 btn-light">ECG</button>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-12 mt-2">
                 <label for="">What were the results?</label>
                 <input type="text" class="w-100 p-2 mb-3" placeholder="Positive, negative, other">
               </div>
-              <div class="col-md-12">
+              <div class="col-md-12 mt-2">
                 <label for="">Please provide any additional information</label>
                 <textarea class="w-100 p-2" rows="5" placeholder="Additional information..."></textarea>
               </div>

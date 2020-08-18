@@ -81,34 +81,12 @@
                 <div class="small text-muted mb-2">
                   Chief Complaint
                 </div>
-                Coughing Problem <br><br>
-                <!-- <div class="small text-muted mb-2">
-                  Notes
-                </div> -->
-                <span class="rounded mr-2 p-2 text-white" style="background-color: #a9a9a9;">
-                  Lasting 2 days 
-                </span>
-                <span class="rounded mr-2 p-2 text-white" style="background-color: #a9a9a9;">
-                  Only at night 
-                </span>
-                <span class="rounded mr-2 p-2 text-white" style="background-color: #a9a9a9;">
-                  Sputum No 
-                </span>
-                <span class="rounded mr-2 p-2 text-white" style="background-color: #a9a9a9;">
-                  Yellow Color 
-                </span>
-                <span class="rounded mr-2 p-2 text-white" style="background-color: #a9a9a9;">
-                  Amount a lot 
-                </span>
-                <span class="rounded mr-2 p-2 text-white" style="background-color: #a9a9a9;">
-                  Fever Yes 
-                </span>
-                <span class="rounded mr-2 p-2 text-white" style="background-color: #a9a9a9;">
-                  No difficulty in swallowing 
-                </span>
-                <span class="rounded mr-2 p-2 text-white" style="background-color: #a9a9a9;">
-                  No Pain in throat
-                </span>
+                <button class="btn px-3 small btn-dark" role="button">
+                  Pain
+                </button>
+                <button class="btn px-3 small btn-dark" role="button">
+                  Ear Pain
+                </button>
                 <br><br>
                 <div class="small text-muted mb-2">
                   Description
@@ -211,23 +189,23 @@
                 <div class="small text-muted">
                   Eyes
                 </div>
-                Jaundice – Yes <br>
-                Pallor – Mild
+                Jaundice Present <br>
+                Mild Pallor
                 <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Patient Appearance"> -->
               </div>
               <div class="col-md-6 mb-3">
                 <div class="small text-muted">
                   Hands
                 </div>
-                Nails – Normal <br>
-                Cyanosis – Yes
+                Normal Nails <br>
+                Cyanosis Present
                 <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Patient Gait"> -->
               </div>
               <div class="col-md-6 mb-3">
                 <div class="small text-muted">
                   Lower Leg and Ankle
                 </div>
-                Oedema – Mild
+                Mild Oedema
                 <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="BP (___/___ mmHg)"> -->
               </div>
             </div>
@@ -352,7 +330,7 @@
       </div>
     </div>
 
-    <div class="container">
+    <!-- <div class="container">
       <div class="row">
         <div class="col-md-12 rounded">
           <ul class="list-inline mt-2 mb-2">
@@ -378,8 +356,7 @@
             </div>
           </div>
         </div>
-      <!-- </fieldset> -->
-    </div>
+    </div> -->
 
     <div>
       <div class="container mt-3 mb-3">
@@ -663,21 +640,21 @@ export default {
           title: 'Episode 1',
           isActive: true
         },
-        {
-          name: 'followup1',
-          title: 'Follow Up 1',
-          isActive: false
-        },
-        {
-          name: 'followup2',
-          title: 'Follow Up 2',
-          isActive: false
-        },
-        {
-          name: 'service1',
-          title: 'Perform ECG',
-          isActive: false
-        },
+        // {
+        //   name: 'followup1',
+        //   title: 'Follow Up 1',
+        //   isActive: false
+        // },
+        // {
+        //   name: 'followup2',
+        //   title: 'Follow Up 2',
+        //   isActive: false
+        // },
+        // {
+        //   name: 'service1',
+        //   title: 'Perform ECG',
+        //   isActive: false
+        // },
         // {
         //   name: 'billing',
         //   title: 'Billing History',

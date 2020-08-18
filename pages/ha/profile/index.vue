@@ -4,9 +4,9 @@
       <transition appear name="u-fade">
         <div class="row my-2">
           <div class="col-md-3 text-left" style="min-height: 200px;">
-            <nuxt-link to="/md/profile" class="text-decoration-none text-dark">
+            <!-- <nuxt-link to="/md/profile" class="text-decoration-none text-dark"> -->
               <img class="w-100" src="/avatar-man_04.png">
-            </nuxt-link>
+            <!-- </nuxt-link> -->
           </div>
           <div class="col-md-9">
             <div class="row">
@@ -32,13 +32,13 @@
               </div>
               <div class="col-md-6">
                 {{ currPatient.demographics.address }} <br>
-                {{ currPatient.demographics.address2 }} <br>
-                :: {{ this.$store.state.currPatient.id }}<br>
+                {{ currPatient.demographics.address2 }} <br><br>
+                <!-- :: {{ this.$store.state.currPatient.id }}<br> -->
                 <br>
                 {{ currPatient.demographics.police }}
               </div>
             </div>
-            <div class="row">
+            <!-- <div class="row">
               <div class="col-md-12">
                 <hr>
               </div>
@@ -53,7 +53,7 @@
                   Edit Family History... <br>
                 </small>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </transition>
