@@ -58,7 +58,7 @@
               <div class="row mt-1">
                 <div class="col-md-12 mb-0 px-0">
                   <div class="col-md-12 text-muted small mb-0 w-100">
-                    Fixed Questions
+                    Chief Complain, Fixed Questions
                     <hr>
                   </div>
                   <transition  appear name="u-fade"  mode="out-in" tag="div">
@@ -5972,7 +5972,7 @@ export default {
         },
         {
           name: 'fixedQuestions',
-          title: 'Chief Complaints, Fixed Questions',
+          title: 'Fixed Questions',
           isActive: false,
           isEnabled: false
         },
