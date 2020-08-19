@@ -152,35 +152,65 @@
                   </div>
                 <div class="col-md-6 mb-3">
                   <label for="exampleFormControlSelect1">Patient Appearance</label><br>
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="Tired, out of breath, pale">
+                  <button class="btn btn-light mb-2 mr-2">
+                    Look Comfortable
+                  </button>
+                  <button class="btn btn-light mb-2 mr-2">
+                    In Pain
+                  </button>
+                  <button class="btn btn-light mb-2 mr-2">
+                    Appears Breathless
+                  </button>
+                  <button class="btn btn-light mb-2 mr-2">
+                    Looks Unwell
+                  </button>
+                  <button class="btn btn-light mb-2 mr-2">
+                    Very Thin
+                  </button>
+                  <button class="btn btn-light mb-2 mr-2">
+                    Obese
+                  </button>
                 </div>
                 <div class="col-md-6 mb-3">
                   <label for="exampleFormControlSelect1">Patient Gait</label><br>
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="Walks with a limp">
+                  <button class="btn btn-light mb-2 mr-2">
+                    Walks Normally
+                  </button>
+                  <button class="btn btn-light mb-2 mr-2">
+                    Walks with a Limp
+                  </button>
+                  <button class="btn btn-light mb-2 mr-2">
+                    Walks with a Bump
+                  </button>
+                  <button class="btn btn-light mb-2 mr-2">
+                    Cannot Walk
+                  </button>
                 </div>
                 <div class="col-md-6 mb-3">
                   <label for="exampleFormControlSelect1">Blood Pressure</label><br>
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="BP (___/___ mmHg)">
+                  <input class="form-control d-inline w-25 mr-2" type="number" value="0"> /
+                  <input class="form-control d-inline w-25 mx-2" type="number" value="0"> mmHg
                 </div>
                 <div class="col-md-6 mb-3">
                   <label for="exampleFormControlSelect1">Oxygen</label><br>
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="SP02 (%)">
+                  <input class="form-control d-inline w-25 mr-2" type="number" value="0"> /
+                  <input class="form-control d-inline w-25 mx-2" type="number" value="0"> SP02 (%)
                 </div>
                 <div class="col-md-6 mb-3">
                   <label for="exampleFormControlSelect1">Patient Temperature</label><br>
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="Temperature (‘’ F)">
+                  <input class="form-control d-inline w-25 mr-2" type="number" value="0"> °F
                 </div>
                 <div class="col-md-6 mb-3">
                   <label for="exampleFormControlSelect1">Patient Height</label><br>
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="Height (cm)">
+                  <input class="form-control d-inline w-25 mr-2" @keyup="calculateBMI" v-model="patHeight" type="number" value="0"> cm
                 </div>
                 <div class="col-md-6 mb-3">
-                  <label for="exampleFormControlSelect1">Patient Weight</label><br>
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="Weight (kg)">
+                  <label for="exampleFormControlSelect2">Patient Weight</label><br>
+                  <input class="form-control d-inline w-25 mr-2" @keyup="calculateBMI" v-model="patWeight" type="number" value="0"> kg
                 </div>
                 <div class="col-md-6 mb-3">
                   <label for="exampleFormControlSelect1">Body Mass Index</label><br>
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="BMI (kg/m2) (Auto Calculated)">
+                  {{ patBMI }} (Auto-calculated)
                 </div>
               </div>
             </div>
@@ -522,12 +552,24 @@ export default {
       this.$store.commit('recordNewEpisode')
       this.$store.commit('updateCurrPatient')
     },
+    calculateBMI: function () {
+      const BMI = (this.patWeight / (this.patHeight * this.patHeight)) * 10000
+      
+      if (typeof(BMI) === 'number') {
+        this.patBMI = BMI.toFixed(2)
+      } else {
+        this.patBMI = 0
+      }
+    }
   },
   mounted () {
     this.$store.commit('updatePath', this.fullPath)
   },
   data() {
     return {
+      patHeight: 0,
+      patWeight: 0,
+      patBMI: 0,
       currCategory: '',
       categoryIndex: null,
       subCategory: '',
