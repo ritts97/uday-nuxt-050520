@@ -58,7 +58,7 @@
               <div class="row mt-1">
                 <div class="col-md-12 mb-0 px-0">
                   <div class="col-md-12 text-muted small mb-0 w-100">
-                    Chief Complain, whFixed Questions
+                    Chief Complain, Fixed Questions
                     <hr>
                   </div>
                   <transition  appear name="u-fade"  mode="out-in" tag="div">
@@ -79,6 +79,9 @@
                               <button class="btn mb-2 mr-2" v-for="(option, indexAnswer) in question.options" :key="indexAnswer" :class="option.isActive ? 'btn-dark text-white' : 'btn-light'" @click="handleSelectAnswer(indexQuestion, indexAnswer)">
                                 {{ option.name }}
                               </button>
+                              <div v-if="question.showOther === true">
+                                <input type="text" class="mt-1 p-2 w-100" placeholder="Describe any further details">
+                              </div>
                             </div>
                             <div v-if="question.type === 'select'">
                               <label for="exampleFormControlSelect1">{{ question.question }}</label><br>
@@ -200,19 +203,19 @@
                   <img src="/anatomy_sketch.png" alt="">
                 </div>
                 <div class="col-md-6 mb-3">
-                  <label for="exampleFormControlSelect1">Hands – Clubbing</label><br>
-                  <button class="btn mb-2 mr-2" :class="[ generalExams.handsClubbing === 'none' ?  'btn-dark' : 'btn-light' ]"  @click="generalExams.handsClubbing = 'none'">None</button>
+                  <label for="exampleFormControlSelect1">Clubbing in Hands</label><br>
                   <button class="btn mb-2 mr-2" :class="[ generalExams.handsClubbing === 'normal' ?  'btn-dark' : 'btn-light' ]"  @click="generalExams.handsClubbing = 'normal'">Normal</button>
                   <button class="btn mb-2 mr-2" :class="[ generalExams.handsClubbing === 'clubbing' ?  'btn-dark' : 'btn-light' ]"  @click="generalExams.handsClubbing = 'clubbing'">Clubbing</button>
                   <button class="btn mb-2 mr-2" :class="[ generalExams.handsClubbing === 'spooning' ?  'btn-dark' : 'btn-light' ]" @click="generalExams.handsClubbing = 'spooning'">Spooning</button>
                   <button class="btn mb-2 mr-2" :class="[ generalExams.handsClubbing === 'cyanosis' ?  'btn-dark' : 'btn-light' ]" @click="generalExams.handsClubbing = 'cyanosis'">Cyanosis</button>
+                  <button class="btn mb-2 mr-2" :class="[ generalExams.handsClubbing === 'none' ?  'btn-dark' : 'btn-light' ]"  @click="generalExams.handsClubbing = 'none'">None</button>
                 </div>
                 <div class="col-md-6 mb-3">
-                  <label for="exampleFormControlSelect1">Legs – Oedema</label><br>
-                  <button class="btn mb-2 mr-2" :class="[ generalExams.legsOedema === 'none' ?  'btn-dark' : 'btn-light' ]"  @click="generalExams.legsOedema = 'none'">None</button>
+                  <label for="exampleFormControlSelect1">Oedema in Legss</label><br>
                   <button class="btn mb-2 mr-2" :class="[ generalExams.legsOedema === 'mild' ?  'btn-dark' : 'btn-light' ]"  @click="generalExams.legsOedema = 'mild'">Mild</button>
                   <button class="btn mb-2 mr-2" :class="[ generalExams.legsOedema === 'moderate' ?  'btn-dark' : 'btn-light' ]"  @click="generalExams.legsOedema = 'moderate'">Moderate</button>
                   <button class="btn mb-2 mr-2" :class="[ generalExams.legsOedema === 'severe' ?  'btn-dark' : 'btn-light' ]" @click="generalExams.legsOedema = 'severe'">Severe</button>
+                  <button class="btn mb-2 mr-2" :class="[ generalExams.legsOedema === 'none' ?  'btn-dark' : 'btn-light' ]"  @click="generalExams.legsOedema = 'none'">None</button>
                 </div>
               </div>
             </div>   
@@ -241,31 +244,25 @@
                   <hr>
                 </div>
                 <div class="col-md-6 mb-3">
-                  <label for="exampleFormControlSelect1">Jaundice</label><br>
+                  <label for="exampleFormControlSelect1">Jaundice in Eyes</label><br>
                   <button class="btn btn-light mb-2 mr-2">Eyes</button>
                   <button class="btn btn-light mb-2 mr-2">Hands</button>
                   <button class="btn btn-light mb-2 mr-2">Lower Leg and Ankle</button>
                 </div>
                 <div class="col-md-6 mb-3">
-                  <label for="exampleFormControlSelect1">Pallor</label><br>
+                  <label for="exampleFormControlSelect1">Pallor in Skin</label><br>
                   <button class="btn btn-light mb-2 mr-2">Eyes</button>
                   <button class="btn btn-light mb-2 mr-2">Hands</button>
                   <button class="btn btn-light mb-2 mr-2">Lower Leg and Ankle</button>
                 </div>
                 <div class="col-md-6 mb-3">
-                  <label for="exampleFormControlSelect1">Cyanosis</label><br>
+                  <label for="exampleFormControlSelect1">Cyanosis in Skin/Nails/Lips/Eyes</label><br>
                   <button class="btn btn-light mb-2 mr-2">Eyes</button>
                   <button class="btn btn-light mb-2 mr-2">Hands</button>
                   <button class="btn btn-light mb-2 mr-2">Lower Leg and Ankle</button>
                 </div>
                 <div class="col-md-6 mb-3">
-                  <label for="exampleFormControlSelect1">Nails</label><br>
-                  <button class="btn btn-light mb-2 mr-2">Eyes</button>
-                  <button class="btn btn-light mb-2 mr-2">Hands</button>
-                  <button class="btn btn-light mb-2 mr-2">Lower Leg and Ankle</button>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label for="exampleFormControlSelect1">Oedema</label><br>
+                  <label for="exampleFormControlSelect1">Oedema in Arms/Legs</label><br>
                   <button class="btn btn-light mb-2 mr-2">Eyes</button>
                   <button class="btn btn-light mb-2 mr-2">Hands</button>
                   <button class="btn btn-light mb-2 mr-2">Lower Leg and Ankle</button>
@@ -421,36 +418,26 @@ export default {
       })
     },
     handleSelectAnswer: function (indexQuestion, indexAnswer) {
-      // currCategory
-      // subCategory
-      // let questions
-
-      // // if (this.categories[this.currCategory].subCategories !== undefined) {
-      // //   // questions = this.categories[this.currCategory].subCategories[self.subCategoryIndex].questions
-      // // // } else {
-      // //   questions = this.categories[this.currCategory].questions
-      // // }
-      // // console.log(this.categories[this.categoryIndex])
-
-      // if ('subCategories' in this.categories[this.categoryIndex]) {
-      // //   console.log('Subcategories exist')
-      // //   console.log(this.categories[this.categoryIndex].subCategories[this.subCategoryInd])
-      //   questions = this.categories[this.categoryIndex].subCategories[this.subCategoryInd].questions
-      // } else {
-      //   questions = this.categories[this.categoryIndex].questions
-      // }
-
-      // console.log(questions[indexQuestion].options)
+      let self = this
 
       this.questions[indexQuestion].options.forEach((question, index) => {
         if (indexAnswer === index) {
           question.isActive = true
+
+          if (question.name === "Other") {
+            console.log('Click')
+            console.log(self.questions[indexQuestion].showOther)
+            self.questions[indexQuestion].showOther = true
+            console.log(self.questions[indexQuestion].showOther)
+          } else {
+            self.questions[indexQuestion].showOther = false
+          }
         } else {
           question.isActive = false
         }
       })
 
-      console.log(indexQuestion, indexAnswer)
+      // console.log(indexQuestion, indexAnswer)
     },
     showAlert: function () {
       alert(`This episode has been recorded.`)
@@ -604,6 +591,7 @@ export default {
                 {
                   question: "Where is it now?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Front (R)',
@@ -638,6 +626,7 @@ export default {
                 {
                   question: "How did the pain start?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Sudden',
@@ -696,6 +685,7 @@ export default {
                 {
                   question: "What brings it on?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Injury',
@@ -722,6 +712,7 @@ export default {
                 {
                   question: "What is the pain relieved by?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'None',
@@ -736,6 +727,7 @@ export default {
                 {
                   question: "Are there any associated symptoms?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Vomiting',
@@ -787,6 +779,7 @@ export default {
                 {
                   question: "Where is it now?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Has not moved',
@@ -801,6 +794,7 @@ export default {
                 {
                   question: "How did the pain start?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Sudden',
@@ -859,6 +853,7 @@ export default {
                 {
                   question: "What brings it on?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'None',
@@ -873,6 +868,7 @@ export default {
                 {
                   question: "What is the pain relieved by?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'None',
@@ -887,6 +883,7 @@ export default {
                 {
                   question: "Are there any associated symptoms?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'H/O Injury',
@@ -950,6 +947,7 @@ export default {
                 {
                   question: "Where is it now?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Has not moved',
@@ -964,6 +962,7 @@ export default {
                 {
                   question: "How did the pain start?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Sudden',
@@ -1022,6 +1021,7 @@ export default {
                 {
                   question: "What brings it on?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'None',
@@ -1036,6 +1036,7 @@ export default {
                 {
                   question: "What is the pain relieved by?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'None',
@@ -1050,6 +1051,7 @@ export default {
                 {
                   question: "Are there any associated symptoms?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'H/O Injury',
@@ -1105,6 +1107,7 @@ export default {
                 {
                   question: "Where is it now?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Has not moved',
@@ -1119,6 +1122,7 @@ export default {
                 {
                   question: "How did the pain start?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Sudden',
@@ -1177,6 +1181,7 @@ export default {
                 {
                   question: "What brings it on?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'None',
@@ -1191,6 +1196,7 @@ export default {
                 {
                   question: "What is the pain relieved by?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'None',
@@ -1205,6 +1211,7 @@ export default {
                 {
                   question: "Are there any associated symptoms?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Cough',
@@ -1280,6 +1287,7 @@ export default {
                 {
                   question: "Where is it now?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Moved to the Front Right',
@@ -1318,6 +1326,7 @@ export default {
                 {
                   question: "How did the pain start?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Sudden',
@@ -1376,6 +1385,7 @@ export default {
                 {
                   question: "What brings it on?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Injury',
@@ -1402,6 +1412,7 @@ export default {
                 {
                   question: "What is the pain relieved by?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Rest',
@@ -1420,6 +1431,7 @@ export default {
                 {
                   question: "Are there any associated symptoms?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'H/O Injury',
@@ -1457,6 +1469,7 @@ export default {
                 {
                   question: "Where did it start?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Neck',
@@ -1643,6 +1656,7 @@ export default {
                 {
                   question: "Where is it now?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Neck',
@@ -1887,6 +1901,7 @@ export default {
                 {
                   question: "What brings it on?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Activity',
@@ -1909,6 +1924,7 @@ export default {
                 {
                   question: "What is the pain relieved by?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Activity',
@@ -1931,6 +1947,7 @@ export default {
                 {
                   question: "Are there any associated symptoms?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'H/O Injury',
@@ -2002,6 +2019,7 @@ export default {
                 {
                   question: "Where is it now?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Upper (R)',
@@ -2056,6 +2074,7 @@ export default {
                 {
                   question: "How did the pain start?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Sudden',
@@ -2118,6 +2137,7 @@ export default {
                 {
                   question: "What brings it on?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Exertion',
@@ -2144,6 +2164,7 @@ export default {
                 {
                   question: "What is the pain relieved by?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Rest',
@@ -2162,6 +2183,7 @@ export default {
                 {
                   question: "Are there any associated symptoms?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Sweating',
@@ -2299,6 +2321,7 @@ export default {
                 {
                   question: "How did the pain start?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Sudden',
@@ -2357,6 +2380,7 @@ export default {
                 {
                   question: "What brings it on?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Food',
@@ -2383,6 +2407,7 @@ export default {
                 {
                   question: "What is the pain relieved by?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Food',
@@ -2405,6 +2430,7 @@ export default {
                 {
                   question: "Are there any associated symptoms?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Constipation',
@@ -2530,6 +2556,7 @@ export default {
                 {
                   question: "How did the pain start?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Sudden',
@@ -2588,6 +2615,7 @@ export default {
                 {
                   question: "What brings it on?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Period',
@@ -2610,6 +2638,7 @@ export default {
                 {
                   question: "What is the pain relieved by?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Period',
@@ -2632,6 +2661,7 @@ export default {
                 {
                   question: "Are there any associated symptoms?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Discharge from Nipple',
@@ -2683,6 +2713,7 @@ export default {
                 {
                   question: "Where is it now?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Did Not Move',
@@ -2701,6 +2732,7 @@ export default {
                 {
                   question: "How did the pain start?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Sudden',
@@ -2759,6 +2791,7 @@ export default {
                 {
                   question: "What brings it on?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Injury',
@@ -2777,6 +2810,7 @@ export default {
                 {
                   question: "What is the pain relieved by?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Rest',
@@ -2795,6 +2829,7 @@ export default {
                 {
                   question: "Are there any associated symptoms?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Swelling',
@@ -2828,6 +2863,7 @@ export default {
                 {
                   question: "Where did it start?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Anal Region',
@@ -2846,6 +2882,7 @@ export default {
                 {
                   question: "Where is it now?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Has not moved',
@@ -2926,6 +2963,7 @@ export default {
                 {
                   question: "What brings it on?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Passage of Stool',
@@ -2944,6 +2982,7 @@ export default {
                 {
                   question: "What is the pain relieved by?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Rest',
@@ -2962,6 +3001,7 @@ export default {
                 {
                   question: "Are there any associated symptoms?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Fever',
@@ -3078,6 +3118,7 @@ export default {
                 {
                   question: "Are there any other symptoms?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Difficulty in Work',
@@ -3320,7 +3361,7 @@ export default {
                 {
                   question: "What is the bowel habit?",
                   type: 'text',
-                  placeholder: 'Please describe the # of times per day'
+                  placeholder: 'Describe the # of times per day'
                 },
                 {
                   question: "Is there yellow colour in urine?",
@@ -3436,6 +3477,7 @@ export default {
             {
               question: "How has it progressed?",
               type: 'button',
+              showOther: false,
               options: [
                 {
                   name: 'Same as Before',
@@ -3462,6 +3504,7 @@ export default {
             {
               question: "What brings it on?",
               type: 'button',
+              showOther: false,
               options: [
                 {
                   name: 'Exertion',
@@ -3484,6 +3527,7 @@ export default {
             {
               question: "What is the difficulty relieved?",
               type: 'button',
+              showOther: false,
               options: [
                 {
                   name: 'Resting',
@@ -3534,6 +3578,7 @@ export default {
             {
               question: "Are there any associated symptoms?",
               type: 'button',
+              showOther: false,
               options: [
                 {
                   name: 'General Weakness',
@@ -3567,6 +3612,7 @@ export default {
             {
               question: "How has it progressed?",
               type: 'button',
+              showOther: false,
               options: [
                 {
                   name: 'Same as Before',
@@ -3593,6 +3639,7 @@ export default {
             {
               question: "What is the nature of the fever?",
               type: 'button',
+              showOther: false,
               options: [
                 {
                   name: 'Everyday',
@@ -3615,6 +3662,7 @@ export default {
             {
               question: "When does the fever come on?",
               type: 'button',
+              showOther: false,
               options: [
                 {
                   name: 'All Day',
@@ -3641,6 +3689,7 @@ export default {
             {
               question: "What is the temperature of the patient?",
               type: 'button',
+              showOther: false,
               options: [
                 {
                   name: 'Low',
@@ -3751,6 +3800,7 @@ export default {
             {
               question: "Is there burning, or more frequency in urine?",
               type: 'button',
+              showOther: false,
               options: [
                 {
                   name: 'Yes',
@@ -3769,6 +3819,7 @@ export default {
             {
               question: "Are there any reliefs?",
               type: 'button',
+              showOther: false,
               options: [
                 {
                   name: 'None',
@@ -3799,6 +3850,7 @@ export default {
             {
               question: "What is the stool type?",
               type: 'button',
+              showOther: false,
               options: [
                 {
                   name: 'Watery',
@@ -3854,6 +3906,7 @@ export default {
             {
               question: "Are there any associated symptoms?",
               type: 'button',
+              showOther: false,
               options: [
                 {
                   name: 'Abdominal Pain',
@@ -3914,7 +3967,7 @@ export default {
             {
               question: "How long has this been happening?",
               type: 'text',
-              placeholder: 'Please describe the # of days',
+              placeholder: 'Describe the # of days',
             },
             {
               question: "What is the nature of the vomiting?",
@@ -3933,7 +3986,7 @@ export default {
             {
               question: "What is the frequency?",
               type: 'text',
-              placeholder: 'Please describe the # of days between incidents',
+              placeholder: 'PDescribe the # of days between incidents',
             },
             {
               question: "Has appetitie changed?",
@@ -3956,12 +4009,12 @@ export default {
             {
               question: "What causes the vomiting?",
               type: 'text',
-              placeholder: 'Please describe any relevant information',
+              placeholder: 'Describe any relevant information',
             },
             {
               question: "Is there any relief?",
               type: 'text',
-              placeholder: 'Please describe any relevant information',
+              placeholder: 'Describe any relevant information',
             },
             {
               question: "Is there blood?",
@@ -3994,6 +4047,7 @@ export default {
             {
               question: "Any associated symptoms?",
               type: 'button',
+              showOther: false,
               options: [
                 {
                   name: 'Abdominal Pain',
@@ -4034,7 +4088,7 @@ export default {
             {
               question: "How long has this been happening?",
               type: 'text',
-              placeholder: 'Please describe the # of days',
+              placeholder: 'Describe the # of days',
             },
             {
               question: "What is the nature of the dizziness?",
@@ -4053,6 +4107,7 @@ export default {
             {
               question: "When does the dizziness occur?",
               type: 'button',
+              showOther: false,
               options: [
                 {
                   name: 'Whole Day',
@@ -4079,16 +4134,17 @@ export default {
             {
               question: "What causes the dizziness?",
               type: 'text',
-              placeholder: 'Please describe any possible causes',
+              placeholder: 'Describe any possible causes',
             },
             {
               question: "What provides relief?",
               type: 'text',
-              placeholder: 'Please describe any possible causes',
+              placeholder: 'Describe any possible causes',
             },
             {
               question: "Is there a relation with positioning?",
               type: 'button',
+              showOther: false,
               options: [
                 {
                   name: 'Lying Down',
@@ -4143,6 +4199,7 @@ export default {
             {
               question: "Are there any associated symptoms?",
               type: 'button',
+              showOther: false,
               options: [
                 {
                   name: 'Vomiting',
@@ -4207,7 +4264,7 @@ export default {
             {
               question: "How long has this been happening?",
               type: 'text',
-              placeholder: 'Please describe the # of days',
+              placeholder: 'Describe the # of days',
             },
             {
               question: "Is there any abdominal pain?",
@@ -4358,7 +4415,7 @@ export default {
             {
               question: "How long has this been happening?",
               type: 'text',
-              placeholder: 'Please describe the # of days',
+              placeholder: 'Describe the # of days',
             },
             {
               question: "Is there any abdominal pain?",
@@ -4391,7 +4448,7 @@ export default {
             {
               question: "What is the color of stool?",
               type: 'text',
-              placeholder: 'Please describe any relevant information',
+              placeholder: 'Describe any relevant information',
             },
             {
               question: "Is there any bleeding with urine?",
@@ -4430,12 +4487,12 @@ export default {
             {
               question: "Where is the rash located?",
               type: 'text',
-              placeholder: 'Please describe the location on body',
+              placeholder: 'PDescribe the location on body',
             },
             {
               question: "How big is the rash?",
               type: 'text',
-              placeholder: 'Please describe the size in cm x cm',
+              placeholder: 'Describe the size in cm x cm',
             },
             {
               question: "How many rashes are there?",
@@ -4472,13 +4529,14 @@ export default {
             {
               question: "Provide a description of the color.",
               type: 'text',
-              placeholder: 'Please describe any relevant information',
+              placeholder: 'Describe any relevant information',
             },
           ]
         },
         {
           name: 'Bleeding with Stool',
           isActive: false,
+          showOther: false,
           questions: [
             {
               question: "What is the color of the stool?",
@@ -4595,12 +4653,12 @@ export default {
                 {
                   question: "When was the last LMP?",
                   type: 'text',
-                  placeholder: 'Please describe # of days',
+                  placeholder: 'Describe # of days',
                 },
                 {
                   question: "What is the duration of the patient's period?",
                   type: 'text',
-                  placeholder: 'Please describe # of days',
+                  placeholder: 'Describe # of days',
                 },
                 {
                   question: "What is the interval between periods?",
@@ -4617,7 +4675,7 @@ export default {
                   ]
                 },
                 {
-                  question: "What is flow?",
+                  question: "What is the flow?",
                   type: 'button',
                   options: [
                     {
@@ -4651,12 +4709,12 @@ export default {
                 {
                   question: "What age was the patient at first childbirth?",
                   type: 'text',
-                  placeholder: 'Please describe the age at children',
+                  placeholder: 'Describe the age at children',
                 },
                 {
                   question: "How old was the patient at the last childbirth?",
                   type: 'text',
-                  placeholder: 'Please describe the age at last childbirth',
+                  placeholder: 'Describe the age at last childbirth',
                 },
                 {
                   question: "Is contraception practiced?",
@@ -4674,12 +4732,22 @@ export default {
                 },
                 {
                   question: "What was the age of onset?",
-                  type: 'text',
-                  placeholder: 'Describe the age of onset'
+                  type: 'button',
+                  options: [
+                    {
+                      name: 'Not Started Yet',
+                      isActive: false
+                    },
+                    {
+                      name: 'Started at age #',
+                      isActive: false
+                    },
+                  ]
                 },
                 {
                   question: "Are there any associated symptoms?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Other',
@@ -4728,12 +4796,12 @@ export default {
                 ,{
                   question: "When was the last LMP?",
                   type: 'text',
-                  placeholder: 'Please describe # of days',
+                  placeholder: 'Describe # of days',
                 },
                 {
                   question: "What is the duration of the patient's period?",
                   type: 'text',
-                  placeholder: 'Please describe the # of days',
+                  placeholder: 'Describe the # of days',
                 },
                 {
                   question: "What is the interval between periods?",
@@ -4750,7 +4818,7 @@ export default {
                   ]
                 },
                 {
-                  question: "What is flow?",
+                  question: "What is the flow?",
                   type: 'button',
                   options: [
                     {
@@ -4784,12 +4852,12 @@ export default {
                 {
                   question: "What age was the patient at first childbirth?",
                   type: 'text',
-                  placeholder: 'Please describe the age at children',
+                  placeholder: 'Describe the age at children',
                 },
                 {
                   question: "How old was the patient at the last childbirth?",
                   type: 'text',
-                  placeholder: 'Please describe the age at last childbirth',
+                  placeholder: 'Describe the age at last childbirth',
                 },
                 {
                   question: "Is contraception practiced?",
@@ -4813,6 +4881,7 @@ export default {
                 {
                   question: "Are there any associated symptoms?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Other',
@@ -4861,12 +4930,12 @@ export default {
                 {
                   question: "When was the last LMP?",
                   type: 'text',
-                  placeholder: 'Please describe any relevant information.',
+                  placeholder: 'Describe the # days',
                 },
                 {
                   question: "What is the duration of the patient's period?",
                   type: 'text',
-                  placeholder: 'Please describe any relevant information.',
+                  placeholder: 'Describe the # days',
                 },
                 {
                   question: "What is the interval between periods?",
@@ -4883,7 +4952,7 @@ export default {
                   ]
                 },
                 {
-                  question: "What is flow?",
+                  question: "What is the flow?",
                   type: 'button',
                   options: [
                     {
@@ -4917,12 +4986,12 @@ export default {
                 {
                   question: "What age was the patient at first childbirth?",
                   type: 'text',
-                  placeholder: 'Please describe the age at children',
+                  placeholder: 'Describe the age at children',
                 },
                 {
                   question: "How old was the patient at the last childbirth?",
                   type: 'text',
-                  placeholder: 'Please describe the age at last childbirth',
+                  placeholder: 'Describe the age at last childbirth',
                 },
                 {
                   question: "Is contraception practiced?",
@@ -4946,6 +5015,7 @@ export default {
                 {
                   question: "Are there any associated symptoms?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Other',
@@ -4994,12 +5064,12 @@ export default {
                 {
                   question: "When was the last LMP?",
                   type: 'text',
-                  placeholder: 'Please describe any relevant information.',
+                  placeholder: 'Describe the # days',
                 },
                 {
                   question: "What is the duration of the patient's period?",
                   type: 'text',
-                  placeholder: 'Please describe any relevant information.',
+                  placeholder: 'Describe the # days',
                 },
                 {
                   question: "What is the interval between periods?",
@@ -5016,7 +5086,7 @@ export default {
                   ]
                 },
                 {
-                  question: "What is flow?",
+                  question: "What is the flow?",
                   type: 'button',
                   options: [
                     {
@@ -5050,12 +5120,12 @@ export default {
                 {
                   question: "What age was the patient at first childbirth?",
                   type: 'text',
-                  placeholder: 'Please describe the age at children',
+                  placeholder: 'Describe the age at children',
                 },
                 {
                   question: "How old was the patient at the last childbirth?",
                   type: 'text',
-                  placeholder: 'Please describe the age at last childbirth',
+                  placeholder: 'Describe the age at last childbirth',
                 },
                 {
                   question: "Is contraception practiced?",
@@ -5079,6 +5149,7 @@ export default {
                 {
                   question: "Are there any associated symptoms?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Other',
@@ -5127,12 +5198,12 @@ export default {
                 {
                   question: "When was the last LMP?",
                   type: 'text',
-                  placeholder: 'Please describe any relevant information.',
+                  placeholder: 'Describe the # days',
                 },
                 {
                   question: "What is the duration of the patient's period?",
                   type: 'text',
-                  placeholder: 'Please describe any relevant information.',
+                  placeholder: 'Describe the # days',
                 },
                 {
                   question: "What is the interval between periods?",
@@ -5149,7 +5220,7 @@ export default {
                   ]
                 },
                 {
-                  question: "What is flow?",
+                  question: "What is the flow?",
                   type: 'button',
                   options: [
                     {
@@ -5183,12 +5254,12 @@ export default {
                 {
                   question: "What age was the patient at first childbirth?",
                   type: 'text',
-                  placeholder: 'Please describe the age at children',
+                  placeholder: 'Describe the age at children',
                 },
                 {
                   question: "How old was the patient at the last childbirth?",
                   type: 'text',
-                  placeholder: 'Please describe the age at last childbirth',
+                  placeholder: 'Describe the age at last childbirth',
                 },
                 {
                   question: "Is contraception practiced?",
@@ -5212,6 +5283,7 @@ export default {
                 {
                   question: "Are there any associated symptoms?",
                   type: 'button',
+                  showOther: false,
                   options: [
                     {
                       name: 'Other',
@@ -5300,7 +5372,7 @@ export default {
             {
               question: "When was the injury sustained?",
               type: 'text',
-              placeholder: 'Please describe the # of days',
+              placeholder: 'Describe the # of days',
             },
             {
               question: "Describe other problems and issues resulting from the injury.",
@@ -5353,6 +5425,7 @@ export default {
             {
               question: "How did the boils start?",
               type: 'button',
+              showOther: false,
               options: [
                 {
                   name: 'Injury',
@@ -5371,6 +5444,7 @@ export default {
             {
               question: "Is there any pain or discomfort?",
               type: 'button',
+              showOther: false,
               options: [
                 {
                   name: 'Throbbing',
@@ -5417,16 +5491,17 @@ export default {
             {
               question: "How long has the ulcer been there?",
               type: 'text',
-              placeholder: 'Please describe the # of days',
+              placeholder: 'Describe the # of days',
             },
             {
               question: "Where is the ulcer located?",
               type: 'text',
-              placeholder: 'Please describe the location on body',
+              placeholder: 'Describe the location on body',
             },
             {
               question: "How did the ulcer start?",
               type: 'button',
+              showOther: false,
               options: [
                 {
                   name: 'Injury',
@@ -5445,6 +5520,7 @@ export default {
             {
               question: "Is there any pain or discomfort?",
               type: 'button',
+              showOther: false,
               options: [
                 {
                   name: 'Throbbing',
@@ -5526,7 +5602,7 @@ export default {
               question: "How long do the palpitations last?",
               placeholder: '# of days',
               type: 'text',
-              placeholder: 'Please describe the # of days',
+              placeholder: 'Describe the # of days',
             },
             {
               question: "What is the type of palpitation?",
@@ -5550,6 +5626,7 @@ export default {
             {
               question: "Are there any associated symptoms?",
               type: 'button',
+              showOther: false,
               options: [
                 {
                   name: 'Other',
@@ -5620,7 +5697,7 @@ export default {
             {
               question: "How are the palpitation relieved?",
               type: 'text',
-              placeholder: 'Please describe any relevant information',
+              placeholder: 'Describe any relevant information',
             }
           ]
         },
@@ -5739,12 +5816,12 @@ export default {
             {
               question: "What brings on the fainting?",
               type: 'text',
-              placeholder: 'Please describe any relevant information'
+              placeholder: 'Describe any relevant information'
             },
             {
               question: "How is the fainting relieved?",
               type: 'text',
-              placeholder: 'Please describe any relevant information'
+              placeholder: 'Describe any relevant information'
             },
           ]
         },
@@ -5759,7 +5836,7 @@ export default {
                 {
                   question: "What is the duration?",
                   type: 'text',
-                  placeholder: 'Please describe the # of days'
+                  placeholder: 'Describe the # of days'
                 },
                 {
                   question: "Is there a loss of appetite?",
@@ -5840,7 +5917,7 @@ export default {
                 {
                   question: "What is the duration?",
                   type: 'text',
-                  placeholder: 'Please describe the # of days'
+                  placeholder: 'Describe the # of days'
                 },
                 {
                   question: "Is there a loss appetite?",
