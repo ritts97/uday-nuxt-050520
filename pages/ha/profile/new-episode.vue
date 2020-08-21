@@ -83,6 +83,11 @@
                                 <input type="text" class="mt-1 p-2 w-100" placeholder="Describe any further details">
                               </div>
                             </div>
+                            <div v-if="question.type === 'button' && question.showTextInput === true">
+                              <div>
+                                <input type="text" class="mt-1 p-2 w-100" :placeholder="question.options[0].isActive === true ? question.options[0].placeholder : question.options[1].placeholder">
+                              </div>
+                            </div>
                             <div v-if="question.type === 'select'">
                               <label for="exampleFormControlSelect1">{{ question.question }}</label><br>
                               <select class="form-control" id="exampleFormControlSelect1">
@@ -194,7 +199,7 @@
                 <div class="col-md-6 mb-3">
                   <label for="exampleFormControlSelect1">Oxygen</label><br>
                   <input class="form-control d-inline w-25 mr-2" type="number" value="0"> /
-                  <input class="form-control d-inline w-25 mx-2" type="number" value="0"> SP02 (%)
+                  <input class="form-control d-inline w-25 mx-2" type="number" value="0"> Sp02 (%)
                 </div>
                 <div class="col-md-6 mb-3">
                   <label for="exampleFormControlSelect1">Patient Temperature</label><br>
@@ -202,11 +207,11 @@
                 </div>
                 <div class="col-md-6 mb-3">
                   <label for="exampleFormControlSelect1">Patient Height</label><br>
-                  <input class="form-control d-inline w-25 mr-2" @keyup="calculateBMI" v-model="patHeight" type="number" value="0"> cm
+                  <input class="form-control d-inline w-25 mr-2" @keyup="calculateBMI" @click="calculateBMI" v-model="patHeight" type="number" value="0"> cm
                 </div>
                 <div class="col-md-6 mb-3">
                   <label for="exampleFormControlSelect2">Patient Weight</label><br>
-                  <input class="form-control d-inline w-25 mr-2" @keyup="calculateBMI" v-model="patWeight" type="number" value="0"> kg
+                  <input class="form-control d-inline w-25 mr-2" @keyup="calculateBMI" @click="calculateBMI" v-model="patWeight" type="number" value="0"> kg
                 </div>
                 <div class="col-md-6 mb-3">
                   <label for="exampleFormControlSelect1">Body Mass Index</label><br>
@@ -393,7 +398,6 @@ export default {
   methods: {
     makeCategoryActive: function (clickedCategory) {
       let self = this
-
     
       this.categories.forEach((category, index) => {
         if (category.name == clickedCategory) {
@@ -453,6 +457,13 @@ export default {
       this.questions[indexQuestion].options.forEach((question, index) => {
         if (indexAnswer === index) {
           question.isActive = true
+
+          // toggle secondary input
+          console.log(self.questions[indexQuestion].showTextInput)
+          if (self.questions[indexQuestion].showTextInput === false) {
+            self.questions[indexQuestion].showTextInput = true
+          }
+          console.log(self.questions[indexQuestion].showTextInput)
 
           if (question.name === "Other") {
             console.log('Click')
@@ -584,6 +595,22 @@ export default {
         handsCyanosis: null,
         handsClubbing: null,
         legsOedema: null,
+      },
+      vitalsOptions: {
+        patientAppearance: [],
+        patientGait: [],
+        bloodPressure: {
+          first: 0,
+          second: 0
+        },
+        oxygen: {
+          first: 0,
+          second: 0
+        },
+        patientTemp: 0,
+        patientHeight: 0,
+        patientWeight: 0,
+        patientBMI: 0
       },
       questions: [],
       categories: [
@@ -3286,7 +3313,29 @@ export default {
                 },
                 {
                   question: "How many tumors are there?",
-                  type: 'select'
+                  type: 'button',
+                  options: [
+                    {
+                      name: '1',
+                      isActive: false
+                    },
+                    {
+                      name: '2',
+                      isActive: false
+                    },
+                    {
+                      name: '3',
+                      isActive: false
+                    },
+                    {
+                      name: '4',
+                      isActive: false
+                    },
+                    {
+                      name: '5+',
+                      isActive: false
+                    },
+                  ]
                 },
                 {
                   question: "How long has it been there?",
@@ -3473,7 +3522,29 @@ export default {
                 },
                 {
                   question: "How many swellings are there?",
-                  type: 'select'
+                  type: 'button',
+                  options: [
+                    {
+                      name: '1',
+                      isActive: false
+                    },
+                    {
+                      name: '2',
+                      isActive: false
+                    },
+                    {
+                      name: '3',
+                      isActive: false
+                    },
+                    {
+                      name: '4',
+                      isActive: false
+                    },
+                    {
+                      name: '5+',
+                      isActive: false
+                    }
+                  ]
                 },
                 {
                   question: "How long has it been there?",
@@ -4705,14 +4776,17 @@ export default {
                 {
                   question: "What is the interval between periods?",
                   type: 'button',
+                  showTextInput: false,
                   options: [
                     {
-                      name: 'Regular – # of Days',
-                      isActive: false
+                      name: 'Regular',
+                      isActive: false,
+                      placeholder: 'Describe the # of days'
                     },
                     {
-                      name: 'Varies – # to # days',
-                      isActive: false
+                      name: 'Varies',
+                      isActive: false,
+                      placeholder: 'Describe the # to # days'
                     },
                   ]
                 },
@@ -4751,12 +4825,12 @@ export default {
                 {
                   question: "What age was the patient at first childbirth?",
                   type: 'text',
-                  placeholder: 'Describe the age at children',
+                  placeholder: 'Describe # age',
                 },
                 {
                   question: "How old was the patient at the last childbirth?",
                   type: 'text',
-                  placeholder: 'Describe the age at last childbirth',
+                  placeholder: 'Describe # age',
                 },
                 {
                   question: "Is contraception practiced?",
@@ -4848,14 +4922,17 @@ export default {
                 {
                   question: "What is the interval between periods?",
                   type: 'button',
+                  showTextInput: false,
                   options: [
                     {
-                      name: 'Regular – # of Days',
-                      isActive: false
+                      name: 'Regular',
+                      isActive: false,
+                      placeholder: 'Describe the # of days'
                     },
                     {
-                      name: 'Varies – # to # days',
-                      isActive: false
+                      name: 'Varies',
+                      isActive: false,
+                      placeholder: 'Describe the # to # days'
                     },
                   ]
                 },
@@ -4894,12 +4971,12 @@ export default {
                 {
                   question: "What age was the patient at first childbirth?",
                   type: 'text',
-                  placeholder: 'Describe the age at children',
+                  placeholder: 'Describe # age',
                 },
                 {
                   question: "How old was the patient at the last childbirth?",
                   type: 'text',
-                  placeholder: 'Describe the age at last childbirth',
+                  placeholder: 'Describe # age',
                 },
                 {
                   question: "Is contraception practiced?",
@@ -4918,7 +4995,7 @@ export default {
                 {
                   question: "What was the age of onset?",
                   type: 'text',
-                  placeholder: 'Describe the age of onset'
+                  placeholder: 'Started at age #'
                 },
                 {
                   question: "Are there any associated symptoms?",
@@ -4982,14 +5059,17 @@ export default {
                 {
                   question: "What is the interval between periods?",
                   type: 'button',
+                  showTextInput: false,
                   options: [
                     {
-                      name: 'Regular – # of Days',
-                      isActive: false
+                      name: 'Regular',
+                      isActive: false,
+                      placeholder: 'Describe the # of days'
                     },
                     {
-                      name: 'Varies – # to # days',
-                      isActive: false
+                      name: 'Varies',
+                      isActive: false,
+                      placeholder: 'Describe the # to # days'
                     },
                   ]
                 },
@@ -5028,12 +5108,12 @@ export default {
                 {
                   question: "What age was the patient at first childbirth?",
                   type: 'text',
-                  placeholder: 'Describe the age at children',
+                  placeholder: 'Describe # age',
                 },
                 {
                   question: "How old was the patient at the last childbirth?",
                   type: 'text',
-                  placeholder: 'Describe the age at last childbirth',
+                  placeholder: 'Describe # age',
                 },
                 {
                   question: "Is contraception practiced?",
@@ -5052,7 +5132,7 @@ export default {
                 {
                   question: "What was the age of onset?",
                   type: 'text',
-                  placeholder: 'Describe the age of onset'
+                  placeholder: 'Started at age #'
                 },
                 {
                   question: "Are there any associated symptoms?",
@@ -5116,14 +5196,17 @@ export default {
                 {
                   question: "What is the interval between periods?",
                   type: 'button',
+                  showTextInput: false,
                   options: [
                     {
-                      name: 'Regular – # of Days',
-                      isActive: false
+                      name: 'Regular',
+                      isActive: false,
+                      placeholder: 'Describe the # of days'
                     },
                     {
-                      name: 'Varies – # to # days',
-                      isActive: false
+                      name: 'Varies',
+                      isActive: false,
+                      placeholder: 'Describe the # to # days'
                     },
                   ]
                 },
@@ -5162,12 +5245,12 @@ export default {
                 {
                   question: "What age was the patient at first childbirth?",
                   type: 'text',
-                  placeholder: 'Describe the age at children',
+                  placeholder: 'Describe # age',
                 },
                 {
                   question: "How old was the patient at the last childbirth?",
                   type: 'text',
-                  placeholder: 'Describe the age at last childbirth',
+                  placeholder: 'Describe # age',
                 },
                 {
                   question: "Is contraception practiced?",
@@ -5186,7 +5269,7 @@ export default {
                 {
                   question: "What was the age of onset?",
                   type: 'text',
-                  placeholder: 'Describe the age of onset'
+                  placeholder: 'Started at age #'
                 },
                 {
                   question: "Are there any associated symptoms?",
@@ -5250,14 +5333,17 @@ export default {
                 {
                   question: "What is the interval between periods?",
                   type: 'button',
+                  showTextInput: false,
                   options: [
                     {
-                      name: 'Regular – # of Days',
-                      isActive: false
+                      name: 'Regular',
+                      isActive: false,
+                      placeholder: 'Describe the # of days'
                     },
                     {
-                      name: 'Varies – # to # days',
-                      isActive: false
+                      name: 'Varies',
+                      isActive: false,
+                      placeholder: 'Describe the # to # days'
                     },
                   ]
                 },
@@ -5296,12 +5382,12 @@ export default {
                 {
                   question: "What age was the patient at first childbirth?",
                   type: 'text',
-                  placeholder: 'Describe the age at children',
+                  placeholder: 'Describe # age',
                 },
                 {
                   question: "How old was the patient at the last childbirth?",
                   type: 'text',
-                  placeholder: 'Describe the age at last childbirth',
+                  placeholder: 'Describe # age',
                 },
                 {
                   question: "Is contraception practiced?",
@@ -5320,7 +5406,7 @@ export default {
                 {
                   question: "What was the age of onset?",
                   type: 'text',
-                  placeholder: 'Describe the age of onset'
+                  placeholder: 'Started at age #'
                 },
                 {
                   question: "Are there any associated symptoms?",
@@ -5361,13 +5447,8 @@ export default {
           questions: [
             {
               question: "Where is the injury located?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Location on Body',
-                  isActive: false
-                },
-              ]
+              type: 'text',
+              placeholder: 'Describe the location on body'
             },
             {
               question: "How was the injury sustained?",

@@ -35,6 +35,9 @@
               Login (as Doct.)
             </button>
           </nuxt-link>
+          <button class="btn btn-dark mb-2 p-2 w-100 text-uppercase" @click="login">
+            Login
+          </button>
           <!-- <nuxt-link to="/admin">
             <button class="btn btn-dark mb-2 p-2 w-100 text-uppercase">
               Login (as Admin)
@@ -81,6 +84,24 @@ export default {
         console.log(res)
         console.log('Success 123s')
       })
+    },
+    login: function () {
+      var data = {
+        email: 'ritwikaghosh48@gmail.com',
+        password: 'abcd1234'
+      }
+
+      var headers = {      
+        'Content-Type': 'application/json;charset=UTF-8',
+      }
+
+      axios.post('http://127.0.0.1:5000/login', data, headers)
+        .then(function (response) {
+          console.log(response.data);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     }
   }
 }
