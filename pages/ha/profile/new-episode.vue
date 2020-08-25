@@ -58,7 +58,7 @@
               <div class="row mt-1">
                 <div class="col-md-12 mb-0 px-0">
                   <div class="col-md-12 text-muted small mb-0 w-100">
-                    Chief Complain, Fixed Questions
+                    Chief Complaints, Fixed Questions
                     <hr>
                   </div>
                   <transition  appear name="u-fade"  mode="out-in" tag="div">
@@ -127,12 +127,10 @@
                   <hr>
                 </div>
                 <div class="col-md-12 mb-3">
-                  <input type="checkbox" class="mr-3 mb-2">Have you washed your hands? <br>
-                  <input type="checkbox" class="mr-3 mb-2">If you are examning a female patient, is there a female chaperon in the room? <br>
-                  <input type="checkbox" class="mr-3 mb-2">Have you greeted the patient by name? <br>
-                  <input type="checkbox" class="mr-3 mb-2">Ask the patient to sit/lie down comfortably, assist if necessary? <br>
-                  <input type="checkbox" class="mr-3 mb-2">Watch as the patient walks to the chair/couch? <br>
-                  <input type="checkbox" class="mr-3 mb-2">Ask the patient if there is any pain anywhere, and if so, approach that region last and very slowly? <br>
+                  <div class="form-check" v-for="(preCheckQuestion, index) in preCheckQuestions" :key ="index">
+                    <input type="checkbox" class="form-check-input" v-model="preCheckQuestion.isChecked" :id="'checkbox' + index">
+                    <label class="form-check-label" :for="'checkbox' + index">{{ preCheckQuestion.question }}</label>
+                  </div>
                 </div>
               </div>
             </div>
@@ -140,7 +138,8 @@
             <div class="container mb-3">
               <div class="row">
                 <div class="col-md-12 px-0">
-                    <button @click="goToNext()" type="button" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0 text-uppercase">
+                  <!-- :disabled="!preCheckQuestions.every((question) => question.isChecked === true)" -->
+                    <button @click="goToNext()"  type="button" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0 text-uppercase">
                       Go to General Exams
                     </button>
                 </div>
@@ -152,43 +151,13 @@
             <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;">
               <div class="row mt-1">
                 <div class="col-md-12 text-muted small mb-0">
-                    Please complete to the best of your ability.
-                    <hr>
-                  </div>
-                <div class="col-md-6 mb-3">
-                  <label for="exampleFormControlSelect1">Patient Appearance</label><br>
-                  <button class="btn btn-light mb-2 mr-2">
-                    Look Comfortable
-                  </button>
-                  <button class="btn btn-light mb-2 mr-2">
-                    In Pain
-                  </button>
-                  <button class="btn btn-light mb-2 mr-2">
-                    Appears Breathless
-                  </button>
-                  <button class="btn btn-light mb-2 mr-2">
-                    Looks Unwell
-                  </button>
-                  <button class="btn btn-light mb-2 mr-2">
-                    Very Thin
-                  </button>
-                  <button class="btn btn-light mb-2 mr-2">
-                    Obese
-                  </button>
+                  Please complete to the best of your ability.
+                  <hr>
                 </div>
-                <div class="col-md-6 mb-3">
-                  <label for="exampleFormControlSelect1">Patient Gait</label><br>
-                  <button class="btn btn-light mb-2 mr-2">
-                    Walks Normally
-                  </button>
-                  <button class="btn btn-light mb-2 mr-2">
-                    Walks with a Limp
-                  </button>
-                  <button class="btn btn-light mb-2 mr-2">
-                    Walks with a Bump
-                  </button>
-                  <button class="btn btn-light mb-2 mr-2">
-                    Cannot Walk
+                <div class="col-md-12 mb-3" v-for="(vitalQuestion, index) in vitalQuestions" :key="index">
+                  <label for="exampleFormControlSelect1">{{ vitalQuestion.title }}</label><br>
+                  <button v-for="(option, optionIndex) in vitalQuestion.options" :class="option.isActive ? 'btn-dark' : 'btn-light'" :key="optionIndex" @click="handleVitalsQuestions(index, optionIndex)" class="btn mb-2 mr-2">
+                    {{ option.name }}
                   </button>
                 </div>
                 <div class="col-md-6 mb-3">
@@ -197,9 +166,9 @@
                   <input class="form-control d-inline w-25 mx-2" type="number" value="0"> mmHg
                 </div>
                 <div class="col-md-6 mb-3">
-                  <label for="exampleFormControlSelect1">Oxygen</label><br>
+                  <label for="exampleFormControlSelect1">Sp02</label><br>
                   <input class="form-control d-inline w-25 mr-2" type="number" value="0"> /
-                  <input class="form-control d-inline w-25 mx-2" type="number" value="0"> Sp02 (%)
+                  <input class="form-control d-inline w-25 mx-2" type="number" value="0"> %
                 </div>
                 <div class="col-md-6 mb-3">
                   <label for="exampleFormControlSelect1">Patient Temperature</label><br>
@@ -214,8 +183,8 @@
                   <input class="form-control d-inline w-25 mr-2" @keyup="calculateBMI" @click="calculateBMI" v-model="patWeight" type="number" value="0"> kg
                 </div>
                 <div class="col-md-6 mb-3">
-                  <label for="exampleFormControlSelect1">Body Mass Index</label><br>
-                  {{ patBMI }} (Auto-calculated)
+                  <label for="exampleFormControlSelect1">Body Mass Index (BMI)</label><br>
+                  {{ patBMI }} kg/m^2
                 </div>
               </div>
             </div>
@@ -234,8 +203,27 @@
           <div key="generalExams" v-if="tabs[4].isActive">
             <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;">
               <div class="row mt-1">
+                <div class="col-md-12 text-muted small mb-0">
+                  Please complete to the best of your ability.
+                  <hr>
+                </div>
                 <div class="col-md-12 mb-5 text-center">
-                  <img src="/anatomy_sketch.png" alt="">
+                  <img src="/anatomy_sketch_02.png" class="w-75" alt="">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="exampleFormControlSelect1">Jaundice in Eyes</label><br>
+                  <button class="btn btn-light mb-2 mr-2">Yes</button>
+                  <button class="btn btn-light mb-2 mr-2">No</button>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="exampleFormControlSelect1">Pallor in Eyes</label><br>
+                  <button class="btn btn-light mb-2 mr-2">Yes</button>
+                  <button class="btn btn-light mb-2 mr-2">No</button>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="exampleFormControlSelect1">Cyanosis in Hands</label><br>
+                  <button class="btn btn-light mb-2 mr-2">Yes</button>
+                  <button class="btn btn-light mb-2 mr-2">No</button>
                 </div>
                 <div class="col-md-6 mb-3">
                   <label for="exampleFormControlSelect1">Clubbing in Hands</label><br>
@@ -271,14 +259,38 @@
               <!-- Specific Exams
               <br><br> -->
               <div class="row mt-1">
-                <div class="col-md-12 mb-5 text-center">
-                  <img src="/anatomy_sketch.png" alt="">
-                </div>
-                <div class="col-md-12 text-muted small">
-                  Specific Exam Questions
+                <div class="col-md-12 text-muted small mb-0">
+                  Please complete to the best of your ability.
                   <hr>
                 </div>
-                <div class="col-md-6 mb-3">
+                <div class="col-md-12 mb-5 text-center">
+                  <img src="/anatomy_sketch_02.png" class="w-75" alt="">
+                </div>
+                <!-- {{ currCategory }}<br>
+                {{ subCategory }}<br><br> -->
+
+                <!-- {{ showSpecificComplaintQuestions(currCategory, subCategory) }} <br><br> -->
+                <!-- <div class="container">
+                  
+                </div> -->
+
+                <div class="container">
+                  <div class="row" v-for="(organ, index) in showSpecificComplaintQuestions(currCategory, subCategory)" :key="index">
+                    <div class="col-md-12 mt-4 mb-2 text-muted">
+                      <small>Area to examine: {{ organ.examination }}</small>
+                      <hr>
+                    </div>
+                    <div class="col-md-6 mb-3" v-for="(question, qIndex) in organ.questions" :key="qIndex">
+                      <label for="exampleFormControlSelect1">{{ question.title }}</label><br>
+                        <button v-for="(option, oIndex) in question.options" :key="oIndex" class="btn btn-light mb-2 mr-2">
+                          {{ option.name }}
+                        </button>
+                    </div>
+                  </div>
+                </div>
+
+                
+                <!-- <div class="col-md-6 mb-3">
                   <label for="exampleFormControlSelect1">Jaundice in Eyes</label><br>
                   <button class="btn btn-light mb-2 mr-2">Eyes</button>
                   <button class="btn btn-light mb-2 mr-2">Hands</button>
@@ -301,7 +313,7 @@
                   <button class="btn btn-light mb-2 mr-2">Eyes</button>
                   <button class="btn btn-light mb-2 mr-2">Hands</button>
                   <button class="btn btn-light mb-2 mr-2">Lower Leg and Ankle</button>
-                </div>
+                </div> -->
               </div>
             </div>
             <!-- Button: Go to Next Section -->
@@ -324,15 +336,28 @@
                   Please include any additional photos where applicable.
                   <hr>
                 </div>
+                <div class="col-md-12 mb-3">
+                  Photo 1.jpg (999 kb) <br>
+                  Photo 2.jpg (999 kb) <br>
+                  Photo 3.jpg (999 kb) <br>
+                  Photo 4.jpg (999 kb) <br>
+                  Photo 5.jpg (999 kb) <br>
+                </div>
+                <div class="col-md-12 mb-3 text-center">
+                  <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="customFile">
+                    <label class="custom-file-label" for="customFile">Choose file</label>
+                  </div>
+                </div>
                 <!-- <div class="col-md-12">
                   <div class="custom-file">
                 </div> -->
-                <div class="col-md-3 mb-4">
+                <!-- <div class="col-md-3 mb-4">
                   <img src="/square-grey.jpg" class="w-100" alt="">
                 </div>
                 <div class="col-md-3 mb-4">
                   <img src="/square-grey-add.jpg" class="w-100" alt="">
-                </div>
+                </div> -->
               </div>
             </div>
             <!-- Button: Go to Next Section -->
@@ -480,6 +505,17 @@ export default {
 
       // console.log(indexQuestion, indexAnswer)
     },
+    handleVitalsQuestions: function (questionIndex, optionIndex) {
+      let self = this
+
+      self.vitalQuestions[questionIndex].options.forEach((vitalQuestionOption, index) => {
+        if (index === optionIndex) {
+          vitalQuestionOption.isActive = true
+        } else {
+          vitalQuestionOption.isActive = false
+        }
+      })
+    },
     showAlert: function () {
       alert(`This episode has been recorded.`)
     },
@@ -489,51 +525,25 @@ export default {
 
       if (tabIsEnabled) {
         for (let i = 0; i < tabs.length; i++) {
-        console.log('----')
-        console.log(tabName, i)
-        console.log(tabs[i].isEnabled)
-        console.log('----')
-        // if (tabs[i].name === tabName) {
-        //   if (tabs[i].isEnabled) {
-        //     tabs[i].isActive = true 
-        //   }
-        // } else if (tabs[i].name === tabName && !tabs[i].isEnabled) {
-        //   tabs[i].isActive = false 
-        // }
-        if (tabs[i].isEnabled) {
-          if (tabs[i].name === tabName) {
-            tabs[i].isActive = true
-          } else {
-            tabs[i].isActive = false
+          console.log('----')
+          console.log(tabName, i)
+          console.log(tabs[i].isEnabled)
+          console.log('----')
+          // if (tabs[i].name === tabName) {
+          //   if (tabs[i].isEnabled) {
+          //     tabs[i].isActive = true 
+          //   }
+          // } else if (tabs[i].name === tabName && !tabs[i].isEnabled) {
+          //   tabs[i].isActive = false 
+          // }
+          if (tabs[i].isEnabled) {
+            if (tabs[i].name === tabName) {
+              tabs[i].isActive = true
+            } else {
+              tabs[i].isActive = false
+            }
           }
         }
-      }
-      
-        //   // if (tabs[i].name === tabName) {
-        //   //   tabs[i].isActive = true
-        //   //   // ref = i
-        //   // } else {
-        //   //   tabs[i].isActive = false
-        //   // }
-        // } 
-        
-        // if (tabs[i].isEnabled && tabs[i].name !== tabName) {
-        //   tabs[i].isActive = false
-        // }
-        // if (tabs[i].isEnabled) {
-          // if (tabs[i].name === tabName) {
-          //   tabs[i].isActive = true
-          //   // ref = i
-          // } else {
-          //   tabs[i].isActive = false
-          // }
-        // } 
-
-        // if (ref == (tabs.length - 1)) {
-        //   this.showComplete = true
-        // } else {
-        //   this.showComplete = false
-        // }
       }
     },
     goToNext: function () {
@@ -566,15 +576,113 @@ export default {
     calculateBMI: function () {
       const BMI = (this.patWeight / (this.patHeight * this.patHeight)) * 10000
       
-      if (typeof(BMI) === 'number') {
+      if (typeof(BMI) === 'number' && BMI < 999) {
         this.patBMI = BMI.toFixed(2)
       } else {
         this.patBMI = 0
+      }
+    },
+    showSpecificComplaintQuestions(currCategory, currSubCategory) {
+      switch (currCategory) {
+        case 'Pain':
+          switch (currSubCategory) {
+            case 'Headache':
+              return this.specificExamQuestions.filter(organ => organ.examination === 'head' || organ.examination === 'eyes' || organ.examination === 'hands')
+            case 'Ear Pain':
+              return this.specificExamQuestions.filter(organ => organ.examination === 'ears' || organ.examination === 'eyes' || organ.examination === 'hands')
+            case 'Teeth Pain':
+              return this.specificExamQuestions.filter(organ => organ.examination === 'cheek&mouth')
+            case 'Throat Pain':
+              return this.specificExamQuestions.filter(organ => organ.examination === 'neck' || organ.examination === 'cheek&mouth' || organ.examination === 'eyes')
+            case 'Back Pain':
+              return this.specificExamQuestions.filter(organ => organ.examination === 'back' || organ.examination === 'lowerleg&ankle' || organ.examination === 'eyes')
+            case 'Joint Pain':
+              return this.specificExamQuestions.filter(organ => organ.examination === 'joints')
+            case 'Chest Pain':
+              return this.specificExamQuestions.filter(organ => organ.examination === 'eyes' || organ.examination === 'lowerleg&ankle' || organ.examination === 'hands' || organ.examination === 'chest')
+            case 'Abdominal Pain':
+              return this.specificExamQuestions.filter(organ => organ.examination === 'eyes' || organ.examination === 'lowerleg&ankle' || organ.examination === 'hands' || organ.examination === 'abdomen')
+            case 'Breast Pain':
+              return null
+            case 'Scrotal Pain':
+              return null
+            case 'Perianal Pain':
+              return null
+            default:
+              return null
+          }
+        case 'Swelling/Tumor':
+          switch (currSubCategory) {
+            case 'Throat Swelling':
+              return this.specificExamQuestions.filter(organ => organ.examination === 'eyes' || organ.examination === 'hands' || organ.examination === 'neck&throat' ||  organ.examination === 'chest'|| organ.examination === 'lowerleg&ankle')
+            case 'Abdomen Swelling':
+              return this.specificExamQuestions.filter(organ => organ.examination === 'eyes' || organ.examination === 'neck' || organ.examination === 'lowerleg&ankle' ||  organ.examination === 'abdomen'|| organ.examination === 'cheek&mouth' || organ.examination === 'lump&swelling')
+            case 'Swelling (Other)':
+              return this.specificExamQuestions.filter(organ => organ.examination === 'lump&swelling' || organ.examination === 'eyes' || organ.examination === 'lowerleg&ankle')
+            default:
+              return null
+          }
+        case 'Difficulty Breathing':
+          return this.specificExamQuestions.filter(organ => organ.examination === 'eyes' || organ.examination === 'neck' || organ.examination === 'lowerleg&ankle' || organ.examination === 'hands'|| organ.examination === 'chest')
+        case 'Fever':
+          return this.specificExamQuestions.filter(organ => organ.examination === 'eyes' || organ.examination === 'neck' || organ.examination === 'lowerleg&ankle' || organ.examination === 'hands'|| organ.examination === 'chest' || organ.examination === 'abdomen')
+        case 'Diarrhoea':
+          return this.specificExamQuestions.filter(organ => organ.examination === 'eyes' || organ.examination === 'cheek&mouth' || organ.examination === 'lowerleg&ankle' || organ.examination === 'hands'|| organ.examination === 'abdomen')
+        case 'Vomiting':
+          return this.specificExamQuestions.filter(organ => organ.examination === 'eyes' || organ.examination === 'cheek&mouth' || organ.examination === 'lowerleg&ankle' || organ.examination === 'hands'|| organ.examination === 'abdomen')
+        case 'Dizziness':
+          return this.specificExamQuestions.filter(organ => organ.examination === 'eyes' || organ.examination === 'neck' || organ.examination === 'lowerleg&ankle' || organ.examination === 'hands' || organ.examination === 'chest' || organ.examination === 'bloodpressure' || organ.examination === 'pulse')
+        case 'Acidity/Indigestion':
+          return this.specificExamQuestions.filter(organ => organ.examination === 'eyes' || organ.examination === 'cheek&mouth' || organ.examination === 'lowerleg&ankle' || organ.examination === 'abdomen')
+        case 'Yellow Urine':
+          return this.specificExamQuestions.filter(organ => organ.examination === 'eyes' || organ.examination === 'cheek&mouth' || organ.examination === 'abdomen' || organ.examination === 'hands')
+        case 'Skin Rash':
+          return this.specificExamQuestions.filter(organ => organ.examination === 'rash')
+        case 'Bleeding with Stool':
+          return this.specificExamQuestions.filter(organ => organ.examination === 'eyes' || organ.examination === 'lowerleg&ankle' || organ.examination === 'abdomen')
+        case 'Gynae Problems':
+          switch (currSubCategory) {
+            case 'Period Problem':
+              return this.specificExamQuestions.filter(organ => organ.examination === 'eyes' || organ.examination === 'lowerleg&ankle' || organ.examination === 'abdomen')
+            case 'Ante-natal Problem':
+              return null
+            case 'Infertility Problem':
+              return null
+            case 'Private Parts Problem':
+              return null
+            case 'Intercourse Problem':
+              return null
+            default:
+              return null
+          }
+        case 'Injury':
+          return this.specificExamQuestions.filter(organ => organ.examination === 'injury')
+        case 'Boils':
+          return this.specificExamQuestions.filter(organ => organ.examination === 'lumps')
+        case 'Ulcer':
+          return this.specificExamQuestions.filter(organ => organ.examination === 'ulcer')
+        case 'Palpitation':
+          return this.specificExamQuestions.filter(organ => organ.examination === 'eyes' || organ.examination === 'neck' || organ.examination === 'lowerleg&ankle' || organ.examination === 'hands' || organ.examination === 'chest' || organ.examination === 'bloodpressure' || organ.examination === 'pulse')
+        case 'Fainting':
+          return this.specificExamQuestions.filter(organ => organ.examination === 'eyes' || organ.examination === 'neck' || organ.examination === 'lowerleg&ankle' || organ.examination === 'hands' || organ.examination === 'chest' || organ.examination === 'bloodpressure' || organ.examination === 'pulse')
+        case 'Weakness':
+          switch (currSubCategory) {
+            case 'General Weakness':
+              return this.specificExamQuestions.filter(organ => organ.examination === 'eyes' || organ.examination === 'neck' || organ.examination === 'lowerleg&ankle' || organ.examination === 'hands' || organ.examination === 'chest' || organ.examination === 'bloodpressure' || organ.examination === 'pulse')
+            case 'Particular Weakness':
+              return this.specificExamQuestions.filter(organ => organ.examination === 'head' || organ.examination === 'eyes' || organ.examination === 'hands')
+            default:
+              return null
+          }
+        default:
+          return null
       }
     }
   },
   mounted () {
     this.$store.commit('updatePath', this.fullPath)
+  },
+  computed: {
   },
   data() {
     return {
@@ -589,6 +697,1217 @@ export default {
       hasSubCategory: false,
       showQuestions: false,
       complaintItem: '',
+      specificExamQuestions: [
+        {
+          examination: 'eyes',
+          questions: [
+            {
+              title: 'Conjunctivitis',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false,
+                },
+                {
+                  name: 'No',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Jaundice',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false,
+                },
+                {
+                  name: 'No',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Pallor',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false,
+                },
+                {
+                  name: 'No',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Puffiness',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false,
+                },
+                {
+                  name: 'No',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Pupil',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false,
+                },
+                {
+                  name: 'No',
+                  isActive: false,
+                },
+              ]
+            },
+          ]
+        },
+        {
+          examination: 'hands',
+          questions: [
+            {
+              title: 'Clubbing',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false,
+                },
+                {
+                  name: 'No',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Cyanosis',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false,
+                },
+                {
+                  name: 'No',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Tremor',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false,
+                },
+                {
+                  name: 'No',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Puffiness',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false,
+                },
+                {
+                  name: 'No',
+                  isActive: false,
+                },
+              ]
+            },
+          ]
+        },
+        {
+          examination: 'lowerleg&ankle',
+          questions: [
+            {
+              title: 'Leg Oedema',
+              options: [
+                {
+                  name: 'Normal',
+                  isActive: false,
+                },
+                {
+                  name: 'Clubbing',
+                  isActive: false,
+                },
+                {
+                  name: 'Spooning',
+                  isActive: false,
+                },
+                {
+                  name: 'Cyanosis',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Skin of Lower Leg/Ankle',
+              options: [
+                {
+                  name: 'Normal',
+                  isActive: false,
+                },
+                {
+                  name: 'Thickened',
+                  isActive: false,
+                },
+                {
+                  name: 'Discolored',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Ulcer',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false,
+                },
+                {
+                  name: 'No',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Pedal Pulses',
+              options: [
+                {
+                  name: 'DP Pulse +/-',
+                  isActive: false,
+                },
+                {
+                  name: 'PT Pulse +/-',
+                  isActive: false,
+                },
+              ]
+            },
+          ]
+        },
+        {
+          examination: 'cheek&mouth',
+          questions: [
+            {
+              title: 'Discoloration',
+              options: [
+                {
+                  name: 'Normal',
+                  isActive: false,
+                },
+                {
+                  name: 'Coated',
+                  isActive: false,
+                },
+                {
+                  name: 'Dry',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Dryness',
+              options: [
+                {
+                  name: 'Dry',
+                  isActive: false,
+                },
+                {
+                  name: 'Not Dry',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Ulcer',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false,
+                },
+                {
+                  name: 'No',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Teeth',
+              options: [
+                {
+                  name: 'Teeth Normal',
+                  isActive: false,
+                },
+                {
+                  name: 'Black Discoloration',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Jaw Movement',
+              options: [
+                {
+                  name: 'Painless',
+                  isActive: false,
+                },
+                {
+                  name: 'Painful',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Redness at Back of Mouth',
+              options: [
+                {
+                  name: 'Redness Around Tonsils & Back of Throat',
+                  isActive: false,
+                },
+                {
+                  name: 'Normal Throat',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Sunkess Appearance',
+              options: [
+                {
+                  name: 'Cheek Normal',
+                  isActive: false,
+                },
+                {
+                  name: 'Cheek Sunken',
+                  isActive: false,
+                },
+              ]
+            },
+          ]
+        },
+        {
+          examination: 'chest',
+          questions: [
+            {
+              title: 'Chest Wall Movements',
+              options: [
+                {
+                  name: 'Both Sides Moving Equally',
+                  isActive: false,
+                },
+                {
+                  name: 'Both Sides Moving Less',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Redness Swelling',
+              options: [
+                {
+                  name: 'No Redness',
+                  isActive: false,
+                },
+                {
+                  name: 'Redness Over Area',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Tender Areas',
+              options: [
+                {
+                  name: 'Tenderness None',
+                  isActive: false,
+                },
+                {
+                  name: 'Tenderness Felt Over Area',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Breath Sounds',
+              options: [
+                {
+                  name: 'Sound File',
+                  isActive: false,
+                },
+              ]
+            },
+          ]
+        },
+        {
+          examination: 'neck',
+          questions: [
+            {
+              title: 'Swelling',
+              options: [
+                {
+                  name: 'None',
+                  isActive: false,
+                },
+                {
+                  name: 'Swelling in Areas',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Position of Trachea',
+              options: [
+                {
+                  name: 'Central',
+                  isActive: false,
+                },
+                {
+                  name: 'Deviated to Right',
+                  isActive: false,
+                },
+                {
+                  name: 'Deviated to Left',
+                  isActive: false,
+                },
+              ]
+            },
+          ]
+        },
+        {
+          examination: 'abdomen',
+          questions: [
+            {
+              title: 'Size',
+              options: [
+                {
+                  name: 'Normal',
+                  isActive: false,
+                },
+                {
+                  name: 'Appears Distended',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Scars',
+              options: [
+                {
+                  name: 'None',
+                  isActive: false,
+                },
+                {
+                  name: 'Present Over Area',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Tenderness',
+              options: [
+                {
+                  name: 'None',
+                  isActive: false,
+                },
+                {
+                  name: 'Present Over Area',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Lumps',
+              options: [
+                {
+                  name: 'Upper Right',
+                  isActive: false,
+                },
+                {
+                  name: 'Upper Center',
+                  isActive: false,
+                },
+                {
+                  name: 'Upper Left',
+                  isActive: false,
+                },
+                {
+                  name: 'Middle Right',
+                  isActive: false,
+                },
+                {
+                  name: 'Middle Center',
+                  isActive: false,
+                },
+                {
+                  name: 'Middle Left',
+                  isActive: false,
+                },
+              ]
+            },
+          ]
+        },
+        {
+          examination: 'back',
+          questions: [
+            {
+              title: 'Swelling',
+              options: [
+                {
+                  name: 'None',
+                  isActive: false,
+                },
+                {
+                  name: 'Present Over Area',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Position of Spinal Column',
+              options: [
+                {
+                  name: 'Midline',
+                  isActive: false,
+                },
+                {
+                  name: 'Deviated',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Movement',
+              options: [
+                {
+                  name: 'Bends Forward and Backwards Normally',
+                  isActive: false,
+                },
+                {
+                  name: 'Restricted',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Redness',
+              options: [
+                {
+                  name: 'No Redness',
+                  isActive: false,
+                },
+                {
+                  name: 'Present Over Area',
+                  isActive: false,
+                },
+              ]
+            },
+          ]
+        },
+        {
+          examination: 'head',
+          questions: [
+            {
+              title: 'Injury',
+              options: [
+                {
+                  name: 'None',
+                  isActive: false,
+                },
+                {
+                  name: 'Present Over Area',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Swelling',
+              options: [
+                {
+                  name: 'None',
+                  isActive: false,
+                },
+                {
+                  name: 'Present Over Area',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Tenderness',
+              options: [
+                {
+                  name: 'None',
+                  isActive: false,
+                },
+                {
+                  name: 'Present in Area',
+                  isActive: false,
+                },
+              ]
+            },
+          ]
+        },
+        {
+          examination: 'ears',
+          questions: [
+            {
+              title: 'Bleeding',
+              options: [
+                {
+                  name: 'None',
+                  isActive: false,
+                },
+                {
+                  name: 'Bleeding in Right Ear',
+                  isActive: false,
+                },
+                {
+                  name: 'Bleeding in Left Ear',
+                  isActive: false,
+                },
+                {
+                  name: 'Bleeding in Both Ears',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Redness',
+              options: [
+                {
+                  name: 'None',
+                  isActive: false,
+                },
+                {
+                  name: 'Present Over Area',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Discharge',
+              options: [
+                {
+                  name: 'None',
+                  isActive: false,
+                },
+                {
+                  name: 'Discharge in Right Ear',
+                  isActive: false,
+                },
+                {
+                  name: 'Discharge in Left Ear',
+                  isActive: false,
+                },
+                {
+                  name: 'Discharge in Both Ears',
+                  isActive: false,
+                },
+              ]
+            },
+          ]
+        },
+        {
+          examination: 'joints',
+          questions: [
+            {
+              title: 'Swelling',
+              options: [
+                {
+                  name: 'None',
+                  isActive: false,
+                },
+                {
+                  name: 'Present Over Area',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Redness',
+              options: [
+                {
+                  name: 'None',
+                  isActive: false,
+                },
+                {
+                  name: 'Present Over Area',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Deformity',
+              options: [
+                {
+                  name: 'None',
+                  isActive: false,
+                },
+                {
+                  name: 'Present Over Area',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Movement',
+              options: [
+                {
+                  name: 'Full Range',
+                  isActive: false,
+                },
+                {
+                  name: 'Restricted',
+                  isActive: false,
+                },
+              ]
+            },
+          ]
+        },
+        {
+          examination: 'ulcers',
+          questions: [
+            {
+              title: 'Location',
+              options: [
+                {
+                  name: 'Location of Ulcer',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'How many ulcers',
+              options: [
+                {
+                  name: '#',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Shape of ulcer(s)',
+              options: [
+                {
+                  name: 'Rounded',
+                  isActive: false,
+                },
+                {
+                  name: 'Irregluar',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Depth',
+              options: [
+                {
+                  name: 'Superficial',
+                  isActive: false,
+                },
+                {
+                  name: 'Deep',
+                  isActive: false,
+                },
+                {
+                  name: 'Bone Exposed',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Size',
+              options: [
+                {
+                  name: '# cms',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Edge',
+              options: [
+                {
+                  name: 'Raised',
+                  isActive: false,
+                },
+                {
+                  name: 'Flat',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Floor',
+              options: [
+                {
+                  name: 'Pink',
+                  isActive: false,
+                },
+                {
+                  name: 'Black',
+                  isActive: false,
+                },
+                {
+                  name: 'Yellow-Green',
+                  isActive: false,
+                },
+                {
+                  name: 'Mixed',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Discharge',
+              options: [
+                {
+                  name: 'Clear',
+                  isActive: false,
+                },
+                {
+                  name: 'Blood',
+                  isActive: false,
+                },
+                {
+                  name: 'Pus',
+                  isActive: false,
+                },
+                {
+                  name: 'Mixed',
+                  isActive: false,
+                },
+                {
+                  name: 'Reddish',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Pain',
+              options: [
+                {
+                  name: 'Painless',
+                  isActive: false,
+                },
+                {
+                  name: 'Painful',
+                  isActive: false,
+                },
+              ]
+            },
+          ]
+        },
+        {
+          examination: 'lump&swelling',
+          questions: [
+            {
+              title: 'Location',
+              options: [
+                {
+                  name: 'Location of Ulcer',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'How many lumps/swellings',
+              options: [
+                {
+                  name: '#',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Shape of ulcer(s)',
+              options: [
+                {
+                  name: 'Rounded',
+                  isActive: false,
+                },
+                {
+                  name: 'Irregluar',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Surface',
+              options: [
+                {
+                  name: 'Smooth',
+                  isActive: false,
+                },
+                {
+                  name: 'Irregular',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Color of Skinze',
+              options: [
+                {
+                  name: 'Normal',
+                  isActive: false,
+                },
+                {
+                  name: 'Red',
+                  isActive: false,
+                },
+                {
+                  name: 'Discolored',
+                  isActive: false,
+                },
+                {
+                  name: 'Dark Spot',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Ulcer',
+              options: [
+                {
+                  name: 'None',
+                  isActive: false,
+                },
+                {
+                  name: 'Present',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Size',
+              options: [
+                {
+                  name: '# cms',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Movement',
+              options: [
+                {
+                  name: 'Can Be Moved',
+                  isActive: false,
+                },
+                {
+                  name: 'Cannot Be Moved',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Feel',
+              options: [
+                {
+                  name: 'Tender',
+                  isActive: false,
+                },
+                {
+                  name: 'Not Tender',
+                  isActive: false,
+                },
+              ]
+            },
+          ]
+        },
+        {
+          examination: 'rash',
+          questions: [
+            {
+              title: 'Location',
+              options: [
+                {
+                  name: 'Location of Rash',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'How many rash(es)',
+              options: [
+                {
+                  name: '#',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Shape of rash(es)',
+              options: [
+                {
+                  name: 'Rounded',
+                  isActive: false,
+                },
+                {
+                  name: 'Irregluar',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Color',
+              options: [
+                {
+                  name: 'Red',
+                  isActive: false,
+                },
+                {
+                  name: 'Pink',
+                  isActive: false,
+                },
+                {
+                  name: 'Dark Color',
+                  isActive: false,
+                },
+                {
+                  name: 'Black',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Size',
+              options: [
+                {
+                  name: '# cms',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Edge',
+              options: [
+                {
+                  name: 'Raised',
+                  isActive: false,
+                },
+                {
+                  name: 'Flat',
+                  isActive: false,
+                },
+              ]
+            },
+          ]
+        },
+        {
+          examination: 'injury',
+          questions: [
+            {
+              title: 'With Cut: Length',
+              options: [
+                {
+                  name: '# cms',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'With Cut: Bleeding',
+              options: [
+                {
+                  name: 'None',
+                  isActive: false,
+                },
+                {
+                  name: 'Oozing',
+                  isActive: false,
+                },
+                {
+                  name: 'Major',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'With Cut: Visibility',
+              options: [
+                {
+                  name: 'Fat',
+                  isActive: false,
+                },
+                {
+                  name: 'Muscle',
+                  isActive: false,
+                },
+                {
+                  name: 'Deep Tissue',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'With Cut: Edges of Skin',
+              options: [
+                {
+                  name: 'Clean',
+                  isActive: false,
+                },
+                {
+                  name: 'Irregular',
+                  isActive: false,
+                },
+                {
+                  name: 'Loss of Skin',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Without Cut: Skin Color of Abrasion/Bruise',
+              options: [
+                {
+                  name: 'Normal Skin',
+                  isActive: false,
+                },
+                {
+                  name: 'Scratch Marks',
+                  isActive: false,
+                },
+                {
+                  name: 'Blue',
+                  isActive: false,
+                },
+                {
+                  name: 'Red',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Without Cut: Burned Area',
+              options: [
+                {
+                  name: '# by # cms',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Without Cut: Burned Surface',
+              options: [
+                {
+                  name: 'Black',
+                  isActive: false,
+                },
+                {
+                  name: 'White',
+                  isActive: false,
+                },
+                {
+                  name: 'Red',
+                  isActive: false,
+                },
+              ]
+            },
+            {
+              title: 'Without Cut: Burned Blisters',
+              options: [
+                {
+                  name: 'None',
+                  isActive: false,
+                },
+                {
+                  name: 'Present',
+                  isActive: false,
+                },
+              ]
+            },
+          ]
+        },
+      ],
+      vitalQuestions: [
+        {
+          title: 'Patient Appearance',
+          options: [
+            {
+              name: 'Looks Comfortable',
+              isActive: false,
+            },
+            {
+              name: 'In Pain',
+              isActive: false,
+            },
+            {
+              name: 'Appears Breathless',
+              isActive: false,
+            },
+            {
+              name: 'Looks Unwell',
+              isActive: false,
+            },
+            {
+              name: 'Looks Very Thin',
+              isActive: false,
+            },
+            {
+              name: 'Looks Obese',
+              isActive: false,
+            }
+          ]
+        },
+        {
+          title: 'Patient Gait',
+          options: [
+            {
+              name: 'Walks Normally',
+              isActive: false,
+            },
+            {
+              name: 'Walks with a Limp',
+              isActive: false,
+            },
+            {
+              name: 'Walks with a Bump',
+              isActive: false,
+            },
+            {
+              name: 'Cannot Walk',
+              isActive: false,
+            },
+          ]
+        },
+      ],
+      preCheckQuestions: [
+        {
+          question: "Have you washed your hands?",
+          isChecked: false,
+        },
+        {
+          question: "If you are examning a female patient, is there a female chaperon in the room?",
+          isChecked: false,
+        },
+        {
+          question: "Have you greeted the patient by name?",
+          isChecked: false,
+        },
+        {
+          question: "Ask the patient to sit/lie down comfortably, assist if necessary?",
+          isChecked: false,
+        },
+        {
+          question: "Watch as the patient walks to the chair/couch?",
+          isChecked: false,
+        },
+        {
+          question: "Ask the patient if there is any pain anywhere, and if so, approach that region last and very slowly?",
+          isChecked: false,
+        },
+      ],
       generalExams: {
         eyesJaundice: null,
         eyesPallor: null,
@@ -621,6 +1940,7 @@ export default {
             {
               name: 'Headache',
               isActive: false,
+              organsToExamine: ['eye', 'head', 'hand'],
               questions: [
                 {
                   question: "How long has this been going on?",
@@ -821,6 +2141,7 @@ export default {
             {
               name: 'Ear Pain',
               isActive: false,
+              organsToExamine: ['ear', 'cheek&mouth'],
               questions: [
                 {
                   question: "How long has this been going on?",
@@ -985,6 +2306,7 @@ export default {
             {
               name: 'Teeth Pain',
               isActive: false,
+              organsToExamine: ['cheek&mouth'],
               questions: [
                 {
                   question: "How long has this been going on?",
@@ -1153,6 +2475,7 @@ export default {
             {
               name: 'Throat Pain',
               isActive: false,
+              organsToExamine: ['neck', 'cheek&mouth', 'eyes'],
               questions: [
                 {
                   question: "How long has this been going on?",
@@ -1313,6 +2636,7 @@ export default {
             {
               name: 'Back Pain',
               isActive: false,
+              organsToExamine: ['back', 'eyes&mouth', 'lowerleg&ankle'],
               questions: [
                 {
                   question: "How long has this been going on?",
@@ -1529,6 +2853,7 @@ export default {
             {
               name: 'Joint Pain',
               isActive: false,
+              organsToExamine: ['joints'],
               questions: [
                 {
                   question: "How long has this been going on?",
@@ -2045,6 +3370,7 @@ export default {
             {
               name: 'Chest Pain',
               isActive: false,
+              organsToExamine: ['eyes', 'lowerleg&ankle', 'hands', 'chest'],
               questions: [
                 {
                   question: "How long has this been going on?",
@@ -2284,7 +3610,8 @@ export default {
             },
             {
               name: 'Abdominal Pain',
-              isActive: false,isActive: false,
+              isActive: false,
+              organsToExamine: ['eye', 'lowerleg&ankle', 'hands', 'abdomen'],
               questions: [
                 {
                   question: "How long has this been going on?",
@@ -2532,6 +3859,7 @@ export default {
             {
               name: 'Breast Pain',
               isActive: false,
+              organsToExamine: [],
               questions: [
                 {
                   question: "How long has this been going on?",
@@ -2754,7 +4082,8 @@ export default {
             },
             {
               name: 'Scrotal Pain',
-              isActive: false,isActive: false,
+              isActive: false,
+              organsToExamine: [],
               questions: [
                 {
                   question: "How long has this been going on?",
@@ -2922,7 +4251,8 @@ export default {
             },
             {
               name: 'Perianal Pain',
-              isActive: false,isActive: false,
+              isActive: false,
+              organsToExamine: ['neck', 'cheek&mouth', 'eyes'],
               questions: [
                 {
                   question: "How long has this been going on?",
@@ -3101,6 +4431,7 @@ export default {
         {
           name: 'Swelling/Tumor',
           isActive: false,
+          organsToExamine: ['eye', 'hands', 'neck&throat', 'chest', 'lowerleg&ankle'],
           subCategories: [
             {
               name: 'Throat Swelling',
@@ -3296,6 +4627,7 @@ export default {
             {
               name: 'Abdomen Swelling',
               isActive: false,
+              organsToExamine: ['eye', 'neck', 'adbomen', 'cheek&mouth', 'lump&swelling', 'lowerleg&ankle'],
               questions: [
                 {
                   question: "Where is the swelling?",
@@ -3515,6 +4847,7 @@ export default {
             {
               name: 'Swelling (Other)',
               isActive: false,
+              organsToExamine: ['eye', 'hands', 'neck&throat', 'chest', 'lowerleg&ankle'],
               questions: [
                 {
                   question: "Where is the swelling?",

@@ -1,5 +1,4 @@
 export default {
-  cat: 'dog',
   udayDb: {
     superadmins: [
       {
