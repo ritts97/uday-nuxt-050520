@@ -61,7 +61,7 @@ export default {
   mounted () {
     this.$store.commit('updatePath', [
       {
-        title: 'HA\'s Dashboard',
+        title: 'Dashboard',
         url: '/ha'
       },
       {
