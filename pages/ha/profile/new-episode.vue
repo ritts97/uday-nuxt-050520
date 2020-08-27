@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-md-12 rounded">
           <ul class="list-inline mb-2">
-            <li class="list-inline-item" v-for="(tab, index) in tabs" :key="index">
+            <li class="list-inline-item mr-0" v-for="(tab, index) in tabs" :key="index">
               <div class="px-2 mr-2 pb-1 mb-1" @click="getTab(tab.name, tab.isEnabled)" :class="{ underline: tab.isActive,  'text-muted': !tab.isEnabled, 'pointer': tab.isEnabled }" role="button">
                 {{ tab.title }}
               </div>
@@ -8242,6 +8242,16 @@ export default {
 <style>
   .fake-link:hover {
     cursor: pointer !important;
+  }
+
+  /* .list-inline-item {
+    margin-right: 10px !important;
+  } */
+
+  @media (min-width: 992px) {
+    .container {
+        max-width: 1060px;
+    }
   }
 
   /* File Upload Styles */
