@@ -88,6 +88,10 @@
                                 <input type="text" class="mt-1 p-2 w-100" :placeholder="question.options[0].isActive === true ? question.options[0].placeholder : question.options[1].placeholder">
                               </div>
                             </div>
+                            <div v-if="question.type === 'number'">
+                              <label for="exampleFormControlSelect1">{{ question.question }}</label><br>
+                              <input type="number" class="mt-1 p-2 mr-2 w-25" placeholder="0"> {{ question.caption }}
+                            </div>
                             <div v-if="question.type === 'select'">
                               <label for="exampleFormControlSelect1">{{ question.question }}</label><br>
                               <select class="form-control" id="exampleFormControlSelect1">
@@ -2641,8 +2645,8 @@ export default {
               questions: [
                 {
                   question: "How long has this been going on?",
-                  type: 'text',
-                  placeholder: 'Describe the # of days'
+                  type: 'number',
+                  caption: 'days long'
                 },
                 {
                   question: "Where did it start?",
@@ -2842,8 +2846,8 @@ export default {
               questions: [
                 {
                   question: "How long has this been going on?",
-                  type: 'text',
-                  placeholder: 'Describe the # of days'
+                  type: 'number',
+                  caption: 'days long'
                 },
                 {
                   question: "Where did it start?",
@@ -3007,8 +3011,8 @@ export default {
               questions: [
                 {
                   question: "How long has this been going on?",
-                  type: 'text',
-                  placeholder: 'Describe the # of days'
+                  type: 'number',
+                  caption: 'days long'
                 },
                 {
                   question: "Where did it start?",
@@ -3176,8 +3180,8 @@ export default {
               questions: [
                 {
                   question: "How long has this been going on?",
-                  type: 'text',
-                  placeholder: 'Describe the # of days'
+                  type: 'number',
+                  caption: 'days long'
                 },
                 {
                   question: "Where did it start?",
@@ -3337,8 +3341,8 @@ export default {
               questions: [
                 {
                   question: "How long has this been going on?",
-                  type: 'text',
-                  placeholder: 'Describe the # of days'
+                  type: 'number',
+                  caption: 'days long'
                 },
                 {
                   question: "Where did it start?",
@@ -3554,8 +3558,8 @@ export default {
               questions: [
                 {
                   question: "How long has this been going on?",
-                  type: 'text',
-                  placeholder: 'Describe the # of days'
+                  type: 'number',
+                  caption: 'days long'
                 },
                 {
                   question: "Where did it start?",
@@ -4071,8 +4075,8 @@ export default {
               questions: [
                 {
                   question: "How long has this been going on?",
-                  type: 'text',
-                  placeholder: 'Describe the # of days'
+                  type: 'number',
+                  caption: 'days long'
                 },
                 {
                   question: "Where did it start?",
@@ -4312,8 +4316,8 @@ export default {
               questions: [
                 {
                   question: "How long has this been going on?",
-                  type: 'text',
-                  placeholder: 'Describe the # of days'
+                  type: 'number',
+                  caption: 'days long'
                 },
                 {
                   question: "Where did it start?",
@@ -4560,8 +4564,8 @@ export default {
               questions: [
                 {
                   question: "How long has this been going on?",
-                  type: 'text',
-                  placeholder: 'Describe the # of days'
+                  type: 'number',
+                  caption: 'days long'
                 },
                 {
                   question: "Where did it start?",
@@ -4784,8 +4788,8 @@ export default {
               questions: [
                 {
                   question: "How long has this been going on?",
-                  type: 'text',
-                  placeholder: 'Describe the # of days'
+                  type: 'number',
+                  caption: 'days long'
                 },
                 {
                   question: "Where did it start?",
@@ -4953,8 +4957,8 @@ export default {
               questions: [
                 {
                   question: "How long has this been going on?",
-                  type: 'text',
-                  placeholder: 'Describe the # of days'
+                  type: 'number',
+                  caption: 'days long'
                 },
                 {
                   question: "Where did it start?",
@@ -5614,8 +5618,8 @@ export default {
           questions: [
             {
                 question: "How long has this been going on?",
-                type: 'text',
-                placeholder: 'Describe the # of days'
+                type: 'number',
+                caption: 'days long'
             },
             {
               question: "How has it progressed?",
@@ -5749,8 +5753,8 @@ export default {
           questions: [
             {
               question: "How long has this been going on?",
-              type: 'text',
-              placeholder: 'Describe the # of days'
+              type: 'number',
+              caption: 'days long'
             },
             {
               question: "How has it progressed?",
@@ -5987,8 +5991,8 @@ export default {
           questions: [
             {
               question: "How long has this been happening?",
-              type: 'text',
-              placeholder: 'Describe the # of days',
+              type: 'number',
+              caption: 'days long'
             },
             {
               question: "What is the stool type?",
@@ -6109,8 +6113,8 @@ export default {
           questions: [
             {
               question: "How long has this been happening?",
-              type: 'text',
-              placeholder: 'Describe the # of days',
+              type: 'number',
+              caption: 'days long'
             },
             {
               question: "What is the nature of the vomiting?",
@@ -6230,8 +6234,8 @@ export default {
           questions: [
             {
               question: "How long has this been happening?",
-              type: 'text',
-              placeholder: 'Describe the # of days',
+              type: 'number',
+              caption: 'days long'
             },
             {
               question: "What is the nature of the dizziness?",
@@ -6406,8 +6410,8 @@ export default {
           questions: [
             {
               question: "How long has this been happening?",
-              type: 'text',
-              placeholder: 'Describe the # of days',
+              type: 'number',
+              caption: 'days long'
             },
             {
               question: "Is there any abdominal pain?",
@@ -6557,8 +6561,8 @@ export default {
           questions: [
             {
               question: "How long has this been happening?",
-              type: 'text',
-              placeholder: 'Describe the # of days',
+              type: 'number',
+              caption: 'days long'
             },
             {
               question: "Is there any abdominal pain?",
@@ -6795,13 +6799,13 @@ export default {
                 },
                 {
                   question: "When was the last LMP?",
-                  type: 'text',
-                  placeholder: 'Describe # of days',
+                  type: 'number',
+                  caption: 'days ago'
                 },
                 {
                   question: "What is the duration of the patient's period?",
-                  type: 'text',
-                  placeholder: 'Describe # of days',
+                  type: 'number',
+                  caption: 'days',
                 },
                 {
                   question: "What is the interval between periods?",
@@ -6843,24 +6847,24 @@ export default {
                   ]
                 },
                 {
-                  question: "How many of children are there?",
-                  type: 'text',
-                  placeholder: 'Describe the # of children'
+                  question: "How many children are there?",
+                  type: 'number',
+                  caption: 'children'
                 },
                 {
                   question: "How many pregnancies have there been?",
-                  type: 'text',
-                  placeholder: 'Describe the # of pregnancies'
+                  type: 'number',
+                  caption: 'pregnancies'
                 },
                 {
                   question: "What age was the patient at first childbirth?",
-                  type: 'text',
-                  placeholder: 'Describe # age',
+                  type: 'number',
+                  caption: 'years old'
                 },
                 {
                   question: "How old was the patient at the last childbirth?",
-                  type: 'text',
-                  placeholder: 'Describe # age',
+                  type: 'number',
+                  caption: 'years old'
                 },
                 {
                   question: "Is contraception practiced?",
@@ -6941,13 +6945,13 @@ export default {
                 }
                 ,{
                   question: "When was the last LMP?",
-                  type: 'text',
-                  placeholder: 'Describe # of days',
+                  type: 'number',
+                  caption: 'days'
                 },
                 {
                   question: "What is the duration of the patient's period?",
-                  type: 'text',
-                  placeholder: 'Describe the # of days',
+                  type: 'number',
+                  caption: 'days'
                 },
                 {
                   question: "What is the interval between periods?",
@@ -6990,23 +6994,23 @@ export default {
                 },
                 {
                   question: "How many of children are there?",
-                  type: 'text',
-                  placeholder: 'Describe the # of children'
+                  type: 'number',
+                  caption: 'children'
                 },
                 {
                   question: "How many pregnancies have there been?",
-                  type: 'text',
-                  placeholder: 'Describe the # of pregnancies'
+                  type: 'number',
+                  caption: 'pregnancies'
                 },
                 {
                   question: "What age was the patient at first childbirth?",
-                  type: 'text',
-                  placeholder: 'Describe # age',
+                  type: 'number',
+                  caption: 'years old'
                 },
                 {
                   question: "How old was the patient at the last childbirth?",
-                  type: 'text',
-                  placeholder: 'Describe # age',
+                  type: 'number',
+                  caption: 'years old'
                 },
                 {
                   question: "Is contraception practiced?",
@@ -7024,8 +7028,8 @@ export default {
                 },
                 {
                   question: "What was the age of onset?",
-                  type: 'text',
-                  placeholder: 'Started at age #'
+                  type: 'number',
+                  caption: 'years old'
                 },
                 {
                   question: "Are there any associated symptoms?",
@@ -7078,13 +7082,13 @@ export default {
                 },
                 {
                   question: "When was the last LMP?",
-                  type: 'text',
-                  placeholder: 'Describe the # days',
+                  type: 'number',
+                  caption: 'days ago'
                 },
                 {
                   question: "What is the duration of the patient's period?",
-                  type: 'text',
-                  placeholder: 'Describe the # days',
+                  type: 'number',
+                  caption: 'days'
                 },
                 {
                   question: "What is the interval between periods?",
@@ -7127,23 +7131,23 @@ export default {
                 },
                 {
                   question: "How many of children are there?",
-                  type: 'text',
-                  placeholder: 'Describe the # of children'
+                  type: 'number',
+                  caption: 'children'
                 },
                 {
                   question: "How many pregnancies have there been?",
-                  type: 'text',
-                  placeholder: 'Describe the # of pregnancies'
+                  type: 'number',
+                  caption: 'pregnancies'
                 },
                 {
                   question: "What age was the patient at first childbirth?",
-                  type: 'text',
-                  placeholder: 'Describe # age',
+                  type: 'number',
+                  caption: 'years old'
                 },
                 {
                   question: "How old was the patient at the last childbirth?",
-                  type: 'text',
-                  placeholder: 'Describe # age',
+                  type: 'number',
+                  caption: 'years old'
                 },
                 {
                   question: "Is contraception practiced?",
@@ -7161,8 +7165,8 @@ export default {
                 },
                 {
                   question: "What was the age of onset?",
-                  type: 'text',
-                  placeholder: 'Started at age #'
+                  type: 'number',
+                  caption: 'years old'
                 },
                 {
                   question: "Are there any associated symptoms?",
@@ -7215,13 +7219,13 @@ export default {
                 },
                 {
                   question: "When was the last LMP?",
-                  type: 'text',
-                  placeholder: 'Describe the # days',
+                  type: 'number',
+                  caption: 'days ago'
                 },
                 {
                   question: "What is the duration of the patient's period?",
-                  type: 'text',
-                  placeholder: 'Describe the # days',
+                  type: 'number',
+                  caption: 'days long'
                 },
                 {
                   question: "What is the interval between periods?",
@@ -7264,23 +7268,23 @@ export default {
                 },
                 {
                   question: "How many of children are there?",
-                  type: 'text',
-                  placeholder: 'Describe the # of children'
+                  type: 'number',
+                  caption: 'children'
                 },
                 {
                   question: "How many pregnancies have there been?",
-                  type: 'text',
-                  placeholder: 'Describe the # of pregnancies'
+                  type: 'number',
+                  caption: 'pregnancies'
                 },
                 {
                   question: "What age was the patient at first childbirth?",
-                  type: 'text',
-                  placeholder: 'Describe # age',
+                  type: 'number',
+                  caption: 'years old'
                 },
                 {
                   question: "How old was the patient at the last childbirth?",
-                  type: 'text',
-                  placeholder: 'Describe # age',
+                  type: 'number',
+                  caption: 'years old'
                 },
                 {
                   question: "Is contraception practiced?",
@@ -7298,8 +7302,8 @@ export default {
                 },
                 {
                   question: "What was the age of onset?",
-                  type: 'text',
-                  placeholder: 'Started at age #'
+                  type: 'number',
+                  caption: 'years old'
                 },
                 {
                   question: "Are there any associated symptoms?",
@@ -7352,13 +7356,13 @@ export default {
                 },
                 {
                   question: "When was the last LMP?",
-                  type: 'text',
-                  placeholder: 'Describe the # days',
+                  type: 'number',
+                  caption: 'days ago'
                 },
                 {
                   question: "What is the duration of the patient's period?",
-                  type: 'text',
-                  placeholder: 'Describe the # days',
+                  type: 'number',
+                  caption: 'days long'
                 },
                 {
                   question: "What is the interval between periods?",
@@ -7401,23 +7405,23 @@ export default {
                 },
                 {
                   question: "How many of children are there?",
-                  type: 'text',
-                  placeholder: 'Describe the # of children'
+                  type: 'number',
+                  caption: 'children'
                 },
                 {
                   question: "How many pregnancies have there been?",
-                  type: 'text',
-                  placeholder: 'Describe the # of pregnancies'
+                  type: 'number',
+                  caption: 'pregnancies'
                 },
                 {
                   question: "What age was the patient at first childbirth?",
-                  type: 'text',
-                  placeholder: 'Describe # age',
+                  type: 'number',
+                  caption: 'years old'
                 },
                 {
                   question: "How old was the patient at the last childbirth?",
-                  type: 'text',
-                  placeholder: 'Describe # age',
+                  type: 'number',
+                  caption: 'years old'
                 },
                 {
                   question: "Is contraception practiced?",
@@ -7435,8 +7439,8 @@ export default {
                 },
                 {
                   question: "What was the age of onset?",
-                  type: 'text',
-                  placeholder: 'Started at age #'
+                  type: 'number',
+                  caption: 'years old'
                 },
                 {
                   question: "Are there any associated symptoms?",
