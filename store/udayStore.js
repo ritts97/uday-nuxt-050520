@@ -34,12 +34,12 @@ export default {
           }
         ],
         has: [{
-          name: 'Teresa Mendoza (RN)',
+          name: 'Ritwika Ghosh (RN)',
           id: 'ha0001',
           role: 'ha',
           status: 'online',
           cluster: 'cluster0001',
-          bio: 'Hello, my name is Teresa Mendoza, and I\'m studying to become a nurse! I\'m happy help you!',
+          bio: 'Hello, my name is Ritwika Ghosh, and I\'m studying to become a nurse! I\'m happy help you!',
           phone: '1-415-555-1234',
           address: '2222 Market Street',
           location: 'Calcutta, IN',

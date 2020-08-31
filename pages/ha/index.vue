@@ -70,9 +70,9 @@
                   <th scope="col">Name</th>
                   <!-- <th scope="col">Gender</th> -->
                   <!-- <th scope="col">Age</th> -->
-                  <th scope="col">Date Registered</th>
                   <th scope="col">Last Visited</th>
-                  <th scope="col">Reg. By</th>
+                  <th scope="col">Registered Date</th>
+                  <th scope="col">Registered By</th>
                 </tr>
               </thead>
               <!-- <tbody> -->
@@ -88,12 +88,12 @@
                     {{ patient.status }}
                   </td>
                   <td>
-                    <nuxt-link :to="'/ha/profile?id=' + patient.id">{{ patient.demographics.name }} ({{ patient.demographics.age }})</nuxt-link>
+                    <nuxt-link :to="'/ha/profile?id=' + patient.id">{{ patient.demographics.name }}</nuxt-link>
                   </td>
                   <!-- <td class="text-uppercase">{{ patient.demographics.gender }}</td> -->
                   <!-- <td>{{ patient.demographics.age }}</td> -->
-                  <td>{{ patient.demographics.phone }}</td>
-                  <td>{{ patient.demographics.location }}</td>
+                  <td>2 days ago</td>
+                  <td>July 01, 2020</td>
                   <td>{{ patient.regBy }}</td>
                 </tr>
 

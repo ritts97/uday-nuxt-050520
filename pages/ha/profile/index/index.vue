@@ -4,7 +4,6 @@
       <div class="row">
         <div class="col-md-6">
           <nuxt-link to="/ha/profile/new-episode">
-           <!-- :disabled="this.$store.state.currPatient.status == 'allocated'" -->
             <button @click="console.log('123')" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Record New Episode</button>     
           </nuxt-link>
         </div>
@@ -19,7 +18,6 @@
           <hr>
         </div>
       </div>
-      <!-- {{ this.$store.state.currPatient.services }} -->
       <div class="row mt-0">
         <div class="col-md-12">
           <ul class="list-inline mb-2">
@@ -30,20 +28,15 @@
             </li>
           </ul>
           <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 10px;">
-             <!-- 1 {{ this.$store.state.currPatient.episodes }} -->
             <table class="table table-sm table-hover mb-0">
               <thead>
                 <tr>
                   <th scope="col">Visit ID</th>
                   <th scope="col">Visit Type</th>
                   <th scope="col">Chief Complaint</th>
-                  <!-- <th scope="col">Status</th> -->
-                  <th scope="col">Date Created</th>
                   <th scope="col">Last Updated</th>
+                  <th scope="col">First Recorded</th>
                   <th scope="col"># Follow Ups</th>
-                  <!-- <th scope="col"># Prescr.</th> -->
-                  <!-- <th scope="col"># Services</th> -->
-                  <!-- <th scope="col">HA Actions</th> -->
                 </tr>
               </thead>
               <tbody>
@@ -59,10 +52,10 @@
                       {{ visit.title }}
                     </div>
                   </td>
-                  <td></td>
-                  <td>{{ visit.created }}</td>
-                  <td>{{ visit.lastUpdated }}</td>
-                  <td>{{ visit.numFollowUps }}</td>
+                  <td>Pain, Injury, Difficulty Breathing</td>
+                  <td>2 days ago</td>
+                  <td>July 01, 2020</td>
+                  <td>0</td>
                 </tr>
                 <tr class="pointer" v-if="this.list.length === 0" style="height: 40px;">
                   <td class="py-3 px-3 text-center" colspan="9">

@@ -11,7 +11,7 @@
               </span>
               <div class="float-right pt-1 dropdown d-inline">
                 <span class="dropdown-toggle dropdown-no-caret pointer" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  jane.doe@udayhealth.org
+                  ritwikaghosh48@gmail.org
                 </span>
                 <div class="dropdown-menu">
                   <nuxt-link to="/ha/edit-profile" class="dropdown-item">Edit Profile</nuxt-link>

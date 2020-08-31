@@ -25,11 +25,11 @@
               Login
             </button>
           </nuxt-link> -->
-          <nuxt-link to="/ha">
-            <button class="btn btn-dark mt-3 mb-2 p-2 w-100 text-uppercase">
-              Login (as HA)
-            </button>
-          </nuxt-link>
+          <!-- <nuxt-link to="/ha" @click="login"> -->
+          <button @click="login" class="btn btn-dark mt-3 mb-2 p-2 w-100 text-uppercase">
+            Login (as HA)
+          </button>
+          <!-- </nuxt-link> -->
           <nuxt-link to="/md">
             <button class="btn btn-dark mb-2 p-2 w-100 text-uppercase">
               Login (as Doct.)
@@ -79,12 +79,12 @@ import axios from 'axios'
 export default {
   layout: 'default',
   methods: {
-    makeRequest: function () {
-      axios.get('http://localhost:5000/').then(function(res){
-        console.log(res)
-        console.log('Success 123s')
-      })
-    },
+    // makeRequest: function () {
+    //   axios.get('http://localhost:5000/').then(function(res){
+    //     console.log(res)
+    //     console.log('Success 123s')
+    //   })
+    // },
     login: function () {
       var data = {
         email: 'ritwikaghosh48@gmail.com',
@@ -95,12 +95,29 @@ export default {
         'Content-Type': 'application/json;charset=UTF-8',
       }
 
+      const self = this
+
+      // Live server
+      // http://76.218.96.73/login
+
       axios.post('http://127.0.0.1:5000/login', data, headers)
         .then(function (response) {
           console.log(response.data);
+
+          alert('You are logged in as ' + response.data + '.')
+
+          self.$router.push({
+            path: '/ha'
+          })
         })
         .catch(function (error) {
           console.log(error);
+
+          alert('Could not login.')
+          
+          self.$router.push({
+            path: '/ha'
+          })
         });
     }
   }
