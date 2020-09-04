@@ -1,3 +1,14 @@
+let getCurrDate = function () {
+  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
+
+  let dateObj = new Date();
+  let month = monthNames[dateObj.getMonth()];
+  let day = String(dateObj.getDate()).padStart(2, '0');
+  let year = dateObj.getFullYear();
+
+  return month + ' ' + day + ', ' + year;
+}
+
 export default {
   updatePath(state, payload) {
     state.currPath = payload
@@ -45,7 +56,7 @@ export default {
 
     let episodeLen = state.udayDb.clusters[CLUSTER_ID].patients.find(patient => patient.id === PATIENT_ID).episodes.length
 
-    let d = new Date();
+    let currentDate = getCurrDate()
 
     state.udayDb.clusters[CLUSTER_ID].patients.find(patient => patient.id === PATIENT_ID).episodes.push({
       type: 'episode',
@@ -53,12 +64,13 @@ export default {
       link: '/ha/profile/profile-visit?id=AAA1&visit=ep0fl01',
       episodeID: 'PA01EP1',
       title: 'Episode ' + episodeLen,
-      created: d.getTime(),
-      lastUpdated: '',
+      created: currentDate,
+      lastUpdated: currentDate,
       numFollowUps: '',
       allocated: true,
       followUps: [],
       services: [],
+      episodeDetails: payload,
       complaint: {
         chiefComplaint: {
           name: 'Ooga booga',
@@ -94,8 +106,8 @@ export default {
     let CLUSTER_ID = state.currCluster
     let PATIENT_ID = state.currPatient.id
 
-    let d = new Date();
     let serviceCount = state.udayDb.clusters[CLUSTER_ID].patients.find(patient => patient.id === PATIENT_ID).services.length
+    let currentDate = getCurrDate()
 
     serviceCount++
 
@@ -105,7 +117,7 @@ export default {
       link: '/ha/profile/profile-visit',
       episodeID: PATIENT_ID + 'SV' + serviceCount,
       title: 'Service ' + serviceCount,
-      created: d.getTime(),
+      created: currentDate,
       lastUpdated: '',
       numFollowUps: '',
       complaint: {
@@ -126,20 +138,22 @@ export default {
     let CLUSTER_ID = state.currCluster
     let PATIENT_COUNT = state.udayDb.clusters[CLUSTER_ID].patients.length + 1
 
-    let d = new Date();
+    let currentDate = getCurrDate()
 
     let baseProfile = {
       id: "pa0" + PATIENT_COUNT,
       status: "registered",
+      dateRegistered: currentDate,
       regBy: payload.regBy,
+      lastVisited: currentDate,
       demographics: {
         ...payload.demographics
       },
       episodes: [{
         episodeID: "PA01EP0",
         title: "Registered",
-        created: d.getTime(),
-        lastUpdated: "",
+        created: currentDate,
+        lastUpdated: currentDate,
         numFollowUps: "",
       }],
       services: []
@@ -150,7 +164,6 @@ export default {
     )
 
     this.$router.push({path: '/ha/'})
-    // this.$router.push({path: '/ha/profile?id=' + "pa0" + PATIENT_COUNT})
   },
   registerHA(state, payload) {
     let CLUSTER_ID = state.currCluster

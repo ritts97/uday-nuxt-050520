@@ -13,6 +13,7 @@
 
           <transition  appear name="u-fade"  mode="out-in">
 
+          <!-- Chief Complaint -->
           <div key="chiefComplaints" v-if="tabs[0].isActive">
             <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;">
               <div class="row mt-1">
@@ -37,16 +38,15 @@
                     </div>
                   </div>
                 </transition>
-                <div class="col-md-12 small fake-link">
+                <div class="col-md-12 small text-muted fake-link">
                   Is there another complaint?
                 </div>
               </div>
             </div>
-            <!-- Button: Go to Next Section -->
             <div class="container mb-3">
               <div class="row">
                 <div class="col-md-12 px-0">
-                    <button @click="goToNext()" :disabled="(!categoryIndex && !hasSubCategory) || (hasSubCategory && subCategoryInd <= -1)" type="button" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0 text-uppercase">
+                    <button @click="goToNext()" :disabled="(categoryIndex <= -1 && !hasSubCategory) || (hasSubCategory && subCategoryInd <= -1)" type="button" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0 text-uppercase">
                       Go to Fixed Questions
                     </button>
                 </div>
@@ -54,6 +54,7 @@
             </div>
           </div>
 
+          <!-- Fixed Questions -->
           <div key="fixed-questions" v-if="tabs[1].isActive">
             <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;">
               <div class="row mt-1">
@@ -73,7 +74,7 @@
                           <div v-for="(question, indexQuestion) in questions" class="col-md-12 mb-4" :key="indexQuestion">
                             <div v-if="question.type === 'text'">
                               <label for="exampleFormControlSelect1">{{ question.question }}</label><br>
-                              <input type="text" class="p-2 w-100" :placeholder="question.placeholder || 'There is no placeholder.'">
+                              <input type="text" class="p-2 w-100" v-model="question.answer" :placeholder="question.placeholder || 'There is no placeholder.'">
                             </div>
                             <div v-if="question.type === 'button'">
                               <label for="exampleFormControlSelect1">{{ question.question }}</label><br>
@@ -93,16 +94,6 @@
                               <label for="exampleFormControlSelect1">{{ question.question }}</label><br>
                               <input type="number" class="mt-1 p-2 mr-2 w-25" placeholder="0"> {{ question.caption }}
                             </div>
-                            <div v-if="question.type === 'select'">
-                              <label for="exampleFormControlSelect1">{{ question.question }}</label><br>
-                              <select class="form-control" id="exampleFormControlSelect1">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                              </select>
-                            </div>
                           </div>
                         </div>
                       </div>
@@ -111,7 +102,6 @@
                 </div>
               </div>
             </div>
-            <!-- Button: Go to Next Section -->
             <div class="container mb-3">
               <div class="row">
                 <div class="col-md-12 px-0">
@@ -123,11 +113,11 @@
             </div>
           </div>
 
+          <!-- Pre-Check Questions -->
           <div key="pre-check" v-if="tabs[2].isActive">
             <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;">
               <div class="row mt-1">
                 <div class="col-md-12 text-muted small mb-0">
-                  <!-- Pre-Check Questions: -->
                   Please complete all the pre-check requirements below.
                   <hr>
                 </div>
@@ -139,8 +129,6 @@
                 </div>
               </div>
             </div>
-
-            <!-- Button: Go to Next Section -->
             <div class="container mb-3">
               <div class="row">
                 <div class="col-md-12 px-0">
@@ -151,33 +139,45 @@
               </div>
             </div>
           </div>
-
+            
+          <!-- Vitals Section -->
           <div key="vitals" v-if="tabs[3].isActive">
             <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;">
               <div class="row mt-1">
                 <div class="col-md-12 text-muted small mb-0">
-                  Please complete to the best of your ability.
+                  Please measure the following areas to the best of your ability.
                   <hr>
                 </div>
-                <div class="col-md-12 mb-3" v-for="(vitalQuestion, index) in vitalQuestions" :key="index">
-                  <label for="exampleFormControlSelect1">{{ vitalQuestion.title }}</label><br>
-                  <button v-for="(option, optionIndex) in vitalQuestion.options" :class="option.isActive ? 'btn-dark' : 'btn-light'" :key="optionIndex" @click="handleVitalsQuestions(index, optionIndex)" class="btn mb-2 mr-2">
-                    {{ option.name }}
-                  </button>
+                <div class="mb-3" v-for="(vitalQuestion, index) in newEpisodeComplete.vitals" :class="[vitalQuestion.fullLength ? 'col-md-12' : 'col-md-6']" :key="index">
+                  <div v-if="vitalQuestion.options">
+                    <label for="exampleFormControlSelect1">{{ vitalQuestion.title }}</label><br>
+                    <button v-for="(option, optionIndex) in vitalQuestion.options" :class="option.isActive ? 'btn-dark' : 'btn-light'" :key="optionIndex" @click="handleVitalsQuestions(index, optionIndex)" class="btn mb-2 mr-2">
+                      {{ option.name }}
+                    </button>
+                  </div>
+                  <div v-else-if="!vitalQuestion.options && vitalQuestion.name === 'bp'">
+                    <label for="exampleFormControlSelect1">{{ vitalQuestion.title }}</label><br>
+                    <input class="form-control d-inline w-25 mr-2" type="number" v-model="vitalQuestion.valueFirst"> /
+                    <input class="form-control d-inline w-25 mx-2 mr-2" type="number" v-model="vitalQuestion.valueSecond"> {{ vitalQuestion.caption }}
+                  </div>
+                  <div v-else-if="!vitalQuestion.options && vitalQuestion.name === 'height'">
+                    <label for="exampleFormControlSelect1 mb-2">{{ vitalQuestion.title }}</label><br>
+                    <input class="form-control d-inline w-25 mr-2" @keyup="calculateBMI" @click="calculateBMI" type="number" v-model="vitalQuestion.value" value="0"> {{ vitalQuestion.caption }}
+                  </div>
+                  <div v-else-if="!vitalQuestion.options && vitalQuestion.name === 'weight'">
+                    <label for="exampleFormControlSelect1 mb-2">{{ vitalQuestion.title }} </label><br>
+                    <input class="form-control d-inline w-25 mr-2" @keyup="calculateBMI" @click="calculateBMI" type="number" v-model="vitalQuestion.value" value="0"> {{ vitalQuestion.caption }}
+                  </div>
+                  <div v-else-if="!vitalQuestion.options && vitalQuestion.name === 'bmi'">
+                    <label for="exampleFormControlSelect1 mb-2">{{ vitalQuestion.title }}</label><br>
+                    <div class="mt-2">{{ vitalQuestion.value }} {{ vitalQuestion.caption }}</div>
+                  </div>
+                  <div v-else>
+                    <label for="exampleFormControlSelect1">{{ vitalQuestion.title }}</label><br>
+                    <input class="form-control d-inline w-25 mr-2" type="number" v-model="vitalQuestion.value" value="0"> {{ vitalQuestion.caption }}
+                  </div>
                 </div>
-                <div class="col-md-6 mb-3">
-                  <label for="exampleFormControlSelect1">Blood Pressure</label><br>
-                  <input class="form-control d-inline w-25 mr-2" type="number" value="0"> /
-                  <input class="form-control d-inline w-25 mx-2" type="number" value="0"> mmHg
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label for="exampleFormControlSelect1">Sp02</label><br>
-                  <input class="form-control d-inline w-25" type="number" value="0"> %
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label for="exampleFormControlSelect1">Patient Temperature</label><br>
-                  <input class="form-control d-inline w-25 mr-2" type="number" value="0"> °F
-                </div>
+                <!--
                 <div class="col-md-6 mb-3">
                   <label for="exampleFormControlSelect1">Patient Height</label><br>
                   <input class="form-control d-inline w-25 mr-2" @keyup="calculateBMI" @click="calculateBMI" v-model="patHeight" type="number" value="0"> cm
@@ -189,7 +189,7 @@
                 <div class="col-md-6 mb-3">
                   <label for="exampleFormControlSelect1">Body Mass Index (BMI)</label><br>
                   {{ patBMI }} kg/m^2
-                </div>
+                </div> -->
               </div>
             </div>
             <div class="container mb-3">
@@ -208,12 +208,12 @@
             <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;">
               <div class="row mt-1">
                 <div class="col-md-12 text-muted small mb-0">
-                  Please complete to the best of your ability.
+                  Please measure the following body regions to the best of your ability.
                   <hr>
                 </div>
 
                 <div class="col-md-12 text-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="w-100" viewBox="0 0 1369 809" version="1.1">
+                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="w-100" viewBox="0 0 1369 809" version="1.1">
                     <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
                     <title>Group 3</title>
                     <desc>Created with Sketch.</desc>
@@ -370,12 +370,48 @@
                             </text>
                         </g>
                     </g>
-                </svg>
-
+                  </svg>
                 </div>
-                <div class="col-md-6 mb-3" v-for="(question, index) in generalExamsQuestions" :key="index">
-                  <label for="exampleFormControlSelect1">{{ question.name }}</label><br>
-                  <button class="btn mb-2 mr-2" :class="option.isActive ? 'btn-dark' : 'btn-light'" v-for="(option, oIndex) in question.options" :key="oIndex" @click="handleGenExamOptions(index, oIndex)">
+
+                <div class="col-md-12 mt-4 mb-2 text-muted">
+                  <small>Eyes</small>
+                  <hr class="mb-1 mt-1">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="exampleFormControlSelect1">{{ generalExamsQuestions[0].name }}</label><br>
+                  <button class="btn mb-2 mr-2" :class="option.isActive ? 'btn-dark' : 'btn-light'" v-for="(option, oIndex) in generalExamsQuestions[0].options" :key="oIndex" @click="handleGenExamOptions(0, oIndex)">
+                    {{ option.name }}
+                  </button>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="exampleFormControlSelect1">{{ generalExamsQuestions[1].name }}</label><br>
+                  <button class="btn mb-2 mr-2" :class="option.isActive ? 'btn-dark' : 'btn-light'" v-for="(option, oIndex) in generalExamsQuestions[1].options" :key="oIndex" @click="handleGenExamOptions(1, oIndex)">
+                    {{ option.name }}
+                  </button>
+                </div>
+                <div class="col-md-12 mt-4 mb-2 text-muted">
+                  <small>Hands</small>
+                  <hr class="mb-1 mt-1">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="exampleFormControlSelect1">{{ generalExamsQuestions[2].name }}</label><br>
+                  <button class="btn mb-2 mr-2" :class="option.isActive ? 'btn-dark' : 'btn-light'" v-for="(option, oIndex) in generalExamsQuestions[2].options" :key="oIndex" @click="handleGenExamOptions(2, oIndex)">
+                    {{ option.name }}
+                  </button>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="exampleFormControlSelect1">{{ generalExamsQuestions[3].name }}</label><br>
+                  <button class="btn mb-2 mr-2" :class="option.isActive ? 'btn-dark' : 'btn-light'" v-for="(option, oIndex) in generalExamsQuestions[3].options" :key="oIndex" @click="handleGenExamOptions(3, oIndex)">
+                    {{ option.name }}
+                  </button>
+                </div>
+                <div class="col-md-12 mt-4 mb-2 text-muted">
+                  <small>Legs</small>
+                  <hr class="mb-1 mt-1">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="exampleFormControlSelect1">{{ generalExamsQuestions[4].name }}</label><br>
+                  <button class="btn mb-2 mr-2" :class="option.isActive ? 'btn-dark' : 'btn-light'" v-for="(option, oIndex) in generalExamsQuestions[4].options" :key="oIndex" @click="handleGenExamOptions(4, oIndex)">
                     {{ option.name }}
                   </button>
                 </div>
@@ -401,7 +437,6 @@
                   Please complete to the best of your ability.
                   <hr>
                 </div>
-
                 <div class="col-md-12 mb-3 text-center">                    
                   <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="w-100" viewBox="0 0 1369 809" version="1.1">
                       <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
@@ -587,45 +622,51 @@
                                   </text>
                               </g>
                               <g id="Group-7" v-if="showSpecificComplaintQuestions(currCategory, subCategory).some(e => e.examination === 'chest')" transform="translate(13.000000, 485.000000)">
-                                  <rect id="Rectangle-Copy-5" fill="#DC3545" x="0" y="0" width="226" height="47" rx="5"/>
+                                  <rect id="Rectangle-Copy-5" :fill="showSpecificComplaintQuestions(currCategory, subCategory).find(e => e.examination === 'chest').isComplete ? 'green' : 'red'" x="0" y="0" width="226" height="47" rx="5"/>
                                   <text id="Chest" font-family="HelveticaNeue, Helvetica Neue" font-size="22" font-weight="normal" letter-spacing="0.625625" fill="#FFFFFF">
                                       <tspan x="82.5059375" y="32">Chest</tspan>
                                   </text>
                               </g>
                               <g id="Group-6" v-if="showSpecificComplaintQuestions(currCategory, subCategory).some(e => e.examination === 'abdomen')" transform="translate(13.000000, 571.000000)">
-                                  <rect id="Rectangle-Copy-7" fill="#DC3545" x="0" y="0" width="226" height="47" rx="5"/>
+                                  <rect id="Rectangle-Copy-7" :fill="showSpecificComplaintQuestions(currCategory, subCategory).find(e => e.examination === 'abdomen').isComplete ? 'green' : 'red'" x="0" y="0" width="226" height="47" rx="5"/>
                                   <text id="Abdomen" font-family="HelveticaNeue, Helvetica Neue" font-size="22" font-weight="normal" letter-spacing="0.625625" fill="#FFFFFF">
                                       <tspan x="62.9163125" y="32">Abdomen</tspan>
                                   </text>
                               </g>
                               <g id="Group-9" v-if="showSpecificComplaintQuestions(currCategory, subCategory).some(e => e.examination === 'back')" transform="translate(1131.000000, 59.000000)">
-                                  <rect id="Rectangle-Copy-8" fill="#DC3545" x="0" y="0" width="226" height="47" rx="5"/>
+                                  <rect id="Rectangle-Copy-8" :fill="showSpecificComplaintQuestions(currCategory, subCategory).find(e => e.examination === 'back').isComplete ? 'green' : 'red'" x="0" y="0" width="226" height="47" rx="5"/>
                                   <text id="Back" font-family="HelveticaNeue, Helvetica Neue" font-size="22" font-weight="normal" letter-spacing="0.625625" fill="#FFFFFF">
                                       <tspan x="86.69075" y="32">Back</tspan>
                                   </text>
                               </g>
                               <g id="Group-12" v-if="showSpecificComplaintQuestions(currCategory, subCategory).some(e => e.examination === 'lump&swelling')" transform="translate(1131.000000, 486.000000)">
-                                  <rect id="Rectangle-Copy-13" fill="#DC3545" x="0" y="0" width="226" height="47" rx="5"/>
+                                  <rect id="Rectangle-Copy-13" :fill="showSpecificComplaintQuestions(currCategory, subCategory).find(e => e.examination === 'lump&swelling').isComplete ? 'green' : 'red'" x="0" y="0" width="226" height="47" rx="5"/>
                                   <text id="Lumps-&amp;-Swelling" font-family="HelveticaNeue, Helvetica Neue" font-size="22" font-weight="normal" letter-spacing="0.625625" fill="#FFFFFF">
                                       <tspan x="20.182" y="32">Lumps &amp; Swelling</tspan>
                                   </text>
                               </g>
                               <g id="Group-13" v-if="showSpecificComplaintQuestions(currCategory, subCategory).some(e => e.examination === 'rash')" transform="translate(1131.000000, 571.000000)">
-                                  <rect id="Rectangle-Copy-14" fill="#DC3545" x="0" y="0" width="226" height="47" rx="5"/>
+                                  <rect id="Rectangle-Copy-14" :fill="showSpecificComplaintQuestions(currCategory, subCategory).find(e => e.examination === 'rash').isComplete ? 'green' : 'red'" x="0" y="0" width="226" height="47" rx="5"/>
                                   <text id="Rash" font-family="HelveticaNeue, Helvetica Neue" font-size="22" font-weight="normal" letter-spacing="0.625625" fill="#FFFFFF">
                                       <tspan x="86.69075" y="32">Rash</tspan>
                                   </text>
                               </g>
                               <g id="Group-14" v-if="showSpecificComplaintQuestions(currCategory, subCategory).some(e => e.examination === 'injury')" transform="translate(1131.000000, 656.000000)">
-                                  <rect id="Rectangle-Copy-15" fill="#DC3545" x="0" y="0" width="226" height="47" rx="5"/>
+                                  <rect id="Rectangle-Copy-15" :fill="showSpecificComplaintQuestions(currCategory, subCategory).find(e => e.examination === 'injury').isComplete ? 'green' : 'red'" x="0" y="0" width="226" height="47" rx="5"/>
                                   <text id="Injury" font-family="HelveticaNeue, Helvetica Neue" font-size="22" font-weight="normal" letter-spacing="0.625625" fill="#FFFFFF">
                                       <tspan x="84.437125" y="32">Injury</tspan>
                                   </text>
                               </g>
                               <g id="Group-5" v-if="showSpecificComplaintQuestions(currCategory, subCategory).some(e => e.examination === 'neck')" transform="translate(13.000000, 400.000000)">
-                                  <rect id="Rectangle-Copy-6" fill="#DC3545" x="0" y="0" width="226" height="47" rx="5"/>
+                                  <rect id="Rectangle-Copy-6" :fill="showSpecificComplaintQuestions(currCategory, subCategory).find(e => e.examination === 'neck').isComplete ? 'green' : 'red'" x="0" y="0" width="226" height="47" rx="5"/>
                                   <text id="Neck" font-family="HelveticaNeue, Helvetica Neue" font-size="22" font-weight="normal" letter-spacing="0.625625" fill="#FFFFFF">
                                       <tspan x="86.28375" y="32">Neck</tspan>
+                                  </text>
+                              </g>
+                              <g id="Group-35" v-if="showSpecificComplaintQuestions(currCategory, subCategory).some(e => e.examination === 'hands')" transform="translate(1118.000000, 144.000000)">
+                                  <rect id="Rectangle-Copy-20" :fill="showSpecificComplaintQuestions(currCategory, subCategory).find(e => e.examination === 'hands').isComplete ? 'green' : 'red'" x="0" y="0" width="226" height="47" rx="5"/>
+                                  <text id="Hands" font-family="HelveticaNeue, Helvetica Neue" font-size="22" font-weight="normal" letter-spacing="0.625625" fill="#FFFFFF">
+                                      <tspan x="79.4479375" y="32">Hands</tspan>
                                   </text>
                               </g>
                               <path d="M258.5,82.5 L419.956547,82.5" v-if="showSpecificComplaintQuestions(currCategory, subCategory).some(e => e.examination === 'head')" id="Line" stroke="#111111" stroke-width="2" stroke-linecap="square"/>
@@ -637,6 +678,7 @@
                               <path d="M258,511 L462,237" v-if="showSpecificComplaintQuestions(currCategory, subCategory).some(e => e.examination === 'chest')" id="Line-2-Copy-3" stroke="#111111" stroke-width="2" stroke-linecap="square"/>
                               <path d="M258,595 L445,326" v-if="showSpecificComplaintQuestions(currCategory, subCategory).some(e => e.examination === 'abdomen')" id="Line-2-Copy-4" stroke="#111111" stroke-width="2" stroke-linecap="square"/>
                               <path d="M258.5,674 L365.46875,674" v-if="showSpecificComplaintQuestions(currCategory, subCategory).some(e => e.examination === 'lowerleg&ankle')" id="Line-2-Copy-5" stroke="#111111" stroke-width="2" stroke-linecap="square"/>
+                              <path d="M657,404.5 L1104.95655,163.5"  v-if="showSpecificComplaintQuestions(currCategory, subCategory).some(e => e.examination === 'hands')" id="Line-Copy-2" stroke="#111111" stroke-width="2" stroke-linecap="square"/>
                           </g>
                       </g>
                   </svg>
@@ -645,8 +687,7 @@
                 <div class="container">
                   <div class="row" v-for="(organ, index) in showSpecificComplaintQuestions(currCategory, subCategory)" :key="index">
                     <div class="col-md-12 mt-4 mb-2 text-muted">
-                      <!-- xxx {{ showSpecificComplaintQuestions(currCategory, subCategory).find(e => e.examination === 'eyes').isComplete }} -->
-                      <small>Area to Examine: {{ organ.name }}</small>
+                      <small>{{ organ.name }}</small>
                       <hr class="mb-1 mt-1">
                     </div>
                     <div class="col-md-6 mb-3" v-for="(question, qIndex) in organ.questions" :key="qIndex">
@@ -660,6 +701,11 @@
                           {{ option.name }}
                         </button>
                       </div>
+                    </div>
+                  </div>
+                  <div class="row" v-if="showSpecificComplaintQuestions(currCategory, subCategory).length === 0">
+                    <div class="col-md-12 my-4 small text-center">
+                      There are no specific complaint questions.
                     </div>
                   </div>
                 </div>
@@ -686,11 +732,11 @@
                   <hr>
                 </div>
                 <div class="col-md-12 mb-3 text-center">
-                  <!-- <div class="custom-file">
+                  <div class="custom-file">
                     <input type="file" class="custom-file-input" id="customFile">
                     <label class="custom-file-label" for="customFile">Choose file</label>
-                  </div> -->
-                  Current Status: {{ currentStatus }} <br>
+                  </div>
+                  <!-- Current Status: {{ currentStatus }} <br> -->
 
                   <!-- <form enctype="multipart/form-data" novalidate v-if="isInitial || isSaving">
                     <h1>Upload images</h1>
@@ -707,7 +753,10 @@
                   </form> -->
                 </div>
                 <div class="col-md-12 mb-5">
-                  {{ uploadedFiles }}
+                  Files uploaded:
+
+
+                  <!-- {{ uploadedFiles }} -->
                 </div>
               </div>
             </div>
@@ -728,11 +777,11 @@
             <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-1" style="min-height: 160px;">
               <div class="row mt-1">
                 <div class="col-md-12 text-muted small">
-                  Doctor Allocation.
+                  Please select a doctor to allocate this complaint record to.
                   <hr>
                 </div>
                 <div class="col-md-12 mb-2">
-                  Please select a doctor to allocate this patient to:
+                  Available doctors in cluster:
                 </div>
                 <div class="col-md-12">
                   <button v-for="(md, index) in this.$store.state.udayDb.clusters['cluster001'].mds" :key="index" class="btn mb-2 mr-2 btn-light">
@@ -853,7 +902,7 @@ export default {
     handleVitalsQuestions: function (questionIndex, optionIndex) {
       let self = this
 
-      self.vitalQuestions[questionIndex].options.forEach((vitalQuestionOption, index) => {
+      self.newEpisodeComplete.vitals[questionIndex].options.forEach((vitalQuestionOption, index) => {
         if (index === optionIndex) {
           vitalQuestionOption.isActive = true
         } else {
@@ -862,9 +911,6 @@ export default {
       })
     },
     handleSpecExamQuestions: function (organ, questionIndex, optionIndex) {
-
-      // console.log(organ)
-
       organ.questions[questionIndex].options.forEach((specExamQuestionOption, index) => {
         if (index === optionIndex) {
           specExamQuestionOption.isActive = true
@@ -881,11 +927,6 @@ export default {
           questionsAnswered += 1
         }
       })
-      
-      console.log(organ.questions)
-      console.log('Questions answered: ' + questionsAnswered)
-      console.log('Total questions: ' + organ.questions.length)
-      console.log('----')
 
       if (questionsAnswered === organ.questions.length) {
         organ.isComplete = true
@@ -937,22 +978,44 @@ export default {
       tabs[ref + 1].isEnabled = true
     },
     addToQueue: function () {
-      // alert('Added to Patient Queue.')
       alert('The patient has been allocated.')
+
+      // normalize answers to new episode questions
+      this.newEpisodeComplete.chiefComplaints.push([this.currCategory, this.subCategory])
+
+      // normalize fixed questions
+      let questions = this.questions
+      this.newEpisodeComplete.chiefComplaintsFixedQuestions.push(...questions)
+
+      // normalize general exams
+      let generalExams = this.generalExamsQuestions
+      this.newEpisodeComplete.generalExams.push(...this.generalExamsQuestions)
+
+      // normalize specific exams
+      let specificExams = this.specificExamQuestions.filter(x => x.isComplete === true)
+      this.newEpisodeComplete.specificExams.push(...specificExams)
 
       this.$store.commit('updateStatus', 'allocated')
       this.$store.commit('addPatientToQueue', this.$store.state.currPatient.id)
-      this.$store.commit('recordNewEpisode')
+      this.$store.commit('recordNewEpisode', this.newEpisodeComplete)
       this.$store.commit('updateCurrPatient')
     },
     calculateBMI: function () {
-      const BMI = (this.patWeight / (this.patHeight * this.patHeight)) * 10000
+      let patWeight = this.newEpisodeComplete.vitals.filter(question => question.name === 'weight')[0].value
+      let patHeight = this.newEpisodeComplete.vitals.filter(question => question.name === 'height')[0].value
+      let BMI = (patWeight / (patHeight * patHeight)) * 10000
       
       if (typeof(BMI) === 'number' && BMI < 999) {
-        this.patBMI = BMI.toFixed(2)
+        this.newEpisodeComplete.vitals.filter(question => question.name === 'bmi')[0].value = BMI.toFixed(2)
       } else {
-        this.patBMI = 0
+        this.newEpisodeComplete.vitals.filter(question => question.name ===  'bmi')[0].value = 0
       }
+
+      console.log('patWeight: ' + patWeight)
+      // console.log(patWeight)
+      console.log('patHeight: ' + patHeight)
+      console.log('BMI: ' + BMI)
+      // console.log('Console Testing')
     },
     showSpecificComplaintQuestions(currCategory, currSubCategory) {
       switch (currCategory) {
@@ -975,13 +1038,13 @@ export default {
             case 'Abdominal Pain':
               return this.specificExamQuestions.filter(organ => organ.examination === 'eyes' || organ.examination === 'lowerleg&ankle' || organ.examination === 'hands' || organ.examination === 'abdomen')
             case 'Breast Pain':
-              return null
+              return []
             case 'Scrotal Pain':
-              return null
+              return []
             case 'Perianal Pain':
-              return null
+              return []
             default:
-              return null
+              return []
           }
         case 'Swelling/Tumor':
           switch (currSubCategory) {
@@ -992,7 +1055,7 @@ export default {
             case 'Swelling (Other)':
               return this.specificExamQuestions.filter(organ => organ.examination === 'lump&swelling' || organ.examination === 'eyes' || organ.examination === 'lowerleg&ankle')
             default:
-              return null
+              return []
           }
         case 'Difficulty Breathing':
           return this.specificExamQuestions.filter(organ => organ.examination === 'eyes' || organ.examination === 'neck' || organ.examination === 'lowerleg&ankle' || organ.examination === 'hands'|| organ.examination === 'chest')
@@ -1017,15 +1080,15 @@ export default {
             case 'Period Problem':
               return this.specificExamQuestions.filter(organ => organ.examination === 'eyes' || organ.examination === 'lowerleg&ankle' || organ.examination === 'abdomen')
             case 'Ante-natal Problem':
-              return null
+              return []
             case 'Infertility Problem':
-              return null
+              return []
             case 'Private Parts Problem':
-              return null
+              return []
             case 'Intercourse Problem':
-              return null
+              return []
             default:
-              return null
+              return []
           }
         case 'Injury':
           return this.specificExamQuestions.filter(organ => organ.examination === 'injury')
@@ -1044,10 +1107,10 @@ export default {
             case 'Particular Weakness':
               return this.specificExamQuestions.filter(organ => organ.examination === 'head' || organ.examination === 'eyes' || organ.examination === 'hands')
             default:
-              return null
+              return []
           }
         default:
-          return null
+          return []
       }
     },
     // start file upload
@@ -1115,13 +1178,124 @@ export default {
       patWeight: 0,
       patBMI: 0,
       currCategory: '',
-      categoryIndex: null,
+      categoryIndex: -1,
       subCategory: '',
       subCategoryInd: null,
       categoryItemInd: null,
       hasSubCategory: false,
       showQuestions: false,
       complaintItem: '',
+      newEpisodeComplete: {
+        chiefComplaints: [],
+        chiefComplaintsFixedQuestions: [],
+        preCheckQuestions: [],
+        vitals: [
+          {
+            title: 'Patient Appearance',
+            name: 'appearance',
+            fullLength: true,
+            options: [
+              {
+                name: 'Looks Comfortable',
+                isActive: false,
+              },
+              {
+                name: 'In Pain',
+                isActive: false,
+              },
+              {
+                name: 'Appears Breathless',
+                isActive: false,
+              },
+              {
+                name: 'Looks Unwell',
+                isActive: false,
+              },
+              {
+                name: 'Looks Very Thin',
+                isActive: false,
+              },
+              {
+                name: 'Looks Obese',
+                isActive: false,
+              }
+            ]
+          },
+          {
+            title: 'Patient Gait',
+            name: 'gait',
+            fullLength: true,
+            options: [
+              {
+                name: 'Walks Normally',
+                isActive: false,
+              },
+              {
+                name: 'Walks with a Limp',
+                isActive: false,
+              },
+              {
+                name: 'Walks with a Bump',
+                isActive: false,
+              },
+              {
+                name: 'Cannot Walk',
+                isActive: false,
+              },
+            ]
+          },
+          {
+            title: 'Blood Pressure',
+            name: 'bp',
+            caption: 'mmHg',
+            valueFirst: '0',
+            valueSecond: '0'
+          },
+          {
+            title: 'Sp02',
+            name: 'sp02',
+            caption: '%',
+            value: '0'
+          },
+          {
+            title: 'Patient Temperature',
+            name: 'temperature',
+            caption: 'F°',
+            value: '0'
+          },
+          {
+            title: 'Patient Height',
+            name: 'height',
+            caption: 'cm',
+            value: '0'
+          },
+          {
+            title: 'Patient Weight',
+            name: 'weight',
+            caption: 'kg',
+            value: '0'
+          },
+          {
+            title: 'Patient BMI',
+            name: 'bmi',
+            caption: 'kg/m^2',
+            value: '0'
+          },
+        ],
+        generalExams: [],
+        specificExams: [
+
+        ],
+        allocation: {},
+        meta: {
+          createDate: '',
+          createdBy: '',
+          lastUpdated: '',
+          patientID: '',
+          patientName: '',
+          clusterID: ''
+        }
+      },
       // start file upload
       uploadedFiles: [],
       uploadError: null,
@@ -2081,13 +2255,8 @@ export default {
             {
               title: 'How many lumps/swellings',
               hasAnswer: false,
-              type: 'button',
-              options: [
-                {
-                  name: '#',
-                  isActive: false,
-                },
-              ]
+              type: 'number',
+              caption: 'count.'
             },
             {
               title: 'Shape of ulcer(s)',
@@ -2200,24 +2369,33 @@ export default {
           isComplete: false,
           questions: [
             {
-              title: 'Location',
+              title: 'Where are the rash(es) located on the body?',
+              hasAnswer: false,
+              type: 'text',
+              answer: '',
+              placeholder: 'Where are the rash(es) are located'
+            },
+            {
+              title: 'How many rash(es) are there?',
               hasAnswer: false,
               type: 'button',
               options: [
                 {
-                  name: 'Location of Rash',
+                  name: '1',
+                  isActive: false,
+                },
+                {
+                  name: 'Multiple (2-5)',
+                  isActive: false,
+                },
+                {
+                  name: 'Many (5+)',
                   isActive: false,
                 },
               ]
             },
             {
-              title: 'How many rash(es)',
-              hasAnswer: false,
-              type: 'number',
-              caption: 'rashes'
-            },
-            {
-              title: 'Shape of rash(es)',
+              title: 'What are the shape of rash(es)?',
               hasAnswer: false,
               type: 'button',
               options: [
@@ -2488,7 +2666,7 @@ export default {
       ],
       generalExamsQuestions: [
         {
-          name: 'Jaundice (yellowness) in Eyes',
+          name: 'Jaundice (yellow-ness) in Eyes',
           type: 'button',
           isComplete: false,
           options: [
@@ -2503,7 +2681,7 @@ export default {
           ]
         },
         {
-          name: 'Pallor (paleness) in Eyes',
+          name: 'Pallor (pale-ness) in Eyes',
           type: 'button',
           isComplete: false,
           options: [
@@ -2518,7 +2696,7 @@ export default {
           ]
         },
         {
-          name: 'Cyanosis (blueness) in Hands',
+          name: 'Cyanosis (blue-ness) in Hands',
           type: 'button',
           isComplete: false,
           options: [
@@ -2546,7 +2724,7 @@ export default {
               isActive: false,
             },
             {
-              name: 'Cyanosis (blueness)',
+              name: 'Cyanosis (blue-ness)',
               isActive: false,
             },
             {
@@ -2598,6 +2776,1004 @@ export default {
       questions: [],
       categories: [
         {
+          name: 'Acidity/Indigestion',
+          isActive: false,
+          questions: [
+            {
+              question: "How long has this been happening?",
+              type: 'number',
+              caption: 'days long.'
+            },
+            {
+              question: "Is there any abdominal pain?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                },
+              ]
+            },
+            {
+              question: "Is there any vomiting?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                },
+              ]
+            },
+            {
+              question: "Is there any nausea?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                },
+              ]
+            },
+            {
+              question: "Is there a loss of appetite?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Normal',
+                  isActive: false
+                },
+                {
+                  name: 'Less',
+                  isActive: false
+                },
+              ]
+            },
+            {
+              question: "Is there any constipation?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                },
+              ]
+            },
+            {
+              question: "Is there any diarrhea?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                },
+              ]
+            },
+            {
+              question: "Is there H/O jaundice?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                },
+              ]
+            },
+            {
+              question: "Is there H/O alcohol ingestion?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                },
+              ]
+            },
+            {
+              question: "Is there H/O smoking?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                },
+              ]
+            },
+            {
+              question: "Has there been a change weight?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                },
+              ]
+            },
+          ]
+        },
+        {
+          name: 'Bleeding with Stool',
+          isActive: false,
+          showOther: false,
+          questions: [
+            {
+              question: "What is the color of the stool?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Bright Red',
+                  isActive: false
+                },
+                {
+                  name: 'Dark Red',
+                  isActive: false
+                },
+                {
+                  name: 'Other',
+                  isActive: false
+                },
+              ]
+            },
+            {
+              question: "What is the amount of stool?",
+              type: 'button',
+              options: [
+                {
+                  name: 'A lot',
+                  isActive: false
+                },
+                {
+                  name: 'Droplets',
+                  isActive: false
+                },
+              ]
+            },
+            {
+              question: "Is there pain during the passing of stool?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                },
+              ]
+            },
+            {
+              question: "Has there been a change in bowel habit?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                },
+              ]
+            },
+            {
+              question: "Is there any constipation?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                },
+              ]
+            },
+            {
+              question: "Is there any diarrhoea?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                },
+              ]
+            },
+          ]
+        },
+        {
+          name: 'Boils',
+          isActive: false,
+          questions: [
+            {
+              question: "How long have the boils been there?",
+              type: 'number',
+              caption: 'days'
+            },
+            {
+              question: "Where is are the boils located?",
+              type: 'text',
+              answer: '',
+              placeholder: 'Describe the location on body'
+            },
+            {
+              question: "How did the boils start?",
+              type: 'button',
+              showOther: false,
+              options: [
+                {
+                  name: 'Injury',
+                  isActive: false
+                },
+                {
+                  name: 'On its Own',
+                  isActive: false
+                },
+                {
+                  name: 'Other',
+                  isActive: false
+                },
+              ]
+            },
+            {
+              question: "Is there any pain or discomfort?",
+              type: 'button',
+              showOther: false,
+              options: [
+                {
+                  name: 'Throbbing',
+                  isActive: false
+                },
+                {
+                  name: 'Dull',
+                  isActive: false
+                },
+                {
+                  name: 'Continuous',
+                  isActive: false
+                },
+                {
+                  name: 'None',
+                  isActive: false
+                },
+                {
+                  name: 'Other',
+                  isActive: false
+                },
+              ]
+            },
+            {
+              question: "Describe the color of the skin over the boils.",
+              type: 'button',
+              options: [
+                {
+                  name: 'Red',
+                  isActive: false
+                },
+                {
+                  name: 'Normal',
+                  isActive: false
+                },
+              ]
+            }
+          ]
+        },
+        {
+          name: 'Difficulty Breathing',
+          isActive: false,
+          questions: [
+            {
+                question: "How long has this been going on?",
+                type: 'number',
+                caption: 'days long.'
+            },
+            {
+              question: "How has it progressed?",
+              type: 'button',
+              showOther: false,
+              options: [
+                {
+                  name: 'Same as Before',
+                  isActive: false
+                },
+                {
+                  name: 'Worsening',
+                  isActive: false
+                },
+                {
+                  name: 'Improving',
+                  isActive: false
+                },
+                {
+                  name: 'Varies with Season',
+                  isActive: false
+                },
+                {
+                  name: 'Other',
+                  isActive: false
+                }
+              ]
+            },
+            {
+              question: "What brings it on?",
+              type: 'button',
+              showOther: false,
+              options: [
+                {
+                  name: 'Exertion',
+                  isActive: false
+                },
+                {
+                  name: 'Climbing Stairs',
+                  isActive: false
+                },
+                {
+                  name: 'None',
+                  isActive: false
+                },
+                {
+                  name: 'Other',
+                  isActive: false
+                }
+              ]
+            },
+            {
+              question: "What is the difficulty relieved?",
+              type: 'button',
+              showOther: false,
+              options: [
+                {
+                  name: 'Resting',
+                  isActive: false
+                },
+                {
+                  name: 'Sitting Up',
+                  isActive: false
+                },
+                {
+                  name: 'None',
+                  isActive: false
+                },
+                {
+                  name: 'Other',
+                  isActive: false
+                }
+              ]
+            },
+            {
+              question: "Does it wake you up at night?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                }
+              ]
+            },
+            {
+              question: "Is there a cough?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                }
+              ]
+            },
+            {
+              question: "Are there any associated symptoms?",
+              type: 'button',
+              showOther: false,
+              options: [
+                {
+                  name: 'General Weakness',
+                  isActive: false
+                },
+                {
+                  name: 'Fever',
+                  isActive: false
+                },
+                {
+                  name: 'None',
+                  isActive: false
+                },
+                {
+                  name: 'Other',
+                  isActive: false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          name: 'Diarrhoea',
+          isActive: false,
+          questions: [
+            {
+              question: "How long has this been happening?",
+              type: 'number',
+              caption: 'days long.'
+            },
+            {
+              question: "What is the stool type?",
+              type: 'button',
+              showOther: false,
+              options: [
+                {
+                  name: 'Watery',
+                  isActive: false
+                },
+                {
+                  name: 'Soft',
+                  isActive: false
+                },
+                {
+                  name: 'Ill-formed',
+                  isActive: false
+                },
+                {
+                  name: 'Other',
+                  isActive: false
+                }
+              ]
+            },
+            {
+              question: "What is the nature of this complaint?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Happens Everyday',
+                  isActive: false
+                },
+                {
+                  name: 'Happens Somedays',
+                  isActive: false
+                },
+              ]
+            },
+            {
+              question: "What is the frequency?",
+              type: 'text',
+              answer: '',
+              placeholder: 'Describe the # of times per day',
+            }, 
+            {
+              question: "Is there blood in the stool?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                },
+              ]
+            },
+            {
+              question: "Are there any associated symptoms?",
+              type: 'button',
+              showOther: false,
+              options: [
+                {
+                  name: 'Abdominal Pain',
+                  isActive: false
+                },
+                {
+                  name: 'Vomiting',
+                  isActive: false
+                },
+                {
+                  name: 'Fever',
+                  isActive: false
+                },
+                {
+                  name: 'None',
+                  isActive: false
+                },
+                {
+                  name: 'Other',
+                  isActive: false
+                }
+              ]
+            },
+            {
+              question: "Is there any relation to food?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                },
+              ]
+            },
+            {
+              question: "Are there any current medications?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                },
+              ]
+            },
+          ]
+        },
+        {
+          name: 'Dizziness',
+          isActive: false,
+          questions: [
+            {
+              question: "How long has this been happening?",
+              type: 'number',
+              caption: 'days long.'
+            },
+            {
+              question: "What is the nature of the dizziness?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Happens Everyday',
+                  isActive: false
+                },
+                {
+                  name: 'Happens Somedays',
+                  isActive: false
+                },
+              ]
+            },
+            {
+              question: "When does the dizziness occur?",
+              type: 'button',
+              showOther: false,
+              options: [
+                {
+                  name: 'Whole Day',
+                  isActive: false
+                },
+                {
+                  name: 'Part of Day (morning)',
+                  isActive: false
+                },
+                {
+                  name: 'Part of Day (evening)',
+                  isActive: false
+                },
+                {
+                  name: 'Part of Day (night)',
+                  isActive: false
+                },
+                {
+                  name: 'Other',
+                  isActive: false
+                },
+              ]
+            },
+            {
+              question: "What causes the dizziness?",
+              type: 'text',
+              answer: '',
+              placeholder: 'Describe any possible causes',
+            },
+            {
+              question: "What provides relief?",
+              type: 'text',
+              answer: '',
+              placeholder: 'Describe any possible causes',
+            },
+            {
+              question: "Is there a relation with positioning?",
+              type: 'button',
+              showOther: false,
+              options: [
+                {
+                  name: 'Lying Down',
+                  isActive: false
+                },
+                {
+                  name: 'Standing Up',
+                  isActive: false
+                },
+                {
+                  name: 'Moving Neck',
+                  isActive: false
+                },
+                {
+                  name: 'Opening Eyes',
+                  isActive: false
+                },
+                {
+                  name: 'Other',
+                  isActive: false
+                }
+              ]
+            },
+            {
+              question: "Is there H/O fainting?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                },
+              ]
+            },
+            {
+              question: "Is there H/O fall?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                },
+              ]
+            },
+            {
+              question: "Are there any associated symptoms?",
+              type: 'button',
+              showOther: false,
+              options: [
+                {
+                  name: 'Vomiting',
+                  isActive: false
+                },
+                {
+                  name: 'Chest Pain',
+                  isActive: false
+                },
+                {
+                  name: 'Breathlessness',
+                  isActive: false
+                },
+                {
+                  name: 'Pain in Ear',
+                  isActive: false
+                },
+                {
+                  name: 'None',
+                  isActive: false
+                },
+                {
+                  name: 'Other',
+                  isActive: false
+                }
+              ]
+            },
+            {
+              question: "Has there been a change in hearing?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Normal',
+                  isActive: false
+                },
+                {
+                  name: 'Diminished',
+                  isActive: false
+                },
+              ]
+            },
+            {
+              question: "Has there been a change in vision?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Normal',
+                  isActive: false
+                },
+                {
+                  name: 'Less',
+                  isActive: false
+                },
+              ]
+            },
+          ]
+        },
+        {
+          name: 'Fever',
+          isActive: false,
+          questions: [
+            {
+              question: "How long has this been going on?",
+              type: 'number',
+              caption: 'days long.'
+            },
+            {
+              question: "How has it progressed?",
+              type: 'button',
+              showOther: false,
+              options: [
+                {
+                  name: 'Same as Before',
+                  isActive: false
+                },
+                {
+                  name: 'Worsening',
+                  isActive: false
+                },
+                {
+                  name: 'Improving',
+                  isActive: false
+                },
+                {
+                  name: 'Varies with Season',
+                  isActive: false
+                },
+                {
+                  name: 'Other',
+                  isActive: false
+                }
+              ]
+            },
+            {
+              question: "What is the nature of the fever?",
+              type: 'button',
+              showOther: false,
+              options: [
+                {
+                  name: 'Everyday',
+                  isActive: false
+                },
+                {
+                  name: 'Alternate',
+                  isActive: false
+                },
+                {
+                  name: 'Irregular',
+                  isActive: false
+                },
+                {
+                  name: 'Other',
+                  isActive: false
+                }
+              ]
+            },
+            {
+              question: "When does the fever come on?",
+              type: 'button',
+              showOther: false,
+              options: [
+                {
+                  name: 'All Day',
+                  isActive: false
+                },
+                {
+                  name: 'Part of the Day (morning)',
+                  isActive: false
+                },
+                {
+                  name: 'Part of the Day (evening)',
+                  isActive: false
+                },
+                {
+                  name: 'Part of the Day (night)',
+                  isActive: false
+                },
+                {
+                  name: 'Other',
+                  isActive: false
+                }
+              ]
+            },
+            {
+              question: "What is the temperature of the patient?",
+              type: 'button',
+              showOther: false,
+              options: [
+                {
+                  name: 'Low',
+                  isActive: false
+                },
+                {
+                  name: 'Medium',
+                  isActive: false
+                },
+                {
+                  name: 'High',
+                  isActive: false
+                },
+                {
+                  name: 'Combined High and Low',
+                  isActive: false
+                },
+                {
+                  name: 'Other',
+                  isActive: false
+                },
+              ]
+            },
+            {
+              question: "Is there shivering?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                }
+              ]
+            },
+            {
+              question: "Is there a cough?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                }
+              ]
+            },
+            {
+              question: "Is there a cough with blood?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                }
+              ]
+            },
+            {
+              question: "Is there pain?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                }
+              ]
+            },
+            {
+              question: "Is there general weakness?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                }
+              ]
+            },
+            {
+              question: "Is there loss of weight?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                }
+              ]
+            },
+            {
+              question: "Is there burning, or more frequency in urine?",
+              type: 'button',
+              showOther: false,
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                },
+                {
+                  name: 'Other',
+                  isActive: false
+                }
+              ]
+            },
+            {
+              question: "Are there any reliefs?",
+              type: 'button',
+              showOther: false,
+              options: [
+                {
+                  name: 'None',
+                  isActive: false
+                },
+                {
+                  name: 'Other',
+                  isActive: false
+                }
+              ]
+            },
+            {
+              question: "Describe any possible causes.",
+              type: 'text',
+              answer: '',
+              placeholder: 'Describe any possible causes'
+            },
+          ]
+        },
+        {
           name: 'Pain',
           isActive: false,
           subCategories: [
@@ -2609,7 +3785,7 @@ export default {
                 {
                   question: "How long has this been going on?",
                   type: 'number',
-                  caption: 'days long'
+                  caption: 'days long.'
                 },
                 {
                   question: "Where did it start?",
@@ -2810,7 +3986,7 @@ export default {
                 {
                   question: "How long has this been going on?",
                   type: 'number',
-                  caption: 'days long'
+                  caption: 'days long.'
                 },
                 {
                   question: "Where did it start?",
@@ -2975,7 +4151,7 @@ export default {
                 {
                   question: "How long has this been going on?",
                   type: 'number',
-                  caption: 'days long'
+                  caption: 'days long.'
                 },
                 {
                   question: "Where did it start?",
@@ -3144,7 +4320,7 @@ export default {
                 {
                   question: "How long has this been going on?",
                   type: 'number',
-                  caption: 'days long'
+                  caption: 'days long.'
                 },
                 {
                   question: "Where did it start?",
@@ -3305,7 +4481,7 @@ export default {
                 {
                   question: "How long has this been going on?",
                   type: 'number',
-                  caption: 'days long'
+                  caption: 'days long.'
                 },
                 {
                   question: "Where did it start?",
@@ -3522,7 +4698,7 @@ export default {
                 {
                   question: "How long has this been going on?",
                   type: 'number',
-                  caption: 'days long'
+                  caption: 'days long.'
                 },
                 {
                   question: "Where did it start?",
@@ -4039,7 +5215,7 @@ export default {
                 {
                   question: "How long has this been going on?",
                   type: 'number',
-                  caption: 'days long'
+                  caption: 'days long.'
                 },
                 {
                   question: "Where did it start?",
@@ -4280,7 +5456,7 @@ export default {
                 {
                   question: "How long has this been going on?",
                   type: 'number',
-                  caption: 'days long'
+                  caption: 'days long.'
                 },
                 {
                   question: "Where did it start?",
@@ -4528,7 +5704,7 @@ export default {
                 {
                   question: "How long has this been going on?",
                   type: 'number',
-                  caption: 'days long'
+                  caption: 'days long.'
                 },
                 {
                   question: "Where did it start?",
@@ -4752,7 +5928,7 @@ export default {
                 {
                   question: "How long has this been going on?",
                   type: 'number',
-                  caption: 'days long'
+                  caption: 'days long.'
                 },
                 {
                   question: "Where did it start?",
@@ -4921,7 +6097,7 @@ export default {
                 {
                   question: "How long has this been going on?",
                   type: 'number',
-                  caption: 'days long'
+                  caption: 'days long.'
                 },
                 {
                   question: "Where did it start?",
@@ -5311,42 +6487,12 @@ export default {
                 {
                   question: "How many tumors are there?",
                   type: 'number',
-                  options: [
-                    {
-                      name: '1',
-                      isActive: false
-                    },
-                    {
-                      name: '2',
-                      isActive: false
-                    },
-                    {
-                      name: '3',
-                      isActive: false
-                    },
-                    {
-                      name: '4',
-                      isActive: false
-                    },
-                    {
-                      name: '5+',
-                      isActive: false
-                    },
-                  ]
+                  caption: 'tumor(s)'
                 },
                 {
                   question: "How long has it been there?",
-                  type: 'button',
-                  options: [
-                    {
-                      name: 'Yes',
-                      isActive: false
-                    },
-                    {
-                      name: 'No',
-                      isActive: false
-                    },
-                  ]
+                  type: 'number',
+                  caption: 'days(s)'
                 },
                 {
                   question: "How did it start?",
@@ -5517,6 +6663,7 @@ export default {
                 {
                   question: "Where is the swelling?",
                   type: 'text',
+                  answer: '',
                   placeholder: 'Describe the location of the swelling'
                 },
                 {
@@ -5557,501 +6704,9 @@ export default {
             },
           ]
         },
-        {
-          name: 'Difficulty Breathing',
-          isActive: false,
-          questions: [
-            {
-                question: "How long has this been going on?",
-                type: 'number',
-                caption: 'days long'
-            },
-            {
-              question: "How has it progressed?",
-              type: 'button',
-              showOther: false,
-              options: [
-                {
-                  name: 'Same as Before',
-                  isActive: false
-                },
-                {
-                  name: 'Worsening',
-                  isActive: false
-                },
-                {
-                  name: 'Improving',
-                  isActive: false
-                },
-                {
-                  name: 'Varies with Season',
-                  isActive: false
-                },
-                {
-                  name: 'Other',
-                  isActive: false
-                }
-              ]
-            },
-            {
-              question: "What brings it on?",
-              type: 'button',
-              showOther: false,
-              options: [
-                {
-                  name: 'Exertion',
-                  isActive: false
-                },
-                {
-                  name: 'Climbing Stairs',
-                  isActive: false
-                },
-                {
-                  name: 'None',
-                  isActive: false
-                },
-                {
-                  name: 'Other',
-                  isActive: false
-                }
-              ]
-            },
-            {
-              question: "What is the difficulty relieved?",
-              type: 'button',
-              showOther: false,
-              options: [
-                {
-                  name: 'Resting',
-                  isActive: false
-                },
-                {
-                  name: 'Sitting Up',
-                  isActive: false
-                },
-                {
-                  name: 'None',
-                  isActive: false
-                },
-                {
-                  name: 'Other',
-                  isActive: false
-                }
-              ]
-            },
-            {
-              question: "Does it wake you up at night?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Yes',
-                  isActive: false
-                },
-                {
-                  name: 'No',
-                  isActive: false
-                }
-              ]
-            },
-            {
-              question: "Is there a cough?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Yes',
-                  isActive: false
-                },
-                {
-                  name: 'No',
-                  isActive: false
-                }
-              ]
-            },
-            {
-              question: "Are there any associated symptoms?",
-              type: 'button',
-              showOther: false,
-              options: [
-                {
-                  name: 'General Weakness',
-                  isActive: false
-                },
-                {
-                  name: 'Fever',
-                  isActive: false
-                },
-                {
-                  name: 'None',
-                  isActive: false
-                },
-                {
-                  name: 'Other',
-                  isActive: false
-                }
-              ]
-            }
-          ]
-        },
-        {
-          name: 'Fever',
-          isActive: false,
-          questions: [
-            {
-              question: "How long has this been going on?",
-              type: 'number',
-              caption: 'days long'
-            },
-            {
-              question: "How has it progressed?",
-              type: 'button',
-              showOther: false,
-              options: [
-                {
-                  name: 'Same as Before',
-                  isActive: false
-                },
-                {
-                  name: 'Worsening',
-                  isActive: false
-                },
-                {
-                  name: 'Improving',
-                  isActive: false
-                },
-                {
-                  name: 'Varies with Season',
-                  isActive: false
-                },
-                {
-                  name: 'Other',
-                  isActive: false
-                }
-              ]
-            },
-            {
-              question: "What is the nature of the fever?",
-              type: 'button',
-              showOther: false,
-              options: [
-                {
-                  name: 'Everyday',
-                  isActive: false
-                },
-                {
-                  name: 'Alternate',
-                  isActive: false
-                },
-                {
-                  name: 'Irregular',
-                  isActive: false
-                },
-                {
-                  name: 'Other',
-                  isActive: false
-                }
-              ]
-            },
-            {
-              question: "When does the fever come on?",
-              type: 'button',
-              showOther: false,
-              options: [
-                {
-                  name: 'All Day',
-                  isActive: false
-                },
-                {
-                  name: 'Part of the Day (morning)',
-                  isActive: false
-                },
-                {
-                  name: 'Part of the Day (evening)',
-                  isActive: false
-                },
-                {
-                  name: 'Part of the Day (night)',
-                  isActive: false
-                },
-                {
-                  name: 'Other',
-                  isActive: false
-                }
-              ]
-            },
-            {
-              question: "What is the temperature of the patient?",
-              type: 'button',
-              showOther: false,
-              options: [
-                {
-                  name: 'Low',
-                  isActive: false
-                },
-                {
-                  name: 'Medium',
-                  isActive: false
-                },
-                {
-                  name: 'High',
-                  isActive: false
-                },
-                {
-                  name: 'Combined High and Low',
-                  isActive: false
-                },
-                {
-                  name: 'Other',
-                  isActive: false
-                },
-              ]
-            },
-            {
-              question: "Is there shivering?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Yes',
-                  isActive: false
-                },
-                {
-                  name: 'No',
-                  isActive: false
-                }
-              ]
-            },
-            {
-              question: "Is there a cough?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Yes',
-                  isActive: false
-                },
-                {
-                  name: 'No',
-                  isActive: false
-                }
-              ]
-            },
-            {
-              question: "Is there a cough with blood?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Yes',
-                  isActive: false
-                },
-                {
-                  name: 'No',
-                  isActive: false
-                }
-              ]
-            },
-            {
-              question: "Is there pain?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Yes',
-                  isActive: false
-                },
-                {
-                  name: 'No',
-                  isActive: false
-                }
-              ]
-            },
-            {
-              question: "Is there general weakness?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Yes',
-                  isActive: false
-                },
-                {
-                  name: 'No',
-                  isActive: false
-                }
-              ]
-            },
-            {
-              question: "Is there loss of weight?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Yes',
-                  isActive: false
-                },
-                {
-                  name: 'No',
-                  isActive: false
-                }
-              ]
-            },
-            {
-              question: "Is there burning, or more frequency in urine?",
-              type: 'button',
-              showOther: false,
-              options: [
-                {
-                  name: 'Yes',
-                  isActive: false
-                },
-                {
-                  name: 'No',
-                  isActive: false
-                },
-                {
-                  name: 'Other',
-                  isActive: false
-                }
-              ]
-            },
-            {
-              question: "Are there any reliefs?",
-              type: 'button',
-              showOther: false,
-              options: [
-                {
-                  name: 'None',
-                  isActive: false
-                },
-                {
-                  name: 'Other',
-                  isActive: false
-                }
-              ]
-            },
-            {
-              question: "Describe any possible causes.",
-              type: 'text',
-              placeholder: 'Describe any possible causes'
-            },
-          ]
-        },
-        {
-          name: 'Diarrhoea',
-          isActive: false,
-          questions: [
-            {
-              question: "How long has this been happening?",
-              type: 'number',
-              caption: 'days long'
-            },
-            {
-              question: "What is the stool type?",
-              type: 'button',
-              showOther: false,
-              options: [
-                {
-                  name: 'Watery',
-                  isActive: false
-                },
-                {
-                  name: 'Soft',
-                  isActive: false
-                },
-                {
-                  name: 'Ill-formed',
-                  isActive: false
-                },
-                {
-                  name: 'Other',
-                  isActive: false
-                }
-              ]
-            },
-            {
-              question: "What is the nature of this complaint?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Happens Everyday',
-                  isActive: false
-                },
-                {
-                  name: 'Happens Somedays',
-                  isActive: false
-                },
-              ]
-            },
-            {
-              question: "What is the frequency?",
-              type: 'text',
-              placeholder: 'Describe the # of times per day',
-            }, 
-            {
-              question: "Is there blood in the stool?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Yes',
-                  isActive: false
-                },
-                {
-                  name: 'No',
-                  isActive: false
-                },
-              ]
-            },
-            {
-              question: "Are there any associated symptoms?",
-              type: 'button',
-              showOther: false,
-              options: [
-                {
-                  name: 'Abdominal Pain',
-                  isActive: false
-                },
-                {
-                  name: 'Vomiting',
-                  isActive: false
-                },
-                {
-                  name: 'Fever',
-                  isActive: false
-                },
-                {
-                  name: 'None',
-                  isActive: false
-                },
-                {
-                  name: 'Other',
-                  isActive: false
-                }
-              ]
-            },
-            {
-              question: "Is there any relation to food?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Yes',
-                  isActive: false
-                },
-                {
-                  name: 'No',
-                  isActive: false
-                },
-              ]
-            },
-            {
-              question: "Are there any current medications?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Yes',
-                  isActive: false
-                },
-                {
-                  name: 'No',
-                  isActive: false
-                },
-              ]
-            },
-          ]
-        },
+        
+
+
         {
           name: 'Vomiting',
           isActive: false,
@@ -6059,7 +6714,7 @@ export default {
             {
               question: "How long has this been happening?",
               type: 'number',
-              caption: 'days long'
+              caption: 'days long.'
             },
             {
               question: "What is the nature of the vomiting?",
@@ -6078,6 +6733,7 @@ export default {
             {
               question: "What is the frequency?",
               type: 'text',
+              answer: '',
               placeholder: 'Describe the # of days between incidents',
             },
             {
@@ -6101,11 +6757,13 @@ export default {
             {
               question: "What causes the vomiting?",
               type: 'text',
+              answer: '',
               placeholder: 'Describe any relevant information',
             },
             {
               question: "Is there any relief?",
               type: 'text',
+              answer: '',
               placeholder: 'Describe any relevant information',
             },
             {
@@ -6173,330 +6831,60 @@ export default {
             },
           ]
         },
+
         {
-          name: 'Dizziness',
+          name: 'Skin Rash',
           isActive: false,
           questions: [
             {
-              question: "How long has this been happening?",
-              type: 'number',
-              caption: 'days long'
-            },
-            {
-              question: "What is the nature of the dizziness?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Happens Everyday',
-                  isActive: false
-                },
-                {
-                  name: 'Happens Somedays',
-                  isActive: false
-                },
-              ]
-            },
-            {
-              question: "When does the dizziness occur?",
-              type: 'button',
-              showOther: false,
-              options: [
-                {
-                  name: 'Whole Day',
-                  isActive: false
-                },
-                {
-                  name: 'Part of Day (morning)',
-                  isActive: false
-                },
-                {
-                  name: 'Part of Day (evening)',
-                  isActive: false
-                },
-                {
-                  name: 'Part of Day (night)',
-                  isActive: false
-                },
-                {
-                  name: 'Other',
-                  isActive: false
-                },
-              ]
-            },
-            {
-              question: "What causes the dizziness?",
+              question: "Where are the rash(es) located?",
               type: 'text',
-              placeholder: 'Describe any possible causes',
+              answer: '',
+              placeholder: 'Describe the location on body',
             },
             {
-              question: "What provides relief?",
+              question: "How big are the rash(es)?",
               type: 'text',
-              placeholder: 'Describe any possible causes',
+              answer: '',
+              placeholder: 'Describe the size in cm x cm',
             },
             {
-              question: "Is there a relation with positioning?",
-              type: 'button',
-              showOther: false,
-              options: [
-                {
-                  name: 'Lying Down',
-                  isActive: false
-                },
-                {
-                  name: 'Standing Up',
-                  isActive: false
-                },
-                {
-                  name: 'Moving Neck',
-                  isActive: false
-                },
-                {
-                  name: 'Opening Eyes',
-                  isActive: false
-                },
-                {
-                  name: 'Other',
-                  isActive: false
-                }
-              ]
-            },
-            {
-              question: "Is there H/O fainting?",
+              question: "How many rashes are there?",
               type: 'button',
               options: [
                 {
-                  name: 'Yes',
+                  name: 'Single',
                   isActive: false
                 },
                 {
-                  name: 'No',
+                  name: 'Multiple (2-5)',
+                  isActive: false
+                },
+                {
+                  name: 'Many (5+)',
                   isActive: false
                 },
               ]
             },
             {
-              question: "Is there H/O fall?",
+              question: "Provide a description of the rash surface.",
               type: 'button',
               options: [
                 {
-                  name: 'Yes',
+                  name: 'Smooth',
                   isActive: false
                 },
                 {
-                  name: 'No',
+                  name: 'Rough',
                   isActive: false
                 },
               ]
             },
             {
-              question: "Are there any associated symptoms?",
-              type: 'button',
-              showOther: false,
-              options: [
-                {
-                  name: 'Vomiting',
-                  isActive: false
-                },
-                {
-                  name: 'Chest Pain',
-                  isActive: false
-                },
-                {
-                  name: 'Breathlessness',
-                  isActive: false
-                },
-                {
-                  name: 'Pain in Ear',
-                  isActive: false
-                },
-                {
-                  name: 'None',
-                  isActive: false
-                },
-                {
-                  name: 'Other',
-                  isActive: false
-                }
-              ]
-            },
-            {
-              question: "Has there been a change in hearing?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Normal',
-                  isActive: false
-                },
-                {
-                  name: 'Diminished',
-                  isActive: false
-                },
-              ]
-            },
-            {
-              question: "Has there been a change in vision?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Normal',
-                  isActive: false
-                },
-                {
-                  name: 'Less',
-                  isActive: false
-                },
-              ]
-            },
-          ]
-        },
-        {
-          name: 'Acidity/Indigestion',
-          isActive: false,
-          questions: [
-            {
-              question: "How long has this been happening?",
-              type: 'number',
-              caption: 'days long'
-            },
-            {
-              question: "Is there any abdominal pain?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Yes',
-                  isActive: false
-                },
-                {
-                  name: 'No',
-                  isActive: false
-                },
-              ]
-            },
-            {
-              question: "Is there any vomiting?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Yes',
-                  isActive: false
-                },
-                {
-                  name: 'No',
-                  isActive: false
-                },
-              ]
-            },
-            {
-              question: "Is there any nausea?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Yes',
-                  isActive: false
-                },
-                {
-                  name: 'No',
-                  isActive: false
-                },
-              ]
-            },
-            {
-              question: "Is there a loss of appetite?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Normal',
-                  isActive: false
-                },
-                {
-                  name: 'Less',
-                  isActive: false
-                },
-              ]
-            },
-            {
-              question: "Is there any constipation?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Yes',
-                  isActive: false
-                },
-                {
-                  name: 'No',
-                  isActive: false
-                },
-              ]
-            },
-            {
-              question: "Is there any diarrhea?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Yes',
-                  isActive: false
-                },
-                {
-                  name: 'No',
-                  isActive: false
-                },
-              ]
-            },
-            {
-              question: "Is there H/O jaundice?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Yes',
-                  isActive: false
-                },
-                {
-                  name: 'No',
-                  isActive: false
-                },
-              ]
-            },
-            {
-              question: "Is there H/O alcohol ingestion?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Yes',
-                  isActive: false
-                },
-                {
-                  name: 'No',
-                  isActive: false
-                },
-              ]
-            },
-            {
-              question: "Is there H/O smoking?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Yes',
-                  isActive: false
-                },
-                {
-                  name: 'No',
-                  isActive: false
-                },
-              ]
-            },
-            {
-              question: "Has there been a change weight?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Yes',
-                  isActive: false
-                },
-                {
-                  name: 'No',
-                  isActive: false
-                },
-              ]
+              question: "Provide a description of the rash color.",
+              type: 'text',
+              answer: '',
+              placeholder: 'Describe any relevant information',
             },
           ]
         },
@@ -6507,7 +6895,7 @@ export default {
             {
               question: "How long has this been happening?",
               type: 'number',
-              caption: 'days long'
+              caption: 'days long.'
             },
             {
               question: "Is there any abdominal pain?",
@@ -6585,154 +6973,8 @@ export default {
             },
           ]
         },
-        {
-          name: 'Skin Rash',
-          isActive: false,
-          questions: [
-            {
-              question: "Where is the rash located?",
-              type: 'text',
-              placeholder: 'Describe the location on body',
-            },
-            {
-              question: "How big is the rash?",
-              type: 'text',
-              placeholder: 'Describe the size in cm x cm',
-            },
-            {
-              question: "How many rashes are there?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Single',
-                  isActive: false
-                },
-                {
-                  name: 'Multiple (2-5)',
-                  isActive: false
-                },
-                {
-                  name: 'Many (5+)',
-                  isActive: false
-                },
-              ]
-            },
-            {
-              question: "Provide a description of the surface.",
-              type: 'button',
-              options: [
-                {
-                  name: 'Smooth',
-                  isActive: false
-                },
-                {
-                  name: 'Rough',
-                  isActive: false
-                },
-              ]
-            },
-            {
-              question: "Provide a description of the color.",
-              type: 'text',
-              placeholder: 'Describe any relevant information',
-            },
-          ]
-        },
-        {
-          name: 'Bleeding with Stool',
-          isActive: false,
-          showOther: false,
-          questions: [
-            {
-              question: "What is the color of the stool?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Bright Red',
-                  isActive: false
-                },
-                {
-                  name: 'Dark Red',
-                  isActive: false
-                },
-                {
-                  name: 'Other',
-                  isActive: false
-                },
-              ]
-            },
-            {
-              question: "What is the amount of stool?",
-              type: 'button',
-              options: [
-                {
-                  name: 'A lot',
-                  isActive: false
-                },
-                {
-                  name: 'Droplets',
-                  isActive: false
-                },
-              ]
-            },
-            {
-              question: "Is there pain during the passing of stool?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Yes',
-                  isActive: false
-                },
-                {
-                  name: 'No',
-                  isActive: false
-                },
-              ]
-            },
-            {
-              question: "Has there been a change in bowel habit?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Yes',
-                  isActive: false
-                },
-                {
-                  name: 'No',
-                  isActive: false
-                },
-              ]
-            },
-            {
-              question: "Is there any constipation?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Yes',
-                  isActive: false
-                },
-                {
-                  name: 'No',
-                  isActive: false
-                },
-              ]
-            },
-            {
-              question: "Is there any diarrhoea?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Yes',
-                  isActive: false
-                },
-                {
-                  name: 'No',
-                  isActive: false
-                },
-              ]
-            },
-          ]
-        },
+
+
         {
           name: 'Gynae Problems',
           isActive: false,
@@ -6763,7 +7005,7 @@ export default {
                 {
                   question: "What is the duration of the patient's period?",
                   type: 'number',
-                  caption: 'days',
+                  caption: 'days.',
                 },
                 {
                   question: "What is the interval between periods?",
@@ -6773,11 +7015,13 @@ export default {
                     {
                       name: 'Regular',
                       isActive: false,
+                      answer: '',
                       placeholder: 'Describe the # of days'
                     },
                     {
                       name: 'Varies',
                       isActive: false,
+                      answer: '',
                       placeholder: 'Describe the # to # days'
                     },
                   ]
@@ -6924,6 +7168,7 @@ export default {
                     {
                       name: 'Varies',
                       isActive: false,
+                      answer: '',
                       placeholder: 'Describe the # to # days'
                     },
                   ]
@@ -7056,11 +7301,13 @@ export default {
                     {
                       name: 'Regular',
                       isActive: false,
+                      answer: '',
                       placeholder: 'Describe the # of days'
                     },
                     {
                       name: 'Varies',
                       isActive: false,
+                      answer: '',
                       placeholder: 'Describe the # to # days'
                     },
                   ]
@@ -7183,7 +7430,7 @@ export default {
                 {
                   question: "What is the duration of the patient's period?",
                   type: 'number',
-                  caption: 'days long'
+                  caption: 'days long.'
                 },
                 {
                   question: "What is the interval between periods?",
@@ -7193,11 +7440,13 @@ export default {
                     {
                       name: 'Regular',
                       isActive: false,
+                      answer: '',
                       placeholder: 'Describe the # of days'
                     },
                     {
                       name: 'Varies',
                       isActive: false,
+                      answer: '',
                       placeholder: 'Describe the # to # days'
                     },
                   ]
@@ -7320,7 +7569,7 @@ export default {
                 {
                   question: "What is the duration of the patient's period?",
                   type: 'number',
-                  caption: 'days long'
+                  caption: 'days long.'
                 },
                 {
                   question: "What is the interval between periods?",
@@ -7330,11 +7579,13 @@ export default {
                     {
                       name: 'Regular',
                       isActive: false,
+                      answer: '',
                       placeholder: 'Describe the # of days'
                     },
                     {
                       name: 'Varies',
                       isActive: false,
+                      answer: '',
                       placeholder: 'Describe the # to # days'
                     },
                   ]
@@ -7440,6 +7691,7 @@ export default {
             {
               question: "Where is the injury located?",
               type: 'text',
+              answer: '',
               placeholder: 'Describe the location on body'
             },
             {
@@ -7523,80 +7775,213 @@ export default {
             }
           ]
         },
+
+
         {
-          name: 'Boils',
+          name: 'Palpitation',
           isActive: false,
           questions: [
             {
-              question: "How long have the boils been there?",
+              question: "How long do the palpitations last?",
               type: 'number',
-              caption: 'days'
+              caption: 'days.',
             },
             {
-              question: "Where is are the boils located?",
-              type: 'text',
-              placeholder: 'Describe the location on body'
-            },
-            {
-              question: "How did the boils start?",
+              question: "What is the type of palpitation?",
               type: 'button',
-              showOther: false,
               options: [
                 {
-                  name: 'Injury',
+                  name: 'Intermittent',
                   isActive: false
                 },
                 {
-                  name: 'On its Own',
-                  isActive: false
-                },
-                {
-                  name: 'Other',
+                  name: 'Always Happening',
                   isActive: false
                 },
               ]
             },
             {
-              question: "Is there any pain or discomfort?",
+              question: "Are there any associated symptoms?",
               type: 'button',
               showOther: false,
               options: [
                 {
-                  name: 'Throbbing',
-                  isActive: false
-                },
-                {
-                  name: 'Dull',
-                  isActive: false
-                },
-                {
-                  name: 'Continuous',
+                  name: 'Other',
                   isActive: false
                 },
                 {
                   name: 'None',
                   isActive: false
                 },
+              ]
+            },
+            {
+              question: "Is there Fainting?",
+              type: 'button',
+              options: [
                 {
-                  name: 'Other',
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
                   isActive: false
                 },
               ]
             },
             {
-              question: "Describe the color of the skin over the boils.",
+              question: "Was there a Fall?",
               type: 'button',
               options: [
                 {
-                  name: 'Red',
+                  name: 'Yes',
                   isActive: false
                 },
                 {
-                  name: 'Normal',
+                  name: 'No',
                   isActive: false
                 },
               ]
+            },
+            {
+              question: "Is there Dizziness?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                },
+              ]
+            },
+            {
+              question: "What brings the palpitations on?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                },
+              ]
+            },
+            {
+              question: "How are the palpitation relieved?",
+              type: 'text',
+              answer: '',
+              placeholder: 'Describe any relevant information',
             }
+          ]
+        },
+        {
+          name: 'Fainting',
+          isActive: false,
+          questions: [
+            {
+              question: "How many episodes have there been?",
+              type: 'number',
+              caption: 'episodes'
+            },
+            {
+              question: "What is the interval between episodes?",
+              type: 'button',
+              options: [
+                {
+                  name: '1',
+                  isActive: false
+                },
+                {
+                  name: '2',
+                  isActive: false
+                },
+                {
+                  name: '3',
+                  isActive: false
+                },
+                {
+                  name: '4',
+                  isActive: false
+                },
+                {
+                  name: '5+',
+                  isActive: false
+                }
+              ]
+            },
+            {
+              question: "Is consciousness loss during fainting?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                },
+              ]
+            },
+            {
+              question: "Are there any associated fits?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                },
+              ]
+            },
+            {
+              question: "Is there dizziness?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                },
+              ]
+            },
+            {
+              question: "Was there a fall?",
+              type: 'button',
+              options: [
+                {
+                  name: 'Yes',
+                  isActive: false
+                },
+                {
+                  name: 'No',
+                  isActive: false
+                },
+              ]
+            },
+            {
+              question: "What brings on the fainting?",
+              type: 'text',
+              answer: '',
+              placeholder: 'Describe any relevant information'
+            },
+            {
+              question: "How is the fainting relieved?",
+              type: 'text',
+              answer: '',
+              placeholder: 'Describe any relevant information'
+            },
           ]
         },
         {
@@ -7606,11 +7991,13 @@ export default {
             {
               question: "How long has the ulcer been there?",
               type: 'text',
+              answer: '',
               placeholder: 'Describe the # of days',
             },
             {
               question: "Where is the ulcer located?",
               type: 'text',
+              answer: '',
               placeholder: 'Describe the location on body',
             },
             {
@@ -7705,232 +8092,9 @@ export default {
             },
             {
               question: "What is the size of the ulcer??",
-              type: 'text'
-            },
-          ]
-        },
-        {
-          name: 'Palpitation',
-          isActive: false,
-          questions: [
-            {
-              question: "How long do the palpitations last?",
-              type: 'number',
-              caption: 'days',
-            },
-            {
-              question: "What is the type of palpitation?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Intermittent',
-                  isActive: false
-                },
-                {
-                  name: 'Always Happening',
-                  isActive: false
-                },
-              ]
-            },
-            {
-              question: "Are there any associated symptoms?",
-              type: 'button',
-              showOther: false,
-              options: [
-                {
-                  name: 'Other',
-                  isActive: false
-                },
-                {
-                  name: 'None',
-                  isActive: false
-                },
-              ]
-            },
-            {
-              question: "Is there Fainting?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Yes',
-                  isActive: false
-                },
-                {
-                  name: 'No',
-                  isActive: false
-                },
-              ]
-            },
-            {
-              question: "Was there a Fall?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Yes',
-                  isActive: false
-                },
-                {
-                  name: 'No',
-                  isActive: false
-                },
-              ]
-            },
-            {
-              question: "Is there Dizziness?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Yes',
-                  isActive: false
-                },
-                {
-                  name: 'No',
-                  isActive: false
-                },
-              ]
-            },
-            {
-              question: "What brings the palpitations on?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Yes',
-                  isActive: false
-                },
-                {
-                  name: 'No',
-                  isActive: false
-                },
-              ]
-            },
-            {
-              question: "How are the palpitation relieved?",
               type: 'text',
-              placeholder: 'Describe any relevant information',
-            }
-          ]
-        },
-        {
-          name: 'Fainting',
-          isActive: false,
-          questions: [
-            {
-              question: "How many episodes have there been?",
-              type: 'button',
-              options: [
-                {
-                  name: '1',
-                  isActive: false
-                },
-                {
-                  name: '2',
-                  isActive: false
-                },
-                {
-                  name: '3',
-                  isActive: false
-                },
-                {
-                  name: '4',
-                  isActive: false
-                },
-                {
-                  name: '5+',
-                  isActive: false
-                }
-              ]
-            },
-            {
-              question: "What is the interval between episodes?",
-              type: 'button',
-              options: [
-                {
-                  name: '1',
-                  isActive: false
-                },
-                {
-                  name: '2',
-                  isActive: false
-                },
-                {
-                  name: '3',
-                  isActive: false
-                },
-                {
-                  name: '4',
-                  isActive: false
-                },
-                {
-                  name: '5+',
-                  isActive: false
-                }
-              ]
-            },
-            {
-              question: "Is consciousness loss during fainting?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Yes',
-                  isActive: false
-                },
-                {
-                  name: 'No',
-                  isActive: false
-                },
-              ]
-            },
-            {
-              question: "Are there any associated fits?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Yes',
-                  isActive: false
-                },
-                {
-                  name: 'No',
-                  isActive: false
-                },
-              ]
-            },
-            {
-              question: "Is there dizziness?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Yes',
-                  isActive: false
-                },
-                {
-                  name: 'No',
-                  isActive: false
-                },
-              ]
-            },
-            {
-              question: "Was there a fall?",
-              type: 'button',
-              options: [
-                {
-                  name: 'Yes',
-                  isActive: false
-                },
-                {
-                  name: 'No',
-                  isActive: false
-                },
-              ]
-            },
-            {
-              question: "What brings on the fainting?",
-              type: 'text',
-              placeholder: 'Describe any relevant information'
-            },
-            {
-              question: "How is the fainting relieved?",
-              type: 'text',
-              placeholder: 'Describe any relevant information'
+              answer: '',
+              placeholder: 'Small, medium, large'
             },
           ]
         },
@@ -7945,7 +8109,7 @@ export default {
                 {
                   question: "What has been the duration of the weakness?",
                   type: 'number',
-                  caption: 'days',
+                  caption: 'days.',
                 },
                 {
                   question: "Is there a loss of appetite?",
@@ -8026,7 +8190,7 @@ export default {
                 {
                   question: "What has been the duration of the weakness?",
                   type: 'number',
-                  caption: 'days',
+                  caption: 'days.',
                 },
                 {
                   question: "Is there a loss appetite?",
@@ -8114,14 +8278,6 @@ export default {
             }
           ]
         },
-        // {
-        //   name: 'Mental Health Problem',
-        //   isActive: false,
-        // },
-        // {
-        //   name: 'Other Category',
-        //   isActive: false,
-        // },
       ],
       fullPath: [
         {
@@ -8203,12 +8359,12 @@ export default {
   /* .list-inline-item {
     margin-right: 10px !important;
   } */
-
+/* 
   @media (min-width: 992px) {
     .container {
         max-width: 1060px;
     }
-  }
+  } */
 
   /* File Upload Styles */
   .dropbox {

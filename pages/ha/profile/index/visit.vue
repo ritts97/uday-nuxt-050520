@@ -77,242 +77,190 @@
 
           <div class="w-100 bg-white mb-2 mt-0 px-3 pt-3 pb-3" key="complaint" style="min-height: 200px;" v-if="subTabs[0].isActive">
             <div class="row mt-1">
-              <div class="col-md-12 mb-3">
+              <div class="col-md-12">
                 <div class="small text-muted mb-2">
-                  Chief Complaint
+                  Chief Complaints
+                  <hr class="mb-1 mt-1">
                 </div>
-                <button class="btn px-3 small btn-dark" role="button">
-                  Pain
-                </button>
-                <button class="btn px-3 small btn-dark" role="button">
-                  Ear Pain
-                </button>
-                <br><br>
-                <div class="small text-muted mb-2">
-                  Description
+                <div v-for="(complaints, index) in currEpisode.episodeDetails.chiefComplaints" :key="index">
+                  <div v-for="(complaint, cIndex) in complaints" :key="cIndex" class="d-inline">
+                    <button v-if="complaint" class="btn px-3 mb-2 mr-2 small btn-dark" role="button">
+                      {{ complaint }}
+                    </button>
+                  </div>
                 </div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat earum sequi laudantium est consequuntur non natus suscipit quibusdam, hic dolore, quam, quidem nostrum. Incidunt alias eos repellendus quaerat tempore doloremque unde sit, earum maiores facilis beatae vero ex hic eaque necessitatibus nulla consectetur dolorum? Voluptas magnam alias at sed unde!
               </div>
-              <!-- <div class="col-md-6 mb-3">
+              <div class="col-md-12 mt-4">
                 <div class="small text-muted mb-2">
-                  Complaint 2
+                  Fixed Questions
+                  <hr class="mb-1 mt-1">
                 </div>
-                Fever <br><br>
-                Lasting 3 days <br>
-                Felt on alternate <br>
-                Present all day <br>
-                Low grade <br>
-                Yes shivers <br>
-                Associated with None <br>
-                Haemoptysis No <br>
-                Associated with Gguggu <br>
-                Weakness No <br>
-                Weightloss No <br>
-                Dysuria No <br>
-                Brought on by Ugugu <br>
-                Relieved by Ugiig <br>
-              </div> -->
+                <div v-for="(question, indexQuestion) in currEpisode.episodeDetails.chiefComplaintsFixedQuestions" class="mt-3 mb-4" :key="indexQuestion">
+                  <div v-if="question.type === 'text'">
+                    <label for="exampleFormControlSelect1">{{ question.question }}</label><br>
+                    {{ question.answer }}
+                    <!-- <input type="text" class="p-2 w-100" :value="question.answer" :placeholder="question.placeholder || 'There is no placeholder.'"> -->
+                  </div>
+                  <div v-if="question.type === 'button'">
+                    <label for="exampleFormControlSelect1">{{ question.question }}</label><br>
+                    <button class="btn mb-2 mr-2" v-for="(option, indexAnswer) in question.options" :key="indexAnswer" :class="option.isActive ? 'btn-dark text-white' : 'btn-light'">
+                      {{ option.name }}
+                    </button>
+                    <div v-if="question.showOther === true">
+                      <input type="text" class="mt-1 p-2 w-100" placeholder="Describe any further details">
+                    </div>
+                  </div>
+                  <div v-if="question.type === 'button' && question.showTextInput === true">
+                    <div>
+                      <input type="text" class="mt-1 p-2 w-100" :placeholder="question.options[0].isActive === true ? question.options[0].placeholder : question.options[1].placeholder">
+                    </div>
+                  </div>
+                  <div v-if="question.type === 'number'">
+                    <label for="exampleFormControlSelect1">{{ question.question }}</label><br>
+                    <input type="number" class="mt-1 p-2 mr-2 w-25" placeholder="0"> {{ question.caption }}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div class="w-100 bg-white mb-2 mt-0 px-3 pt-3 pb-3" key="vitals" style="min-height: 200px;" v-if="subTabs[1].isActive">
             <div class="row mt-1">
-              <div class="col-md-6 mb-4">
-                <div class="small text-muted mb-1">
-                  Pulse
+              <div class="mb-4" v-for="(vitalQuestion, index) in currEpisode.episodeDetails.vitals" :class="[vitalQuestion.fullLength ? 'col-md-12' : 'col-md-6']" :key="index">
+                <div v-if="vitalQuestion.options">
+                  <label for="exampleFormControlSelect1">{{ vitalQuestion.title }}</label><br>
+                  <button v-for="(option, optionIndex) in vitalQuestion.options" :class="option.isActive ? 'btn-dark' : 'btn-light'" :key="optionIndex" class="btn mb-2 mr-2">
+                    {{ option.name }}
+                  </button>
                 </div>
-                72 BPM
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="BP (___/___ mmHg)"> -->
-              </div>
-              <div class="col-md-6 mb-4">
-                <div class="small text-muted mb-1">
-                  BP
+                <div v-else-if="!vitalQuestion.options && vitalQuestion.name === 'bp'">
+                  <label for="exampleFormControlSelect1">{{ vitalQuestion.title }}</label><br>
+                  {{ vitalQuestion.valueFirst }} / {{ vitalQuestion.valueSecond }}
+                  {{ vitalQuestion.caption }}
                 </div>
-                120/80 mmHg
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="BP (___/___ mmHg)"> -->
-              </div>
-              <div class="col-md-6 mb-4">
-                <div class="small text-muted mb-1">
-                  SP02
+                <div v-else-if="!vitalQuestion.options && vitalQuestion.name === 'height'">
+                  <label for="exampleFormControlSelect1 mb-2">{{ vitalQuestion.title }}</label><br>
+                  {{ vitalQuestion.value }} {{ vitalQuestion.caption }}
                 </div>
-                89%
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="SP02 (%)"> -->
-              </div>
-              <div class="col-md-6 mb-4">
-                <div class="small text-muted mb-1">
-                  Temperature
+                <div v-else-if="!vitalQuestion.options && vitalQuestion.name === 'weight'">
+                  <label for="exampleFormControlSelect1 mb-2">{{ vitalQuestion.title }} </label><br>
+                  {{ vitalQuestion.value }} {{ vitalQuestion.caption }}
                 </div>
-                98^
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Temperature (‘’ F)"> -->
-              </div>
-              <div class="col-md-6 mb-4">
-                <div class="small text-muted mb-1">
-                  Height
+                <div v-else-if="!vitalQuestion.options && vitalQuestion.name === 'bmi'">
+                  <label for="exampleFormControlSelect1 mb-2">{{ vitalQuestion.title }}</label><br>
+                  <div class="mt-2">{{ vitalQuestion.value }} {{ vitalQuestion.caption }}</div>
                 </div>
-                180 cm
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Height (cm)"> -->
-              </div>
-              <div class="col-md-6 mb-4">
-                <div class="small text-muted mb-1">
-                  Weight
+                <div v-else>
+                  <label for="exampleFormControlSelect1">{{ vitalQuestion.title }}</label><br>
+                  {{ vitalQuestion.value }} {{ vitalQuestion.caption }}
                 </div>
-                65 kg
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Weight (kg)"> -->
-              </div>
-              <div class="col-md-6 mb-3">
-                <div class="small text-muted mb-1">
-                  BMI
-                </div>
-                20.06 kg/m2
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="BMI (kg/m2) (Auto Calculated)"> -->
-              </div>
-              <div class="col-md-12 mb-4">
-                <hr class="pb-3">
-                <div class="small text-muted mb-1">
-                  Patient Appearance
-                </div>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quas fuga modi necessitatibus, similique explicabo quae aliquid nostrum velit dolorem veniam fugit temporibus hic ut quia et obcaecati consequatur libero possimus animi exercitationem omnis ducimus culpa nisi enim. Optio, similique. Veniam, tempore et architecto voluptates nisi odit expedita illo ipsam incidunt!
-              </div>
-              <div class="col-md-12 mb-4">
-                <div class="small text-muted mb-1">
-                  Patient Gait
-                </div>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellat voluptatum porro quos error minus iste nesciunt nobis quam vero animi unde deserunt totam modi odio itaque atque perspiciatis voluptatibus ea optio, adipisci nisi iusto id corrupti. Doloribus repudiandae eaque sed hic, perferendis, iure, expedita est pariatur corrupti vitae architecto maxime!
               </div>
             </div>
           </div>
           <div class="w-100 bg-white mb-2 mt-0 px-3 pt-3 pb-3" key="general-exams" style="min-height: 200px;" v-if="subTabs[2].isActive">
-            <div class="row mt-1">
-              <!-- <div class="col-md-12 mb-5 text-center" style="min-height: 300px;">
-                <img src="/anatomy_sketch.png" alt="">
-              </div> -->
-              <div class="col-md-6 mb-3">
-                <div class="small text-muted">
-                  Eyes
-                </div>
-                Jaundice Present <br>
-                Mild Pallor
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Patient Appearance"> -->
+            <div class="row">
+              <div class="col-md-12 text-muted small mb-0">
+                General Exams
+                <hr>
               </div>
-              <div class="col-md-6 mb-3">
-                <div class="small text-muted">
-                  Hands
-                </div>
-                Normal Nails <br>
-                Cyanosis Present
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Patient Gait"> -->
-              </div>
-              <div class="col-md-6 mb-3">
-                <div class="small text-muted">
-                  Lower Leg and Ankle
-                </div>
-                Mild Oedema
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="BP (___/___ mmHg)"> -->
+              <div class="col-md-12">
+                <img src="/anatomy_sketch.svg" class="w-100" alt="">
               </div>
             </div>
+            <div class="row mt-1">
+              <div class="col-md-12 mb-2 text-muted">
+                  <small>Eyes</small>
+                  <hr class="mb-1 mt-1">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="exampleFormControlSelect1">{{ this.currEpisode.episodeDetails.generalExams[0].name }}</label><br>
+                  <button class="btn mb-2 mr-2" :class="option.isActive ? 'btn-dark' : 'btn-light'" v-for="(option, oIndex) in this.currEpisode.episodeDetails.generalExams[0].options" :key="oIndex">
+                    {{ option.name }}
+                  </button>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="exampleFormControlSelect1">{{ this.currEpisode.episodeDetails.generalExams[1].name }}</label><br>
+                  <button class="btn mb-2 mr-2" :class="option.isActive ? 'btn-dark' : 'btn-light'" v-for="(option, oIndex) in this.currEpisode.episodeDetails.generalExams[1].options" :key="oIndex">
+                    {{ option.name }}
+                  </button>
+                </div>
+                <div class="col-md-12 mt-4 mb-2 text-muted">
+                  <small>Hands</small>
+                  <hr class="mb-1 mt-1">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="exampleFormControlSelect1">{{ this.currEpisode.episodeDetails.generalExams[2].name }}</label><br>
+                  <button class="btn mb-2 mr-2" :class="option.isActive ? 'btn-dark' : 'btn-light'" v-for="(option, oIndex) in this.currEpisode.episodeDetails.generalExams[2].options" :key="oIndex">
+                    {{ option.name }}
+                  </button>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="exampleFormControlSelect1">{{ this.currEpisode.episodeDetails.generalExams[3].name }}</label><br>
+                  <button class="btn mb-2 mr-2" :class="option.isActive ? 'btn-dark' : 'btn-light'" v-for="(option, oIndex) in this.currEpisode.episodeDetails.generalExams[3].options" :key="oIndex">
+                    {{ option.name }}
+                  </button>
+                </div>
+                <div class="col-md-12 mt-4 mb-2 text-muted">
+                  <small>Legs</small>
+                  <hr class="mb-1 mt-1">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="exampleFormControlSelect1">{{ this.currEpisode.episodeDetails.generalExams[4].name }}</label><br>
+                  <button class="btn mb-2 mr-2" :class="option.isActive ? 'btn-dark' : 'btn-light'" v-for="(option, oIndex) in this.currEpisode.episodeDetails.generalExams[4].options" :key="oIndex">
+                    {{ option.name }}
+                  </button>
+                </div>
+            </div>
           </div>
+
+          <!-- Start Specific Exams -->
           <div class="w-100 bg-white mb-2 mt-0 px-3 pt-3 pb-3" key="specific-exams" style="min-height: 200px;" v-if="subTabs[3].isActive">
-            <div class="row mt-1">
-              <div class="col-md-6 mb-4">
-                <div class="small text-muted mb-1">
-                  Pulse
-                </div>
-                72 BPM
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="BP (___/___ mmHg)"> -->
+            <!-- {{ currEpisode.episodeDetails }} -->
+            <div class="row">
+              <div class="col-md-12 text-muted small mb-0">
+                Specific Exams
+                <hr>
               </div>
-              <div class="col-md-6 mb-4">
-                <div class="small text-muted mb-1">
-                  BP
-                </div>
-                120/80 mmHg
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="BP (___/___ mmHg)"> -->
+              <div class="col-md-12">
+                <img src="/anatomy_sketch.svg" class="w-100" alt="">
               </div>
-              <div class="col-md-6 mb-4">
-                <div class="small text-muted mb-1">
-                  SP02
-                </div>
-                89%
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="SP02 (%)"> -->
+            </div>
+            <div class="row" v-for="(organ, index) in currEpisode.episodeDetails.specificExams" :key="index">
+              <div class="col-md-12 mb-2 text-muted">
+                <small>{{ organ.name }}</small>
+                <hr class="mb-1 mt-1">
               </div>
-              <div class="col-md-6 mb-4">
-                <div class="small text-muted mb-1">
-                  Temperature
+              <div class="col-md-6 mb-3" v-for="(question, qIndex) in organ.questions" :key="qIndex">
+                <div v-if="question.type === 'text'">
+                  <label for="exampleFormControlSelect1">{{ question.title }}</label><br>
+                  <input type="text" class="p-2 w-100" placeholder="Describe in the subject area in further detail">
                 </div>
-                98^
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Temperature (‘’ F)"> -->
+                <div v-else>
+                  <label for="exampleFormControlSelect1">{{ question.title }}</label><br>
+                  <button v-for="(option, oIndex) in question.options" :key="oIndex" class="btn mb-2 mr-2" :class="option.isActive ? 'btn-dark' : 'btn-light'">
+                    {{ option.name }}
+                  </button>
+                </div>
               </div>
-              <div class="col-md-6 mb-4">
-                <div class="small text-muted mb-1">
-                  Height
-                </div>
-                180 cm
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Height (cm)"> -->
-              </div>
-              <div class="col-md-6 mb-4">
-                <div class="small text-muted mb-1">
-                  Weight
-                </div>
-                65 kg
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="Weight (kg)"> -->
-              </div>
-              <div class="col-md-6 mb-3">
-                <div class="small text-muted mb-1">
-                  BMI
-                </div>
-                20.06 kg/m2
-                <!-- <input type="text" class="w-100 p-2 mb-3" placeholder="BMI (kg/m2) (Auto Calculated)"> -->
-              </div>
-              <div class="col-md-12 mb-4">
-                <hr class="pb-3">
-                <div class="small text-muted mb-1">
-                  Patient Appearance
-                </div>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quas fuga modi necessitatibus, similique explicabo quae aliquid nostrum velit dolorem veniam fugit temporibus hic ut quia et obcaecati consequatur libero possimus animi exercitationem omnis ducimus culpa nisi enim. Optio, similique. Veniam, tempore et architecto voluptates nisi odit expedita illo ipsam incidunt!
-              </div>
-              <div class="col-md-12 mb-4">
-                <div class="small text-muted mb-1">
-                  Patient Gait
-                </div>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellat voluptatum porro quos error minus iste nesciunt nobis quam vero animi unde deserunt totam modi odio itaque atque perspiciatis voluptatibus ea optio, adipisci nisi iusto id corrupti. Doloribus repudiandae eaque sed hic, perferendis, iure, expedita est pariatur corrupti vitae architecto maxime!
+            </div>
+            <div v-if="currEpisode.episodeDetails.specificExams.length === 0" class="row">
+              <div class="col-md-12 my-4 small text-center">
+                There are no specific complaint questions.
               </div>
             </div>
           </div>
-          <div class="w-100 bg-white mb-2 mt-0 px-3 pt-3 pb-1" key="photo" style="min-height: 200px;" v-if="subTabs[4].isActive">
+          <!-- <div class="w-100 bg-white mb-2 mt-0 px-3 pt-3 pb-1" key="photo" style="min-height: 200px;" v-if="subTabs[4].isActive">
             <div class="row mt-1">
-              <!-- <div class="col-md-12 mb-3 text-center">
-                Additional Photos
-              </div> -->
               <div class="col-md-3 mb-4">
                 <img src="/square-grey.jpg" class="w-100" alt="">
               </div>
               <div class="col-md-3 mb-4">
                 <img src="/square-grey.jpg" class="w-100" alt="">
               </div>
-              <!-- <div class="col-md-3 mb-4">
-                <img src="/square-grey.jpg" class="w-100" alt="">
-              </div>
-              <div class="col-md-3 mb-4">
-                <img src="/square-grey.jpg" class="w-100" alt="">
-              </div>
-              <div class="col-md-3 mb-4">
-                <img src="/square-grey.jpg" class="w-100" alt="">
-              </div>
-              <div class="col-md-3 mb-4">
-                <img src="/square-grey.jpg" class="w-100" alt="">
-              </div> -->
-              <!-- <div class="col-md-3 mb-4">
-                <img src="/square-grey.jpg" class="w-100" alt="">
-              </div> -->
               <div class="col-md-3 mb-4">
                 <img src="/square-grey-add.jpg" class="w-100" alt="">
               </div>
-              <!-- <div class="col-md-3 mb-4">
-                <img src="/square-grey.jpg" alt="">
-              </div>
-              <div class="col-md-3 mb-4">
-                <img src="/square-grey.jpg" alt="">
-              </div> -->
             </div>
-          </div>
+          </div> -->
           </transition>
           <!-- <div class="row px-2 mb-2">
             <div class="col-md-12 text-left">
@@ -504,9 +452,7 @@
             </div>
           </div>
           <div class="col-md-12">
-            <!-- <nuxt-link to="/ha/profile/new-episode"> -->
-              <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0  text-uppercase">Print Prescription</button>     
-            <!-- </nuxt-link> -->
+            <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0  text-uppercase">Print Prescription</button>     
           </div>
         </div>
         <div class="row">
@@ -525,13 +471,6 @@
             {{ episodeData.feedback.advice }}
           </div>
         </div>
-        <!-- <div class="row">
-          <div class="col-md-12 mb-3 text-right">
-            <div class="small">
-              Last reviewed by Doctor Suresh at 7:00pm, 01/01/2021
-            </div>
-          </div>
-        </div> -->
       </div>
     </div>
   </div>
@@ -566,6 +505,11 @@ export default {
       if (this.episodeData.feedback.hasFeedback ) {
         showDocsFeedback = true
       }
+    }
+  },
+  computed: {
+    currEpisode: function () {
+      return this.$store.state.currPatient.episodes.find(episode => episode.episodeID === this.$route.query.id)
     }
   },
   methods: {
@@ -697,11 +641,11 @@ export default {
         //   title: 'Billed',
         //   isActive: false,
         // },
-        {
-          name: 'photos',
-          title: 'Photos',
-          isActive: false,
-        }
+        // {
+        //   name: 'photos',
+        //   title: 'Photos',
+        //   isActive: false,
+        // }
       ]
     }
   },

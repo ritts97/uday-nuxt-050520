@@ -5,13 +5,19 @@
         <div class="row my-2">
           <div class="col-md-3 text-left" style="min-height: 200px;">
             <!-- <nuxt-link to="/md/profile" class="text-decoration-none text-dark"> -->
-              <img class="w-100" src="/avatar-man_05.png">
+            <div class="position-relative">
+              <div class="position-absolute">
+                <img class="w-100 pb-2" src="/avatar-man_06.png">
+              </div>
+              <div class="w-100" style="padding-bottom: 100%;"></div>
+            </div>
+              <!-- <img class="w-100 pb-2" src="/avatar-man_06.png"> -->
             <!-- </nuxt-link> -->
           </div>
           <div class="col-md-9">
             <div class="row">
               <div class="col-md-6">
-                <h5 class="d-inline text-decoration-none">{{ currPatient.demographics.name }} ({{ currPatient.demographics.age }} years old)</h5>  
+                <h5 class="d-inline text-decoration-none">{{ currPatient.demographics.name }}</h5>  
               </div>
               <div class="col-md-6 text-right text-capitalize">
                 <img v-if="currPatient.status == 'registered'" src="/circle-green.svg" class="shape-status" alt="">
@@ -24,18 +30,19 @@
             <br>
             
             <div class="row">
-              <div class="col-md-6">
-                {{ currPatient.demographics.occupation }} <br>
-                {{ currPatient.demographics.phone }} <br>
-                {{ currPatient.demographics.hswd }} <br><br>
-                {{ currPatient.demographics.location }}
+              <div class="col-md-6"> 
+                {{ currPatient.demographics.occupation }} | 
+                {{ currPatient.demographics.age }} years old <br>
+                {{ currPatient.demographics.hswd }} <br>
+                {{ currPatient.demographics.police }}
               </div>
               <div class="col-md-6">
+                {{ currPatient.demographics.phone }} <br><br>
                 {{ currPatient.demographics.address }} <br>
-                {{ currPatient.demographics.address2 }} <br><br>
+                {{ currPatient.demographics.location }}<br>
+                <!-- {{ currPatient.demographics.address2 }} <br> -->
                 <!-- :: {{ this.$store.state.currPatient.id }}<br> -->
                 <br>
-                {{ currPatient.demographics.police }}
               </div>
             </div>
             <!-- <div class="row">
@@ -97,7 +104,6 @@ export default {
     }
   },
   mounted () {
-    console.log('Hello')
     this.$store.commit('updatePath', this.fullPath)
   },
   transition: 'u-fade'

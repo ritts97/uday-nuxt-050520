@@ -4,9 +4,12 @@
       <transition name="u-fade">
         <div class="row my-2">
           <div class="col-md-3 text-left" style="min-height: 200px;">
-            <nuxt-link to="/md/profile" class="text-decoration-none text-dark">
-              <img class="w-100" src="/avatar.png">
-            </nuxt-link>
+            <div class="position-relative">
+              <div class="position-absolute">
+                <img class="w-100 pb-2" src="/avatar-girl_04.png">
+              </div>
+              <div class="w-100" style="padding-bottom: 100%;"></div>
+            </div>
           </div>
         <div class="col-md-9">
             <div class="row">
@@ -22,11 +25,12 @@
             {{ currUser.bio }}<br><br>
             <div class="row">
               <div class="col-md-6">
-                {{ currUser.address }} <br>
-                {{ currUser.location }}<br>
+                Health Assistant | 24 years old
               </div>
               <div class="col-md-6">
-                {{ currUser.phone }} <br>
+                {{ currUser.phone }} <br><br>
+                {{ currUser.address }} <br>
+                {{ currUser.location }}<br>
               </div>
             </div>
           </div>
@@ -92,8 +96,8 @@
                   </td>
                   <!-- <td class="text-uppercase">{{ patient.demographics.gender }}</td> -->
                   <!-- <td>{{ patient.demographics.age }}</td> -->
-                  <td>2 days ago</td>
-                  <td>July 01, 2020</td>
+                  <td>{{ patient.lastVisited }}</td>
+                  <td>{{ patient.dateRegistered }}</td>
                   <td>{{ patient.regBy }}</td>
                 </tr>
 
@@ -163,7 +167,7 @@ export default {
   mounted () {
     let path = [
       {
-        title: 'HA\'s Dashboard',
+        title: 'Dashboard',
         url: '/ha'
       },
     ]

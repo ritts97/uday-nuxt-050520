@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-md-6">
           <nuxt-link to="/ha/profile/new-episode">
-            <button @click="console.log('123')" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Record New Episode</button>     
+            <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Record New Episode</button>     
           </nuxt-link>
         </div>
         <div class="col-md-6">
@@ -31,12 +31,12 @@
             <table class="table table-sm table-hover mb-0">
               <thead>
                 <tr>
-                  <th scope="col">Visit ID</th>
+                  <th scope="col">Status</th>
                   <th scope="col">Visit Type</th>
                   <th scope="col">Chief Complaint</th>
                   <th scope="col">Last Updated</th>
                   <th scope="col">First Recorded</th>
-                  <th scope="col"># Follow Ups</th>
+                  <th scope="col">Follow Ups</th>
                 </tr>
               </thead>
               <tbody>
@@ -52,10 +52,25 @@
                       {{ visit.title }}
                     </div>
                   </td>
-                  <td>Pain, Injury, Difficulty Breathing</td>
-                  <td>2 days ago</td>
-                  <td>July 01, 2020</td>
-                  <td>0</td>
+                  <td>
+                    <div v-if="visit.episodeDetails" >
+                      <div v-for="(complaints, index) in visit.episodeDetails.chiefComplaints" :key="index">
+                        <div v-if="complaints[1]">
+                          <button class="btn-sm btn-light mb-2 mr-2">
+                            {{ complaints[1] }}
+                          </button>
+                        </div>
+                        <div v-else>
+                          <button class="btn-sm btn-light mb-2 mr-2">
+                            {{ complaints[0] }}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>{{ visit.lastUpdated }}</td>
+                  <td>{{ visit.created }}</td>
+                  <td></td>
                 </tr>
                 <tr class="pointer" v-if="this.list.length === 0" style="height: 40px;">
                   <td class="py-3 px-3 text-center" colspan="9">
