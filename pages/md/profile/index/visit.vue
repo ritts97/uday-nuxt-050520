@@ -527,15 +527,17 @@
     </div>
     </transition>
 
-    <div class="container" v-if="this.$store.state.currPatient.status === 'allocated'">
-      <div class="row">
-        <div class="col-md-12">
-          <button @click="showDocsFeedback = false; editable = !editable" :disabled="!editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Save Episode Feedback</button>     
-        </div>
-        <div class="col-md-12 mb-3">
-          <nuxt-link to="/md/">
-            <button @click="editable = false; releasePatient()" :disabled="!editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Mark Patient Released</button>     
-          </nuxt-link>
+    <div v-if="showDocsFeedback === true">
+      <div class="container" v-if="this.$store.state.currPatient.status === 'allocated'">
+        <div class="row">
+          <div class="col-md-12">
+            <button @click="showDocsFeedback = false; editable = !editable" :disabled="!editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Save Episode Feedback</button>     
+          </div>
+          <div class="col-md-12 mb-3">
+            <nuxt-link to="/md/">
+              <button @click="editable = false; releasePatient()" :disabled="!editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Mark Patient Released</button>     
+            </nuxt-link>
+          </div>
         </div>
       </div>
     </div>
@@ -588,7 +590,7 @@ export default {
       this.episodeData = this.$store.state.currPatient.episodes.find(episode => episode.episodeID === episodeID )
 
       if (this.episodeData.feedback.hasFeedback ) {
-        showDocsFeedback = true
+        this.showDocsFeedback = true
       }
     }
   },

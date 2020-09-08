@@ -58,6 +58,8 @@ export default {
 
     let currentDate = getCurrDate()
 
+    // generate random UID
+    let newID = Math.random().toString(36).substr(2, 6)
     
     console.log('Payload: ', payload)
 
@@ -65,7 +67,7 @@ export default {
       type: 'episode',
       billed: '',
       link: '/ha/profile/profile-visit?id=AAA1&visit=ep0fl01',
-      episodeID: 'PA01EP1',
+      episodeID: newID,
       title: 'Episode ' + episodeLen,
       created: currentDate,
       lastUpdated: currentDate,
@@ -132,8 +134,11 @@ export default {
 
     let currentDate = getCurrDate()
 
+    // generate random UID
+    let newID = Math.random().toString(36).substr(2, 6)
+
     let baseProfile = {
-      id: "pa0" + PATIENT_COUNT,
+      id: newID,
       status: "registered",
       dateRegistered: currentDate,
       regBy: payload.regBy,

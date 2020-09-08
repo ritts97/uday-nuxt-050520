@@ -31,7 +31,7 @@
             <table class="table table-sm table-hover mb-0">
               <thead>
                 <tr>
-                  <th scope="col">Patient Status</th>
+                  <th scope="col">Status</th>
                   <th scope="col">Visit Type</th>
                   <th scope="col">Chief Complaint (or Service)</th>
                   <th scope="col" class="d-none d-md-inline-block mb-n1 w-33">Last Updated</th>
@@ -45,7 +45,11 @@
                     <div v-if="index === (getListLengthSecond - 1)">
                       <img src="/circle-green.svg" class="shape-status" alt=""> Registered
                     </div>
-                    <div v-else-if="visit.allocated">
+                    <div v-else-if="visit.type === 'service'">
+                      <img src="/circle-yellow.svg" class="shape-status" alt="">
+                      Released
+                    </div>
+                    <div v-else>
                       <img src="/circle-red.svg" class="shape-status" alt="">
                       Allocated
                     </div>
