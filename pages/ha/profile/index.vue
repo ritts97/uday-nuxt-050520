@@ -2,29 +2,26 @@
   <div>
     <div class="container">
       <transition appear name="u-fade">
-        <div class="row my-2">
-          <div class="col-md-3 text-left" style="min-height: 200px;">
-            <!-- <nuxt-link to="/md/profile" class="text-decoration-none text-dark"> -->
+        <div class="row">
+          <div class="col-md-3 text-left responsive-padding-bottom" style="min-height: 200px;">
             <div class="position-relative">
               <div class="position-absolute">
-                <img class="w-100 pb-2" src="/avatar-man_06.png">
+                <img class="w-100" src="/avatar-man_06.png">
               </div>
               <div class="w-100" style="padding-bottom: 100%;"></div>
             </div>
-              <!-- <img class="w-100 pb-2" src="/avatar-man_06.png"> -->
-            <!-- </nuxt-link> -->
           </div>
           <div class="col-md-9">
             <div class="row">
-              <div class="col-md-6">
+              <div class="col-md-12 text-capitalize">
                 <h5 class="d-inline text-decoration-none">{{ currPatient.demographics.name }}</h5>  
-              </div>
-              <div class="col-md-6 text-right text-capitalize">
-                <img v-if="currPatient.status == 'registered'" src="/circle-green.svg" class="shape-status" alt="">
-                <img v-if="currPatient.status == 'released'" src="/circle-yellow.svg" class="shape-status" alt="">
-                <img v-if="currPatient.status == 'allocated'" src="/circle-red.svg" class="shape-status" alt="">
-                <img v-if="currPatient.status == 'queued'" src="/circle-orange.svg" class="shape-status" alt="">
-                {{ currPatient.status }}
+                <div class="d-inline float-right">
+                  <img v-if="currPatient.status == 'registered'" src="/circle-green.svg" class="shape-status" alt="">
+                  <img v-if="currPatient.status == 'released'" src="/circle-yellow.svg" class="shape-status" alt="">
+                  <img v-if="currPatient.status == 'allocated'" src="/circle-red.svg" class="shape-status" alt="">
+                  <img v-if="currPatient.status == 'queued'" src="/circle-orange.svg" class="shape-status" alt="">
+                  {{ currPatient.status }}
+                </div>
               </div>
             </div>
             <br>
@@ -116,5 +113,11 @@ export default {
 }
 .u-fade-enter, .u-fade-leave-active {
   opacity: 0;
+}
+
+@media only screen and (max-width: 600px) {
+  .responsive-padding-bottom {
+    padding-bottom: 2rem!important;;
+  }
 }
 </style>

@@ -2,8 +2,8 @@
   <div>
     <div class="container">
       <transition name="u-fade">
-        <div class="row my-2">
-          <div class="col-md-3 text-left" style="min-height: 200px;">
+        <div class="row">
+          <div class="col-md-3 text-left responsive-padding-bottom">
             <div class="position-relative">
               <div class="position-absolute">
                 <img class="w-100 pb-2" src="/avatar-girl_04.png">
@@ -13,12 +13,12 @@
           </div>
         <div class="col-md-9">
             <div class="row">
-              <div class="col-md-6">
+              <div class="col-md-12">
                 <h5 class="d-inline text-decoration-none">{{ currUser.name }}</h5>  
-              </div>
-              <div class="col-md-6 text-right text-capitalize">
-                <img src="/circle-green.svg" class="shape-status" alt="">
-                {{ currUser.status }}
+                <div class="float-right text-capitalize">
+                  <img src="/circle-green.svg" class="shape-status" alt="">
+                  {{ currUser.status }}
+                </div>
               </div>
             </div>
             <br>
@@ -63,15 +63,15 @@
               <!-- </div> -->
             </li>
           </ul>
-          <div class="w-100 bg-white mb-3 mt-0 px-3 py-1">
+          <div class="shadow-sm w-100 bg-white mb-3 mt-0 px-3 py-1">
             <!-- <input type="text" class="w-100 p-2" placeholder=":: Search by ID, name or phone number"> -->
             <table class="table table-sm table-hover mt-2">
               <!--  v-if="!tabs[4].isActive" -->
               <thead>
                 <tr>
                   <!-- <th scope="col">ID</th> -->
-                  <th scope="col">Status</th>
-                  <th scope="col">Name</th>
+                  <th scope="col">Patient Status</th>
+                  <th scope="col">Patient Name</th>
                   <!-- <th scope="col">Gender</th> -->
                   <!-- <th scope="col">Age</th> -->
                   <th scope="col">Last Visited</th>
@@ -311,5 +311,11 @@ thead tr th {
   position: relative;
   float:right; 
   margin-top: 10px;
+}
+
+@media only screen and (max-width: 600px) {
+  .responsive-padding-bottom {
+    padding-bottom: 2rem!important;;
+  }
 }
 </style>

@@ -10,13 +10,18 @@
       </div>
     </div> -->
     <div class="container">
-      <div class="row text-center">
-        <div class="offset-md-4 col-md-4 bg-white rounded px-4 py-4">
+      <div class="row text-center mx-2">
+        <div class="shadow offset-md-4 col-md-4 bg-white rounded px-4 py-4">
           <!-- Login <br> -->
-          <img src="/uday-logo-orig.png" class="p-3" alt=""><br>
-          <div class="text-secondary mt-1 pb-0">Welcome to Uday. 
-            <!-- <br>We are grateful for your support. -->
+          <div class="position-relative">
+            <div class="position-absolute" style="left: 0; right: 0;">
+              <img src="/uday-logo-orig.png" alt="">
             </div>
+            <div style="padding-bottom: 44%;"></div>
+          </div>
+          <div class="text-secondary mt-1 pb-0">
+            Welcome to Uday. 
+          </div>
           <hr>
           <input type="text" name="" class="w-100 mb-2 p-2" placeholder="Username or Email" id=""><br>
           <input type="text" name="" class="w-100 p-2" placeholder="Password" id=""><br>

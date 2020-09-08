@@ -58,6 +58,9 @@ export default {
 
     let currentDate = getCurrDate()
 
+    
+    console.log('Payload: ', payload)
+
     state.udayDb.clusters[CLUSTER_ID].patients.find(patient => patient.id === PATIENT_ID).episodes.push({
       type: 'episode',
       billed: '',
@@ -102,7 +105,7 @@ export default {
       }
     })
   },
-  recordNewService(state) {
+  recordNewService(state, payload) {
     let CLUSTER_ID = state.currCluster
     let PATIENT_ID = state.currPatient.id
 
@@ -118,20 +121,9 @@ export default {
       episodeID: PATIENT_ID + 'SV' + serviceCount,
       title: 'Service ' + serviceCount,
       created: currentDate,
-      lastUpdated: '',
+      lastUpdated: currentDate,
+      episodeDetails: payload,
       numFollowUps: '',
-      complaint: {
-        chiefComplaint: '',
-        vitals: '',
-        genExams: '',
-        specExams: '',
-        addPhotos: ''
-      },
-      feedback: {
-        medicine: '',
-        investigations: '',
-        advice: '',
-      }
     })
   },
   registerPatient(state, payload) {

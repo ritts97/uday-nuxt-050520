@@ -49,6 +49,12 @@
       </div>
       <div class="row">
         <div class="col-md-12">
+          <!-- <nuxt-link to="/ha/profile/new-episode"> -->
+            <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Record New Follow Up</button>     
+          <!-- </nuxt-link> -->
+        </div>
+        <div class="col-md-12">
+          <hr class="mt-2">
           <!-- Episode ID: {{ this.$route.query.id }} <br>
           Curr Patient: {{ this.$store.state.currPatient.episodes.find(episode => episode.episodeID === this.$route.query.id ) }} -->
         </div>
@@ -99,7 +105,6 @@
                   <div v-if="question.type === 'text'">
                     <label for="exampleFormControlSelect1">{{ question.question }}</label><br>
                     {{ question.answer }}
-                    <!-- <input type="text" class="p-2 w-100" :value="question.answer" :placeholder="question.placeholder || 'There is no placeholder.'"> -->
                   </div>
                   <div v-if="question.type === 'button'">
                     <label for="exampleFormControlSelect1">{{ question.question }}</label><br>
@@ -117,7 +122,7 @@
                   </div>
                   <div v-if="question.type === 'number'">
                     <label for="exampleFormControlSelect1">{{ question.question }}</label><br>
-                    <input type="number" class="mt-1 p-2 mr-2 w-25" placeholder="0"> {{ question.caption }}
+                    {{ question.answer }} {{ question.caption }}
                   </div>
                 </div>
               </div>
@@ -125,6 +130,7 @@
           </div>
           <div class="w-100 bg-white mb-2 mt-0 px-3 pt-3 pb-3" key="vitals" style="min-height: 200px;" v-if="subTabs[1].isActive">
             <div class="row mt-1">
+              <!-- {{ currEpisode.episodeDetails.vitals }} -->
               <div class="mb-4" v-for="(vitalQuestion, index) in currEpisode.episodeDetails.vitals" :class="[vitalQuestion.fullLength ? 'col-md-12' : 'col-md-6']" :key="index">
                 <div v-if="vitalQuestion.options">
                   <label for="exampleFormControlSelect1">{{ vitalQuestion.title }}</label><br>
@@ -163,7 +169,12 @@
                 <hr>
               </div>
               <div class="col-md-12">
-                <img src="/anatomy_sketch.svg" class="w-100" alt="">
+                <div class="position-relative">
+                  <div class="position-absolute">
+                    <img src="/anatomy_sketch.svg" class="w-100" alt="">
+                  </div>
+                  <div class="w-100 bg-dark" style="padding-bottom: 59%;"></div>
+                </div>
               </div>
             </div>
             <div class="row mt-1">
@@ -221,9 +232,15 @@
                 <hr>
               </div>
               <div class="col-md-12">
-                <img src="/anatomy_sketch.svg" class="w-100" alt="">
+                <div class="position-relative">
+                  <div class="position-absolute">
+                    <img src="/anatomy_sketch.svg" class="w-100" alt="">
+                  </div>
+                  <div class="w-100 bg-dark" style="padding-bottom: 59%;"></div>
+                </div>
               </div>
             </div>
+            <!-- xx {{ currEpisode.episodeDetails.specificExams }} -->
             <div class="row" v-for="(organ, index) in currEpisode.episodeDetails.specificExams" :key="index">
               <div class="col-md-12 mb-2 text-muted">
                 <small>{{ organ.name }}</small>
@@ -495,8 +512,7 @@ export default {
       }
     ])
 
-    // get episode data
-    // set episode data
+    // get episode data, set episode data
     const episodeID = this.$route.query.id
 
     if ( this.$store.state.currPatient.id !== '') {
@@ -513,6 +529,9 @@ export default {
     }
   },
   methods: {
+    recordNewFollowUp: function () {
+
+    },
     getSubTab: function (tabName) {
       let tabs = this.subTabs
       let ref = 0

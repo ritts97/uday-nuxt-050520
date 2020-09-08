@@ -1,42 +1,40 @@
 <template>
   <div>
     <div class="container">
-      <!-- <div class="row">
+      <div class="row">
         <div class="col-md-12 rounded">
-          <ul class="list-inline">
-            <li class="list-inline-item">
-              <button class="btn btn-dark px-3" role="button">
+          <ul class="list-inline mb-2">
+            <li class="list-inline-item mr-0">
+              <div class="px-2 mr-2 pb-1 mb-1 underline" role="button">
                 New Service
-              </button>
+              </div>
             </li>
           </ul>
         </div>
-      </div> -->
+      </div>
       <div class="row">
         <div class="col-md-12 rounded">
-          <!-- <ul class="list-inline mb-2">
-            <li class="list-inline-item" v-for="(tab, index) in tabs" :key="index">
-              <button class="btn pl-0 pr-4 pb-2" @click="getTab(tab.name)" role="button">
-                {{ tab.title }}
-              </button>
-            </li>
-          </ul> -->
           <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="tabs[0].isActive">
             <div class="row mt-1">
               <div class="col-md-12 text-muted small mb-3">
-                  Please complete to the best of your ability.
+                  Please describe details relating to the service performed.
                 </div>
               <div class="col-md-12">
                 <label for="">What service did you provide?</label><br>
                 <button class="btn mb-2 mr-2 btn-light">ECG</button>
+                <button class="btn mb-2 mr-2 btn-light">Service 2</button>
+                <button class="btn mb-2 mr-2 btn-light">Service 3</button>
+                <button class="btn mb-2 mr-2 btn-light">Service 4</button>
+                <button class="btn mb-2 mr-2 btn-light">Service 5</button>
+                <button class="btn mb-2 mr-2 btn-light">Service 6</button>
               </div>
               <div class="col-md-12 mt-2">
                 <label for="">What were the results?</label>
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Positive, negative, other">
+                <input type="text" class="w-100 p-2 mb-3" v-model="serviceDetails.serviceResults" placeholder="Describe the results from the tests performed">
               </div>
               <div class="col-md-12 mt-2">
                 <label for="">Please provide any additional information</label>
-                <textarea class="w-100 p-2" rows="5" placeholder="Additional information..."></textarea>
+                <textarea class="w-100 p-2" rows="5" v-model="serviceDetails.serviceDescription" placeholder="Additional information..."></textarea>
               </div>
             </div>
           </div>
@@ -75,62 +73,23 @@ export default {
     ])
   },
   methods: {
-    // showAlert: function () {
-    //   alert(`This service has been recorded.`)
-    // },
     recordNewService: function () {
       alert('New service has been recorded.')
 
-      this.$store.commit('recordNewService')
+      this.$store.commit('recordNewService', this.serviceDetails)
     },
-    getTab: function (tabName) {
-      let tabs = this.tabs
-      let ref = 0
-
-      for (let i = 0; i < tabs.length; i++) {
-        if (tabs[i].name === tabName) {
-          tabs[i].isActive = true
-          ref = i
-        } else {
-          tabs[i].isActive = false
-        }
-
-        if (ref == (tabs.length - 1)) {
-          this.showComplete = true
-        } else {
-          this.showComplete = false
-        }
-      }
-    },
-    goToNext: function () {
-      let tabs = this.tabs
-      let ref = 0
-
-      for (let i = 0; i < tabs.length; i++) {
-        if (tabs[i].isActive === true) {
-          tabs[i].isActive = false
-          ref = i
-        }
-      }
-
-      if ((ref + 1) >= (tabs.length-1)) {
-        this.showComplete = true
-      } 
-
-      tabs[ref + 1].isActive = true
-    }
   },
   data() {
     return {
       list: [],
+      serviceDetails: {
+        chiefComplaints: [['ECG']],
+        serviceResults: '',
+        serviceDescription: '',
+      },
       showDemographics: true,
       showComplete: false,
       tabs: [
-        // {
-        //   name: 'patients',
-        //   title: 'Demographics',
-        //   isActive: true,
-        // },
         {
           name: 'allocated',
           title: 'Service Details',

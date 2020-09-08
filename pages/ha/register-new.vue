@@ -8,7 +8,15 @@
             <div class="container">
               <div class="row">
                 <div class="col-md-12 text-center">
-                  <img src="/avatar-placeholder.jpg" class="m-3" style="width: 200px;" alt=""><br>
+                  <!-- <img src="/avatar-placeholder.jpg" class="m-3" style="width: 200px;" alt=""><br> -->
+
+                  <div class="position-relative mx-auto" style="width: 200px;">
+                    <div class="position-absolute">
+                      <img src="/avatar-placeholder.jpg" alt="">
+                    </div>
+                    <div style="padding-bottom: 100%;"></div>
+                  </div>
+                  <br>
                   <button class="btn btn-dark px-4 mb-3">Upload Photo</button>
                 </div>
               </div>

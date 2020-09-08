@@ -92,7 +92,7 @@
                             </div>
                             <div v-if="question.type === 'number'">
                               <label for="exampleFormControlSelect1">{{ question.question }}</label><br>
-                              <input type="number" class="mt-1 p-2 mr-2 w-25" placeholder="0"> {{ question.caption }}
+                              <input type="number" v-model="question.answer" class="mt-1 p-2 mr-2 w-25" placeholder="0"> {{ question.caption }}
                             </div>
                           </div>
                         </div>
@@ -177,19 +177,6 @@
                     <input class="form-control d-inline w-25 mr-2" type="number" v-model="vitalQuestion.value" value="0"> {{ vitalQuestion.caption }}
                   </div>
                 </div>
-                <!--
-                <div class="col-md-6 mb-3">
-                  <label for="exampleFormControlSelect1">Patient Height</label><br>
-                  <input class="form-control d-inline w-25 mr-2" @keyup="calculateBMI" @click="calculateBMI" v-model="patHeight" type="number" value="0"> cm
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label for="exampleFormControlSelect2">Patient Weight</label><br>
-                  <input class="form-control d-inline w-25 mr-2" @keyup="calculateBMI" @click="calculateBMI" v-model="patWeight" type="number" value="0"> kg
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label for="exampleFormControlSelect1">Body Mass Index (BMI)</label><br>
-                  {{ patBMI }} kg/m^2
-                </div> -->
               </div>
             </div>
             <div class="container mb-3">
@@ -703,6 +690,7 @@
                       </div>
                     </div>
                   </div>
+
                   <div class="row" v-if="showSpecificComplaintQuestions(currCategory, subCategory).length === 0">
                     <div class="col-md-12 my-4 small text-center">
                       There are no specific complaint questions.
@@ -716,19 +704,18 @@
               <div class="row">
                 <div class="col-md-12 px-0">
                     <button @click="goToNext()" type="button" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0 text-uppercase">
-                      Go to Photos
+                      Go to Allocations
                     </button>
                 </div>
               </div>
             </div>
           </div>
 
-          <div key="addPhotos" v-if="tabs[6].isActive">
+          <!-- <div key="addPhotos" v-if="tabs[6].isActive">
             <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-1" style="min-height: 200px;">
               <div class="row mt-1">
-
                 <div class="col-md-12 text-muted small">
-                  Please include any additional photos where applicable.
+                  Include any additional photos where applicable.
                   <hr>
                 </div>
                 <div class="col-md-12 mb-3 text-center">
@@ -736,27 +723,8 @@
                     <input type="file" class="custom-file-input" id="customFile">
                     <label class="custom-file-label" for="customFile">Choose file</label>
                   </div>
-                  <!-- Current Status: {{ currentStatus }} <br> -->
-
-                  <!-- <form enctype="multipart/form-data" novalidate v-if="isInitial || isSaving">
-                    <h1>Upload images</h1>
-                    <div class="dropbox">
-                      <input type="file" multiple :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length"
-                        accept="image/*" class="input-file">
-                        <p v-if="isInitial">
-                          Drag your file(s) here to begin<br> or click to browse
-                        </p>
-                        <p v-if="isSaving">
-                          Uploading {{ fileCount }} files...
-                        </p>
-                    </div>
-                  </form> -->
                 </div>
                 <div class="col-md-12 mb-5">
-                  Files uploaded:
-
-
-                  <!-- {{ uploadedFiles }} -->
                 </div>
               </div>
             </div>
@@ -769,19 +737,19 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
 
 
           <!-- Doctor Allocation Section -->
-          <div key="allocation" v-if="tabs[7].isActive">
+          <div key="allocation" v-if="tabs[6].isActive">
             <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-1" style="min-height: 160px;">
               <div class="row mt-1">
                 <div class="col-md-12 text-muted small">
-                  Please select a doctor to allocate this complaint record to.
+                  Select a doctor to receive this complaint record.
                   <hr>
                 </div>
                 <div class="col-md-12 mb-2">
-                  Available doctors in cluster:
+                  Who would you like to allocate this complaint record to?
                 </div>
                 <div class="col-md-12">
                   <button v-for="(md, index) in this.$store.state.udayDb.clusters['cluster001'].mds" :key="index" class="btn mb-2 mr-2 btn-light">
@@ -797,7 +765,7 @@
               <div class="col-md-12">
                   <nuxt-link to="/ha/profile" class="w-100">
                     <button @click="addToQueue" type="button" data-dismiss="modal" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0 text-uppercase">
-                      Submit Allocation
+                      Record New Episode
                     </button>
                   </nuxt-link>
               </div>
@@ -880,11 +848,9 @@ export default {
           question.isActive = true
 
           // toggle secondary input
-          console.log(self.questions[indexQuestion].showTextInput)
           if (self.questions[indexQuestion].showTextInput === false) {
             self.questions[indexQuestion].showTextInput = true
           }
-          console.log(self.questions[indexQuestion].showTextInput)
 
           if (question.name === "Other") {
             console.log('Click')
@@ -991,9 +957,15 @@ export default {
       let generalExams = this.generalExamsQuestions
       this.newEpisodeComplete.generalExams.push(...this.generalExamsQuestions)
 
+      // // normalize vitals
+      // let vitals = this.vitals
+      console.log(this.newEpisodeComplete.vitals)
+
       // normalize specific exams
       let specificExams = this.specificExamQuestions.filter(x => x.isComplete === true)
-      this.newEpisodeComplete.specificExams.push(...specificExams)
+      this.newEpisodeComplete.specificExams.push(...this.specificExamQuestions.filter(x => x.isComplete === true))
+      console.log('xx')
+      console.log(this.specificExamQuestions.filter(x => x.isComplete === true))
 
       this.$store.commit('updateStatus', 'allocated')
       this.$store.commit('addPatientToQueue', this.$store.state.currPatient.id)
@@ -2256,6 +2228,7 @@ export default {
               title: 'How many lumps/swellings',
               hasAnswer: false,
               type: 'number',
+              answer: '',
               caption: 'count.'
             },
             {
@@ -2782,6 +2755,7 @@ export default {
             {
               question: "How long has this been happening?",
               type: 'number',
+              answer: '',
               caption: 'days long.'
             },
             {
@@ -3028,6 +3002,7 @@ export default {
             {
               question: "How long have the boils been there?",
               type: 'number',
+              answer: '',
               caption: 'days'
             },
             {
@@ -3105,6 +3080,7 @@ export default {
             {
                 question: "How long has this been going on?",
                 type: 'number',
+                answer: '',
                 caption: 'days long.'
             },
             {
@@ -3240,6 +3216,7 @@ export default {
             {
               question: "How long has this been happening?",
               type: 'number',
+              answer: '',
               caption: 'days long.'
             },
             {
@@ -3363,6 +3340,7 @@ export default {
             {
               question: "How long has this been happening?",
               type: 'number',
+              answer: '',
               caption: 'days long.'
             },
             {
@@ -3541,6 +3519,7 @@ export default {
             {
               question: "How long has this been going on?",
               type: 'number',
+              answer: '', 
               caption: 'days long.'
             },
             {
@@ -3785,6 +3764,7 @@ export default {
                 {
                   question: "How long has this been going on?",
                   type: 'number',
+                  answer: '',
                   caption: 'days long.'
                 },
                 {
@@ -3986,6 +3966,7 @@ export default {
                 {
                   question: "How long has this been going on?",
                   type: 'number',
+                  answer: '',
                   caption: 'days long.'
                 },
                 {
@@ -4151,6 +4132,7 @@ export default {
                 {
                   question: "How long has this been going on?",
                   type: 'number',
+                  answer: '',
                   caption: 'days long.'
                 },
                 {
@@ -4320,6 +4302,7 @@ export default {
                 {
                   question: "How long has this been going on?",
                   type: 'number',
+                  answer: '',
                   caption: 'days long.'
                 },
                 {
@@ -4481,6 +4464,7 @@ export default {
                 {
                   question: "How long has this been going on?",
                   type: 'number',
+                  answer: '',
                   caption: 'days long.'
                 },
                 {
@@ -4698,6 +4682,7 @@ export default {
                 {
                   question: "How long has this been going on?",
                   type: 'number',
+                  answer: '',
                   caption: 'days long.'
                 },
                 {
@@ -5215,6 +5200,7 @@ export default {
                 {
                   question: "How long has this been going on?",
                   type: 'number',
+                  answer: '',
                   caption: 'days long.'
                 },
                 {
@@ -5456,6 +5442,7 @@ export default {
                 {
                   question: "How long has this been going on?",
                   type: 'number',
+                  answer: '',
                   caption: 'days long.'
                 },
                 {
@@ -5704,6 +5691,7 @@ export default {
                 {
                   question: "How long has this been going on?",
                   type: 'number',
+                  answer: '',
                   caption: 'days long.'
                 },
                 {
@@ -5928,6 +5916,7 @@ export default {
                 {
                   question: "How long has this been going on?",
                   type: 'number',
+                  answer: '',
                   caption: 'days long.'
                 },
                 {
@@ -6097,6 +6086,7 @@ export default {
                 {
                   question: "How long has this been going on?",
                   type: 'number',
+                  answer: '',
                   caption: 'days long.'
                 },
                 {
@@ -6294,6 +6284,7 @@ export default {
                 {
                   question: "How long has it been there?",
                   type: 'number',
+                  answer: '',
                   caption: 'day(s)'
                 },
                 {
@@ -6487,11 +6478,13 @@ export default {
                 {
                   question: "How many tumors are there?",
                   type: 'number',
+                  answer: '',
                   caption: 'tumor(s)'
                 },
                 {
                   question: "How long has it been there?",
                   type: 'number',
+                  answer: '',
                   caption: 'days(s)'
                 },
                 {
@@ -6595,6 +6588,7 @@ export default {
                 {
                   question: "What is the bowel habit?",
                   type: 'number',
+                  answer: '',
                   caption: 'time(s) per day'
                 },
                 {
@@ -6669,11 +6663,13 @@ export default {
                 {
                   question: "How many swellings are there?",
                   type: 'number',
+                  answer: '',
                   caption: 'swelling(s)'
                 },
                 {
                   question: "How long has it been there?",
                   type: 'number',
+                  answer: '',
                   caption: 'days(s)'
                 },
                 {
@@ -6714,6 +6710,7 @@ export default {
             {
               question: "How long has this been happening?",
               type: 'number',
+              answer: '',
               caption: 'days long.'
             },
             {
@@ -6895,6 +6892,7 @@ export default {
             {
               question: "How long has this been happening?",
               type: 'number',
+              answer: '',
               caption: 'days long.'
             },
             {
@@ -7000,11 +6998,13 @@ export default {
                 {
                   question: "When was the last LMP?",
                   type: 'number',
+                  answer: '',
                   caption: 'days ago'
                 },
                 {
                   question: "What is the duration of the patient's period?",
                   type: 'number',
+                  answer: '',
                   caption: 'days.',
                 },
                 {
@@ -7051,21 +7051,25 @@ export default {
                 {
                   question: "How many children are there?",
                   type: 'number',
+                  answer: '',
                   caption: 'children'
                 },
                 {
                   question: "How many pregnancies have there been?",
                   type: 'number',
+                  answer: '',
                   caption: 'pregnancies'
                 },
                 {
                   question: "What age was the patient at first childbirth?",
                   type: 'number',
+                  answer: '',
                   caption: 'years old'
                 },
                 {
                   question: "How old was the patient at the last childbirth?",
                   type: 'number',
+                  answer: '',
                   caption: 'years old'
                 },
                 {
@@ -7148,11 +7152,13 @@ export default {
                 ,{
                   question: "When was the last LMP?",
                   type: 'number',
+                  answer: '',
                   caption: 'days'
                 },
                 {
                   question: "What is the duration of the patient's period?",
                   type: 'number',
+                  answer: '',
                   caption: 'days'
                 },
                 {
@@ -7198,21 +7204,25 @@ export default {
                 {
                   question: "How many of children are there?",
                   type: 'number',
+                  answer: '',
                   caption: 'children'
                 },
                 {
                   question: "How many pregnancies have there been?",
                   type: 'number',
+                  answer: '',
                   caption: 'pregnancies'
                 },
                 {
                   question: "What age was the patient at first childbirth?",
                   type: 'number',
+                  answer: '',
                   caption: 'years old'
                 },
                 {
                   question: "How old was the patient at the last childbirth?",
                   type: 'number',
+                  answer: '',
                   caption: 'years old'
                 },
                 {
@@ -7232,6 +7242,7 @@ export default {
                 {
                   question: "What was the age of onset?",
                   type: 'number',
+                  answer: '',
                   caption: 'years old'
                 },
                 {
@@ -7286,11 +7297,13 @@ export default {
                 {
                   question: "When was the last LMP?",
                   type: 'number',
+                  answer: '',
                   caption: 'days ago'
                 },
                 {
                   question: "What is the duration of the patient's period?",
-                  type: 'number',
+                  type: 'number', 
+                  answer: '',
                   caption: 'days'
                 },
                 {
@@ -7337,21 +7350,25 @@ export default {
                 {
                   question: "How many of children are there?",
                   type: 'number',
+                  answer: '',
                   caption: 'children'
                 },
                 {
                   question: "How many pregnancies have there been?",
                   type: 'number',
+                  answer: '',
                   caption: 'pregnancies'
                 },
                 {
                   question: "What age was the patient at first childbirth?",
                   type: 'number',
+                  answer: '',
                   caption: 'years old'
                 },
                 {
                   question: "How old was the patient at the last childbirth?",
                   type: 'number',
+                  answer: '',
                   caption: 'years old'
                 },
                 {
@@ -7371,6 +7388,7 @@ export default {
                 {
                   question: "What was the age of onset?",
                   type: 'number',
+                  answer: '',
                   caption: 'years old'
                 },
                 {
@@ -7425,11 +7443,13 @@ export default {
                 {
                   question: "When was the last LMP?",
                   type: 'number',
+                  answer: '',
                   caption: 'days ago'
                 },
                 {
                   question: "What is the duration of the patient's period?",
                   type: 'number',
+                  answer: '',
                   caption: 'days long.'
                 },
                 {
@@ -7476,21 +7496,25 @@ export default {
                 {
                   question: "How many of children are there?",
                   type: 'number',
+                  answer: '',
                   caption: 'children'
                 },
                 {
                   question: "How many pregnancies have there been?",
                   type: 'number',
+                  answer: '',
                   caption: 'pregnancies'
                 },
                 {
                   question: "What age was the patient at first childbirth?",
                   type: 'number',
+                  answer: '',
                   caption: 'years old'
                 },
                 {
                   question: "How old was the patient at the last childbirth?",
                   type: 'number',
+                  answer: '',
                   caption: 'years old'
                 },
                 {
@@ -7510,6 +7534,7 @@ export default {
                 {
                   question: "What was the age of onset?",
                   type: 'number',
+                  answer: '',
                   caption: 'years old'
                 },
                 {
@@ -7564,11 +7589,13 @@ export default {
                 {
                   question: "When was the last LMP?",
                   type: 'number',
+                  answer: '',
                   caption: 'days ago'
                 },
                 {
                   question: "What is the duration of the patient's period?",
                   type: 'number',
+                  answer: '',
                   caption: 'days long.'
                 },
                 {
@@ -7615,21 +7642,25 @@ export default {
                 {
                   question: "How many of children are there?",
                   type: 'number',
+                  answer: '',
                   caption: 'children'
                 },
                 {
                   question: "How many pregnancies have there been?",
                   type: 'number',
+                  answer: '',
                   caption: 'pregnancies'
                 },
                 {
                   question: "What age was the patient at first childbirth?",
                   type: 'number',
+                  answer: '',
                   caption: 'years old'
                 },
                 {
                   question: "How old was the patient at the last childbirth?",
                   type: 'number',
+                  answer: '',
                   caption: 'years old'
                 },
                 {
@@ -7649,6 +7680,7 @@ export default {
                 {
                   question: "What was the age of onset?",
                   type: 'number',
+                  answer: '',
                   caption: 'years old'
                 },
                 {
@@ -7739,6 +7771,7 @@ export default {
             {
               question: "When was the injury sustained?",
               type: 'number',
+              answer: '',
               caption: 'days ago',
             },
             {
@@ -7784,6 +7817,7 @@ export default {
             {
               question: "How long do the palpitations last?",
               type: 'number',
+              answer: '',
               caption: 'days.',
             },
             {
@@ -7886,6 +7920,7 @@ export default {
             {
               question: "How many episodes have there been?",
               type: 'number',
+              answer: '',
               caption: 'episodes'
             },
             {
@@ -8109,6 +8144,7 @@ export default {
                 {
                   question: "What has been the duration of the weakness?",
                   type: 'number',
+                  answer: '',
                   caption: 'days.',
                 },
                 {
@@ -8190,6 +8226,7 @@ export default {
                 {
                   question: "What has been the duration of the weakness?",
                   type: 'number',
+                  answer: '',
                   caption: 'days.',
                 },
                 {
@@ -8333,12 +8370,12 @@ export default {
           isActive: false,
           isEnabled: false
         },
-        {
-          name: 'photos',
-          title: 'Photos',
-          isActive: false,
-          isEnabled: false
-        },
+        // {
+        //   name: 'photos',
+        //   title: 'Photos',
+        //   isActive: false,
+        //   isEnabled: false
+        // },
         {
           name: 'allocation',
           title: 'Allocation',

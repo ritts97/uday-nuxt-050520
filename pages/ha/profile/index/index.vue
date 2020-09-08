@@ -27,29 +27,40 @@
                 </div>
             </li>
           </ul>
-          <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 10px;">
+          <div class="shadow-sm w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 10px;">
             <table class="table table-sm table-hover mb-0">
               <thead>
                 <tr>
-                  <th scope="col">Status</th>
+                  <th scope="col">Patient Status</th>
                   <th scope="col">Visit Type</th>
-                  <th scope="col">Chief Complaint</th>
-                  <th scope="col">Last Updated</th>
-                  <th scope="col">First Recorded</th>
-                  <th scope="col">Follow Ups</th>
+                  <th scope="col">Chief Complaint (or Service)</th>
+                  <th scope="col" class="d-none d-md-inline-block mb-n1 w-33">Last Updated</th>
+                  <th scope="col" class="d-none d-md-inline-block mb-n1 w-33">First Recorded</th>
+                  <th scope="col" class="d-none d-md-inline-block mb-n1 w-33">Follow Ups</th>
                 </tr>
               </thead>
               <tbody>
                 <tr class="pointer" v-for="(visit, index) in this.list.slice().reverse()" :key="index" style="height: 40px;" :class="{ 'bg-red' : visit.allocated }">
-                  <td class="text-uppercase" scope="row">{{ visit.episodeID }}</td>
+                  <td class="text-capitalize" scope="row">
+                    <div v-if="index === (getListLengthSecond - 1)">
+                      <img src="/circle-green.svg" class="shape-status" alt=""> Registered
+                    </div>
+                    <div v-else-if="visit.allocated">
+                      <img src="/circle-red.svg" class="shape-status" alt="">
+                      Allocated
+                    </div>
+                  </td>
                   <td>
                     <div v-if="visit.title !== 'Registered'">
-                      <nuxt-link :to="'profile/visit?id=' + visit.episodeID">
+                      <nuxt-link v-if="visit.type === 'episode'" :to="'profile/visit?id=' + visit.episodeID">
+                        {{ visit.title }}
+                      </nuxt-link>
+                      <nuxt-link v-else :to="'profile/visit-service?id=' + visit.episodeID">
                         {{ visit.title }}
                       </nuxt-link>
                     </div>
                     <div v-else>
-                      {{ visit.title }}
+                      <!-- {{ visit.title }} -->
                     </div>
                   </td>
                   <td>
@@ -68,9 +79,9 @@
                       </div>
                     </div>
                   </td>
-                  <td>{{ visit.lastUpdated }}</td>
-                  <td>{{ visit.created }}</td>
-                  <td></td>
+                  <td class="d-none d-md-inline-block mb-n1 w-33">{{ visit.lastUpdated }}</td>
+                  <td class="d-none d-md-inline-block mb-n1 w-33">{{ visit.created }}</td>
+                  <td class="d-none d-md-inline-block mb-n1 w-33"></td>
                 </tr>
                 <tr class="pointer" v-if="this.list.length === 0" style="height: 40px;">
                   <td class="py-3 px-3 text-center" colspan="9">
@@ -115,6 +126,12 @@ export default {
     ])
   },
   computed: {
+    getListLengthSecond: function () {
+      console.log('List: ')
+      console.log(this.list)
+      console.log(this.list.length)
+      return this.list.length
+    },
     filterAllVisits: function () {
       let queryID = this.$route.query.id
 
@@ -211,5 +228,13 @@ export default {
 <style>
 .bg-red {
   /* background-color: #eee; */
+}
+
+.mb-n1 {
+  margin-bottom: -1px!important;
+}
+
+.w-33 {
+  width: 33%;
 }
 </style>

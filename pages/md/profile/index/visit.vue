@@ -43,47 +43,56 @@
           </ul>
           <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="subTabs[0].isActive">
             <div class="row mt-1">
-              <div class="col-md-12 mb-3">
+              <div class="col-md-12">
                 <div class="small text-muted mb-2">
-                  Chief Complaint
+                  Chief Complaints
+                  <hr class="mb-1 mt-1">
                 </div>
-                {{ this.$store.state.currPatient.episodes[1].complaint.chiefComplaint.name }}
-                <!-- Coughing Problem <br><br>
-                <span class="rounded mr-2 p-2 text-white" style="background-color: #a9a9a9;">
-                  Lasting 2 days 
-                </span>
-                <span class="rounded mr-2 p-2 text-white" style="background-color: #a9a9a9;">
-                  Only at night 
-                </span>
-                <span class="rounded mr-2 p-2 text-white" style="background-color: #a9a9a9;">
-                  Sputum No 
-                </span>
-                <span class="rounded mr-2 p-2 text-white" style="background-color: #a9a9a9;">
-                  Yellow Color 
-                </span>
-                <span class="rounded mr-2 p-2 text-white" style="background-color: #a9a9a9;">
-                  Amount a lot 
-                </span>
-                <span class="rounded mr-2 p-2 text-white" style="background-color: #a9a9a9;">
-                  Fever Yes 
-                </span>
-                <span class="rounded mr-2 p-2 text-white" style="background-color: #a9a9a9;">
-                  No difficulty in swallowing 
-                </span>
-                <span class="rounded mr-2 p-2 text-white" style="background-color: #a9a9a9;">
-                  No Pain in throat
-                </span>
-                -->
-                <br><br> 
+
+                <!-- {{ currEpisode }} <br>
+                
+                {{ this.$route.query.id }} <br>
+   -->
+                <!-- {{ episodeData.episodeDetails }} -->
+                <div v-if="episodeData.episodeDetails.chiefComplaints">
+                  <div v-for="(complaints, index) in episodeData.episodeDetails.chiefComplaints" :key="index">
+                    <div v-for="(complaint, cIndex) in complaints" :key="cIndex" class="d-inline">
+                      <button v-if="complaint" class="btn px-3 mb-2 mr-2 small btn-dark" role="button">
+                        {{ complaint }}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 mt-4">
                 <div class="small text-muted mb-2">
-                  Description
+                  Fixed Questions
+                  <hr class="mb-1 mt-1">
                 </div>
-                {{ this.$store.state.currPatient.episodes[1].complaint.chiefComplaint.symptons }}
-                <br><br> 
-                <div class="small text-muted mb-2">
-                  Description
+                <div v-for="(question, indexQuestion) in episodeData.episodeDetails.chiefComplaintsFixedQuestions" class="mt-3 mb-4" :key="indexQuestion">
+                  <div v-if="question.type === 'text'">
+                    <label for="exampleFormControlSelect1">{{ question.question }}</label><br>
+                    {{ question.answer }}
+                  </div>
+                  <div v-if="question.type === 'button'">
+                    <label for="exampleFormControlSelect1">{{ question.question }}</label><br>
+                    <button class="btn mb-2 mr-2" v-for="(option, indexAnswer) in question.options" :key="indexAnswer" :class="option.isActive ? 'btn-dark text-white' : 'btn-light'">
+                      {{ option.name }}
+                    </button>
+                    <div v-if="question.showOther === true">
+                      <input type="text" class="mt-1 p-2 w-100" placeholder="Describe any further details">
+                    </div>
+                  </div>
+                  <div v-if="question.type === 'button' && question.showTextInput === true">
+                    <div>
+                      <input type="text" class="mt-1 p-2 w-100" :placeholder="question.options[0].isActive === true ? question.options[0].placeholder : question.options[1].placeholder">
+                    </div>
+                  </div>
+                  <div v-if="question.type === 'number'">
+                    <label for="exampleFormControlSelect1">{{ question.question }}</label><br>
+                    <input type="number" class="mt-1 p-2 mr-2 w-25" placeholder="0"> {{ question.caption }}
+                  </div>
                 </div>
-                {{ this.$store.state.currPatient.episodes[1].complaint.chiefComplaint.addInformation }}
               </div>
             </div>
             <!-- <div class="row mt-1">
@@ -101,67 +110,35 @@
           </div>
           <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="subTabs[1].isActive">
             <div class="row mt-1">
-              <div class="col-md-12">
-                <div class="small text-muted mb-2">
-                  Vitals
+              <div class="mb-4" v-for="(vitalQuestion, index) in episodeData.episodeDetails.vitals" :class="[vitalQuestion.fullLength ? 'col-md-12' : 'col-md-6']" :key="index">
+                <div v-if="vitalQuestion.options">
+                  <label for="exampleFormControlSelect1">{{ vitalQuestion.title }}</label><br>
+                  <button v-for="(option, optionIndex) in vitalQuestion.options" :class="option.isActive ? 'btn-dark' : 'btn-light'" :key="optionIndex" class="btn mb-2 mr-2">
+                    {{ option.name }}
+                  </button>
                 </div>
-                <br><br>
-                <!-- {{ this.$store.state.currPatient.episodes[0].complaint.vitals }} -->
+                <div v-else-if="!vitalQuestion.options && vitalQuestion.name === 'bp'">
+                  <label for="exampleFormControlSelect1">{{ vitalQuestion.title }}</label><br>
+                  {{ vitalQuestion.valueFirst }} / {{ vitalQuestion.valueSecond }}
+                  {{ vitalQuestion.caption }}
+                </div>
+                <div v-else-if="!vitalQuestion.options && vitalQuestion.name === 'height'">
+                  <label for="exampleFormControlSelect1 mb-2">{{ vitalQuestion.title }}</label><br>
+                  {{ vitalQuestion.value }} {{ vitalQuestion.caption }}
+                </div>
+                <div v-else-if="!vitalQuestion.options && vitalQuestion.name === 'weight'">
+                  <label for="exampleFormControlSelect1 mb-2">{{ vitalQuestion.title }} </label><br>
+                  {{ vitalQuestion.value }} {{ vitalQuestion.caption }}
+                </div>
+                <div v-else-if="!vitalQuestion.options && vitalQuestion.name === 'bmi'">
+                  <label for="exampleFormControlSelect1 mb-2">{{ vitalQuestion.title }}</label><br>
+                  <div class="mt-2">{{ vitalQuestion.value }} {{ vitalQuestion.caption }}</div>
+                </div>
+                <div v-else>
+                  <label for="exampleFormControlSelect1">{{ vitalQuestion.title }}</label><br>
+                  {{ vitalQuestion.value }} {{ vitalQuestion.caption }}
+                </div>
               </div>
-              <!-- <div class="col-md-12 mb-4">
-                <div class="small text-muted mb-1">
-                  Patient Appearance
-                </div>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quas fuga modi necessitatibus, similique explicabo quae aliquid nostrum velit dolorem veniam fugit temporibus hic ut quia et obcaecati consequatur libero possimus animi exercitationem omnis ducimus culpa nisi enim. Optio, similique. Veniam, tempore et architecto voluptates nisi odit expedita illo ipsam incidunt!
-              </div>
-              <div class="col-md-12 mb-4">
-                <div class="small text-muted mb-1">
-                  Patient Gait
-                </div>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellat voluptatum porro quos error minus iste nesciunt nobis quam vero animi unde deserunt totam modi odio itaque atque perspiciatis voluptatibus ea optio, adipisci nisi iusto id corrupti. Doloribus repudiandae eaque sed hic, perferendis, iure, expedita est pariatur corrupti vitae architecto maxime!
-              </div>
-              <div class="col-md-6 mb-4">
-                <div class="small text-muted mb-1">
-                  Pulse
-                </div>
-                72 BPM
-              </div>
-              <div class="col-md-6 mb-4">
-                <div class="small text-muted mb-1">
-                  BP
-                </div>
-                120/80 mmHg
-              </div>
-              <div class="col-md-6 mb-4">
-                <div class="small text-muted mb-1">
-                  SP02
-                </div>
-                89%
-              </div>
-              <div class="col-md-6 mb-4">
-                <div class="small text-muted mb-1">
-                  Temperature
-                </div>
-                98^
-              </div>
-              <div class="col-md-6 mb-4">
-                <div class="small text-muted mb-1">
-                  Height
-                </div>
-                180 cm
-              </div>
-              <div class="col-md-6 mb-4">
-                <div class="small text-muted mb-1">
-                  Weight
-                </div>
-                65 kg
-              </div>
-              <div class="col-md-6 mb-3">
-                <div class="small text-muted mb-1">
-                  BMI
-                </div>
-                20.06 kg/m2
-              </div> -->
             </div>
             <!-- <div class="row mt-1">
               <div class="col-md-6 text-left">
@@ -174,47 +151,64 @@
           </div>
           <!-- <transition name="u-fade" mode="out-in"> -->
           <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="subTabs[2].isActive">
-            <div class="row mt-1">
-              <!-- <div class="col-md-12 mb-5 text-center" style="min-height: 300px;">
-                <img src="/anatomy_sketch.png" alt="">
-              </div> -->
+            <div class="row">
+              <div class="col-md-12 text-muted small mb-0">
+                General Exams
+                <hr>
+              </div>
               <div class="col-md-12">
-                <div class="small text-muted mb-2">
-                  General Exams
+                <div class="position-relative">
+                  <div class="position-absolute">
+                    <img src="/anatomy_sketch.svg" class="w-100" alt="">
+                  </div>
+                  <div class="w-100 bg-dark" style="padding-bottom: 59%;"></div>
                 </div>
-                <br><br>
-                <!-- {{ this.$store.state.currPatient.episodes[0].complaint.genExams }} -->
               </div>
-              <!-- <div class="col-md-6 pb-3 mb-3">
-                <div class="small text-muted mb-3">
-                  Eyes
+            </div>
+            <div class="row mt-1">
+              <div class="col-md-12 mb-2 text-muted">
+                  <small>Eyes</small>
+                  <hr class="mb-1 mt-1">
                 </div>
-                <span class="rounded mr-2 p-2 text-white" style="background-color: #a9a9a9;">
-                  Jaundice Yes 
-                </span>
-                <span class="rounded mr-2 p-2 text-white" style="background-color: #a9a9a9;">
-                  Pallor Mild
-                </span>
-              </div>
-              <div class="col-md-6 pb-3 mb-3">
-                <div class="small text-muted mb-3">
-                  Hands
+                <div class="col-md-6 mb-3">
+                  <!-- {{ episodeData.episodeDetails.generalExams }} -->
+                  <label for="exampleFormControlSelect1">{{ episodeData.episodeDetails.generalExams[0].name }}</label><br>
+                  <button class="btn mb-2 mr-2" :class="option.isActive ? 'btn-dark' : 'btn-light'" v-for="(option, oIndex) in episodeData.episodeDetails.generalExams[0].options" :key="oIndex">
+                    {{ option.name }}
+                  </button>
                 </div>
-                <span class="rounded mr-2 p-2 text-white" style="background-color: #a9a9a9;">
-                  Nails Normal
-                </span>
-                <span class="rounded mr-2 p-2 text-white" style="background-color: #a9a9a9;">
-                  Cyanosis Yes
-                </span>
-              </div>
-              <div class="col-md-6 pb-3 mb-3">
-                <div class="small text-muted mb-3">
-                  Lower Leg and Ankle
+                <div class="col-md-6 mb-3">
+                  <label for="exampleFormControlSelect1">{{ episodeData.episodeDetails.generalExams[1].name }}</label><br>
+                  <button class="btn mb-2 mr-2" :class="option.isActive ? 'btn-dark' : 'btn-light'" v-for="(option, oIndex) in episodeData.episodeDetails.generalExams[1].options" :key="oIndex">
+                    {{ option.name }}
+                  </button>
                 </div>
-                <span class="rounded mr-2 p-2 text-white" style="background-color: #a9a9a9;">
-                Oedema Mild
-                </span>
-              </div> -->
+                <div class="col-md-12 mt-4 mb-2 text-muted">
+                  <small>Hands</small>
+                  <hr class="mb-1 mt-1">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="exampleFormControlSelect1">{{ episodeData.episodeDetails.generalExams[2].name }}</label><br>
+                  <button class="btn mb-2 mr-2" :class="option.isActive ? 'btn-dark' : 'btn-light'" v-for="(option, oIndex) in episodeData.episodeDetails.generalExams[2].options" :key="oIndex">
+                    {{ option.name }}
+                  </button>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="exampleFormControlSelect1">{{ episodeData.episodeDetails.generalExams[3].name }}</label><br>
+                  <button class="btn mb-2 mr-2" :class="option.isActive ? 'btn-dark' : 'btn-light'" v-for="(option, oIndex) in episodeData.episodeDetails.generalExams[3].options" :key="oIndex">
+                    {{ option.name }}
+                  </button>
+                </div>
+                <div class="col-md-12 mt-4 mb-2 text-muted">
+                  <small>Legs</small>
+                  <hr class="mb-1 mt-1">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="exampleFormControlSelect1">{{ episodeData.episodeDetails.generalExams[4].name }}</label><br>
+                  <button class="btn mb-2 mr-2" :class="option.isActive ? 'btn-dark' : 'btn-light'" v-for="(option, oIndex) in episodeData.episodeDetails.generalExams[4].options" :key="oIndex">
+                    {{ option.name }}
+                  </button>
+                </div>
             </div>
             <!-- <div class="row mt-1">
               <div class="col-md-6 text-left">
@@ -228,34 +222,44 @@
           <!-- </transition> -->
           <!-- <transition name="u-fade" mode="out-in"> -->
             <div class="w-100 bg-white mb-3 mt-0 px-3 pt-3 pb-3" style="min-height: 200px;" v-if="subTabs[3].isActive">
-              <div class="row mt-1">
+              <div class="row">
+                <div class="col-md-12 text-muted small mb-0">
+                  Specific Exams
+                  <hr>
+                </div>
                 <div class="col-md-12">
-                  <div class="small text-muted mb-2">
-                    Specific Exams
+                  <div class="position-relative">
+                    <div class="position-absolute">
+                      <img src="/anatomy_sketch.svg" class="w-100" alt="">
+                    </div>
+                    <div class="w-100 bg-dark" style="padding-bottom: 59%;"></div>
                   </div>
-                  <br><br>
-                  <!-- {{ this.$store.state.currPatient.episodes[0].complaint.genExams }} -->
-                </div>
-                <!-- <div class="col-md-12 mb-4">
-                  <div class="small text-muted mb-1">
-                    Patient Appearance
-                  </div>
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quas fuga modi necessitatibus, similique explicabo quae aliquid nostrum velit dolorem veniam fugit temporibus hic ut quia et obcaecati consequatur libero possimus animi exercitationem omnis ducimus culpa nisi enim. Optio, similique. Veniam, tempore et architecto voluptates nisi odit expedita illo ipsam incidunt!
-                </div>
-                <div class="col-md-12 mb-4">
-                  <div class="small text-muted mb-1">
-                    Patient Gait
-                  </div>
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellat voluptatum porro quos error minus iste nesciunt nobis quam vero animi unde deserunt totam modi odio itaque atque perspiciatis voluptatibus ea optio, adipisci nisi iusto id corrupti. Doloribus repudiandae eaque sed hic, perferendis, iure, expedita est pariatur corrupti vitae architecto maxime!
                 </div>
               </div>
-              <div class="row mt-1">
-                <div class="col-md-6 text-left">
-                  <small>First Recorded: January 1, 2022</small>
+              <!-- xxx
+              {{ episodeData.episodeDetails }} -->
+              <div class="row" v-for="(organ, index) in episodeData.episodeDetails.specificExams" :key="index">
+                <div class="col-md-12 mb-2 text-muted">
+                  <small>{{ organ.name }}</small>
+                  <hr class="mb-1 mt-1">
                 </div>
-                <div class="col-md-6 text-right">
-                  <small>Last Updated: January 20, 2022</small>
-                </div> -->
+                <div class="col-md-6 mb-3" v-for="(question, qIndex) in organ.questions" :key="qIndex">
+                  <div v-if="question.type === 'text'">
+                    <label for="exampleFormControlSelect1">{{ question.title }}</label><br>
+                    <input type="text" class="p-2 w-100" placeholder="Describe in the subject area in further detail">
+                  </div>
+                  <div v-else>
+                    <label for="exampleFormControlSelect1">{{ question.title }}</label><br>
+                    <button v-for="(option, oIndex) in question.options" :key="oIndex" class="btn mb-2 mr-2" :class="option.isActive ? 'btn-dark' : 'btn-light'">
+                      {{ option.name }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div v-if="episodeData.episodeDetails.specificExams.length === 0" class="row">
+                <div class="col-md-12 my-4 small text-center">
+                  There are no specific complaint questions.
+                </div>
               </div>
             </div>
           <!-- </transition> -->
@@ -576,6 +580,17 @@ export default {
     // get episode data
     // set episode data
     this.getEpisodeData()
+
+    // get episode data, set episode data
+    const episodeID = this.$route.query.id
+
+    if ( this.$store.state.currPatient.id !== '') {
+      this.episodeData = this.$store.state.currPatient.episodes.find(episode => episode.episodeID === episodeID )
+
+      if (this.episodeData.feedback.hasFeedback ) {
+        showDocsFeedback = true
+      }
+    }
   },
   methods: {
     getEpisodeData() {
@@ -683,28 +698,9 @@ export default {
         time: ''
       },
       episodeData: {
-        type: '',
-        billed: '',
-        link: '',
-        episodeID: '',
-        title: '',
-        created: '',
-        lastUpdated: '',
-        numFollowUps: '',
-        followUps: [],
-        services: [],
-        complaint: {
-          chiefComplaint: '',
-          vitals: '',
-          genExams: '',
-          specExams: '',
-          addPhotos: ''
-        },
-        feedback: {
-          medicine: [],
-          investigations: '',
-          advice: '',
-          diagnosis: ''
+        episodeDetails: {
+          chiefComplaints: '',
+          generalExams: []
         }
       },
       editable: false,
