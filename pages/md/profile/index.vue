@@ -4,9 +4,12 @@
       <transition name="u-fade">
         <div class="row">
           <div class="col-md-3 mt-2 text-left" style="min-height: 200px;">
-            <nuxt-link to="/ha/profile" class="text-decoration-none text-dark">
-              <img src="/avatar-man_02.png">
-            </nuxt-link>
+            <div class="position-relative">
+              <div class="position-absolute">
+                <img class="w-100" src="/avatar-man_08.png">
+              </div>
+              <div class="w-100" style="padding-bottom: 100%;"></div>
+            </div>
           </div>
           <div class="col-md-9 mt-2">
             <div class="row">

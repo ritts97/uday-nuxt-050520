@@ -4,7 +4,7 @@
       <div class="row" v-if="this.$store.state.currPatient.status === 'allocated'">
         <div class="col-md-12">
           <!-- <nuxt-link to="/md/profile/profile-visit"> -->
-            <button @click="showDocsFeedback = true; editable = true" :disabled="editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Update Episode Feedback</button>     
+            <button @click="showDocsFeedback = true; editable = true; scrollToAddress()" :disabled="editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Update Episode Feedback</button>     
           <!-- </nuxt-link> -->
         </div>
         <div class="col-md-12">
@@ -314,7 +314,7 @@
     </div>
 
     <div>
-      <div class="container mt-3 mb-3">
+      <div class="container mt-3 mb-3" ref="doctors-feedback">
         <div class="row">
           <div class="col-md-12">
             <h5 class="d-inline">Doctor's Feedback</h5> 
@@ -531,7 +531,7 @@
       <div class="container" v-if="this.$store.state.currPatient.status === 'allocated'">
         <div class="row">
           <div class="col-md-12">
-            <button @click="showDocsFeedback = false; editable = !editable" :disabled="!editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Save Episode Feedback</button>     
+            <button @click="editable = !editable; scrollToTop()" :disabled="!editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Save Episode Feedback</button>     
           </div>
           <div class="col-md-12 mb-3">
             <nuxt-link to="/md/">
@@ -595,6 +595,20 @@ export default {
     }
   },
   methods: {
+    scrollToAddress: function () {
+      let elTopPos = this.$refs['doctors-feedback'].getBoundingClientRect().top
+      
+      setTimeout(function () {
+        window.scrollTo(0, elTopPos);
+      }, 400)
+    },
+    scrollToTop: function () {
+      // let elTopPos = this.$refs['doctors-feedback'].getBoundingClientRect().top
+      
+      // setTimeout(function () {
+      //   window.scrollTo(0, 0);
+      // }, 400)
+    },
     getEpisodeData() {
       const episodeID = this.$route.query.id
 
@@ -682,7 +696,7 @@ export default {
         episodeID: this.$route.query.id
       }
 
-      confirm('The patient episode has been released.')
+      confirm('Are you sure you want to release this patient?')
       this.$store.commit('releasePatient', episodeInfo)
     }
   },
@@ -787,6 +801,10 @@ export default {
 </script>
 
 <style>
+html {
+  scroll-behavior: smooth;
+}
+
 .list-inline-item {
   margin-right: 16px !important;
 }

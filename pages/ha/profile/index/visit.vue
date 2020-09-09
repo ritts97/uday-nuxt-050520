@@ -30,6 +30,164 @@
       </div>
     </div>
 
+    <!-- Print Billing -->
+    <div class="d-none">
+      <div class="p-5 m-5" id="printMe2">
+        <div class="container p-5">
+          <div class="row mb-5">
+            <div class="col-md-12 text-center">
+              <div class="position-relative">
+                <div class="position-absolute" style="left: 0; right: 0;">
+                  <img src="/uday-logo-orig.png" alt="">
+                </div>
+                <div style="padding-bottom: 36%;"></div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="small text-muted">
+                Prescriptions
+              </div>
+            </div>
+            <div class="col-md-12" id="printMe">
+              <div class="w-100 bg-white mb-3 mt-0 pt-0 pb-0">
+                <table class="table table-sm table-hover mt-3">
+                  <thead>
+                    <tr>
+                      <th scope="col"></th>
+                      <th scope="col">ID</th>
+                      <th scope="col">Medicine</th>
+                      <th scope="col">Type</th>
+                      <th scope="col">Batch</th>
+                      <th scope="col">Expiry</th>
+                      <th scope="col">Stock</th>
+                      <th scope="col">MRP</th>
+                      <th scope="col">GST</th>
+                      <th scope="col">Dis. Rate</th>
+                      <th scope="col">Crit. Value</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="pointer">
+                      <td><input type="checkbox" name="" id=""></td>
+                      <td>AAU</td>
+                      <td>Lorazepam</td>
+                      <td>AAU</td>
+                      <td>135</td>
+                      <td>12/22</td>
+                      <td>99</td>
+                      <td>$99</td>
+                      <td>$99</td>
+                      <td>0%</td>
+                      <td>10</td>
+                    </tr>
+                    <tr class="pointer">
+                      <td><input type="checkbox" name="" id=""></td>
+                      <td>AAU</td>
+                      <td>Lorazepam</td>
+                      <td>AAU</td>
+                      <td>135</td>
+                      <td>12/22</td>
+                      <td>99</td>
+                      <td>$99</td>
+                      <td>$99</td>
+                      <td>0%</td>
+                      <td>10</td>
+                    </tr>
+                    <tr class="pointer">
+                      <td><input type="checkbox" name="" id=""></td>
+                      <td>AAU</td>
+                      <td>Lorazepam</td>
+                      <td>AAU</td>
+                      <td>135</td>
+                      <td>12/22</td>
+                      <td>99</td>
+                      <td>$99</td>
+                      <td>$99</td>
+                      <td>0%</td>
+                      <td>10</td>
+                    </tr>
+                    <tr class="pointer">
+                      <td><input type="checkbox" name="" id=""></td>
+                      <td>AAU</td>
+                      <td>Lorazepam</td>
+                      <td>AAU</td>
+                      <td>135</td>
+                      <td>12/22</td>
+                      <td>99</td>
+                      <td>$99</td>
+                      <td>$99</td>
+                      <td>0%</td>
+                      <td>10</td>
+                    </tr>
+                    <tr class="pointer" style="background-color: salmon;">
+                      <td><input type="checkbox" name="" id=""></td>
+                      <td>AAU</td>
+                      <td>Lorazepam</td>
+                      <td>AAU</td>
+                      <td>135</td>
+                      <td>12/22</td>
+                      <td>99</td>
+                      <td>$99</td>
+                      <td>$99</td>
+                      <td>0%</td>
+                      <td>10</td>
+                    </tr>
+                    <tr class="pointer" style="background-color: salmon;">
+                      <td><input type="checkbox" name="" id=""></td>
+                      <td>AAU</td>
+                      <td>Lorazepam</td>
+                      <td>AAU</td>
+                      <td>135</td>
+                      <td>12/22</td>
+                      <td>99</td>
+                      <td>$99</td>
+                      <td>$99</td>
+                      <td>0%</td>
+                      <td>10</td>
+                    </tr>
+                    <tr class="pointer" style="background-color: salmon;">
+                      <td><input type="checkbox" name="" id=""></td>
+                      <td>AAU</td>
+                      <td>Lorazepam</td>
+                      <td>AAU</td>
+                      <td>135</td>
+                      <td>12/22</td>
+                      <td>99</td>
+                      <td>$99</td>
+                      <td>$99</td>
+                      <td>0%</td>
+                      <td>10</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 mb-5">
+              <div class="small text-muted mb-3">
+                Investigations
+              </div>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam, obcaecati?
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 mb-5">
+              <div class="small text-muted mb-3">
+                Advice
+              </div>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, voluptate!
+            </div>
+          </div>
+          <div class="row text-right">
+            <div class="col-md-12 mb-5">
+              Total Due: $999
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
     <div class="container mt-0">
       <div class="row" v-if="this.$store.state.currPatient.status !== 'allocated'">
         <div class="col-md-12">
@@ -354,7 +512,7 @@
               Prescriptions
             </div>
           </div>
-          <div class="col-md-12">
+          <div class="col-md-12" id="printMe">
             <div class="w-100 bg-white mb-3 mt-0 pt-0 pb-0">
               <table class="table table-sm table-hover mt-3">
                 <thead>
@@ -469,7 +627,7 @@
             </div>
           </div>
           <div class="col-md-12">
-            <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0  text-uppercase">Print Prescription</button>     
+            <button @click="sendAlert('Print the prescription bill.')" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0  text-uppercase">Print This Prescription's Billing</button>     
           </div>
         </div>
         <div class="row">
@@ -519,7 +677,7 @@ export default {
       this.episodeData = this.$store.state.currPatient.episodes.find(episode => episode.episodeID === episodeID )
 
       if (this.episodeData.feedback.hasFeedback ) {
-        showDocsFeedback = true
+        this.showDocsFeedback = true
       }
     }
   },
@@ -529,6 +687,23 @@ export default {
     }
   },
   methods: {
+    sendAlert: function (msg) {
+      alert(msg)
+      const options = {
+        name: '_blank',
+        specs: [
+          'fullscreen=yes',
+          'titlebar=yes',
+          'scrollbars=yes'
+        ],
+        styles: [
+          'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css',
+          'https://unpkg.com/kidlat-css/css/kidlat.css'
+        ]
+      }
+
+      this.$htmlToPaper('printMe2');
+    },
     recordNewFollowUp: function () {
 
     },
