@@ -343,24 +343,33 @@
                             <path d="M409.131845,97.34717 L259.917969,97.34717" id="path3552" stroke="#000000"/>
                             <path d="M299.421875,406.34717 L259.917969,406.34717" id="path3552-copy" stroke="#000000"/>
                             <path d="M347.715589,585.34717 L259.917969,585.34717" id="path3552-copy-2" stroke="#000000"/>
-                            <rect id="Rectangle" :fill="(generalExamsQuestions[0].isComplete && generalExamsQuestions[1].isComplete) ? 'green' : '#DC3545'" x="128" y="71" width="98" height="47" rx="5"/>
-                            <rect id="Rectangle-Copy" :fill="(generalExamsQuestions[2].isComplete && generalExamsQuestions[3].isComplete) ? 'green' : '#DC3545'" x="128" y="383" width="98" height="47" rx="5"/>
-                            <rect id="Rectangle-Copy-2" :fill="(generalExamsQuestions[4].isComplete) ? 'green' : '#DC3545'" x="128" y="562" width="98" height="47" rx="5"/>
-                            <text id="Eyes" font-family="HelveticaNeue, Helvetica Neue" font-size="22" font-weight="normal" letter-spacing="0.625625" fill="#FFFFFF">
-                                <tspan x="151.62075" y="103">Eyes</tspan>
-                            </text>
-                            <text id="Hands" font-family="HelveticaNeue, Helvetica Neue" font-size="22" font-weight="normal" letter-spacing="0.625625" fill="#FFFFFF">
-                                <tspan x="143.447937" y="415">Hands</tspan>
-                            </text>
-                            <text id="Legs" font-family="HelveticaNeue, Helvetica Neue" font-size="22" font-weight="normal" letter-spacing="0.625625" fill="#FFFFFF">
-                                <tspan x="151.91175" y="594">Legs</tspan>
-                            </text>
+                             
+                            <g @click="scrollToAddress('eyes')" class="fake-link" >
+                              <rect id="Rectangle" :fill="(generalExamsQuestions[0].isComplete && generalExamsQuestions[1].isComplete) ? 'green' : '#DC3545'" x="128" y="71" width="98" height="47" rx="5"/>
+                              <text id="Eyes" font-family="HelveticaNeue, Helvetica Neue" font-size="22" font-weight="normal" letter-spacing="0.625625" fill="#FFFFFF">
+                                  <tspan x="151.62075" y="103">Eyes</tspan>
+                              </text>
+                            </g>
+
+                            <g @click="scrollToAddress('hands')" class="fake-link" >
+                              <rect id="Rectangle-Copy" :fill="(generalExamsQuestions[2].isComplete && generalExamsQuestions[3].isComplete) ? 'green' : '#DC3545'" x="128" y="383" width="98" height="47" rx="5"/>
+                              <text id="Hands" font-family="HelveticaNeue, Helvetica Neue" font-size="22" font-weight="normal" letter-spacing="0.625625" fill="#FFFFFF">
+                                  <tspan x="143.447937" y="415">Hands</tspan>
+                              </text>
+                            </g>
+
+                            <g @click="scrollToAddress('legs')" class="fake-link" >
+                              <rect id="Rectangle-Copy-2" :fill="(generalExamsQuestions[4].isComplete) ? 'green' : '#DC3545'" x="128" y="562" width="98" height="47" rx="5"/>
+                              <text id="Legs" font-family="HelveticaNeue, Helvetica Neue" font-size="22" font-weight="normal" letter-spacing="0.625625" fill="#FFFFFF">
+                                  <tspan x="151.91175" y="594">Legs</tspan>
+                              </text>
+                            </g>
                         </g>
                     </g>
                   </svg>
                 </div>
 
-                <div class="col-md-12 mt-4 mb-2 text-muted">
+                <div class="col-md-12 mt-4 mb-2 text-muted" ref="eyes">
                   <small>Eyes</small>
                   <hr class="mb-1 mt-1">
                 </div>
@@ -376,7 +385,7 @@
                     {{ option.name }}
                   </button>
                 </div>
-                <div class="col-md-12 mt-4 mb-2 text-muted">
+                <div class="col-md-12 mt-4 mb-2 text-muted" ref="hands">
                   <small>Hands</small>
                   <hr class="mb-1 mt-1">
                 </div>
@@ -392,7 +401,7 @@
                     {{ option.name }}
                   </button>
                 </div>
-                <div class="col-md-12 mt-4 mb-2 text-muted">
+                <div class="col-md-12 mt-4 mb-2 text-muted" ref="legs">
                   <small>Legs</small>
                   <hr class="mb-1 mt-1">
                 </div>
@@ -786,6 +795,26 @@
 export default {
   layout: 'dashboard',
   methods: {
+    scrollToAddress: function (bodyPart) {
+      let elTopPos
+
+
+      switch (bodyPart) {
+        case 'eyes':
+          elTopPos = this.$refs['eyes'].getBoundingClientRect().top 
+          break;
+        case 'hands':
+          elTopPos = this.$refs['hands'].getBoundingClientRect().top 
+          break;
+        case 'legs':
+          elTopPos = this.$refs['legs'].getBoundingClientRect().top 
+          break;
+      }
+
+      setTimeout(function () {
+        window.scrollTo(0, elTopPos);
+      }, 1000)
+    },
     makeCategoryActive: function (clickedCategory) {
       let self = this
     

@@ -6,7 +6,7 @@
           <div class="col-md-3 text-left responsive-padding-bottom" style="min-height: 200px;">
             <div class="position-relative">
               <div class="position-absolute">
-                <img class="w-100" src="/avatar-man_06.png">
+                <img class="w-100" src="/avatar-man_09.png">
               </div>
               <div class="w-100" style="padding-bottom: 100%;"></div>
             </div>

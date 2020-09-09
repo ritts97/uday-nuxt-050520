@@ -1,7 +1,12 @@
 <template>
-  <div>
+  <div class="mb-4">
     <div class="container mt-0">
       <div class="row" v-if="this.$store.state.currPatient.status === 'allocated'">
+        <div class="col-md-12 mb-1">
+          <nuxt-link to="/md/">
+            <button @click="editable = false; releasePatient()" :disabled="!patientIsReleasable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Mark Patient Released</button>     
+          </nuxt-link>
+        </div>
         <div class="col-md-12">
           <!-- <nuxt-link to="/md/profile/profile-visit"> -->
             <button @click="showDocsFeedback = true; editable = true; scrollToAddress()" :disabled="editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Update Episode Feedback</button>     
@@ -302,13 +307,13 @@
     <!-- {{ editable }} -->
     <div class="container" v-if="editable === true">
       <div class="row">
-        <div class="col-md-6">
+        <!-- <div class="col-md-6">
           <button @click="editable = true" :disabled="!editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Edit Complaint Description</button>     
-        </div>
-        <div class="col-md-6 mb-3">
-          <nuxt-link to="/md/">
-            <button @click="editable = false;" :disabled="!editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Save Complaint Description</button>     
-          </nuxt-link>
+        </div> -->
+        <div class="col-md-12 mb-3">
+          <!-- <nuxt-link to="/md/"> -->
+            <button @click="editable = false;" :disabled="!editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Save Complaint Updates</button>     
+          <!-- </nuxt-link> -->
         </div>
       </div>
     </div>
@@ -527,16 +532,11 @@
     </div>
     </transition>
 
-    <div v-if="showDocsFeedback === true">
+    <div v-if="showDocsFeedback === true && editable">
       <div class="container" v-if="this.$store.state.currPatient.status === 'allocated'">
         <div class="row">
           <div class="col-md-12">
-            <button @click="editable = !editable; scrollToTop()" :disabled="!editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Save Episode Feedback</button>     
-          </div>
-          <div class="col-md-12 mb-3">
-            <nuxt-link to="/md/">
-              <button @click="editable = false; releasePatient()" :disabled="!editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Mark Patient Released</button>     
-            </nuxt-link>
+            <button @click="editable = !editable; scrollToTop(); patientIsReleasable = !patientIsReleasable" :disabled="!editable" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Save Episode Feedback</button>     
           </div>
         </div>
       </div>
@@ -600,14 +600,14 @@ export default {
       
       setTimeout(function () {
         window.scrollTo(0, elTopPos);
-      }, 400)
+      }, 1000)
     },
     scrollToTop: function () {
-      // let elTopPos = this.$refs['doctors-feedback'].getBoundingClientRect().top
+      let elTopPos = this.$refs['doctors-feedback'].getBoundingClientRect().top
       
-      // setTimeout(function () {
-      //   window.scrollTo(0, 0);
-      // }, 400)
+      setTimeout(function () {
+        window.scrollTo(0, 0);
+      }, 1000)
     },
     getEpisodeData() {
       const episodeID = this.$route.query.id
@@ -723,6 +723,7 @@ export default {
       list: [],
       feedbackEditable: false,
       visitStatus: 'allocated',
+      patientIsReleasable: false,
       showDocsFeedback: false,
       showDemographics: true,
       showComplete: false,

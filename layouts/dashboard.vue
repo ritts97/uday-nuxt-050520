@@ -121,6 +121,10 @@ html, body {
   background-color: #eee;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 .underline {
   border-bottom: 2px solid #aaa;
 }
