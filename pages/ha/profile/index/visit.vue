@@ -236,6 +236,12 @@
                 {{ tab.title }}
               </div>
             </li>
+
+            <li class="list-inline-item text-center pointer">
+              <div class="px-2 mr-2 pb-1 mb-1" role="button">
+                New Follow Up
+              </div>
+            </li>
           </ul>
           <transition name="u-fade"  mode="out-in">
 
@@ -1195,21 +1201,21 @@ export default {
           title: 'Episode 1',
           isActive: true
         },
-        // {
-        //   name: 'followup1',
-        //   title: 'Follow Up 1',
-        //   isActive: false
-        // },
-        // {
-        //   name: 'followup2',
-        //   title: 'Follow Up 2',
-        //   isActive: false
-        // },
-        // {
-        //   name: 'service1',
-        //   title: 'Perform ECG',
-        //   isActive: false
-        // },
+        {
+          name: 'followup1',
+          title: 'Follow Up 1',
+          isActive: false
+        },
+        {
+          name: 'followup2',
+          title: 'Follow Up 2',
+          isActive: false
+        },
+        {
+          name: 'service1',
+          title: 'Perform ECG',
+          isActive: false
+        },
         // {
         //   name: 'billing',
         //   title: 'Billing History',

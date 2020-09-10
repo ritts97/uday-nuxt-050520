@@ -25,70 +25,19 @@
                 Health Diagnosis
                 <hr>
               </div>
-              <div class="col-md-6">
-                <div class="form-check ml-5 mb-4">
-                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                  <label class="form-check-label ml-3" for="defaultCheck1">
-                    High Blood Pressure
-                  </label>
-                </div>
-                <div class="form-check ml-5 mb-4">
-                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                  <label class="form-check-label ml-3" for="defaultCheck1">
-                    Stroke
-                  </label>
-                </div>
-                <div class="form-check ml-5 mb-4">
-                  <input class="form-check-input" type="checkbox" value="" checked id="defaultCheck1">
-                  <label class="form-check-label ml-3" for="defaultCheck1">
-                    Asthma
-                  </label>
-                </div>
-                <div class="form-check ml-5 mb-4">
-                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                  <label class="form-check-label ml-3" for="defaultCheck1">
-                    Cancer
-                  </label>
-                </div>
-                <div class="form-check ml-5 mb-4">
-                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                  <label class="form-check-label ml-3" for="defaultCheck1">
-                    Tobacco
+              <div class="col-md-6" v-for="(patientQuestion, index) in currPatient.demographics.patientHistory.questions" :key="index">
+                <div v-if="patientQuestion.placeholder" class="form-check ml-5 mb-4">
+                  <input class="form-check-input" type="checkbox" value="" :id="'patientQuestions' + index">
+                  <label class="form-check-label ml-3 fake-link" :for="'patientQuestions' + index">
+                    {{ patientQuestion.title }}
                   </label><br>
-                  <input type="text" class="ml-3 p-2 mt-3 w-75" placeholder="Sticks/Packs per day" name="" id="">
+                  <input type="number" v-model="patientQuestion.value" min="0" class="ml-3 mr-3 p-2 mt-3 w-5" placeholder="0"> Sticks/packs per day.
                 </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-check ml-5 mb-4">
-                  <input class="form-check-input" type="checkbox" value="" checked id="defaultCheck1">
-                  <label class="form-check-label ml-3" for="defaultCheck1">
-                    Heart Attack
+                <div class="form-check ml-5 mb-4" v-else>
+                  <input class="form-check-input" type="checkbox" value="" :id="'patientQuestions' + index">
+                  <label class="form-check-label ml-3 fake-link" :for="'patientQuestions' + index">
+                    {{ patientQuestion.title }}
                   </label>
-                </div>
-                <div class="form-check ml-5 mb-4">
-                  <input class="form-check-input" type="checkbox" value="" checked id="defaultCheck1">
-                  <label class="form-check-label ml-3" for="defaultCheck1">
-                    Diabetes
-                  </label>
-                </div>
-                <div class="form-check ml-5 mb-4">
-                  <input class="form-check-input" type="checkbox" value="" checked id="defaultCheck1">
-                  <label class="form-check-label ml-3" for="defaultCheck1">
-                    TB
-                  </label>
-                </div>
-                <div class="form-check ml-5 mb-4">
-                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                  <label class="form-check-label ml-3" for="defaultCheck1">
-                    Other
-                  </label>
-                </div>
-                <div class="form-check ml-5 mb-4">
-                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                  <label class="form-check-label ml-3" for="defaultCheck1">
-                    Alcohol
-                  </label><br>
-                  <input type="text" class="ml-3 p-2 mt-3 w-75" placeholder="Cups/Bottles per day" name="" id="">
                 </div>
               </div>
             </div>
@@ -97,8 +46,9 @@
                 General Notes
                 <hr>
               </div>
-              <div class="col-md-12">
-                <textarea class="w-100 form-control" rows="5" placeholder="Please provide any additional or relevant information"></textarea>
+              <div class="col-md-12 mb-4">
+                {{ currPatient.demographics.patientHistory.generalDescription }}
+                <!-- <textarea class="w-100 form-control" rows="5" placeholder="Please provide any additional or relevant information"></textarea> -->
               </div>
             </div>
           </div>
@@ -115,137 +65,19 @@
                 Health Diagnosis
                 <hr>
               </div>
-              <div class="col-md-6">
-                <div class="form-check ml-5 mb-4">
-                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                  <label class="form-check-label ml-3" for="defaultCheck1">
-                    High Blood Pressure
+              <div class="col-md-6" v-for="(patientQuestion, index) in currPatient.demographics.familyHistory.questions" :key="index">
+                <div v-if="patientQuestion.placeholder" class="form-check ml-5 mb-4">
+                  <input class="form-check-input" type="checkbox" value="" :id="'patientQuestions' + index">
+                  <label class="form-check-label ml-3 fake-link" :for="'patientQuestions' + index">
+                    {{ patientQuestion.title }}
                   </label><br>
-                  <select class="custom-select w-75 ml-3 mt-3">
-                    <option selected disabled>Relationship</option>
-                    <option value="1">Parent</option>
-                    <option value="2">Spouse</option>
-                    <option value="3">Other Relationship</option>
-                  </select>
+                  <input type="number" v-model="patientQuestion.value" min="0" class="ml-3 mr-3 p-2 mt-3 w-5" placeholder="0"> Sticks/packs per day.
                 </div>
-                <div class="form-check ml-5 mb-4">
-                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                  <label class="form-check-label ml-3" for="defaultCheck1">
-                    Stroke
-                  </label><br>
-                  <select class="custom-select w-75 ml-3 mt-3">
-                    <option selected disabled>Relationship</option>
-                    <option value="1">Parent</option>
-                    <option value="2">Spouse</option>
-                    <option value="3">Other Relationship</option>
-                  </select>
-                </div>
-                <div class="form-check ml-5 mb-4">
-                  <input class="form-check-input" type="checkbox" value="" checked id="defaultCheck1">
-                  <label class="form-check-label ml-3" for="defaultCheck1">
-                    Asthma
-                  </label><br>
-                  <select class="custom-select w-75 ml-3 mt-3">
-                    <option disabled>Relationship</option>
-                    <option selected value="1">Parent</option>
-                    <option value="2">Spouse</option>
-                    <option value="3">Other Relationship</option>
-                  </select>
-                </div>
-                <div class="form-check ml-5 mb-4">
-                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                  <label class="form-check-label ml-3" for="defaultCheck1">
-                    Cancer
-                  </label><br>
-                  <select class="custom-select w-75 ml-3 mt-3">
-                    <option disabled>Relationship</option>
-                    <option value="1">Parent</option>
-                    <option selected value="2">Spouse</option>
-                    <option value="3">Other Relationship</option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-check ml-5 mb-4">
-                  <input class="form-check-input" type="checkbox" value="" checked id="defaultCheck1">
-                  <label class="form-check-label ml-3" for="defaultCheck1">
-                    Heart Attack
-                  </label><br>
-                  <select class="custom-select w-75 ml-3 mt-3">
-                    <option disabled>Relationship</option>
-                    <option value="1">Parent</option>
-                    <option value="2">Spouse</option>
-                    <option selected value="3">Other Relationship</option>
-                  </select>
-                </div>
-                <div class="form-check ml-5 mb-4">
-                  <input class="form-check-input" type="checkbox" value="" checked id="defaultCheck1">
-                  <label class="form-check-label ml-3" for="defaultCheck1">
-                    Diabetes
-                  </label><br>
-                  <select class="custom-select w-75 ml-3 mt-3">
-                    <option disabled>Relationship</option>
-                    <option selected value="1">Parent</option>
-                    <option value="2">Spouse</option>
-                    <option value="3">Other Relationship</option>
-                  </select>
-                </div>
-                <div class="form-check ml-5 mb-4">
-                  <input class="form-check-input" type="checkbox" value="" checked id="defaultCheck1">
-                  <label class="form-check-label ml-3" for="defaultCheck1">
-                    TB
-                  </label><br>
-                  <select class="custom-select w-75 ml-3 mt-3">
-                    <option disabled>Relationship</option>
-                    <option selected value="1">Parent</option>
-                    <option value="2">Spouse</option>
-                    <option value="3">Other Relationship</option>
-                  </select>
-                </div>
-                <div class="form-check ml-5 mb-4">
-                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                  <label class="form-check-label ml-3" for="defaultCheck1">
-                    Other
-                  </label><br>
-                  <input type="text" class="ml-3 p-2 mt-3 w-75" placeholder="Describe condition..." name="" id=""><br>
-                  <select class="custom-select w-75 ml-3 mt-3">
-                    <option selected disabled>Relationship</option>
-                    <option value="1">Parent</option>
-                    <option value="2">Spouse</option>
-                    <option value="3">Other Relationship</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-check ml-5 mb-4">
-                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                  <label class="form-check-label ml-3" for="defaultCheck1">
-                    Tobacco
-                  </label><br>
-                  <input type="text" class="ml-3 p-2 mt-3 w-75" placeholder="Sticks/Packs per day" name="" id=""><br>
-                  <select class="custom-select w-75 ml-3 mt-3">
-                    <option selected disabled>Relationship</option>
-                    <option value="1">Parent</option>
-                    <option value="2">Spouse</option>
-                    <option value="3">Other Relationship</option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-check ml-5 mb-4">
-                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                  <label class="form-check-label ml-3" for="defaultCheck1">
-                    Alcohol
-                  </label><br>
-                  <input type="text form-control" class="ml-3 p-2 mt-3 w-75" placeholder="Cups/Bottles per day" name="" id=""><br>
-                  <select class="custom-select w-75 ml-3 mt-3">
-                    <option selected disabled>Relationship</option>
-                    <option value="1">Parent</option>
-                    <option value="2">Spouse</option>
-                    <option value="3">Other Relationship</option>
-                  </select>
+                <div class="form-check ml-5 mb-4" v-else>
+                  <input class="form-check-input" type="checkbox" value="" :id="'patientQuestions' + index">
+                  <label class="form-check-label ml-3 fake-link" :for="'patientQuestions' + index">
+                    {{ patientQuestion.title }}
+                  </label>
                 </div>
               </div>
             </div>
@@ -254,8 +86,9 @@
                 General Notes
                 <hr>
               </div>
-              <div class="col-md-12">
-                <textarea class="w-100 form-control" rows="5" placeholder="Please provide any additional or relevant information"></textarea>
+              <div class="col-md-12 mb-4">
+                {{ currPatient.demographics.familyHistory.generalDescription }}
+                <!-- <textarea class="w-100 form-control" rows="5" placeholder="Please provide any additional or relevant information"></textarea> -->
               </div>
             </div>
           </div>
@@ -302,6 +135,11 @@ export default {
         url: '/ha/profile'
       }
     ])
+  },
+  computed: {
+    currPatient: function () {
+      return this.$store.state.currPatient
+    }
   },
   methods: {
     getTab: function (tabName) {
