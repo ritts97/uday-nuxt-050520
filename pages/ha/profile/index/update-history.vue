@@ -4,30 +4,26 @@
       <div class="row">
         <div class="col-md-12 rounded">
           <ul class="list-inline">
-            <li class="list-inline-item">
-              <button class="btn btn-dark px-3 small" role="button">
-                View Medical History
-              </button>
-            </li><li class="list-inline-item">
-              <button class="btn btn-light px-3 small" role="button">
-                Update Medical History
-              </button>
+            <li class="list-inline-item" v-for="(tab, index) in tabs" :key="index">
+              <div class="btn px-3 small mr-1 pointer" type="button" @click="getTab(tab.name, tab.isEnabled)" :class="tab.isActive ? 'btn-dark' : 'btn-light'">
+                {{ tab.title }}
+              </div>
             </li>
           </ul>
         </div>
       </div>
+    </div>
 
+    <!-- Patient Medical History -->
+    <div class="container" v-if="tabs[0].isActive">
       <div class="row">
         <div class="col-md-12 rounded">
           <div class="w-100 bg-white mb-3 px-3 pb-3" style="min-height: 100px;">
-
             <!-- Start Patient History -->
             <div class="row pt-3">
-              <div class="col-md-12 pb-3">
-                Patient History
-              </div>
-              <div class="col-md-12 small text-muted pb-3">
+              <div class="col-md-12 small text-muted pb-2">
                 Health Diagnosis
+                <hr>
               </div>
               <div class="col-md-6">
                 <div class="form-check ml-5 mb-4">
@@ -97,26 +93,27 @@
               </div>
             </div>
             <div class="row pt-3">
-              <div class="col-md-12 small text-muted pb-3">
+              <div class="col-md-12 small text-muted pb-0">
                 General Notes
-              </div>
-              <div class="col-md-12">
-                <textarea class="w-100 form-control" rows="5">
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus veritatis, doloremque cum sunt rerum fugit, voluptatum rem pariatur similique nemo id reiciendis commodi. Aliquam aspernatur sapiente inventore ducimus, distinctio tempore.
-                </textarea>
-              </div>
-              <div class="col-md-12 py-2">
                 <hr>
               </div>
-            </div>
-
-            <!-- Start Family History -->
-            <div class="row">
-              <div class="col-md-12 pb-3">
-                Family History
+              <div class="col-md-12">
+                <textarea class="w-100 form-control" rows="5" placeholder="Please provide any additional or relevant information"></textarea>
               </div>
-              <div class="col-md-12 small text-muted pb-3">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container" v-if="tabs[1].isActive">
+      <div class="row">
+        <div class="col-md-12 rounded">
+          <div class="w-100 bg-white mb-3 px-3 pb-3" style="min-height: 100px;">
+            <div class="row pt-3">
+              <div class="col-md-12 small text-muted pb-2">
                 Health Diagnosis
+                <hr>
               </div>
               <div class="col-md-6">
                 <div class="form-check ml-5 mb-4">
@@ -253,23 +250,28 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus veritatis, 
               </div>
             </div>
             <div class="row pt-3">
-              <div class="col-md-12 small text-muted pb-3">
+              <div class="col-md-12 small text-muted pb-0">
                 General Notes
+                <hr>
               </div>
               <div class="col-md-12">
-                <textarea class="w-100 form-control" rows="5">
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores vel aliquam debitis tempore eligendi libero. Soluta aperiam accusamus aliquid hic?
-                </textarea>
+                <textarea class="w-100 form-control" rows="5" placeholder="Please provide any additional or relevant information"></textarea>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="container mb-3">
+
+    <div class="container mb-4">
       <div class="row">
         <div class="col-md-12">
           <div>
+            <nuxt-link to="/ha/profile">
+              <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2 text-uppercase">
+                Edit Medical History
+              </button>
+            </nuxt-link>
             <nuxt-link to="/ha/profile">
               <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1 text-uppercase">
                 Save Medical History
@@ -285,6 +287,22 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores vel aliquam deb
 <script>
 export default {
   layout: 'dashboard',
+  mounted() {
+    this.$store.commit('updatePath', [
+      {
+        title: 'Dashboard',
+        url: '/ha'
+      },
+      {
+        title: 'Patient\'s Profile',
+        url: '/ha/profile'
+      },
+      {
+        title: 'View Demographics',
+        url: '/ha/profile'
+      }
+    ])
+  },
   methods: {
     getTab: function (tabName) {
       let tabs = this.tabs
@@ -330,41 +348,16 @@ export default {
       showDemographics: true,
       showComplete: false,
       tabs: [
-        // {
-        //   name: 'patients',
-        //   title: 'Demographics',
-        //   isActive: true,
-        // },
         {
-          name: 'allocated',
-          title: 'Chief Complaints',
+          name: 'medicalHistory',
+          title: 'Patient Medical History',
           isActive: true,
         },
-        // {
-        //   name: 'released',
-        //   title: 'Medical History',
-        //   isActive: false,
-        // },
         {
-          name: 'cluster',
-          title: 'Vitals',
+          name: 'familyMedicalHistory',
+          title: 'Family Medical History',
           isActive: false,
         },
-        {
-          name: 'general',
-          title: 'General Exams',
-          isActive: false,
-        },
-        {
-          name: 'specific',
-          title: 'Specific Exams',
-          isActive: false,
-        },
-        {
-          name: 'photos',
-          title: 'Add. Photos',
-          isActive: false,
-        }
       ]
     }
   },

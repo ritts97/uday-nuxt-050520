@@ -6,7 +6,9 @@
           <div class="col-md-3 text-left responsive-padding-bottom" style="min-height: 200px;">
             <div class="position-relative">
               <div class="position-absolute">
-                <img class="w-100" src="/avatar-man_09.png">
+                <nuxt-link to="/ha/profile">
+                  <img class="w-100" src="/avatar-man_09.png">
+                </nuxt-link>
               </div>
               <div class="w-100" style="padding-bottom: 100%;"></div>
             </div>
@@ -36,10 +38,23 @@
               <div class="col-md-6">
                 {{ currPatient.demographics.phone }} <br><br>
                 {{ currPatient.demographics.address }} <br>
-                {{ currPatient.demographics.location }}<br>
+                {{ currPatient.demographics.location }}
+                
                 <!-- {{ currPatient.demographics.address2 }} <br> -->
                 <!-- :: {{ this.$store.state.currPatient.id }}<br> -->
-                <br>
+              </div>
+              <div class="col-md-12 mt-5">
+                <!-- <hr> -->
+              </div>
+              <div class="col-md-6">
+                <nuxt-link to="/ha/profile/update-demo">
+                  Update Demographics
+                </nuxt-link>
+              </div>
+              <div class="col-md-6">
+                <nuxt-link to="/ha/profile/update-history">
+                  View Medical History 
+                </nuxt-link>
               </div>
             </div>
             <!-- <div class="row">

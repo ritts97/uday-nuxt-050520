@@ -39,7 +39,7 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: ['@/plugins/vue-html-to-paper.js'],
+  plugins: ['@/plugins/vue-html-to-paper.js', '@/plugins/v-tooltips.js'],
 
   /*
   ** Page transitions

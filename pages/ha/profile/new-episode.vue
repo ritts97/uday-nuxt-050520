@@ -92,7 +92,7 @@
                             </div>
                             <div v-if="question.type === 'number'">
                               <label for="exampleFormControlSelect1">{{ question.question }}</label><br>
-                              <input type="number" v-model="question.answer" class="mt-1 p-2 mr-2 w-25" placeholder="0"> {{ question.caption }}
+                              <input type="number" min="0" v-model="question.answer" class="mt-1 p-2 mr-2 w-25" placeholder="0"> {{ question.caption }}
                             </div>
                           </div>
                         </div>
@@ -132,7 +132,7 @@
             <div class="container mb-3">
               <div class="row">
                 <div class="col-md-12 px-0">
-                  <button @click="goToNext()"  type="button" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0 text-uppercase">
+                  <button @click="goToNext()" :disabled="!preCheckQuestions.every(question => question.isChecked === true)" type="button" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0 text-uppercase">
                     Go to General Exams
                   </button>
                 </div>
@@ -157,16 +157,16 @@
                   </div>
                   <div v-else-if="!vitalQuestion.options && vitalQuestion.name === 'bp'">
                     <label for="exampleFormControlSelect1">{{ vitalQuestion.title }}</label><br>
-                    <input class="form-control d-inline w-25 mr-2" type="number" v-model="vitalQuestion.valueFirst"> /
-                    <input class="form-control d-inline w-25 mx-2 mr-2" type="number" v-model="vitalQuestion.valueSecond"> {{ vitalQuestion.caption }}
+                    <input class="form-control d-inline w-25 mr-2" type="number" min="0" v-model="vitalQuestion.valueFirst"> /
+                    <input class="form-control d-inline w-25 mx-2 mr-2" type="number" min="0" v-model="vitalQuestion.valueSecond"> {{ vitalQuestion.caption }}
                   </div>
                   <div v-else-if="!vitalQuestion.options && vitalQuestion.name === 'height'">
                     <label for="exampleFormControlSelect1 mb-2">{{ vitalQuestion.title }}</label><br>
-                    <input class="form-control d-inline w-25 mr-2" @keyup="calculateBMI" @click="calculateBMI" type="number" v-model="vitalQuestion.value" value="0"> {{ vitalQuestion.caption }}
+                    <input class="form-control d-inline w-25 mr-2" @keyup="calculateBMI" @click="calculateBMI" type="number" min="0" v-model="vitalQuestion.value" value="0"> {{ vitalQuestion.caption }}
                   </div>
                   <div v-else-if="!vitalQuestion.options && vitalQuestion.name === 'weight'">
                     <label for="exampleFormControlSelect1 mb-2">{{ vitalQuestion.title }} </label><br>
-                    <input class="form-control d-inline w-25 mr-2" @keyup="calculateBMI" @click="calculateBMI" type="number" v-model="vitalQuestion.value" value="0"> {{ vitalQuestion.caption }}
+                    <input class="form-control d-inline w-25 mr-2" @keyup="calculateBMI" @click="calculateBMI" type="number" min="0" v-model="vitalQuestion.value" value="0"> {{ vitalQuestion.caption }}
                   </div>
                   <div v-else-if="!vitalQuestion.options && vitalQuestion.name === 'bmi'">
                     <label for="exampleFormControlSelect1 mb-2">{{ vitalQuestion.title }}</label><br>
@@ -174,7 +174,7 @@
                   </div>
                   <div v-else>
                     <label for="exampleFormControlSelect1">{{ vitalQuestion.title }}</label><br>
-                    <input class="form-control d-inline w-25 mr-2" type="number" v-model="vitalQuestion.value" value="0"> {{ vitalQuestion.caption }}
+                    <input class="form-control d-inline w-25 mr-2" type="number" min="0" v-model="vitalQuestion.value" value="0"> {{ vitalQuestion.caption }}
                   </div>
                 </div>
               </div>
@@ -368,19 +368,22 @@
                     </g>
                   </svg>
                 </div>
-
                 <div class="col-md-12 mt-4 mb-2 text-muted" ref="eyes">
                   <small>Eyes</small>
                   <hr class="mb-1 mt-1">
                 </div>
                 <div class="col-md-6 mb-3">
-                  <label for="exampleFormControlSelect1">{{ generalExamsQuestions[0].name }}</label><br>
+                  <div class="d-inline" v-tooltip="{ content: `<img class='w-100' src='/refImages/jaundice.png'>` }">
+                    <label class="fake-link" for="exampleFormControlSelect1">{{ generalExamsQuestions[0].name }}</label><br>
+                  </div>
                   <button class="btn mb-2 mr-2" :class="option.isActive ? 'btn-dark' : 'btn-light'" v-for="(option, oIndex) in generalExamsQuestions[0].options" :key="oIndex" @click="handleGenExamOptions(0, oIndex)">
                     {{ option.name }}
                   </button>
                 </div>
                 <div class="col-md-6 mb-3">
-                  <label for="exampleFormControlSelect1">{{ generalExamsQuestions[1].name }}</label><br>
+                  <div class="d-inline" v-tooltip="{ content: `<img class='w-100' src='/refImages/pallor.png'>` }">
+                    <label class="fake-link" for="exampleFormControlSelect1" >{{ generalExamsQuestions[1].name }}</label><br>
+                  </div>
                   <button class="btn mb-2 mr-2" :class="option.isActive ? 'btn-dark' : 'btn-light'" v-for="(option, oIndex) in generalExamsQuestions[1].options" :key="oIndex" @click="handleGenExamOptions(1, oIndex)">
                     {{ option.name }}
                   </button>
@@ -390,13 +393,17 @@
                   <hr class="mb-1 mt-1">
                 </div>
                 <div class="col-md-6 mb-3">
-                  <label for="exampleFormControlSelect1">{{ generalExamsQuestions[2].name }}</label><br>
+                  <div class="d-inline" v-tooltip="{ content: `<img class='w-100' src='/refImages/cyanosis.png'>` }">
+                    <label class="fake-link" for="exampleFormControlSelect1" >{{ generalExamsQuestions[2].name }}</label><br>
+                  </div>
                   <button class="btn mb-2 mr-2" :class="option.isActive ? 'btn-dark' : 'btn-light'" v-for="(option, oIndex) in generalExamsQuestions[2].options" :key="oIndex" @click="handleGenExamOptions(2, oIndex)">
                     {{ option.name }}
                   </button>
                 </div>
                 <div class="col-md-6 mb-3">
-                  <label for="exampleFormControlSelect1">{{ generalExamsQuestions[3].name }}</label><br>
+                  <div class="d-inline" v-tooltip="{ content: `<img class='w-100' src='/refImages/clubbing.png'>` }">
+                    <label class="fake-link" for="exampleFormControlSelect1" >{{ generalExamsQuestions[3].name }}</label><br>
+                  </div>
                   <button class="btn mb-2 mr-2" :class="option.isActive ? 'btn-dark' : 'btn-light'" v-for="(option, oIndex) in generalExamsQuestions[3].options" :key="oIndex" @click="handleGenExamOptions(3, oIndex)">
                     {{ option.name }}
                   </button>
@@ -406,7 +413,9 @@
                   <hr class="mb-1 mt-1">
                 </div>
                 <div class="col-md-6 mb-3">
-                  <label for="exampleFormControlSelect1">{{ generalExamsQuestions[4].name }}</label><br>
+                  <div class="d-inline" v-tooltip="{ content: `<img class='w-100' src='/refImages/oedema.png'>` }">
+                    <label class="fake-link" for="exampleFormControlSelect1">{{ generalExamsQuestions[4].name }}</label><br>
+                  </div>
                   <button class="btn mb-2 mr-2" :class="option.isActive ? 'btn-dark' : 'btn-light'" v-for="(option, oIndex) in generalExamsQuestions[4].options" :key="oIndex" @click="handleGenExamOptions(4, oIndex)">
                     {{ option.name }}
                   </button>
@@ -795,6 +804,15 @@
 export default {
   layout: 'dashboard',
   methods: {
+    showRefs: function () {
+      console.log(this.$refs)
+      // this.$refs
+    },
+    scrollToTop: function () {
+      setTimeout(function () {
+        window.scrollTo(0, 0);
+      }, 1000)
+    },
     scrollToAddress: function (bodyPart) {
       let elTopPos
 
@@ -968,6 +986,8 @@ export default {
           ref = i
         }
       }
+
+      this.scrollToTop()
 
       tabs[ref + 1].isActive = true
       tabs[ref + 1].isEnabled = true
@@ -1158,6 +1178,14 @@ export default {
   mounted () {
     this.reset();
     this.$store.commit('updatePath', this.fullPath)
+
+    let self = this
+    
+    setTimeout(function() {
+      console.log('xx')
+      console.log(self.$refs['eyes'])
+      console.log(self.$refs['data-toggle'])
+    }, 2000)
   },
   computed: {
     isInitial() {
@@ -8460,5 +8488,116 @@ export default {
     font-size: 1.2em;
     text-align: center;
     padding: 50px 0;
+  }
+
+  /* V-tooltips */
+
+  .tooltip {
+    display: block !important;
+    z-index: 10000;
+  }
+
+  .tooltip .tooltip-inner {
+    background: orange;
+    color: white;
+    border-radius: 16px;
+    /* width: 400px !important;
+    height: 400px !important; */
+    max-width: 500px !important;
+    padding: 5px 10px 4px;
+  }
+
+  .tooltip .tooltip-arrow {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    position: absolute;
+    margin: 5px;
+    border-color: green;
+    z-index: 1;
+  }
+
+  .tooltip[x-placement^="top"] {
+    margin-bottom: 5px;
+  }
+
+  .tooltip[x-placement^="top"] .tooltip-arrow {
+    border-width: 5px 5px 0 5px;
+    border-left-color: transparent !important;
+    border-right-color: transparent !important;
+    border-bottom-color: transparent !important;
+    bottom: -5px;
+    left: calc(50% - 5px);
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .tooltip[x-placement^="bottom"] {
+    margin-top: 5px;
+  }
+
+  .tooltip[x-placement^="bottom"] .tooltip-arrow {
+    border-width: 0 5px 5px 5px;
+    border-left-color: transparent !important;
+    border-right-color: transparent !important;
+    border-top-color: transparent !important;
+    top: -5px;
+    left: calc(50% - 5px);
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .tooltip[x-placement^="right"] {
+    margin-left: 5px;
+  }
+
+  .tooltip[x-placement^="right"] .tooltip-arrow {
+    border-width: 5px 5px 5px 0;
+    border-left-color: transparent !important;
+    border-top-color: transparent !important;
+    border-bottom-color: transparent !important;
+    left: -5px;
+    top: calc(50% - 5px);
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .tooltip[x-placement^="left"] {
+    margin-right: 5px;
+  }
+
+  .tooltip[x-placement^="left"] .tooltip-arrow {
+    border-width: 5px 0 5px 5px;
+    border-top-color: transparent !important;
+    border-right-color: transparent !important;
+    border-bottom-color: transparent !important;
+    right: -5px;
+    top: calc(50% - 5px);
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .tooltip.popover .popover-inner {
+    background: #f9f9f9;
+    color: white;
+    padding: 24px;
+    border-radius: 5px;
+    box-shadow: 0 5px 30px rgba(white, .1);
+  }
+
+  .tooltip.popover .popover-arrow {
+    border-color: #f9f9f9;
+  }
+
+  .tooltip[aria-hidden='true'] {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity .15s, visibility .15s;
+  }
+
+  .tooltip[aria-hidden='false'] {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity .15s;
   }
 </style>
