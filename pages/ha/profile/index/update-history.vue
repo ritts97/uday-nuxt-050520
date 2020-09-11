@@ -22,19 +22,19 @@
             <!-- Start Patient History -->
             <div class="row pt-3">
               <div class="col-md-12 small text-muted pb-2">
-                Health Diagnosis
+                Health Diagnosis 111
                 <hr>
               </div>
               <div class="col-md-6" v-for="(patientQuestion, index) in currPatient.demographics.patientHistory.questions" :key="index">
                 <div v-if="patientQuestion.placeholder" class="form-check ml-5 mb-4">
-                  <input class="form-check-input" type="checkbox" value="" :id="'patientQuestions' + index">
+                  <input class="form-check-input" type="checkbox" :checked="patientQuestion.isActive" :id="'patientQuestions' + index">
                   <label class="form-check-label ml-3 fake-link" :for="'patientQuestions' + index">
                     {{ patientQuestion.title }}
                   </label><br>
-                  <input type="number" v-model="patientQuestion.value" min="0" class="ml-3 mr-3 p-2 mt-3 w-5" placeholder="0"> Sticks/packs per day.
+                  <input type="number" :value="patientQuestion.value" min="0" class="ml-3 mr-3 p-2 mt-3 w-5" placeholder="0"> Sticks/packs per day.
                 </div>
                 <div class="form-check ml-5 mb-4" v-else>
-                  <input class="form-check-input" type="checkbox" value="" :id="'patientQuestions' + index">
+                  <input class="form-check-input" type="checkbox" :checked="patientQuestion.isActive" :id="'patientQuestions' + index">
                   <label class="form-check-label ml-3 fake-link" :for="'patientQuestions' + index">
                     {{ patientQuestion.title }}
                   </label>
@@ -67,14 +67,14 @@
               </div>
               <div class="col-md-6" v-for="(patientQuestion, index) in currPatient.demographics.familyHistory.questions" :key="index">
                 <div v-if="patientQuestion.placeholder" class="form-check ml-5 mb-4">
-                  <input class="form-check-input" type="checkbox" value="" :id="'patientQuestions' + index">
+                  <input class="form-check-input" type="checkbox" :checked="patientQuestion.isActive" :id="'patientQuestions' + index">
                   <label class="form-check-label ml-3 fake-link" :for="'patientQuestions' + index">
                     {{ patientQuestion.title }}
                   </label><br>
-                  <input type="number" v-model="patientQuestion.value" min="0" class="ml-3 mr-3 p-2 mt-3 w-5" placeholder="0"> Sticks/packs per day.
+                  <input type="number" :value="patientQuestion.value" min="0" class="ml-3 mr-3 p-2 mt-3 w-5" placeholder="0"> Sticks/packs per day.
                 </div>
                 <div class="form-check ml-5 mb-4" v-else>
-                  <input class="form-check-input" type="checkbox" value="" :id="'patientQuestions' + index">
+                  <input class="form-check-input" type="checkbox" :checked="patientQuestion.isActive" :id="'patientQuestions' + index">
                   <label class="form-check-label ml-3 fake-link" :for="'patientQuestions' + index">
                     {{ patientQuestion.title }}
                   </label>

@@ -2,7 +2,6 @@ import udayDBStore from "./udayStore"
 import udayMutations from "./mutations"
 
 export const state = () => ({
-  counter: 10,
   currPath: [
     {
       title: "Dashboard",
@@ -27,30 +26,10 @@ export const state = () => ({
       phone: "",
       location: ""
     },
-    episodes: [
-      {
-        episodeID: "EP0 FL0",
-        title: "Registered",
-        created: "1 week ago",
-        lastUpdated: "1 week ago",
-        numFollowUps: "3",
-        complaint: {
-          chiefComplaint: "",
-          vitals: "",
-          genExams: "",
-          specExams: "",
-          addPhotos: ""
-        },
-        feedback: {
-          medicine: "",
-          investigations: "",
-          advice: "",
-          diagnosis: ""
-        }
-      }
-    ],
+    episodes: [],
     services: []
   },
+  currEpisode: {},
   ...udayDBStore,
 });
 

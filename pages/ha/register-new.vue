@@ -102,7 +102,7 @@
                     <option value="3">Other</option>
                   </select>
                   <label for="">Country</label>
-                  <input type="text" class="w-100 p-2 mb-3" v-model="patientData.country" placeholder="India">
+                  <input type="text" class="w-100 p-2 mb-3" v-model="patientData.country" placeholder="India" value="India">
                 </div>
               </div>
             </div>

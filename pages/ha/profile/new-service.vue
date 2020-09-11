@@ -2,11 +2,27 @@
   <div>
     <div class="container">
       <div class="row">
+        <div class="col-md-12">
+          <ul class="list-inline">
+            <!-- <li class="list-inline-item">
+              <button class="btn btn-light px-3 small">
+                {{ this.$store.state.currEpisode.title }}
+              </button>
+            </li> -->
+            <li class="list-inline-item">
+              <button class="btn btn-dark px-3 small">
+                New Service (for Episode: {{ this.$store.state.currEpisode.episodeID }})
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="row">
         <div class="col-md-12 rounded">
           <ul class="list-inline mb-2">
             <li class="list-inline-item mr-0">
               <div class="px-2 mr-2 pb-1 mb-1 underline" role="button">
-                New Service
+                Service Details
               </div>
             </li>
           </ul>
@@ -44,7 +60,7 @@
     <div class="container mb-3">
       <div class="row">
         <div class="col-md-12">
-          <nuxt-link to="/ha/profile"> 
+          <nuxt-link :to="'/ha/profile/visit?id=' + this.$store.state.currEpisode.episodeID"> 
             <button @click="recordNewService()" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">Record New Service</button>
           </nuxt-link>
         </div>
@@ -76,7 +92,9 @@ export default {
     recordNewService: function () {
       alert('New service has been recorded.')
 
-      this.$store.commit('recordNewService', this.serviceDetails)
+      const episodeID = this.$route.query.id
+
+      this.$store.commit('recordNewService', [this.serviceDetails, episodeID])
     },
   },
   data() {

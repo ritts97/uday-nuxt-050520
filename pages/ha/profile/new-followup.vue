@@ -11,12 +11,11 @@
             </li> -->
             <li class="list-inline-item">
               <button class="btn btn-dark px-3 small">
-                New Episode
+                New Follow Up
               </button>
             </li>
           </ul>
         </div>
-
         <div class="col-md-12 rounded">
           <ul class="list-inline mb-2">
             <li class="list-inline-item mr-0" v-for="(tab, index) in tabs" :key="index">
@@ -796,9 +795,9 @@
             </div>
             <div class="row">
               <div class="col-md-12">
-                  <nuxt-link to="/ha/profile" class="w-100">
+                  <nuxt-link :to="'/ha/profile/visit?id=' + this.$store.state.currEpisode.episodeID" class="w-100">
                     <button @click="addToQueue" type="button" data-dismiss="modal" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-0 text-uppercase">
-                      Record New Episode
+                      Record New Follow Up
                     </button>
                   </nuxt-link>
               </div>
@@ -826,11 +825,10 @@ export default {
     scrollToTop: function () {
       setTimeout(function () {
         window.scrollTo(0, 0);
-      }, 1000)
+      }, 0)
     },
     scrollToAddress: function (bodyPart) {
       let elTopPos
-
 
       switch (bodyPart) {
         case 'eyes':
@@ -1008,7 +1006,7 @@ export default {
       tabs[ref + 1].isEnabled = true
     },
     addToQueue: function () {
-      alert('The patient has been allocated.')
+      alert('The patient follow has been recorded.')
 
       // normalize answers to new episode questions
       this.newEpisodeComplete.chiefComplaints.push([this.currCategory, this.subCategory])
@@ -1023,18 +1021,19 @@ export default {
 
       // // normalize vitals
       // let vitals = this.vitals
-      console.log(this.newEpisodeComplete.vitals)
+      // console.log(this.newEpisodeComplete.vitals)
 
       // normalize specific exams
       let specificExams = this.specificExamQuestions.filter(x => x.isComplete === true)
       this.newEpisodeComplete.specificExams.push(...this.specificExamQuestions.filter(x => x.isComplete === true))
-      console.log('xx')
-      console.log(this.specificExamQuestions.filter(x => x.isComplete === true))
+      // console.log(this.specificExamQuestions.filter(x => x.isComplete === true))
 
-      this.$store.commit('updateStatus', 'allocated')
-      this.$store.commit('addPatientToQueue', this.$store.state.currPatient.id)
-      this.$store.commit('recordNewEpisode', this.newEpisodeComplete)
-      this.$store.commit('updateCurrPatient')
+      // this.$store.commit('updateStatus', 'allocated')
+      // this.$store.commit('addPatientToQueue', this.$store.state.currPatient.id)
+
+
+      this.$store.commit('recordNewFollowUp', [this.$store.state.currEpisode.episodeID, this.newEpisodeComplete])
+      // this.$store.commit('updateCurrPatient')
     },
     calculateBMI: function () {
       let patWeight = this.newEpisodeComplete.vitals.filter(question => question.name === 'weight')[0].value
@@ -1332,6 +1331,8 @@ export default {
         ],
         allocation: {},
         meta: {
+          visitID: '',
+          visitType: 'followup',
           createDate: '',
           createdBy: '',
           lastUpdated: '',
@@ -8398,8 +8399,8 @@ export default {
           url: '/ha/profile'
         },
         {
-          title: 'New Episode',
-          url: '/ha/new-episode'
+          title: 'New Follow Up',
+          url: '/ha/new-followup'
         },
       ],
       list: [],

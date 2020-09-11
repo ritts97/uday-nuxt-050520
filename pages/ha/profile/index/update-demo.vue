@@ -19,35 +19,37 @@
           <div class="w-100 bg-white mb-3 px-3 pb-3" style="min-height: 100px;">
             <div class="row pt-3">
               <div class="col-md-12 pb-3">
-                General Information
+                General Information <br>
+                <!-- <br><br> -->
+                <!-- {{ currPatient.demographics }} -->
               </div>
               <div class="col-md-6">
                 <div class="small text-muted mb-1">
                   Full Name
                 </div>
-                <input type="text" class="w-100 p-2 mb-3" placeholder="First Name" value="Delores Abernathy">
+                <input type="text" class="w-100 p-2 mb-3" placeholder="First Name" :value="currPatient.demographics.name">
                 <div class="small text-muted mb-1">
                   Phone Number
                 </div>
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Phone Number" value="1-415-555-12234">
+                <input type="text" class="w-100 p-2 mb-3" placeholder="Phone Number" :value="currPatient.demographics.phone">
                 <div class="small text-muted mb-1">
                   H/W/S/D of
                 </div>
-                <input type="text" class="w-100 p-2 mb-3" placeholder="H/W/S/D of" value="Delores Abernathy">
+                <input type="text" class="w-100 p-2 mb-3" placeholder="H/W/S/D of" :value="currPatient.demographics.hswd">
               </div>
               <div class="col-md-6">
                 <div class="small text-muted mb-1">
                   Gender
                 </div>
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Gender" value="Male">
+                <input type="text" class="w-100 p-2 mb-3" placeholder="Gender" :value="currPatient.demographics.gender">
                 <div class="small text-muted mb-1">
                   Age
                 </div>
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Age" value="29">
+                <input type="text" class="w-100 p-2 mb-3" placeholder="Age" :value="currPatient.demographics.age">
                 <div class="small text-muted mb-1">
                   Occupation
                 </div>
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Occupation" value="Industrial Farmer">
+                <input type="text" class="w-100 p-2 mb-3" placeholder="Occupation" :value="currPatient.demographics.occupation">
               </div>
             </div>
             <div class="row pt-3">
@@ -58,25 +60,25 @@
                 <div class="small text-muted mb-1">
                   Address 1
                 </div>
-                <input type="text" class="w-100 p-2 mb-3" placeholder="First Name" value="444 D St.">
+                <input type="text" class="w-100 p-2 mb-3" placeholder="First Name" :value="currPatient.demographics.address">
                 <div class="small text-muted mb-1">
                   District
                 </div>
-                <input type="text" class="w-100 p-2 mb-3" placeholder="First Name" value="Hyperbad">
+                <input type="text" class="w-100 p-2 mb-3" placeholder="First Name" value="District">
                 <div class="small text-muted mb-1">
                   Police Station
                 </div>
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Phone Number" value="Police Station">
+                <input type="text" class="w-100 p-2 mb-3" placeholder="Phone Number" :value="currPatient.demographics.police">
               </div>
               <div class="col-md-6">
                 <div class="small text-muted mb-1">
                   Address 2
                 </div>
-                <input type="text" class="w-100 p-2 mb-3" placeholder="First Name" value="Apt #4">
+                <input type="text" class="w-100 p-2 mb-3" placeholder="First Name" :value="currPatient.demographics.address2">
                 <div class="small text-muted mb-1">
                   State
                 </div>
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Gender" value="India">
+                <input type="text" class="w-100 p-2 mb-3" placeholder="" :value="currPatient.demographics.country">
               </div>
             </div>
           </div>
@@ -117,6 +119,11 @@ export default {
         url: '/ha/profile'
       }
     ])
+  },
+  computed: {
+    currPatient: function () {
+      return this.$store.state.currPatient
+    }
   },
   methods: {
     getTab: function (tabName) {

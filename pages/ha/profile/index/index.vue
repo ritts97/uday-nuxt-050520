@@ -131,9 +131,9 @@ export default {
   },
   computed: {
     getListLengthSecond: function () {
-      console.log('List: ')
-      console.log(this.list)
-      console.log(this.list.length)
+      // console.log('List: ')
+      // console.log(this.list)
+      // console.log(this.list.length)
       return this.list.length
     },
     filterAllVisits: function () {

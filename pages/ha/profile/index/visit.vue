@@ -206,10 +206,15 @@
         </div> -->
       </div>
       <div class="row">
-        <div class="col-md-12">
-          <!-- <nuxt-link to="/ha/profile/new-episode"> -->
+        <div class="col-md-6">
+          <nuxt-link to="/ha/profile/new-followup">
             <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Record New Follow Up</button>     
-          <!-- </nuxt-link> -->
+          </nuxt-link>
+        </div>
+        <div class="col-md-6">
+          <nuxt-link :to="'/ha/profile/new-service?id=' + this.$route.query.id">
+            <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Record New Service</button>     
+          </nuxt-link>
         </div>
         <div class="col-md-12">
           <hr class="mt-2">
@@ -217,17 +222,33 @@
           Curr Patient: {{ this.$store.state.currPatient.episodes.find(episode => episode.episodeID === this.$route.query.id ) }} -->
         </div>
       </div>
+      <!-- {{ episodeData }} -->
       <div class="row">
         <div class="col-md-12 rounded">
           <ul class="list-inline">
             <li v-for="(tab, index) in tabs" :key="index" class="list-inline-item">
-              <button  @click="getTab(tab.name)" class="btn px-3 small" :class="tab.isActive ? 'btn-dark' : 'btn-light'" role="button">
+              <button v-if="tab.type === 'episode'" @click="getTab(tab.name); handleEpisode()" class="btn px-3 small" :class="tab.isActive ? 'btn-dark' : 'btn-light'" role="button">
+                {{ tab.title }}
+              </button>
+
+              <button  v-if="tab.type === 'followup'" @click="getTab(tab.name); handleFollowUp(tab.itemIndex)" class="btn px-3 small" :class="tab.isActive ? 'btn-dark' : 'btn-light'" role="button">
+                {{ tab.title }}
+              </button>
+
+              <button  v-if="tab.type === 'service'" @click="getTab(tab.name); handleService(tab.itemIndex)" class="btn px-3 small" :class="tab.isActive ? 'btn-dark' : 'btn-light'" role="button">
                 {{ tab.title }}
               </button>
             </li>
           </ul>
         </div>
       </div>
+    </div>
+      <!-- <div class="row">
+        <div class="col-md-12">
+          {{ visitData }} 
+        </div>
+      </div> -->
+    <div class="container" v-if="!visitData.serviceResults">
       <div class="row">
         <div class="col-md-12 rounded">
           <ul class="list-inline mb-2">
@@ -236,15 +257,8 @@
                 {{ tab.title }}
               </div>
             </li>
-
-            <li class="list-inline-item text-center pointer">
-              <div class="px-2 mr-2 pb-1 mb-1" role="button">
-                New Follow Up
-              </div>
-            </li>
           </ul>
           <transition name="u-fade"  mode="out-in">
-
           <div class="w-100 bg-white mb-2 mt-0 px-3 pt-3 pb-3" key="complaint" style="min-height: 200px;" v-if="subTabs[0].isActive">
             <div class="row mt-1">
               <div class="col-md-12">
@@ -252,7 +266,7 @@
                   Chief Complaints
                   <hr class="mb-1 mt-1">
                 </div>
-                <div v-for="(complaints, index) in currEpisode.episodeDetails.chiefComplaints" :key="index">
+                <div v-for="(complaints, index) in visitData.chiefComplaints" :key="index">
                   <div v-for="(complaint, cIndex) in complaints" :key="cIndex" class="d-inline">
                     <button v-if="complaint" class="btn px-3 mb-2 mr-2 small btn-dark" role="button">
                       {{ complaint }}
@@ -265,7 +279,7 @@
                   Fixed Questions
                   <hr class="mb-1 mt-1">
                 </div>
-                <div v-for="(question, indexQuestion) in currEpisode.episodeDetails.chiefComplaintsFixedQuestions" class="mt-3 mb-4" :key="indexQuestion">
+                <div v-for="(question, indexQuestion) in visitData.chiefComplaintsFixedQuestions" class="mt-3 mb-4" :key="indexQuestion">
                   <div v-if="question.type === 'text'">
                     <label for="exampleFormControlSelect1">{{ question.question }}</label><br>
                     {{ question.answer }}
@@ -295,7 +309,7 @@
           <div class="w-100 bg-white mb-2 mt-0 px-3 pt-3 pb-3" key="vitals" style="min-height: 200px;" v-if="subTabs[1].isActive">
             <div class="row mt-1">
               <!-- {{ currEpisode.episodeDetails.vitals }} -->
-              <div class="mb-4" v-for="(vitalQuestion, index) in currEpisode.episodeDetails.vitals" :class="[vitalQuestion.fullLength ? 'col-md-12' : 'col-md-6']" :key="index">
+              <div class="mb-4" v-for="(vitalQuestion, index) in visitData.vitals" :class="[vitalQuestion.fullLength ? 'col-md-12' : 'col-md-6']" :key="index">
                 <div v-if="vitalQuestion.options">
                   <label for="exampleFormControlSelect1">{{ vitalQuestion.title }}</label><br>
                   <button v-for="(option, optionIndex) in vitalQuestion.options" :class="option.isActive ? 'btn-dark' : 'btn-light'" :key="optionIndex" class="btn mb-2 mr-2">
@@ -478,21 +492,21 @@
                             <path d="M347.715589,585.34717 L259.917969,585.34717" id="path3552-copy-2" stroke="#000000"/>
 
                             <g @click="scrollToAddress('eyes')" class="fake-link">
-                            <rect id="Rectangle" :fill="(this.currEpisode.episodeDetails.generalExams[0].isComplete && this.currEpisode.episodeDetails.generalExams[0].isComplete) ? 'green' : '#DC3545'" x="128" y="71" width="98" height="47" rx="5"/>
+                            <rect id="Rectangle" :fill="(visitData.generalExams[0].isComplete && this.currEpisode.episodeDetails.generalExams[0].isComplete) ? 'green' : '#DC3545'" x="128" y="71" width="98" height="47" rx="5"/>
                             <text id="Eyes" font-family="HelveticaNeue, Helvetica Neue" font-size="22" font-weight="normal" letter-spacing="0.625625" fill="#FFFFFF">
                                 <tspan x="151.62075" y="103">Eyes</tspan>
                             </text>
                             </g>
 
                             <g @click="scrollToAddress('hands')" class="fake-link">
-                            <rect id="Rectangle-Copy" :fill="(this.currEpisode.episodeDetails.generalExams[0].isComplete && this.currEpisode.episodeDetails.generalExams[0].isComplete) ? 'green' : '#DC3545'" x="128" y="383" width="98" height="47" rx="5"/>
+                            <rect id="Rectangle-Copy" :fill="(visitData.generalExams[0].isComplete && this.currEpisode.episodeDetails.generalExams[0].isComplete) ? 'green' : '#DC3545'" x="128" y="383" width="98" height="47" rx="5"/>
                             <text id="Hands" class="fake-link" font-family="HelveticaNeue, Helvetica Neue" font-size="22" font-weight="normal" letter-spacing="0.625625" fill="#FFFFFF">
                                 <tspan x="143.447937" y="415">Hands</tspan>
                             </text>
                             </g>
 
                             <g @click="scrollToAddress('legs')" class="fake-link">
-                            <rect id="Rectangle-Copy-2" :fill="(this.currEpisode.episodeDetails.generalExams[0].isComplete) ? 'green' : '#DC3545'" x="128" y="562" width="98" height="47" rx="5"/>
+                            <rect id="Rectangle-Copy-2" :fill="(visitData.generalExams[0].isComplete) ? 'green' : '#DC3545'" x="128" y="562" width="98" height="47" rx="5"/>
                             <text id="Legs" class="fake-link" font-family="HelveticaNeue, Helvetica Neue" font-size="22" font-weight="normal" letter-spacing="0.625625" fill="#FFFFFF">
                                 <tspan x="151.91175" y="594">Legs</tspan>
                             </text>
@@ -508,13 +522,13 @@
                   <hr class="mb-1 mt-1">
                 </div>
                 <div class="col-md-6 mb-3">
-                  <label for="exampleFormControlSelect1">{{ this.currEpisode.episodeDetails.generalExams[0].name }}</label><br>
+                  <label for="exampleFormControlSelect1">{{ visitData.generalExams[0].name }}</label><br>
                   <button class="btn mb-2 mr-2" :class="option.isActive ? 'btn-dark' : 'btn-light'" v-for="(option, oIndex) in this.currEpisode.episodeDetails.generalExams[0].options" :key="oIndex">
                     {{ option.name }}
                   </button>
                 </div>
                 <div class="col-md-6 mb-3">
-                  <label for="exampleFormControlSelect1">{{ this.currEpisode.episodeDetails.generalExams[1].name }}</label><br>
+                  <label for="exampleFormControlSelect1">{{ visitData.generalExams[1].name }}</label><br>
                   <button class="btn mb-2 mr-2" :class="option.isActive ? 'btn-dark' : 'btn-light'" v-for="(option, oIndex) in this.currEpisode.episodeDetails.generalExams[1].options" :key="oIndex">
                     {{ option.name }}
                   </button>
@@ -524,13 +538,13 @@
                   <hr class="mb-1 mt-1">
                 </div>
                 <div class="col-md-6 mb-3">
-                  <label for="exampleFormControlSelect1">{{ this.currEpisode.episodeDetails.generalExams[2].name }}</label><br>
+                  <label for="exampleFormControlSelect1">{{ visitData.generalExams[2].name }}</label><br>
                   <button class="btn mb-2 mr-2" :class="option.isActive ? 'btn-dark' : 'btn-light'" v-for="(option, oIndex) in this.currEpisode.episodeDetails.generalExams[2].options" :key="oIndex">
                     {{ option.name }}
                   </button>
                 </div>
                 <div class="col-md-6 mb-3">
-                  <label for="exampleFormControlSelect1">{{ this.currEpisode.episodeDetails.generalExams[3].name }}</label><br>
+                  <label for="exampleFormControlSelect1">{{ visitData.generalExams[3].name }}</label><br>
                   <button class="btn mb-2 mr-2" :class="option.isActive ? 'btn-dark' : 'btn-light'" v-for="(option, oIndex) in this.currEpisode.episodeDetails.generalExams[3].options" :key="oIndex">
                     {{ option.name }}
                   </button>
@@ -540,7 +554,7 @@
                   <hr class="mb-1 mt-1">
                 </div>
                 <div class="col-md-6 mb-3">
-                  <label for="exampleFormControlSelect1">{{ this.currEpisode.episodeDetails.generalExams[4].name }}</label><br>
+                  <label for="exampleFormControlSelect1">{{ visitData.generalExams[4].name }}</label><br>
                   <button class="btn mb-2 mr-2" :class="option.isActive ? 'btn-dark' : 'btn-light'" v-for="(option, oIndex) in this.currEpisode.episodeDetails.generalExams[4].options" :key="oIndex">
                     {{ option.name }}
                   </button>
@@ -698,112 +712,112 @@
                                   <path d="M531.67505,0.00518 L618.819752,0.00518 C620.573286,0.00518 621.994807,1.42670077 621.994807,3.1802355 L621.994807,84.2699205 C621.994807,86.0234552 620.573286,87.444976 618.819752,87.444976 L531.67505,87.444976 C529.921516,87.444976 528.499995,86.0234552 528.499995,84.2699205 L528.499995,3.1802355 C528.499995,1.42670077 529.921516,0.00518 531.67505,0.00518 Z" id="rect3164" stroke-width="0.9276551" stroke-dasharray="0.9276551,0.9276551"/>
                               </g>
                           </g>
-                          <g id="Group-8" v-if="currEpisode.episodeDetails.specificExams.some(e => e.examination === 'lowerleg&ankle')" transform="translate(13.000000, 656.000000)">
-                              <rect id="Rectangle-Copy-3" :fill="currEpisode.episodeDetails.specificExams.find(e => e.examination === 'lowerleg&ankle').isComplete ? 'green' : 'red'" x="0" y="0" width="226" height="47" rx="5"/>
+                          <g id="Group-8" v-if="visitData.specificExams.some(e => e.examination === 'lowerleg&ankle')" transform="translate(13.000000, 656.000000)">
+                              <rect id="Rectangle-Copy-3" :fill="visitData.specificExams.find(e => e.examination === 'lowerleg&ankle').isComplete ? 'green' : 'red'" x="0" y="0" width="226" height="47" rx="5"/>
                               <text id="Lower-Leg-&amp;-Ankle" font-family="HelveticaNeue, Helvetica Neue" font-size="22" font-weight="normal" letter-spacing="0.625625" fill="#FFFFFF">
                                   <tspan x="15.6011875" y="32">Lower Leg &amp; Ankle</tspan>
                               </text>
                           </g>
-                          <g id="Group-4" v-if="currEpisode.episodeDetails.specificExams.some(e => e.examination === 'cheek&mouth')" transform="translate(13.000000, 315.000000)">
-                              <rect id="Rectangle-Copy-4" :fill="currEpisode.episodeDetails.specificExams.find(e => e.examination === 'cheek&mouth').isComplete ? 'green' : 'red'" x="0" y="0" width="226" height="47" rx="5"/>
+                          <g id="Group-4" v-if="visitData.specificExams.some(e => e.examination === 'cheek&mouth')" transform="translate(13.000000, 315.000000)">
+                              <rect id="Rectangle-Copy-4" :fill="visitData.specificExams.find(e => e.examination === 'cheek&mouth').isComplete ? 'green' : 'red'" x="0" y="0" width="226" height="47" rx="5"/>
                               <text id="Cheek-&amp;-Mouth" font-family="HelveticaNeue, Helvetica Neue" font-size="22" font-weight="normal" letter-spacing="0.625625" fill="#FFFFFF">
                                   <tspan x="32.7144375" y="32">Cheek &amp; Mouth</tspan>
                               </text>
                           </g>
-                          <g id="Group-2" v-if="currEpisode.episodeDetails.specificExams.some(e => e.examination === 'head')" transform="translate(13.000000, 59.000000)">
-                              <rect id="Rectangle-Copy-9" :fill="currEpisode.episodeDetails.specificExams.find(e => e.examination === 'head').isComplete ? 'green' : 'red'" x="0" y="0" width="226" height="47" rx="5"/>
+                          <g id="Group-2" v-if="visitData.specificExams.some(e => e.examination === 'head')" transform="translate(13.000000, 59.000000)">
+                              <rect id="Rectangle-Copy-9" :fill="visitData.specificExams.find(e => e.examination === 'head').isComplete ? 'green' : 'red'" x="0" y="0" width="226" height="47" rx="5"/>
                               <text id="Head" font-family="HelveticaNeue, Helvetica Neue" font-size="22" font-weight="normal" letter-spacing="0.625625" fill="#FFFFFF">
                                   <tspan x="85.46975" y="32">Head</tspan>
                               </text>
                           </g>
-                          <g id="Group-3" v-if="currEpisode.episodeDetails.specificExams.some(e => e.examination === 'ears')" transform="translate(13.000000, 230.000000)">
-                              <rect id="Rectangle-Copy-10" :fill="currEpisode.episodeDetails.specificExams.find(e => e.examination === 'ears').isComplete ? 'green' : 'red'" x="0" y="0" width="226" height="47" rx="5"/>
+                          <g id="Group-3" v-if="visitData.specificExams.some(e => e.examination === 'ears')" transform="translate(13.000000, 230.000000)">
+                              <rect id="Rectangle-Copy-10" :fill="visitData.specificExams.find(e => e.examination === 'ears').isComplete ? 'green' : 'red'" x="0" y="0" width="226" height="47" rx="5"/>
                               <text id="Ears" font-family="HelveticaNeue, Helvetica Neue" font-size="22" font-weight="normal" letter-spacing="0.625625" fill="#FFFFFF">
                                   <tspan x="89.95775" y="32">Ears</tspan>
                               </text>
                           </g>
-                          <g id="Group-3-Copy" v-if="currEpisode.episodeDetails.specificExams.some(e => e.examination === 'eyes')" transform="translate(13.000000, 144.000000)">
-                              <rect id="Rectangle-Copy-10" :fill="currEpisode.episodeDetails.specificExams.find(e => e.examination === 'eyes').isComplete ? 'green' : 'red'" x="0" y="0" width="226" height="47" rx="5"/>
+                          <g id="Group-3-Copy" v-if="visitData.specificExams.some(e => e.examination === 'eyes')" transform="translate(13.000000, 144.000000)">
+                              <rect id="Rectangle-Copy-10" :fill="visitData.specificExams.find(e => e.examination === 'eyes').isComplete ? 'green' : 'red'" x="0" y="0" width="226" height="47" rx="5"/>
                               <text id="Eyes" font-family="HelveticaNeue, Helvetica Neue" font-size="22" font-weight="normal" letter-spacing="0.625625" fill="#FFFFFF">
                                   <tspan x="88.12075" y="32">Eyes</tspan>
                               </text>
                           </g>
-                          <g id="Group-10" v-if="currEpisode.episodeDetails.specificExams.some(e => e.examination === 'joints')" transform="translate(1131.000000, 315.000000)">
-                              <rect id="Rectangle-Copy-11" :fill="currEpisode.episodeDetails.specificExams.find(e => e.examination === 'joints').isComplete ? 'green' : 'red'" x="0" y="0" width="226" height="47" rx="5"/>
+                          <g id="Group-10" v-if="visitData.specificExams.some(e => e.examination === 'joints')" transform="translate(1131.000000, 315.000000)">
+                              <rect id="Rectangle-Copy-11" :fill="visitData.specificExams.find(e => e.examination === 'joints').isComplete ? 'green' : 'red'" x="0" y="0" width="226" height="47" rx="5"/>
                               <text id="Joints" font-family="HelveticaNeue, Helvetica Neue" font-size="22" font-weight="normal" letter-spacing="0.625625" fill="#FFFFFF">
                                   <tspan x="81.577125" y="32">Joints</tspan>
                               </text>
                           </g>
-                          <g id="Group-11" v-if="currEpisode.episodeDetails.specificExams.some(e => e.examination === 'ulcers')" transform="translate(1131.000000, 400.000000)">
-                              <rect id="Rectangle-Copy-12" :fill="currEpisode.episodeDetails.specificExams.find(e => e.examination === 'ulcers').isComplete ? 'green' : 'red'" x="0" y="0" width="226" height="47" rx="5"/>
+                          <g id="Group-11" v-if="visitData.specificExams.some(e => e.examination === 'ulcers')" transform="translate(1131.000000, 400.000000)">
+                              <rect id="Rectangle-Copy-12" :fill="visitData.specificExams.find(e => e.examination === 'ulcers').isComplete ? 'green' : 'red'" x="0" y="0" width="226" height="47" rx="5"/>
                               <text id="Ulcers" font-family="HelveticaNeue, Helvetica Neue" font-size="22" font-weight="normal" letter-spacing="0.625625" fill="#FFFFFF">
                                   <tspan x="79.762125" y="32">Ulcers</tspan>
                               </text>
                           </g>
-                          <g id="Group-7" v-if="currEpisode.episodeDetails.specificExams.some(e => e.examination === 'chest')" transform="translate(13.000000, 485.000000)">
-                              <rect id="Rectangle-Copy-5" :fill="currEpisode.episodeDetails.specificExams.find(e => e.examination === 'chest').isComplete ? 'green' : 'red'" x="0" y="0" width="226" height="47" rx="5"/>
+                          <g id="Group-7" v-if="visitData.specificExams.some(e => e.examination === 'chest')" transform="translate(13.000000, 485.000000)">
+                              <rect id="Rectangle-Copy-5" :fill="visitData.specificExams.find(e => e.examination === 'chest').isComplete ? 'green' : 'red'" x="0" y="0" width="226" height="47" rx="5"/>
                               <text id="Chest" font-family="HelveticaNeue, Helvetica Neue" font-size="22" font-weight="normal" letter-spacing="0.625625" fill="#FFFFFF">
                                   <tspan x="82.5059375" y="32">Chest</tspan>
                               </text>
                           </g>
-                          <g id="Group-6" v-if="currEpisode.episodeDetails.specificExams.some(e => e.examination === 'abdomen')" transform="translate(13.000000, 571.000000)">
-                              <rect id="Rectangle-Copy-7" :fill="currEpisode.episodeDetails.specificExams.find(e => e.examination === 'abdomen').isComplete ? 'green' : 'red'" x="0" y="0" width="226" height="47" rx="5"/>
+                          <g id="Group-6" v-if="visitData.specificExams.some(e => e.examination === 'abdomen')" transform="translate(13.000000, 571.000000)">
+                              <rect id="Rectangle-Copy-7" :fill="visitData.specificExams.find(e => e.examination === 'abdomen').isComplete ? 'green' : 'red'" x="0" y="0" width="226" height="47" rx="5"/>
                               <text id="Abdomen" font-family="HelveticaNeue, Helvetica Neue" font-size="22" font-weight="normal" letter-spacing="0.625625" fill="#FFFFFF">
                                   <tspan x="62.9163125" y="32">Abdomen</tspan>
                               </text>
                           </g>
-                          <g id="Group-9" v-if="currEpisode.episodeDetails.specificExams.some(e => e.examination === 'back')" transform="translate(1131.000000, 59.000000)">
-                              <rect id="Rectangle-Copy-8" :fill="currEpisode.episodeDetails.specificExams.find(e => e.examination === 'back').isComplete ? 'green' : 'red'" x="0" y="0" width="226" height="47" rx="5"/>
+                          <g id="Group-9" v-if="visitData.specificExams.some(e => e.examination === 'back')" transform="translate(1131.000000, 59.000000)">
+                              <rect id="Rectangle-Copy-8" :fill="visitData.specificExams.find(e => e.examination === 'back').isComplete ? 'green' : 'red'" x="0" y="0" width="226" height="47" rx="5"/>
                               <text id="Back" font-family="HelveticaNeue, Helvetica Neue" font-size="22" font-weight="normal" letter-spacing="0.625625" fill="#FFFFFF">
                                   <tspan x="86.69075" y="32">Back</tspan>
                               </text>
                           </g>
-                          <g id="Group-12" v-if="currEpisode.episodeDetails.specificExams.some(e => e.examination === 'lump&swelling')" transform="translate(1131.000000, 486.000000)">
+                          <g id="Group-12" v-if="visitData.specificExams.some(e => e.examination === 'lump&swelling')" transform="translate(1131.000000, 486.000000)">
                               <rect id="Rectangle-Copy-13" :fill="currEpisode.episodeDetails.specificExams.find(e => e.examination === 'lump&swelling').isComplete ? 'green' : 'red'" x="0" y="0" width="226" height="47" rx="5"/>
                               <text id="Lumps-&amp;-Swelling" font-family="HelveticaNeue, Helvetica Neue" font-size="22" font-weight="normal" letter-spacing="0.625625" fill="#FFFFFF">
                                   <tspan x="20.182" y="32">Lumps &amp; Swelling</tspan>
                               </text>
                           </g>
-                          <g id="Group-13" v-if="currEpisode.episodeDetails.specificExams.some(e => e.examination === 'rash')" transform="translate(1131.000000, 571.000000)">
-                              <rect id="Rectangle-Copy-14" :fill="currEpisode.episodeDetails.specificExams.find(e => e.examination === 'rash').isComplete ? 'green' : 'red'" x="0" y="0" width="226" height="47" rx="5"/>
+                          <g id="Group-13" v-if="visitData.specificExams.some(e => e.examination === 'rash')" transform="translate(1131.000000, 571.000000)">
+                              <rect id="Rectangle-Copy-14" :fill="visitData.specificExams.find(e => e.examination === 'rash').isComplete ? 'green' : 'red'" x="0" y="0" width="226" height="47" rx="5"/>
                               <text id="Rash" font-family="HelveticaNeue, Helvetica Neue" font-size="22" font-weight="normal" letter-spacing="0.625625" fill="#FFFFFF">
                                   <tspan x="86.69075" y="32">Rash</tspan>
                               </text>
                           </g>
-                          <g id="Group-14" v-if="currEpisode.episodeDetails.specificExams.some(e => e.examination === 'injury')" transform="translate(1131.000000, 656.000000)">
-                              <rect id="Rectangle-Copy-15" :fill="currEpisode.episodeDetails.specificExams.find(e => e.examination === 'injury').isComplete ? 'green' : 'red'" x="0" y="0" width="226" height="47" rx="5"/>
+                          <g id="Group-14" v-if="visitData.specificExams.some(e => e.examination === 'injury')" transform="translate(1131.000000, 656.000000)">
+                              <rect id="Rectangle-Copy-15" :fill="visitData.specificExams.find(e => e.examination === 'injury').isComplete ? 'green' : 'red'" x="0" y="0" width="226" height="47" rx="5"/>
                               <text id="Injury" font-family="HelveticaNeue, Helvetica Neue" font-size="22" font-weight="normal" letter-spacing="0.625625" fill="#FFFFFF">
                                   <tspan x="84.437125" y="32">Injury</tspan>
                               </text>
                           </g>
-                          <g id="Group-5" v-if="currEpisode.episodeDetails.specificExams.some(e => e.examination === 'neck')" transform="translate(13.000000, 400.000000)">
-                              <rect id="Rectangle-Copy-6" :fill="currEpisode.episodeDetails.specificExams.find(e => e.examination === 'neck').isComplete ? 'green' : 'red'" x="0" y="0" width="226" height="47" rx="5"/>
+                          <g id="Group-5" v-if="visitData.specificExams.some(e => e.examination === 'neck')" transform="translate(13.000000, 400.000000)">
+                              <rect id="Rectangle-Copy-6" :fill="visitData.specificExams.find(e => e.examination === 'neck').isComplete ? 'green' : 'red'" x="0" y="0" width="226" height="47" rx="5"/>
                               <text id="Neck" font-family="HelveticaNeue, Helvetica Neue" font-size="22" font-weight="normal" letter-spacing="0.625625" fill="#FFFFFF">
                                   <tspan x="86.28375" y="32">Neck</tspan>
                               </text>
                           </g>
-                          <g id="Group-35" v-if="currEpisode.episodeDetails.specificExams.some(e => e.examination === 'hands')" transform="translate(1118.000000, 144.000000)">
-                              <rect id="Rectangle-Copy-20" :fill="currEpisode.episodeDetails.specificExams.find(e => e.examination === 'hands').isComplete ? 'green' : 'red'" x="0" y="0" width="226" height="47" rx="5"/>
+                          <g id="Group-35" v-if="visitData.specificExams.some(e => e.examination === 'hands')" transform="translate(1118.000000, 144.000000)">
+                              <rect id="Rectangle-Copy-20" :fill="visitData.specificExams.find(e => e.examination === 'hands').isComplete ? 'green' : 'red'" x="0" y="0" width="226" height="47" rx="5"/>
                               <text id="Hands" font-family="HelveticaNeue, Helvetica Neue" font-size="22" font-weight="normal" letter-spacing="0.625625" fill="#FFFFFF">
                                   <tspan x="79.4479375" y="32">Hands</tspan>
                               </text>
                           </g>
-                          <path d="M258.5,82.5 L419.956547,82.5" v-if="currEpisode.episodeDetails.specificExams.some(e => e.examination === 'head')" id="Line" stroke="#111111" stroke-width="2" stroke-linecap="square"/>
-                          <path d="M974.746094,82.5 L1104.95655,82.5" v-if="currEpisode.episodeDetails.specificExams.some(e => e.examination === 'back')" id="Line-Copy" stroke="#111111" stroke-width="2" stroke-linecap="square"/>
-                          <path d="M258,173 L419.956547,114.67763" v-if="currEpisode.episodeDetails.specificExams.some(e => e.examination === 'eyes')" id="Line-2" stroke="#111111" stroke-width="2" stroke-linecap="square"/>
-                          <path d="M258.5,251 L419.956547,142.5" v-if="currEpisode.episodeDetails.specificExams.some(e => e.examination === 'ears')" id="Line-2-Copy" stroke="#111111" stroke-width="2" stroke-linecap="square"/>
-                          <path d="M258.5,337 L428,164" v-if="currEpisode.episodeDetails.specificExams.some(e => e.examination === 'cheek&mouth')" id="Line-2-Copy-6" stroke="#111111" stroke-width="2" stroke-linecap="square"/>
-                          <path d="M258,420 L445,173" v-if="currEpisode.episodeDetails.specificExams.some(e => e.examination === 'neck')" id="Line-2-Copy-2" stroke="#111111" stroke-width="2" stroke-linecap="square"/>
-                          <path d="M258,511 L462,237" v-if="currEpisode.episodeDetails.specificExams.some(e => e.examination === 'chest')" id="Line-2-Copy-3" stroke="#111111" stroke-width="2" stroke-linecap="square"/>
-                          <path d="M258,595 L445,326" v-if="currEpisode.episodeDetails.specificExams.some(e => e.examination === 'abdomen')" id="Line-2-Copy-4" stroke="#111111" stroke-width="2" stroke-linecap="square"/>
-                          <path d="M258.5,674 L365.46875,674" v-if="currEpisode.episodeDetails.specificExams.some(e => e.examination === 'lowerleg&ankle')" id="Line-2-Copy-5" stroke="#111111" stroke-width="2" stroke-linecap="square"/>
-                          <path d="M657,404.5 L1104.95655,163.5"  v-if="currEpisode.episodeDetails.specificExams.some(e => e.examination === 'hands')" id="Line-Copy-2" stroke="#111111" stroke-width="2" stroke-linecap="square"/>
+                          <path d="M258.5,82.5 L419.956547,82.5" v-if="visitData.specificExams.some(e => e.examination === 'head')" id="Line" stroke="#111111" stroke-width="2" stroke-linecap="square"/>
+                          <path d="M974.746094,82.5 L1104.95655,82.5" v-if="visitData.specificExams.some(e => e.examination === 'back')" id="Line-Copy" stroke="#111111" stroke-width="2" stroke-linecap="square"/>
+                          <path d="M258,173 L419.956547,114.67763" v-if="visitData.specificExams.some(e => e.examination === 'eyes')" id="Line-2" stroke="#111111" stroke-width="2" stroke-linecap="square"/>
+                          <path d="M258.5,251 L419.956547,142.5" v-if="visitData.specificExams.some(e => e.examination === 'ears')" id="Line-2-Copy" stroke="#111111" stroke-width="2" stroke-linecap="square"/>
+                          <path d="M258.5,337 L428,164" v-if="visitData.specificExams.some(e => e.examination === 'cheek&mouth')" id="Line-2-Copy-6" stroke="#111111" stroke-width="2" stroke-linecap="square"/>
+                          <path d="M258,420 L445,173" v-if="visitData.specificExams.some(e => e.examination === 'neck')" id="Line-2-Copy-2" stroke="#111111" stroke-width="2" stroke-linecap="square"/>
+                          <path d="M258,511 L462,237" v-if="visitData.specificExams.some(e => e.examination === 'chest')" id="Line-2-Copy-3" stroke="#111111" stroke-width="2" stroke-linecap="square"/>
+                          <path d="M258,595 L445,326" v-if="visitData.specificExams.some(e => e.examination === 'abdomen')" id="Line-2-Copy-4" stroke="#111111" stroke-width="2" stroke-linecap="square"/>
+                          <path d="M258.5,674 L365.46875,674" v-if="visitData.specificExams.some(e => e.examination === 'lowerleg&ankle')" id="Line-2-Copy-5" stroke="#111111" stroke-width="2" stroke-linecap="square"/>
+                          <path d="M657,404.5 L1104.95655,163.5"  v-if="visitData.specificExams.some(e => e.examination === 'hands')" id="Line-Copy-2" stroke="#111111" stroke-width="2" stroke-linecap="square"/>
                       </g>
                   </g>
                 </svg>
               </div>
             </div>
-            <div class="row" v-for="(organ, index) in currEpisode.episodeDetails.specificExams" :key="index">
+            <div class="row" v-for="(organ, index) in visitData.specificExams" :key="index">
               <div class="col-md-12 mb-2 text-muted">
                 <small>{{ organ.name }}</small>
                 <hr class="mb-1 mt-1">
@@ -821,7 +835,7 @@
                 </div>
               </div>
             </div>
-            <div v-if="currEpisode.episodeDetails.specificExams.length === 0" class="row">
+            <div v-if="visitData.specificExams.length === 0" class="row">
               <div class="col-md-12 my-4 small text-center">
                 There are no specific complaint questions.
               </div>
@@ -856,6 +870,55 @@
         </div>
       </div>
     </div>
+
+    <div class="container mt-0" v-else>
+      <div class="row">
+        <div class="col-md-12 rounded">
+          <ul class="list-inline mb-2">
+            <li class="list-inline-item text-center pointer">
+              <div class="px-2 mr-2 pb-1 mb-1 underline">
+                Service Details
+              </div>
+            </li>
+          </ul>
+          <div class="w-100 bg-white mb-2 mt-0 px-3 pt-3 pb-3" key="complaint" style="min-height: 200px;">
+            <div class="row mt-1">
+              <div class="col-md-12">
+                <div class="small text-muted mb-2">
+                  Service Performed
+                  <hr class="mb-1 mt-1">
+                </div>
+                <div class="d-inline">
+                  <button class="btn px-3 mr-2 small btn-dark" role="button">
+                    {{ visitData.chiefComplaints[0][0] }}
+                    <!-- 111 {{ visitData }} -->
+                  </button>
+                </div>
+              </div>
+              <div class="col-md-12 mt-4">
+                <div class="small text-muted mb-2">
+                  Service Results
+                  <hr class="mb-1 mt-1">
+                </div>
+                <div class="d-inline">
+                  {{ visitData.serviceResults }}
+                </div>
+              </div>
+              <div class="col-md-12 mt-4 mb-2">
+                <div class="small text-muted mb-2">
+                  Additional Details
+                  <hr class="mb-1 mt-1">
+                </div>
+                <div class="d-inline">
+                  {{ visitData.serviceDescription }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
     <!-- <div class="container">
       <div class="row">
@@ -1039,7 +1102,7 @@
             <div class="small text-muted mb-3">
               Investigations
             </div>
-            {{ episodeData.feedback.investigations }}
+            {{ visitData.feedback.investigations }}
           </div>
         </div>
         <div class="row">
@@ -1047,7 +1110,7 @@
             <div class="small text-muted mb-3">
               Advice
             </div>
-            {{ episodeData.feedback.advice }}
+            {{ visitData.feedback.advice }}
           </div>
         </div>
       </div>
@@ -1059,6 +1122,8 @@
 export default {
   layout: 'dashboard',
   mounted() {
+    let self = this
+
     this.$store.commit('updatePath', [
       {
         title: 'Dashboard',
@@ -1078,7 +1143,35 @@ export default {
     const episodeID = this.$route.query.id
 
     if ( this.$store.state.currPatient.id !== '') {
-      this.episodeData = this.$store.state.currPatient.episodes.find(episode => episode.episodeID === episodeID )
+      let currEpisode = this.$store.state.currPatient.episodes.find(episode => episode.episodeID === episodeID)
+
+      this.episodeData = currEpisode
+      this.visitData = currEpisode.episodeDetails
+
+      // add followup tabs for navigation
+      currEpisode.followUps.forEach((followup, index) => self.tabs.push(
+        {
+          type: 'followup',
+          name: 'followup' + index,
+          title: 'Follow Up ' + (index + 1),
+          isActive: false,
+          itemIndex: index,
+        },
+      ))
+
+      // add service tabs for navigation
+      currEpisode.services.forEach((service, index) => self.tabs.push(
+        {
+          type: 'service',
+          name: 'service' + index,
+          title: 'Service ' + (index + 1),
+          isActive: false,
+          itemIndex: index,
+        },
+      ))
+
+      // update currEpisode in Store
+      this.$store.commit("updateCurrEpisode", currEpisode)
 
       if (this.episodeData.feedback.hasFeedback ) {
         this.showDocsFeedback = true
@@ -1091,6 +1184,18 @@ export default {
     }
   },
   methods: {
+    handleEpisode: function () {
+      // console.log(this.episodeData)
+      this.visitData = this.currEpisode.episodeDetails
+    },
+    handleFollowUp: function (index) {
+      console.log(this.episodeData.followUps[index])
+      this.visitData = this.episodeData.followUps[index]
+    },
+    handleService: function (index) {
+      console.log(this.episodeData.services[index])
+      this.visitData = this.episodeData.services[index]
+    },
     scrollToAddress: function (bodyPart) {
       let elTopPos
 
@@ -1168,6 +1273,7 @@ export default {
   },
   data() {
     return {
+      visitData: {},
       episodeData: {
         type: '',
         billed: '',
@@ -1197,40 +1303,11 @@ export default {
       showComplete: false,
       tabs: [
         {
+          type: 'episode',
           name: 'episode1',
           title: 'Episode 1',
           isActive: true
         },
-        {
-          name: 'followup1',
-          title: 'Follow Up 1',
-          isActive: false
-        },
-        {
-          name: 'followup2',
-          title: 'Follow Up 2',
-          isActive: false
-        },
-        {
-          name: 'service1',
-          title: 'Perform ECG',
-          isActive: false
-        },
-        // {
-        //   name: 'billing',
-        //   title: 'Billing History',
-        //   isActive: false
-        // },
-        // {
-        //   name: 'newfollowup',
-        //   title: 'Record Follow Up',
-        //   isActive: false
-        // },
-        // {
-        //   name: 'newservice',
-        //   title: 'Record Service',
-        //   isActive: false
-        // },
       ],
       subTabs: [
         {

@@ -27,9 +27,12 @@ export default {
 
     let patientProf = state.udayDb.clusters[CLUSTER_ID].patients.find(patient => patient.id === PATIENT_ID) || state.currPatient
 
-    console.log(patientProf)
+    // console.log(patientProf)
 
     state.currPatient = patientProf
+  },
+  updateCurrEpisode(state, payload) {
+    state.currEpisode = payload
   },
   increment(state, payload) {
     if (payload) {
@@ -49,6 +52,30 @@ export default {
     // find episode (from clusterID => patientID => episodeID)
     state.udayDb.clusters[clusterID].patients.find(patient => patient.id === patientID).episodes.find(episode => episode.episodeID === episodeID).feedback = feedback
     // alert('Your feedback has been updated.')
+  },
+  recordNewFollowUp(state, payload) {
+    console.log('start new followup entry');
+
+    let CLUSTER_ID = state.currCluster;
+    let PATIENT_ID = state.currPatient.id;
+    let EPISODE_ID = payload[0]
+
+    let FOLLOWUP_PAYLOAD = payload[1]
+
+    // console.log(episodeID);
+    // console.log(episodePayload);
+
+    // update FollowUp meta data
+    let newID = Math.random() .toString(36) .substr(2, 6);
+    FOLLOWUP_PAYLOAD.meta.visitID = newID;
+    FOLLOWUP_PAYLOAD.meta.createDate = getCurrDate();
+
+    state.udayDb.clusters[CLUSTER_ID].patients
+      .find(patient => patient.id === PATIENT_ID)
+      .episodes.find(episode => episode.episodeID === EPISODE_ID)
+      .followUps.push(FOLLOWUP_PAYLOAD);
+      
+    console.log("end new followup entry");
   },
   recordNewEpisode(state, payload) {
     let CLUSTER_ID = state.currCluster
@@ -108,6 +135,8 @@ export default {
     })
   },
   recordNewService(state, payload) {
+    let SERVICE_PAYLOAD = payload[0]
+    let EPISODE_ID = payload[1]
     let CLUSTER_ID = state.currCluster
     let PATIENT_ID = state.currPatient.id
 
@@ -116,17 +145,24 @@ export default {
 
     serviceCount++
 
-    state.udayDb.clusters[CLUSTER_ID].patients.find(patient => patient.id === PATIENT_ID).services.push({
-      type: 'service',
-      billed: '',
-      link: '/ha/profile/profile-visit',
-      episodeID: PATIENT_ID + 'SV' + serviceCount,
-      title: 'Service ' + serviceCount,
-      created: currentDate,
-      lastUpdated: currentDate,
-      episodeDetails: payload,
-      numFollowUps: '',
-    })
+    if (!EPISODE_ID) { 
+      state.udayDb.clusters[CLUSTER_ID].patients.find(patient => patient.id === PATIENT_ID).services.push({
+        type: 'service',
+        billed: '',
+        link: '/ha/profile/profile-visit',
+        episodeID: PATIENT_ID + 'SV' + serviceCount,
+        title: 'Service ' + serviceCount,
+        created: currentDate,
+        lastUpdated: currentDate,
+        episodeDetails: payload,
+        numFollowUps: '',
+      })
+    } else {
+      state.udayDb.clusters[CLUSTER_ID].patients
+        .find(patient => patient.id === PATIENT_ID)
+        .episodes.find(episode => episode.episodeID === EPISODE_ID)
+        .services.push(SERVICE_PAYLOAD);
+    }
   },
   registerPatient(state, payload) {
     let CLUSTER_ID = state.currCluster
@@ -194,11 +230,11 @@ export default {
     const PATIENT_ID = payload.patientID
     const EPISODE_ID = payload.episodeID
 
-    console.log(CLUSTER_ID)
-    console.log(PATIENT_ID)
-    console.log(EPISODE_ID)
-    console.log(payload.newMedicine)
-    console.log(state.udayDb.clusters[CLUSTER_ID].patients.find(patient => patient.id === PATIENT_ID).episodes.find(episode => episode.episodeID === EPISODE_ID).feedback)
+    // console.log(CLUSTER_ID)
+    // console.log(PATIENT_ID)
+    // console.log(EPISODE_ID)
+    // console.log(payload.newMedicine)
+    // console.log(state.udayDb.clusters[CLUSTER_ID].patients.find(patient => patient.id === PATIENT_ID).episodes.find(episode => episode.episodeID === EPISODE_ID).feedback)
 
     state.udayDb.clusters[CLUSTER_ID].patients.find(patient => patient.id === PATIENT_ID).episodes.find(episode => episode.episodeID === EPISODE_ID).feedback.medicine.push(payload.newMedicine)
     state.udayDb.clusters[CLUSTER_ID].patients.find(patient => patient.id === PATIENT_ID).episodes.find(episode => episode.episodeID === EPISODE_ID).feedback.hasFeedback = true

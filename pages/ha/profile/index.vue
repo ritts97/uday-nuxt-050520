@@ -32,7 +32,7 @@
               <div class="col-md-6"> 
                 {{ currPatient.demographics.occupation }} | 
                 {{ currPatient.demographics.age }} years old <br>
-                {{ currPatient.demographics.hswd }} <br>
+                {{ currPatient.demographics.hswd }} <br><br>
                 {{ currPatient.demographics.police }}
               </div>
               <div class="col-md-6">
@@ -43,19 +43,34 @@
                 <!-- {{ currPatient.demographics.address2 }} <br> -->
                 <!-- :: {{ this.$store.state.currPatient.id }}<br> -->
               </div>
-              <div class="col-md-12 mt-5">
+              <div class="col-md-10 mt-4">
                 <!-- <hr> -->
               </div>
-              <div class="col-md-6">
-                <nuxt-link to="/ha/profile/update-demo">
-                  Update Demographics
+              <div class="col-md-12">
+                <nuxt-link to="/ha/profile/update-demo" class="mr-2">
+                  <button class="btn btn-light py-1 px-3">
+                    <small>
+                      View/Update Demographics
+                    </small>
+                  </button>
                 </nuxt-link>
-              </div>
-              <div class="col-md-6">
                 <nuxt-link to="/ha/profile/update-history">
-                  View Medical History 
+                  <button class="btn btn-light py-1 px-3">
+                    <small>
+                      View/Update Family History 
+                    </small>
+                  </button>
                 </nuxt-link>
               </div>
+              <!-- <div class="col-md-6">
+                <nuxt-link to="/ha/profile/update-history">
+                  <button class="btn btn-light py-1 px-3">
+                    <small>
+                      View Family History 
+                    </small>
+                  </button>
+                </nuxt-link>
+              </div> -->
             </div>
             <!-- <div class="row">
               <div class="col-md-12">
