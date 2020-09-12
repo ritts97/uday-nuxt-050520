@@ -107,7 +107,7 @@
                             </div>
                             <div v-if="question.type === 'number'">
                               <label for="exampleFormControlSelect1">{{ question.question }}</label><br>
-                              <input type="number" min="0" v-model="question.answer" class="mt-1 p-2 mr-2 w-25" placeholder="0"> {{ question.caption }}
+                              <input type="number" value="0" min="0" v-model="question.answer" class="mt-1 p-2 mr-2 w-25" placeholder="0"> {{ question.caption }}
                             </div>
                           </div>
                         </div>
@@ -2300,7 +2300,7 @@ export default {
               title: 'How many lumps/swellings',
               hasAnswer: false,
               type: 'number',
-              answer: '',
+              answer: '0',
               caption: 'count.'
             },
             {
@@ -2827,7 +2827,7 @@ export default {
             {
               question: "How long has this been happening?",
               type: 'number',
-              answer: '',
+              answer: '0',
               caption: 'days long.'
             },
             {
@@ -3074,7 +3074,7 @@ export default {
             {
               question: "How long have the boils been there?",
               type: 'number',
-              answer: '',
+              answer: '0',
               caption: 'days'
             },
             {
@@ -3288,7 +3288,7 @@ export default {
             {
               question: "How long has this been happening?",
               type: 'number',
-              answer: '',
+              answer: '0',
               caption: 'days long.'
             },
             {
@@ -3412,7 +3412,7 @@ export default {
             {
               question: "How long has this been happening?",
               type: 'number',
-              answer: '',
+              answer: '0',
               caption: 'days long.'
             },
             {
@@ -3591,7 +3591,7 @@ export default {
             {
               question: "How long has this been going on?",
               type: 'number',
-              answer: '', 
+              answer: '0', 
               caption: 'days long.'
             },
             {
@@ -3836,7 +3836,7 @@ export default {
                 {
                   question: "How long has this been going on?",
                   type: 'number',
-                  answer: '',
+                  answer: '0',
                   caption: 'days long.'
                 },
                 {
@@ -4038,7 +4038,7 @@ export default {
                 {
                   question: "How long has this been going on?",
                   type: 'number',
-                  answer: '',
+                  answer: '0',
                   caption: 'days long.'
                 },
                 {
@@ -4204,7 +4204,7 @@ export default {
                 {
                   question: "How long has this been going on?",
                   type: 'number',
-                  answer: '',
+                  answer: '0',
                   caption: 'days long.'
                 },
                 {
@@ -4374,7 +4374,7 @@ export default {
                 {
                   question: "How long has this been going on?",
                   type: 'number',
-                  answer: '',
+                  answer: '0',
                   caption: 'days long.'
                 },
                 {
@@ -4536,7 +4536,7 @@ export default {
                 {
                   question: "How long has this been going on?",
                   type: 'number',
-                  answer: '',
+                  answer: '0',
                   caption: 'days long.'
                 },
                 {
@@ -4754,7 +4754,7 @@ export default {
                 {
                   question: "How long has this been going on?",
                   type: 'number',
-                  answer: '',
+                  answer: '0',
                   caption: 'days long.'
                 },
                 {
@@ -5272,7 +5272,7 @@ export default {
                 {
                   question: "How long has this been going on?",
                   type: 'number',
-                  answer: '',
+                  answer: '0',
                   caption: 'days long.'
                 },
                 {
@@ -5514,7 +5514,7 @@ export default {
                 {
                   question: "How long has this been going on?",
                   type: 'number',
-                  answer: '',
+                  answer: '0',
                   caption: 'days long.'
                 },
                 {
@@ -5763,7 +5763,7 @@ export default {
                 {
                   question: "How long has this been going on?",
                   type: 'number',
-                  answer: '',
+                  answer: '0',
                   caption: 'days long.'
                 },
                 {
@@ -5988,7 +5988,7 @@ export default {
                 {
                   question: "How long has this been going on?",
                   type: 'number',
-                  answer: '',
+                  answer: '0',
                   caption: 'days long.'
                 },
                 {
@@ -6158,7 +6158,7 @@ export default {
                 {
                   question: "How long has this been going on?",
                   type: 'number',
-                  answer: '',
+                  answer: '0',
                   caption: 'days long.'
                 },
                 {
@@ -6356,7 +6356,7 @@ export default {
                 {
                   question: "How long has it been there?",
                   type: 'number',
-                  answer: '',
+                  answer: '0',
                   caption: 'day(s)'
                 },
                 {
@@ -6550,13 +6550,13 @@ export default {
                 {
                   question: "How many tumors are there?",
                   type: 'number',
-                  answer: '',
+                  answer: '0',
                   caption: 'tumor(s)'
                 },
                 {
                   question: "How long has it been there?",
                   type: 'number',
-                  answer: '',
+                  answer: '0',
                   caption: 'days(s)'
                 },
                 {
@@ -6660,7 +6660,7 @@ export default {
                 {
                   question: "What is the bowel habit?",
                   type: 'number',
-                  answer: '',
+                  answer: '0',
                   caption: 'time(s) per day'
                 },
                 {
@@ -6735,13 +6735,13 @@ export default {
                 {
                   question: "How many swellings are there?",
                   type: 'number',
-                  answer: '',
+                  answer: '0',
                   caption: 'swelling(s)'
                 },
                 {
                   question: "How long has it been there?",
                   type: 'number',
-                  answer: '',
+                  answer: '0',
                   caption: 'days(s)'
                 },
                 {
@@ -6782,7 +6782,7 @@ export default {
             {
               question: "How long has this been happening?",
               type: 'number',
-              answer: '',
+              answer: '0',
               caption: 'days long.'
             },
             {
@@ -6964,7 +6964,7 @@ export default {
             {
               question: "How long has this been happening?",
               type: 'number',
-              answer: '',
+              answer: '0',
               caption: 'days long.'
             },
             {
@@ -7070,13 +7070,13 @@ export default {
                 {
                   question: "When was the last LMP?",
                   type: 'number',
-                  answer: '',
-                  caption: 'days ago'
+                  answer: '0',
+                  caption: 'days ago.'
                 },
                 {
                   question: "What is the duration of the patient's period?",
                   type: 'number',
-                  answer: '',
+                  answer: '0',
                   caption: 'days.',
                 },
                 {
@@ -7123,26 +7123,26 @@ export default {
                 {
                   question: "How many children are there?",
                   type: 'number',
-                  answer: '',
+                  answer: '0',
                   caption: 'children'
                 },
                 {
                   question: "How many pregnancies have there been?",
                   type: 'number',
-                  answer: '',
+                  answer: '0',
                   caption: 'pregnancies'
                 },
                 {
                   question: "What age was the patient at first childbirth?",
                   type: 'number',
-                  answer: '',
-                  caption: 'years old'
+                  answer: '0',
+                  caption: 'years old.'
                 },
                 {
                   question: "How old was the patient at the last childbirth?",
                   type: 'number',
-                  answer: '',
-                  caption: 'years old'
+                  answer: '0',
+                  caption: 'years old.'
                 },
                 {
                   question: "Is contraception practiced?",
@@ -7224,13 +7224,13 @@ export default {
                 ,{
                   question: "When was the last LMP?",
                   type: 'number',
-                  answer: '',
+                  answer: '0',
                   caption: 'days'
                 },
                 {
                   question: "What is the duration of the patient's period?",
                   type: 'number',
-                  answer: '',
+                  answer: '0',
                   caption: 'days'
                 },
                 {
@@ -7276,26 +7276,26 @@ export default {
                 {
                   question: "How many of children are there?",
                   type: 'number',
-                  answer: '',
+                  answer: '0',
                   caption: 'children'
                 },
                 {
                   question: "How many pregnancies have there been?",
                   type: 'number',
-                  answer: '',
+                  answer: '0',
                   caption: 'pregnancies'
                 },
                 {
                   question: "What age was the patient at first childbirth?",
                   type: 'number',
-                  answer: '',
-                  caption: 'years old'
+                  answer: '0',
+                  caption: 'years old.'
                 },
                 {
                   question: "How old was the patient at the last childbirth?",
                   type: 'number',
-                  answer: '',
-                  caption: 'years old'
+                  answer: '0',
+                  caption: 'years old.'
                 },
                 {
                   question: "Is contraception practiced?",
@@ -7314,8 +7314,8 @@ export default {
                 {
                   question: "What was the age of onset?",
                   type: 'number',
-                  answer: '',
-                  caption: 'years old'
+                  answer: '0',
+                  caption: 'years old.'
                 },
                 {
                   question: "Are there any associated symptoms?",
@@ -7369,14 +7369,14 @@ export default {
                 {
                   question: "When was the last LMP?",
                   type: 'number',
-                  answer: '',
-                  caption: 'days ago'
+                  answer: '0',
+                  caption: 'days ago.'
                 },
                 {
                   question: "What is the duration of the patient's period?",
                   type: 'number', 
-                  answer: '',
-                  caption: 'days'
+                  answer: '0',
+                  caption: 'days.'
                 },
                 {
                   question: "What is the interval between periods?",
@@ -7422,26 +7422,26 @@ export default {
                 {
                   question: "How many of children are there?",
                   type: 'number',
-                  answer: '',
-                  caption: 'children'
+                  answer: '0',
+                  caption: 'children.'
                 },
                 {
                   question: "How many pregnancies have there been?",
                   type: 'number',
-                  answer: '',
-                  caption: 'pregnancies'
+                  answer: '0',
+                  caption: 'pregnancies.'
                 },
                 {
                   question: "What age was the patient at first childbirth?",
                   type: 'number',
-                  answer: '',
-                  caption: 'years old'
+                  answer: '0',
+                  caption: 'years old.'
                 },
                 {
                   question: "How old was the patient at the last childbirth?",
                   type: 'number',
-                  answer: '',
-                  caption: 'years old'
+                  answer: '0',
+                  caption: 'years old.'
                 },
                 {
                   question: "Is contraception practiced?",
@@ -7460,8 +7460,8 @@ export default {
                 {
                   question: "What was the age of onset?",
                   type: 'number',
-                  answer: '',
-                  caption: 'years old'
+                  answer: '0',
+                  caption: 'years old.'
                 },
                 {
                   question: "Are there any associated symptoms?",
@@ -7515,13 +7515,13 @@ export default {
                 {
                   question: "When was the last LMP?",
                   type: 'number',
-                  answer: '',
-                  caption: 'days ago'
+                  answer: '0',
+                  caption: 'days ago.'
                 },
                 {
                   question: "What is the duration of the patient's period?",
                   type: 'number',
-                  answer: '',
+                  answer: '0',
                   caption: 'days long.'
                 },
                 {
@@ -7568,26 +7568,26 @@ export default {
                 {
                   question: "How many of children are there?",
                   type: 'number',
-                  answer: '',
-                  caption: 'children'
+                  answer: '0',
+                  caption: 'children.'
                 },
                 {
                   question: "How many pregnancies have there been?",
                   type: 'number',
-                  answer: '',
-                  caption: 'pregnancies'
+                  answer: '0',
+                  caption: 'pregnancies.'
                 },
                 {
                   question: "What age was the patient at first childbirth?",
                   type: 'number',
-                  answer: '',
-                  caption: 'years old'
+                  answer: '0',
+                  caption: 'years old.'
                 },
                 {
                   question: "How old was the patient at the last childbirth?",
                   type: 'number',
-                  answer: '',
-                  caption: 'years old'
+                  answer: '0',
+                  caption: 'years old.'
                 },
                 {
                   question: "Is contraception practiced?",
@@ -7606,8 +7606,8 @@ export default {
                 {
                   question: "What was the age of onset?",
                   type: 'number',
-                  answer: '',
-                  caption: 'years old'
+                  answer: '0',
+                  caption: 'years old.'
                 },
                 {
                   question: "Are there any associated symptoms?",
@@ -7661,13 +7661,13 @@ export default {
                 {
                   question: "When was the last LMP?",
                   type: 'number',
-                  answer: '',
-                  caption: 'days ago'
+                  answer: '0',
+                  caption: 'days ago.'
                 },
                 {
                   question: "What is the duration of the patient's period?",
                   type: 'number',
-                  answer: '',
+                  answer: '0',
                   caption: 'days long.'
                 },
                 {
@@ -7714,26 +7714,26 @@ export default {
                 {
                   question: "How many of children are there?",
                   type: 'number',
-                  answer: '',
-                  caption: 'children'
+                  answer: '0',
+                  caption: 'children.'
                 },
                 {
                   question: "How many pregnancies have there been?",
                   type: 'number',
-                  answer: '',
-                  caption: 'pregnancies'
+                  answer: '0',
+                  caption: 'pregnancies.'
                 },
                 {
                   question: "What age was the patient at first childbirth?",
                   type: 'number',
-                  answer: '',
-                  caption: 'years old'
+                  answer: '0',
+                  caption: 'years old.'
                 },
                 {
                   question: "How old was the patient at the last childbirth?",
                   type: 'number',
-                  answer: '',
-                  caption: 'years old'
+                  answer: '0',
+                  caption: 'years old.'
                 },
                 {
                   question: "Is contraception practiced?",
@@ -7752,8 +7752,8 @@ export default {
                 {
                   question: "What was the age of onset?",
                   type: 'number',
-                  answer: '',
-                  caption: 'years old'
+                  answer: '0',
+                  caption: 'years old.'
                 },
                 {
                   question: "Are there any associated symptoms?",
@@ -7843,8 +7843,8 @@ export default {
             {
               question: "When was the injury sustained?",
               type: 'number',
-              answer: '',
-              caption: 'days ago',
+              answer: '0',
+              caption: 'days ago.',
             },
             {
               question: "Describe other problems and issues resulting from the injury.",
@@ -7889,7 +7889,7 @@ export default {
             {
               question: "How long do the palpitations last?",
               type: 'number',
-              answer: '',
+              answer: '0',
               caption: 'days.',
             },
             {
@@ -7992,7 +7992,7 @@ export default {
             {
               question: "How many episodes have there been?",
               type: 'number',
-              answer: '',
+              answer: '0',
               caption: 'episodes'
             },
             {
@@ -8216,7 +8216,7 @@ export default {
                 {
                   question: "What has been the duration of the weakness?",
                   type: 'number',
-                  answer: '',
+                  answer: '0',
                   caption: 'days.',
                 },
                 {
@@ -8298,7 +8298,7 @@ export default {
                 {
                   question: "What has been the duration of the weakness?",
                   type: 'number',
-                  answer: '',
+                  answer: '0',
                   caption: 'days.',
                 },
                 {

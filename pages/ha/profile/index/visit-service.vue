@@ -2,20 +2,6 @@
   <div>
     <div class="container mt-0">
       <div class="row">
-        <div class="col-md-12">
-        </div>
-      </div>
-      <div class="row">
-        <!-- <div class="col-md-12">
-          <nuxt-link to="/ha/profile/new-episode">
-            <button class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-2  text-uppercase">Record New Follow Up</button>     
-          </nuxt-link>
-        </div>
-        <div class="col-md-12">
-          <hr class="mt-2">
-        </div> -->
-      </div>
-      <div class="row">
         <div class="col-md-12 rounded">
           <ul class="list-inline">
             <li class="list-inline-item">
@@ -44,16 +30,10 @@
                 </div>
                 <div class="d-inline">
                   <button class="btn px-3 mr-2 small btn-dark" role="button">
-                    {{ serviceData.episodeDetails.chiefComplaints[0][0] }}
+
+                    <!-- {{ serviceData }} -->
+                    {{ serviceData.episodeDetails[0].chiefComplaints[0][0] }}
                   </button>
-                  <!-- {{ serviceData }} -->
-                  <!-- <br><br> -->
-                  <!-- {{ this.$route.query.id }} <br><br>
-                  {{ serviceData }} -->
-                  <!-- {{ this.$store.state.currPatient.services }}
-                  <div v-for="(service, index) in this.$store.state.currPatient.services" :key="index">
-                    {{ service.id }}
-                  </div> -->
                 </div>
               </div>
               <div class="col-md-12 mt-4">
@@ -62,10 +42,7 @@
                   <hr class="mb-1 mt-1">
                 </div>
                 <div class="d-inline">
-                  <!-- {{ serviceData }} -->
-                  <!-- {{ this.$route.query.id }}
-                  {{ this.$store.state.currPatient.services.find(service => service.episodeID === this.$route.query.id) }} -->
-                  {{ serviceData.episodeDetails.serviceResults }}
+                  {{ serviceData.episodeDetails[0].serviceResults }}
                 </div>
               </div>
               <div class="col-md-12 mt-4 mb-2">
@@ -74,7 +51,7 @@
                   <hr class="mb-1 mt-1">
                 </div>
                 <div class="d-inline">
-                  {{ serviceData.episodeDetails.serviceDescription }}
+                  {{ serviceData.episodeDetails[0].serviceDescription }}
                 </div>
               </div>
             </div>
@@ -107,7 +84,10 @@ export default {
     const serviceID = this.$route.query.id
 
     if ( this.$store.state.currPatient.id !== '') {
-      this.serviceData = this.$store.state.currPatient.services.find(service => service.episodeID === serviceID )
+      console.log('Service ID: ' + serviceID)
+      console.log(this.$store.state.currPatient.services)
+      this.serviceData = this.$store.state.currPatient.services.find(service => service.episodeID === serviceID)
+      console.log(this.serviceData)
     }
   },
   computed: {
@@ -125,11 +105,11 @@ export default {
         "title": "", 
         "created": "", 
         "lastUpdated": "", 
-        "episodeDetails": { 
+        "episodeDetails": [{ 
           "chiefComplaints": [ [ "" ] ], 
           "serviceResults": "", 
           "serviceDescription": "" 
-        }, 
+        }], 
         "numFollowUps": "" 
       }
     }

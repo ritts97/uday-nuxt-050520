@@ -21,35 +21,36 @@
               <div class="col-md-12 pb-3">
                 General Information <br>
                 <!-- <br><br> -->
+                <!-- {{ demographics }} -->
                 <!-- {{ currPatient.demographics }} -->
               </div>
               <div class="col-md-6">
                 <div class="small text-muted mb-1">
                   Full Name
                 </div>
-                <input type="text" class="w-100 p-2 mb-3" placeholder="First Name" :value="currPatient.demographics.name">
+                <input type="text" class="w-100 p-2 mb-3" placeholder="First Name" v-model="demographics.name">
                 <div class="small text-muted mb-1">
                   Phone Number
                 </div>
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Phone Number" :value="currPatient.demographics.phone">
+                <input type="text" class="w-100 p-2 mb-3" placeholder="Phone Number" v-model="demographics.phone">
                 <div class="small text-muted mb-1">
                   H/W/S/D of
                 </div>
-                <input type="text" class="w-100 p-2 mb-3" placeholder="H/W/S/D of" :value="currPatient.demographics.hswd">
+                <input type="text" class="w-100 p-2 mb-3" placeholder="H/W/S/D of" v-model="demographics.hswd">
               </div>
               <div class="col-md-6">
                 <div class="small text-muted mb-1">
                   Gender
                 </div>
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Gender" :value="currPatient.demographics.gender">
+                <input type="text" class="w-100 p-2 mb-3" placeholder="Gender" v-model="demographics.gender">
                 <div class="small text-muted mb-1">
                   Age
                 </div>
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Age" :value="currPatient.demographics.age">
+                <input type="text" class="w-100 p-2 mb-3" placeholder="Age" v-model="demographics.age">
                 <div class="small text-muted mb-1">
                   Occupation
                 </div>
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Occupation" :value="currPatient.demographics.occupation">
+                <input type="text" class="w-100 p-2 mb-3" placeholder="Occupation" v-model="demographics.occupation">
               </div>
             </div>
             <div class="row pt-3">
@@ -60,7 +61,7 @@
                 <div class="small text-muted mb-1">
                   Address 1
                 </div>
-                <input type="text" class="w-100 p-2 mb-3" placeholder="First Name" :value="currPatient.demographics.address">
+                <input type="text" class="w-100 p-2 mb-3" placeholder="First Name" v-model="demographics.address">
                 <div class="small text-muted mb-1">
                   District
                 </div>
@@ -68,17 +69,17 @@
                 <div class="small text-muted mb-1">
                   Police Station
                 </div>
-                <input type="text" class="w-100 p-2 mb-3" placeholder="Phone Number" :value="currPatient.demographics.police">
+                <input type="text" class="w-100 p-2 mb-3" placeholder="Phone Number" v-model="demographics.police">
               </div>
               <div class="col-md-6">
                 <div class="small text-muted mb-1">
                   Address 2
                 </div>
-                <input type="text" class="w-100 p-2 mb-3" placeholder="First Name" :value="currPatient.demographics.address2">
+                <input type="text" class="w-100 p-2 mb-3" placeholder="First Name" v-model="demographics.address2">
                 <div class="small text-muted mb-1">
                   State
                 </div>
-                <input type="text" class="w-100 p-2 mb-3" placeholder="" :value="currPatient.demographics.country">
+                <input type="text" class="w-100 p-2 mb-3" placeholder="" v-model="demographics.country">
               </div>
             </div>
           </div>
@@ -90,7 +91,7 @@
         <div class="col-md-12">
           <div>
             <nuxt-link to="/ha/profile">
-              <button @click="showAlert('Demographics for Delores Abernathy have been updated.')" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1 text-uppercase">
+              <button @click="updateDemographics('Patient demographics have been updated.')" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1 text-uppercase">
                 Save Demographics
               </button>
             </nuxt-link>
@@ -125,45 +126,16 @@ export default {
       return this.$store.state.currPatient
     }
   },
+  mounted() {
+    this.demographics = {...this.currPatient.demographics}
+  },
   methods: {
-    getTab: function (tabName) {
-      let tabs = this.tabs
-      let ref = 0
-
-      for (let i = 0; i < tabs.length; i++) {
-        if (tabs[i].name === tabName) {
-          tabs[i].isActive = true
-          ref = i
-        } else {
-          tabs[i].isActive = false
-        }
-
-        if (ref == (tabs.length - 1)) {
-          this.showComplete = true
-        } else {
-          this.showComplete = false
-        }
-      }
-    },
-    goToNext: function () {
-      let tabs = this.tabs
-      let ref = 0
-
-      for (let i = 0; i < tabs.length; i++) {
-        if (tabs[i].isActive === true) {
-          tabs[i].isActive = false
-          ref = i
-        }
-      }
-
-      if ((ref + 1) >= (tabs.length-1)) {
-        this.showComplete = true
-      } 
-
-      tabs[ref + 1].isActive = true
-    },
-    showAlert: function (msg) {
+    updateDemographics: function (msg) {
       alert(msg)
+
+      let currPatientId = this.currPatient.id
+
+      this.$store.commit('updateDemographics', [currPatientId, this.demographics])
     }
   },
   data() {
@@ -172,6 +144,19 @@ export default {
       showDocsFeedback: true,
       showDemographics: true,
       showComplete: false,
+      demographics: {
+        name: '',
+        occupation: '',
+        gender: '',
+        age: 0,
+        hswd: '',
+        address: '',
+        address2: '',
+        police: '',
+        phone: '',
+        location: '',
+        country: '',
+      },
       tabs: [
         {
           name: 'allocated',

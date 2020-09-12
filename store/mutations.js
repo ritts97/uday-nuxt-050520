@@ -31,6 +31,19 @@ export default {
 
     state.currPatient = patientProf
   },
+  updateDemographics(state, payload) {
+    let PATIENT_ID = payload[0]
+    let CLUSTER_ID = state.currCluster;
+    let PATIENT_DEMOGRAPHICS = payload[1]
+
+    let patientProf =
+      state.udayDb.clusters[CLUSTER_ID].patients.find(
+        patient => patient.id === PATIENT_ID
+      ) || state.currPatient; 
+      
+    patientProf.demographics = {...PATIENT_DEMOGRAPHICS };
+    console.log(patientProf)
+  },
   updateCurrEpisode(state, payload) {
     state.currEpisode = payload
   },
@@ -146,6 +159,7 @@ export default {
     serviceCount++
 
     if (!EPISODE_ID) { 
+      console.log("No episode ID")
       state.udayDb.clusters[CLUSTER_ID].patients.find(patient => patient.id === PATIENT_ID).services.push({
         type: 'service',
         billed: '',
@@ -158,6 +172,7 @@ export default {
         numFollowUps: '',
       })
     } else {
+      console.log()
       state.udayDb.clusters[CLUSTER_ID].patients
         .find(patient => patient.id === PATIENT_ID)
         .episodes.find(episode => episode.episodeID === EPISODE_ID)

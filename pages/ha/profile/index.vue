@@ -47,17 +47,24 @@
                 <!-- <hr> -->
               </div>
               <div class="col-md-12">
+                <nuxt-link to="/ha/profile/">
+                  <button class="btn btn-light py-1 px-3">
+                    <small>
+                      All Visits
+                    </small>
+                  </button>
+                </nuxt-link>
                 <nuxt-link to="/ha/profile/update-demo" class="mr-2">
                   <button class="btn btn-light py-1 px-3">
                     <small>
-                      View/Update Demographics
+                      View Demographics
                     </small>
                   </button>
                 </nuxt-link>
                 <nuxt-link to="/ha/profile/update-history">
                   <button class="btn btn-light py-1 px-3">
                     <small>
-                      View/Update Family History 
+                      View Medical History 
                     </small>
                   </button>
                 </nuxt-link>

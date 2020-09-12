@@ -56,11 +56,12 @@
                   </td>
                   <td>
                     <div v-if="visit.title !== 'Registered'">
-                      <nuxt-link v-if="visit.type === 'episode'" :to="'profile/visit?id=' + visit.episodeID">
+                      <nuxt-link v-if="visit.type === 'episode'" :to="'/ha/profile/visit?id=' + visit.episodeID">
                         {{ visit.title }}
                       </nuxt-link>
-                      <nuxt-link v-else :to="'profile/visit-service?id=' + visit.episodeID">
+                      <nuxt-link v-else :to="'/ha/profile/visit-service?id=' + visit.episodeID">
                         {{ visit.title }}
+                         <!-- || {{ visit }} -->
                       </nuxt-link>
                     </div>
                     <div v-else>
@@ -69,7 +70,10 @@
                   </td>
                   <td>
                     <div v-if="visit.episodeDetails" >
-                      <div v-for="(complaints, index) in visit.episodeDetails.chiefComplaints" :key="index">
+                      <!-- {{ visit.episodeDetails[0].chiefComplaints }} aasdas
+                      asdasd -->
+                      <div v-for="(complaints, index) in visit.episodeDetails[0].chiefComplaints" :key="index">
+                        <!-- {{ complaints }} asdsa -->
                         <div v-if="complaints[1]">
                           <button class="btn-sm btn-light mb-2 mr-2">
                             {{ complaints[1] }}
@@ -82,6 +86,9 @@
                         </div>
                       </div>
                     </div>
+                    <!-- <div v-else-if="visit.chiefComplaints">
+                      {{ visit.chiefComplaints[0][0] }}
+                    </div> -->
                   </td>
                   <td class="d-none d-md-inline-block mb-n1 w-33">{{ visit.lastUpdated }}</td>
                   <td class="d-none d-md-inline-block mb-n1 w-33">{{ visit.created }}</td>

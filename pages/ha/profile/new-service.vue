@@ -11,7 +11,9 @@
             </li> -->
             <li class="list-inline-item">
               <button class="btn btn-dark px-3 small">
-                New Service (for Episode: {{ this.$store.state.currEpisode.episodeID }})
+                New Service 
+                <!-- (for Episode: {{ this.$store.state.currEpisode.episodeID }}) -->
+                 <!-- {{ this.$store.state.currEpisode }} -->
               </button>
             </li>
           </ul>
@@ -37,12 +39,9 @@
                 </div>
               <div class="col-md-12">
                 <label for="">What service did you provide?</label><br>
-                <button class="btn mb-2 mr-2 btn-light">ECG</button>
-                <button class="btn mb-2 mr-2 btn-light">Service 2</button>
-                <button class="btn mb-2 mr-2 btn-light">Service 3</button>
-                <button class="btn mb-2 mr-2 btn-light">Service 4</button>
-                <button class="btn mb-2 mr-2 btn-light">Service 5</button>
-                <button class="btn mb-2 mr-2 btn-light">Service 6</button>
+                <button class="btn mb-2 mr-2" :class="service.isActive ? 'btn-dark' : 'btn-light'" v-for="(service, index) in serviceOptions" :key="index" @click="handleServiceOptions(index)">
+                  {{ service.title }}
+                </button>
               </div>
               <div class="col-md-12 mt-2">
                 <label for="">What were the results?</label>
@@ -60,7 +59,10 @@
     <div class="container mb-3">
       <div class="row">
         <div class="col-md-12">
-          <nuxt-link :to="'/ha/profile/visit?id=' + this.$store.state.currEpisode.episodeID"> 
+          <nuxt-link :to="'/ha/profile/visit?id=' + this.$store.state.currEpisode.episodeID" v-if="this.$store.state.currEpisode.episodeID"> 
+            <button @click="recordNewService()" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">Record New Service</button>
+          </nuxt-link>
+          <nuxt-link :to="'/ha/profile/'" v-else> 
             <button @click="recordNewService()" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">Record New Service</button>
           </nuxt-link>
         </div>
@@ -83,6 +85,10 @@ export default {
         url: '/ha/profile'
       },
       {
+        title: this.$store.state.currEpisode.title,
+        url: '/ha/profile/visit?id=' + this.$store.state.currEpisode.episodeID,
+      },
+      {
         title: 'New Service',
         url: '/ha/new-service'
       },
@@ -94,17 +100,42 @@ export default {
 
       const episodeID = this.$route.query.id
 
+      console.log([this.serviceDetails, episodeID])
       this.$store.commit('recordNewService', [this.serviceDetails, episodeID])
     },
+    handleServiceOptions: function (serviceIndex) {
+      let self = this
+      this.serviceOptions.forEach((service, index) => {
+        if (index === serviceIndex) {
+          service.isActive = true
+          self.serviceDetails.chiefComplaints = [[service.title]]
+        } else {
+          service.isActive = false
+        }
+      })
+    }
   },
   data() {
     return {
       list: [],
       serviceDetails: {
-        chiefComplaints: [['ECG']],
+        chiefComplaints: [[]],
         serviceResults: '',
         serviceDescription: '',
       },
+      currService: '',
+      serviceOptions: [
+        {
+          name: 'ecg',
+          title: 'ECG',
+          isActive: false
+        },
+        {
+          name: 'service2',
+          title: 'Service 2',
+          isActive: false
+        }
+      ],
       showDemographics: true,
       showComplete: false,
       tabs: [

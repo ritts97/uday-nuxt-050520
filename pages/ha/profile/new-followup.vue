@@ -3076,7 +3076,7 @@ export default {
               question: "How long have the boils been there?",
               type: 'number',
               answer: '',
-              caption: 'days'
+              caption: 'days.'
             },
             {
               question: "Where is are the boils located?",
@@ -7125,25 +7125,25 @@ export default {
                   question: "How many children are there?",
                   type: 'number',
                   answer: '',
-                  caption: 'children'
+                  caption: 'children.'
                 },
                 {
                   question: "How many pregnancies have there been?",
                   type: 'number',
                   answer: '',
-                  caption: 'pregnancies'
+                  caption: 'pregnancies.'
                 },
                 {
                   question: "What age was the patient at first childbirth?",
                   type: 'number',
                   answer: '',
-                  caption: 'years old'
+                  caption: 'years old.'
                 },
                 {
                   question: "How old was the patient at the last childbirth?",
                   type: 'number',
                   answer: '',
-                  caption: 'years old'
+                  caption: 'years old.'
                 },
                 {
                   question: "Is contraception practiced?",
@@ -7226,13 +7226,13 @@ export default {
                   question: "When was the last LMP?",
                   type: 'number',
                   answer: '',
-                  caption: 'days'
+                  caption: 'days.'
                 },
                 {
                   question: "What is the duration of the patient's period?",
                   type: 'number',
                   answer: '',
-                  caption: 'days'
+                  caption: 'days.'
                 },
                 {
                   question: "What is the interval between periods?",
@@ -7278,25 +7278,25 @@ export default {
                   question: "How many of children are there?",
                   type: 'number',
                   answer: '',
-                  caption: 'children'
+                  caption: 'children.'
                 },
                 {
                   question: "How many pregnancies have there been?",
                   type: 'number',
                   answer: '',
-                  caption: 'pregnancies'
+                  caption: 'pregnancies.'
                 },
                 {
                   question: "What age was the patient at first childbirth?",
                   type: 'number',
                   answer: '',
-                  caption: 'years old'
+                  caption: 'years old.'
                 },
                 {
                   question: "How old was the patient at the last childbirth?",
                   type: 'number',
                   answer: '',
-                  caption: 'years old'
+                  caption: 'years old.'
                 },
                 {
                   question: "Is contraception practiced?",
@@ -7316,7 +7316,7 @@ export default {
                   question: "What was the age of onset?",
                   type: 'number',
                   answer: '',
-                  caption: 'years old'
+                  caption: 'years old.'
                 },
                 {
                   question: "Are there any associated symptoms?",
@@ -7377,7 +7377,7 @@ export default {
                   question: "What is the duration of the patient's period?",
                   type: 'number', 
                   answer: '',
-                  caption: 'days'
+                  caption: 'days.'
                 },
                 {
                   question: "What is the interval between periods?",
@@ -7424,25 +7424,25 @@ export default {
                   question: "How many of children are there?",
                   type: 'number',
                   answer: '',
-                  caption: 'children'
+                  caption: 'children.'
                 },
                 {
                   question: "How many pregnancies have there been?",
                   type: 'number',
                   answer: '',
-                  caption: 'pregnancies'
+                  caption: 'pregnancies.'
                 },
                 {
                   question: "What age was the patient at first childbirth?",
                   type: 'number',
                   answer: '',
-                  caption: 'years old'
+                  caption: 'years old.'
                 },
                 {
                   question: "How old was the patient at the last childbirth?",
                   type: 'number',
                   answer: '',
-                  caption: 'years old'
+                  caption: 'years old.'
                 },
                 {
                   question: "Is contraception practiced?",
@@ -7462,7 +7462,7 @@ export default {
                   question: "What was the age of onset?",
                   type: 'number',
                   answer: '',
-                  caption: 'years old'
+                  caption: 'years old.'
                 },
                 {
                   question: "Are there any associated symptoms?",
@@ -7570,25 +7570,25 @@ export default {
                   question: "How many of children are there?",
                   type: 'number',
                   answer: '',
-                  caption: 'children'
+                  caption: 'children.'
                 },
                 {
                   question: "How many pregnancies have there been?",
                   type: 'number',
                   answer: '',
-                  caption: 'pregnancies'
+                  caption: 'pregnancies.'
                 },
                 {
                   question: "What age was the patient at first childbirth?",
                   type: 'number',
                   answer: '',
-                  caption: 'years old'
+                  caption: 'years old.'
                 },
                 {
                   question: "How old was the patient at the last childbirth?",
                   type: 'number',
                   answer: '',
-                  caption: 'years old'
+                  caption: 'years old.'
                 },
                 {
                   question: "Is contraception practiced?",
@@ -7608,7 +7608,7 @@ export default {
                   question: "What was the age of onset?",
                   type: 'number',
                   answer: '',
-                  caption: 'years old'
+                  caption: 'years old.'
                 },
                 {
                   question: "Are there any associated symptoms?",
@@ -7716,25 +7716,25 @@ export default {
                   question: "How many of children are there?",
                   type: 'number',
                   answer: '',
-                  caption: 'children'
+                  caption: 'children.'
                 },
                 {
                   question: "How many pregnancies have there been?",
                   type: 'number',
                   answer: '',
-                  caption: 'pregnancies'
+                  caption: 'pregnancies.'
                 },
                 {
                   question: "What age was the patient at first childbirth?",
                   type: 'number',
                   answer: '',
-                  caption: 'years old'
+                  caption: 'years old.'
                 },
                 {
                   question: "How old was the patient at the last childbirth?",
                   type: 'number',
                   answer: '',
-                  caption: 'years old'
+                  caption: 'years old.'
                 },
                 {
                   question: "Is contraception practiced?",
@@ -7754,7 +7754,7 @@ export default {
                   question: "What was the age of onset?",
                   type: 'number',
                   answer: '',
-                  caption: 'years old'
+                  caption: 'years old.'
                 },
                 {
                   question: "Are there any associated symptoms?",
@@ -8393,6 +8393,10 @@ export default {
         {
           title: 'Dashboard',
           url: '/ha'
+        },
+        {
+          title: this.$store.state.currEpisode.title,
+          url: '/ha/profile/visit?id=' + this.$store.state.currEpisode.episodeID,
         },
         {
           title: 'Patient\'s Profile',

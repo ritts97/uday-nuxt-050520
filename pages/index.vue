@@ -32,17 +32,17 @@
           </nuxt-link> -->
           <!-- <nuxt-link to="/ha" @click="login"> -->
           <button @click="login" class="btn btn-dark mt-3 mb-2 p-2 w-100 text-uppercase">
-            Login (as HA)
+            Login as HA
           </button>
           <!-- </nuxt-link> -->
           <nuxt-link to="/md">
             <button class="btn btn-dark mb-2 p-2 w-100 text-uppercase">
-              Login (as Doct.)
+              Login as Doctor
             </button>
           </nuxt-link>
-          <button class="btn btn-dark mb-2 p-2 w-100 text-uppercase" @click="login">
+          <!-- <button class="btn btn-dark mb-2 p-2 w-100 text-uppercase" @click="login">
             Login
-          </button>
+          </button> -->
           <!-- <nuxt-link to="/admin">
             <button class="btn btn-dark mb-2 p-2 w-100 text-uppercase">
               Login (as Admin)

@@ -22,7 +22,7 @@
             <!-- Start Patient History -->
             <div class="row pt-3">
               <div class="col-md-12 small text-muted pb-2">
-                Health Diagnosis 111
+                Health Diagnosis
                 <hr>
               </div>
               <div class="col-md-6" v-for="(patientQuestion, index) in currPatient.demographics.patientHistory.questions" :key="index">
