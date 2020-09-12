@@ -108,6 +108,11 @@
             </div>
           </div>
         </div>
+        <div class="col-md-12 mb-3">
+          <button type="button" @click="goToNext()" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">
+            Go to Patient Medical History
+          </button>
+        </div>
       </div>
 
       <!-- Patient Medical History -->
@@ -146,6 +151,11 @@
               </div>
             </div>
           </div>
+        </div>
+        <div class="col-md-12 mb-3">
+          <button type="button" @click="goToNext()" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">
+            Go to Family Medical History
+          </button>
         </div>
       </div>
 
@@ -191,12 +201,7 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
-
-    <div class="container mb-3">
-      <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 mb-3">
           <button type="submit" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">
             Register New Patient
           </button>
@@ -242,6 +247,20 @@ export default {
         self.patientData.gender = profile.gender[0].toUpperCase()
         self.patientData.location = profile.location.city + ', ' + profile.location.state + ', ' + profile.location.country
       })
+    },
+    goToNext: function () {
+      let tabs = this.tabs
+      let ref = 0
+
+      for (let i = 0; i < tabs.length; i++) {
+        if (tabs[i].isActive === true) {
+          tabs[i].isActive = false
+          ref = i
+        }
+      }
+
+      tabs[ref + 1].isActive = true
+      tabs[ref + 1].isEnabled = true
     },
     getTab: function (tabName) {
       let tabs = this.tabs

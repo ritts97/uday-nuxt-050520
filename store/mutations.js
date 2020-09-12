@@ -147,6 +147,9 @@ export default {
       }
     })
   },
+  clearVisitID(state, payload) {
+    state.currEpisode = {}
+  },
   recordNewService(state, payload) {
     let SERVICE_PAYLOAD = payload[0]
     let EPISODE_ID = payload[1]
@@ -168,7 +171,7 @@ export default {
         title: 'Service ' + serviceCount,
         created: currentDate,
         lastUpdated: currentDate,
-        episodeDetails: payload,
+        episodeDetails: payload[0],
         numFollowUps: '',
       })
     } else {

@@ -69,11 +69,9 @@
                     </div>
                   </td>
                   <td>
-                    <div v-if="visit.episodeDetails" >
-                      <!-- {{ visit.episodeDetails[0].chiefComplaints }} aasdas
-                      asdasd -->
-                      <div v-for="(complaints, index) in visit.episodeDetails[0].chiefComplaints" :key="index">
-                        <!-- {{ complaints }} asdsa -->
+                    <div v-if="visit.episodeDetails">
+                      <div v-for="(complaints, index) in visit.episodeDetails.chiefComplaints" :key="index">
+
                         <div v-if="complaints[1]">
                           <button class="btn-sm btn-light mb-2 mr-2">
                             {{ complaints[1] }}
@@ -86,9 +84,6 @@
                         </div>
                       </div>
                     </div>
-                    <!-- <div v-else-if="visit.chiefComplaints">
-                      {{ visit.chiefComplaints[0][0] }}
-                    </div> -->
                   </td>
                   <td class="d-none d-md-inline-block mb-n1 w-33">{{ visit.lastUpdated }}</td>
                   <td class="d-none d-md-inline-block mb-n1 w-33">{{ visit.created }}</td>
@@ -122,6 +117,8 @@ export default {
 
       this.$store.commit('updateCurrPatient', { id: queryID })
     }
+
+    this.$store.commit('clearVisitID')
 
     this.list = this.filterAllVisits
 

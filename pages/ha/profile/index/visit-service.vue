@@ -30,9 +30,8 @@
                 </div>
                 <div class="d-inline">
                   <button class="btn px-3 mr-2 small btn-dark" role="button">
-
                     <!-- {{ serviceData }} -->
-                    {{ serviceData.episodeDetails[0].chiefComplaints[0][0] }}
+                    {{ serviceData.episodeDetails.chiefComplaints[0][0] }}
                   </button>
                 </div>
               </div>
@@ -42,7 +41,7 @@
                   <hr class="mb-1 mt-1">
                 </div>
                 <div class="d-inline">
-                  {{ serviceData.episodeDetails[0].serviceResults }}
+                  {{ serviceData.episodeDetails.serviceResults }}
                 </div>
               </div>
               <div class="col-md-12 mt-4 mb-2">
@@ -51,7 +50,7 @@
                   <hr class="mb-1 mt-1">
                 </div>
                 <div class="d-inline">
-                  {{ serviceData.episodeDetails[0].serviceDescription }}
+                  {{ serviceData.episodeDetails.serviceDescription }}
                 </div>
               </div>
             </div>
@@ -84,8 +83,8 @@ export default {
     const serviceID = this.$route.query.id
 
     if ( this.$store.state.currPatient.id !== '') {
-      console.log('Service ID: ' + serviceID)
-      console.log(this.$store.state.currPatient.services)
+      // console.log('Service ID: ' + serviceID)
+      // console.log(this.$store.state.currPatient.services)
       this.serviceData = this.$store.state.currPatient.services.find(service => service.episodeID === serviceID)
       console.log(this.serviceData)
     }
@@ -105,11 +104,11 @@ export default {
         "title": "", 
         "created": "", 
         "lastUpdated": "", 
-        "episodeDetails": [{ 
-          "chiefComplaints": [ [ "" ] ], 
+        "episodeDetails": { 
+          "chiefComplaints": [[]], 
           "serviceResults": "", 
           "serviceDescription": "" 
-        }], 
+        }, 
         "numFollowUps": "" 
       }
     }
