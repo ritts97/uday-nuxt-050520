@@ -87,6 +87,12 @@ Vue.use(VueCookies)
 
 export default {
   layout: 'default',
+  mounted() {
+    this.getOccupation()
+    this.getState()
+    this.getDistrict()
+    this.getPs()
+  },
   methods: {
     // makeRequest: function () {
     //   axios.get('http://localhost:5000/').then(function(res){
@@ -128,6 +134,27 @@ export default {
             path: '/ha'
           })
         });
+    },
+    getOccupation: function(){
+      axios.get('http://127.0.0.1:5000/requestoccupation').then(resp => {
+        Vue.prototype.$occ = resp.data;
+        alert($$occ)
+      });
+    },
+    getState: function(){
+      axios.get('http://127.0.0.1:5000/requeststate').then(resp =>{
+        Vue.prototype.$state = resp.data;
+      });
+    },
+    getDistrict: function(){
+      axios.get('http://127.0.0.1:5000/requestdistrict').then(resp =>{
+        Vue.prototype.$district = resp.data;
+      });
+    },
+    getPs: function(){
+      axios.get('http://127.0.0.1:5000/requestps').then(resp =>{
+        Vue.prototype.$ps = resp.data;
+      })
     }
   }
 }

@@ -62,8 +62,8 @@
                   
                   <label for="">Occupation</label>
                   <select class="custom-select mb-3" v-model="patientData.occupationId" id="occupation" @click="changeocc()">
-                    <option selected disabled>Occupation</option>
                   </select>
+
                   <label for="">Husband/Wife/Son/Daughter of</label>
                   <input type="text" class="w-100 p-2 mb-3" v-model="patientData.hswd" placeholder="Family Members's Name">
                 
@@ -80,9 +80,11 @@
                   <input type="text" class="w-100 p-2 mb-3" v-model="patientData.address" placeholder="Address 1">
                   
                   <label for="">District</label>
-                  <input type="text" class="w-100 p-2 mb-3" placeholder="District">
+                  <select class="custom-select mb-4" v-model="patientData.districtId" id="districtId" @click="changedistrict()">
+                  </select>
                   <label for="">Police Station</label>
-                  <input type="text" class="w-100 p-2 mb-3" v-model="patientData.police" placeholder="Police Station">
+                  <select class="custom-select mb-4" v-model="patientData.psId" id="psId" @click="changeps()">
+                  </select>
                 </div>
                 <div class="col-md-6">
 
@@ -90,12 +92,7 @@
                   <input type="text" class="w-100 p-2 mb-3" v-model="patientData.address2" placeholder="Address 2">
                   
                   <label for="">State</label>
-                  <select class="custom-select mb-4">
-                    <option selected disabled>State</option>
-                    <option value="1">Maharashtra</option>
-                    <option value="2">Kerala</option>
-                    <option value="2">Tamila Nadu</option>
-                    <option value="3">Other</option>
+                  <select class="custom-select mb-4" v-model="patientData.stateId" id="stateId" @click="changestate()">
                   </select>
                   <label for="">Country</label>
                   <input type="text" class="w-100 p-2 mb-3" v-model="patientData.country" placeholder="India" value="India">
@@ -250,18 +247,60 @@ export default {
       })
     },
     changeocc: function() {
-      axios.get('http://127.0.0.1:5000/requestoccupation').then(resp =>{
-        var occ = resp.data;
-        var l = occ.length;
-        var options = "";
-        var opt = "";
-        var i=0;
-        for(i=0; i < l; i++){
-          opt = "<option value=\"" + occ[i] + "\">" + occ[i] + "</option>\n";
-          options = options.concat(opt)
+      var occp = this.$occ;
+      var l = occp.length;
+      var opt = "", options = "<option selected disabled>State</option>\n";
+      var i = 0;
+      for(i = 0; i < l; i++){
+        opt = "<option value=\"" + occp[i]['objectid'] + "\">" + occp[i]['name'] + "</option>\n";
+        options = options.concat(opt)
+      }
+      document.getElementById("occupation").innerHTML = options
+    },
+    changestate: function() {
+      var st = this.$state;
+      var l = st.length;
+      var opt = "", options = "<option selected disabled>State</option>\n";
+      var i = 0;
+      for(i = 0; i < l; i++){
+        opt = "<option value=\"" + st[i]['objectid'] + "\">" + st[i]['name'] + "</option>\n";
+        options = options.concat(opt)
+      }
+      document.getElementById("stateId").innerHTML = options
+    },
+    changedistrict: function() {
+      var options = "<option selected disabled>District</option>\n", opt = "";
+      if(this.patientData.stateId == undefined){
+        alert("State not selected!")
+      }
+      else{
+        var dist = this.$district;
+        var l = dist.length, i = 0;
+        for(i = 0; i < l; i++){
+          if(dist[i]['state'] == this.patientData.stateId){
+            opt = "<option value=\"" + dist[i]['objectid'] + "\">" + dist[i]['name'] + "</option>\n";
+            options = options.concat(opt)
+          }
         }
-        document.getElementById("occupation").innerHTML = options             
-      });
+      }
+      document.getElementById("districtId").innerHTML = options
+    },
+    changeps: function() {
+      var options = "<option selected disabled>Police Station</option>\n", opt = "";
+      if(this.patientData.districtId == undefined){
+        alert("District not selected!")
+      }
+      else{
+        var ps = this.$ps;
+        var l = ps.length, i = 0;
+        for(i = 0; i < l; i++){
+          if(ps[i]['district'] == this.patientData.districtId){
+            opt = "<option value=\"" + ps[i]['objectid'] + "\">" + ps[i]['name'] + "</option>\n";
+            options = options.concat(opt)
+          }
+        }
+      }
+      document.getElementById("psId").innerHTML = options
     },
     goNext: function() {
       let tabs = this.tabs
@@ -303,10 +342,10 @@ export default {
         ageType: 'Years',
         phone: Number(self.patientData.phone),
         villOrCity: self.patientData.address,
-        stateId: 'WB',
-        districtId: 'KOL',
-        psId: 'RGPARK',
-        sdwOf: "Amar Baap!",
+        stateId: self.patientData.stateId,
+        districtId: self.patientData.districtId,
+        psId: self.patientData.psId,
+        sdwOf: self.patientData.hswd,
         occupationId: self.patientData.occupationId
       }
 
