@@ -349,7 +349,7 @@ export default {
         occupationId: self.patientData.occupationId
       }
 
-      axios.post('http://127.0.0.1:5000/registerpatient', data, headers)
+      axios.post(this.$url +'registerpatient', data, headers)
       .then(function (response) {
         Vue.$cookies.set('PID', response.data)
         alert('Patient reg. Id '+ Vue.$cookies.get('PID'))

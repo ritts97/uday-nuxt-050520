@@ -85,6 +85,8 @@ import Vue from 'vue'
 import VueCookies from 'vue-cookies'
 Vue.use(VueCookies)
 
+Vue.prototype.$url = 'http://127.0.0.1:5000/';
+
 export default {
   layout: 'default',
   mounted() {
@@ -115,7 +117,7 @@ export default {
       // Live server
       // http://76.218.96.73/login
 
-      axios.post('http://127.0.0.1:5000/login', data, headers)
+      axios.post(this.$url + 'login', data, headers)
         .then(function (response) {
           console.log(response.data);
           Vue.$cookies.set('HaId', response.data)
@@ -136,23 +138,23 @@ export default {
         });
     },
     getOccupation: function(){
-      axios.get('http://127.0.0.1:5000/requestoccupation').then(resp => {
+      axios.get(this.$url + 'requestoccupation').then(resp => {
         Vue.prototype.$occ = resp.data;
         alert($$occ)
       });
     },
     getState: function(){
-      axios.get('http://127.0.0.1:5000/requeststate').then(resp =>{
+      axios.get(this.$url+'requeststate').then(resp =>{
         Vue.prototype.$state = resp.data;
       });
     },
     getDistrict: function(){
-      axios.get('http://127.0.0.1:5000/requestdistrict').then(resp =>{
+      axios.get(this.$url+'requestdistrict').then(resp =>{
         Vue.prototype.$district = resp.data;
       });
     },
     getPs: function(){
-      axios.get('http://127.0.0.1:5000/requestps').then(resp =>{
+      axios.get(this.$url+'requestps').then(resp =>{
         Vue.prototype.$ps = resp.data;
       })
     }
