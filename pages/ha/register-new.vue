@@ -43,11 +43,11 @@
                   <input type="text" class="w-100 p-2 mb-3" v-model="patientData.name" placeholder="Full Name">
                   
                   <label for="">Gender</label>
-                  <select class="custom-select mb-3">
+                  <select class="custom-select mb-3" v-model="patientData.gender">
                     <option selected disabled>Gender</option>
-                    <option value="1">Male</option>
-                    <option value="2">Female</option>
-                    <option value="3">Other</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
                   </select>
                   <label for="">Phone Number</label>
                   <input type="text" class="w-100 p-2 mb-3" v-model="patientData.phone" placeholder="Phone Number">
@@ -61,12 +61,8 @@
                   <input type="text" class="w-100 p-2 mb-3" v-model="patientData.age" placeholder="Age">
                   
                   <label for="">Occupation</label>
-                  <select class="custom-select mb-3">
+                  <select class="custom-select mb-3" v-model="patientData.occupationId" id="occupation" @click="changeocc()">
                     <option selected disabled>Occupation</option>
-                    <option value="1">Industrial Farmer</option>
-                    <option value="2">Teacher</option>
-                    <option value="2">Student</option>
-                    <option value="3">Other</option>
                   </select>
                   <label for="">Husband/Wife/Son/Daughter of</label>
                   <input type="text" class="w-100 p-2 mb-3" v-model="patientData.hswd" placeholder="Family Members's Name">
@@ -153,7 +149,7 @@
           </div>
         </div>
         <div class="col-md-12 mb-3">
-          <button type="button" @click="goToNext()" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">
+          <button type="button" @click="goNext()" class="w-100 btn btn-dark rounded font-weight-bold py-3 mb-1  text-uppercase">
             Go to Family Medical History
           </button>
         </div>
@@ -214,7 +210,11 @@
 
 <script>
 import axios from 'axios'
+import Vue from 'vue'
+import VueCookies from 'vue-cookies'
 
+Vue.use(VueCookies)
+var occ = ""
 export default {
   layout: 'dashboard',
   mounted() {
@@ -232,6 +232,7 @@ export default {
     this.$store.commit('updatePath', path)
 
     this.generateFakeCredentials()
+
   },
   methods: {
     generateFakeCredentials: function name(params) {
@@ -248,9 +249,24 @@ export default {
         self.patientData.location = profile.location.city + ', ' + profile.location.state + ', ' + profile.location.country
       })
     },
-    goToNext: function () {
+    changeocc: function() {
+      axios.get('http://127.0.0.1:5000/requestoccupation').then(resp =>{
+        var occ = resp.data;
+        var l = occ.length;
+        var options = "";
+        var opt = "";
+        var i=0;
+        for(i=0; i < l; i++){
+          opt = "<option value=\"" + occ[i] + "\">" + occ[i] + "</option>\n";
+          options = options.concat(opt)
+        }
+        document.getElementById("occupation").innerHTML = options             
+      });
+    },
+    goNext: function() {
       let tabs = this.tabs
       let ref = 0
+      let self = this
 
       for (let i = 0; i < tabs.length; i++) {
         if (tabs[i].isActive === true) {
@@ -261,6 +277,48 @@ export default {
 
       tabs[ref + 1].isActive = true
       tabs[ref + 1].isEnabled = true
+    },
+    goToNext: function () {
+      let tabs = this.tabs
+      let ref = 0
+      let self = this
+
+      for (let i = 0; i < tabs.length; i++) {
+        if (tabs[i].isActive === true) {
+          tabs[i].isActive = false
+          ref = i
+        }
+      }
+
+      tabs[ref + 1].isActive = true
+      tabs[ref + 1].isEnabled = true
+      var headers = {
+        'Content-Type': 'application/json;charset=UTF-8',
+      }
+      var data = {
+        HaId: Vue.$cookies.get('HaId'),
+        name: self.patientData.name,
+        gender: self.patientData.gender,
+        age: Number(self.patientData.age),
+        ageType: 'Years',
+        phone: Number(self.patientData.phone),
+        villOrCity: self.patientData.address,
+        stateId: 'WB',
+        districtId: 'KOL',
+        psId: 'RGPARK',
+        sdwOf: "Amar Baap!",
+        occupationId: self.patientData.occupationId
+      }
+
+      axios.post('http://127.0.0.1:5000/registerpatient', data, headers)
+      .then(function (response) {
+        Vue.$cookies.set('PID', response.data)
+        alert('Patient reg. Id '+ Vue.$cookies.get('PID'))
+      })
+      .catch(function(error){
+        console.log(error);
+        alert('Could not register')
+      });
     },
     getTab: function (tabName) {
       let tabs = this.tabs
@@ -285,8 +343,6 @@ export default {
 
       this.$store.commit('registerPatient', payload)
       this.$store.commit('updateCurrPatient', payload)
-
-      alert('A new patient has been registered.')
       
       
     }
@@ -295,7 +351,7 @@ export default {
     return {
       patientData: {
         name: "",
-        occupation: 'Truck Driver',
+        occupation: "",
         gender: "m",
         age: "29",
         hswd: '',
@@ -307,7 +363,7 @@ export default {
         country: '',
         demographics: {
           name: "",
-          occupation: 'Truck Driver',
+          occupation: "",
           gender: "m",
           age: "29",
           hswd: '',

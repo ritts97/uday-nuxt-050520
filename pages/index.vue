@@ -79,7 +79,11 @@
 </template>
 
 <script>
+
 import axios from 'axios'
+import Vue from 'vue'
+import VueCookies from 'vue-cookies'
+Vue.use(VueCookies)
 
 export default {
   layout: 'default',
@@ -108,8 +112,8 @@ export default {
       axios.post('http://127.0.0.1:5000/login', data, headers)
         .then(function (response) {
           console.log(response.data);
-
-          alert('You are logged in as ' + response.data + '.')
+          Vue.$cookies.set('HaId', response.data)
+          alert('You are logged in as ' + Vue.$cookies.get('HaId') + '.')
 
           self.$router.push({
             path: '/ha'
