@@ -335,7 +335,7 @@ export default {
         'Content-Type': 'application/json;charset=UTF-8',
       }
       var data = {
-        HaId: Vue.$cookies.get('HaId'),
+        HaId: Vue.$cookies.get('HaId').HaId,
         name: self.patientData.name,
         gender: self.patientData.gender,
         age: Number(self.patientData.age),
@@ -346,17 +346,20 @@ export default {
         districtId: self.patientData.districtId,
         psId: self.patientData.psId,
         sdwOf: self.patientData.hswd,
-        occupationId: self.patientData.occupationId
+        occupationId: self.patientData.occupationId,
+        cluster: Vue.$cookies.get('HaId').cluster
       }
 
       axios.post(this.$url +'registerpatient', data, headers)
       .then(function (response) {
-        Vue.$cookies.set('PID', response.data)
-        alert('Patient reg. Id '+ Vue.$cookies.get('PID'))
+        var list = response.data[0];
+        var d = {objectid: list['objectid'], name: self.patientData.name, date: list['date'], haId: Vue.$cookies.get('HaId').HaId, status:"registered", cluster : Vue.$cookies.get('HaId').cluster}
+        Vue.$cookies.set('PID', d)
+        alert('Patient reg. Id '+ Vue.$cookies.get('PID').objectid)
       })
       .catch(function(error){
         console.log(error);
-        alert('Could not register')
+        alert('Could not register  ' + error)
       });
     },
     getTab: function (tabName) {

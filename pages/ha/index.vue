@@ -14,7 +14,7 @@
         <div class="col-md-9">
             <div class="row">
               <div class="col-md-12">
-                <h5 class="d-inline text-decoration-none">{{ currUser.name }}</h5>  
+                <h5 class="d-inline text-decoration-none">{{ this.haName }}</h5>  
                 <div class="float-right text-capitalize">
                   <img src="/circle-green.svg" class="shape-status" alt="">
                   {{ currUser.status }}
@@ -82,23 +82,23 @@
               <!-- <tbody> -->
 
               <!-- <transition name="u-fade"  mode="in-out" tag="tbody"> -->
-                <tr class="pointer" v-for="(patient, index) in list.slice().reverse()" :key="index">
+                <tr class="pointer" v-for="i in this.$patientlist" :key="i">
                   <!-- <th class="text-uppercase" scope="row">{{ patient.id }}</th> -->
                   <td class="text-capitalize">
-                    <img v-if="patient.status == 'registered'" src="/circle-green.svg" class="shape-status" alt="">
-                    <img v-if="patient.status == 'released'" src="/circle-yellow.svg" class="shape-status" alt="">
-                    <img v-if="patient.status == 'allocated'" src="/circle-red.svg" class="shape-status" alt="">
-                    <img v-if="patient.status == 'queued'" src="/circle-orange.svg" class="shape-status" alt="">
-                    {{ patient.status }}
+                    <img v-if="i['status'] == 'registered'" src="/circle-green.svg" class="shape-status" alt="">
+                    <img v-if="i['status'] == 'released'" src="/circle-yellow.svg" class="shape-status" alt="">
+                    <img v-if="i['status'] == 'allocated'" src="/circle-red.svg" class="shape-status" alt="">
+                    <img v-if="i['status'] == 'queued'" src="/circle-orange.svg" class="shape-status" alt="">
+                    {{ i['status'] }}
                   </td>
                   <td>
-                    <nuxt-link :to="'/ha/profile?id=' + patient.id">{{ patient.demographics.name }}</nuxt-link>
+                    <nuxt-link :to="'/ha/profile?id=' + i['objectid']">{{ i['name'] }}</nuxt-link>
                   </td>
                   <!-- <td class="text-uppercase">{{ patient.demographics.gender }}</td> -->
                   <!-- <td>{{ patient.demographics.age }}</td> -->
-                  <td>{{ patient.lastVisited }}</td>
-                  <td>{{ patient.dateRegistered }}</td>
-                  <td>{{ patient.regBy }}</td>
+                  <td>{{ i['date'] }}</td>
+                  <td>{{ i['date'] }}</td>
+                  <td>{{ i['name'] }}</td>
                 </tr>
 
                 <tr v-show="list.length === 0" class="pointer" key="empty" style="height: 40px;">
@@ -118,6 +118,11 @@
 </template>
 
 <script>
+
+import Vue from 'vue'
+import VueCookies from 'vue-cookies'
+import getPatientList from '@/pages/index'
+
 export default {
   layout: 'dashboard',
   computed: {
@@ -171,17 +176,28 @@ export default {
         url: '/ha'
       },
     ]
-
-
-    this.list = this.patientList.filter(patient => patient.regBy ==  this.$store.state.currUser.name)
+    var l = this.$patientlist.length
+    if(l > 0){
+    if(Vue.$cookies.get('PID').objectid != this.$patientlist[l-1]['objectid']) {
+      this.$patientlist.push(Vue.$cookies.get('PID'))
+    }
+    }
+    if(l == 0){
+      this.$patientlist.push(Vue.$cookies.get('PID'))
+    }
+    this.haName = Vue.$cookies.get('HaId').name
+    this.cluster = Vue.$cookies.get('HaId').cluster
+    this.list = this.$patientlist.filter(patient => patient.cluster = this.cluster)
 
     this.$store.commit('updateCurrUser')
     this.$store.commit('updatePath', path)
+
+    
   },
   methods: {
     getList: function (tabName) {
       if (tabName == 'patients') {
-        this.list = this.filterMyPatients
+        this.list = this.$patientlist
       }
       else if (tabName == 'cluster') {
         this.list = this.filterCluster
@@ -206,7 +222,7 @@ export default {
     },
     getListLength: function (tabName) {
       if (tabName == 'patients') {
-        return this.filterMyPatients.length
+        return this.$patientlist.length
       }
       else if (tabName == 'cluster') {
         return this.filterCluster.length

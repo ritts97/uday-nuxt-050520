@@ -23,15 +23,15 @@
             Welcome to Uday. 
           </div>
           <hr>
-          <input type="text" name="" class="w-100 mb-2 p-2" placeholder="Username or Email" id=""><br>
-          <input type="text" name="" class="w-100 p-2" placeholder="Password" id=""><br>
+          <input type="text" name="" class="w-100 mb-2 p-2" placeholder="Username or Email" id="" v-carousel v-model="email"><br>
+          <input type="password" name="" class="w-100 p-2" placeholder="Password" id="" v-carousel v-model="password"><br>
           <!-- <nuxt-link to="/ha">
             <button class="btn btn-dark mt-3 mb-2 p-2 w-100 text-uppercase">
               Login
             </button>
           </nuxt-link> -->
           <!-- <nuxt-link to="/ha" @click="login"> -->
-          <button @click="login" class="btn btn-dark mt-3 mb-2 p-2 w-100 text-uppercase">
+          <button @click="loginha" class="btn btn-dark mt-3 mb-2 p-2 w-100 text-uppercase">
             Login as HA
           </button>
           <!-- </nuxt-link> -->
@@ -90,6 +90,9 @@ Vue.prototype.$url = 'http://127.0.0.1:5000/';
 export default {
   layout: 'default',
   mounted() {
+    Vue.prototype.$abc = [{number: 0}, {number: 1}]
+    this.$abc = this.$abc.concat({number: 2})
+    this.getPatientList()
     this.getOccupation()
     this.getState()
     this.getDistrict()
@@ -102,10 +105,11 @@ export default {
     //     console.log('Success 123s')
     //   })
     // },
-    login: function () {
+    loginha: function () {
       var data = {
-        email: 'ritwikaghosh48@gmail.com',
-        password: 'abcd1234'
+        email: this.email,
+        password: this.password,
+        type: "HA"
       }
 
       var headers = {      
@@ -119,9 +123,10 @@ export default {
 
       axios.post(this.$url + 'login', data, headers)
         .then(function (response) {
+          var details = response.data[0]
           console.log(response.data);
-          Vue.$cookies.set('HaId', response.data)
-          alert('You are logged in as ' + Vue.$cookies.get('HaId') + '.')
+          Vue.$cookies.set('HaId', details)
+          alert('You are logged in as ' + Vue.$cookies.get('HaId').name + '.')
 
           self.$router.push({
             path: '/ha'
@@ -131,16 +136,11 @@ export default {
           console.log(error);
 
           alert('Could not login.')
-          
-          self.$router.push({
-            path: '/ha'
-          })
         });
     },
     getOccupation: function(){
       axios.get(this.$url + 'requestoccupation').then(resp => {
         Vue.prototype.$occ = resp.data;
-        alert($$occ)
       });
     },
     getState: function(){
@@ -156,7 +156,12 @@ export default {
     getPs: function(){
       axios.get(this.$url+'requestps').then(resp =>{
         Vue.prototype.$ps = resp.data;
-      })
+      });
+    },
+    getPatientList: function(){
+      axios.get(this.$url + 'getpatientlist').then(resp =>{
+        Vue.prototype.$patientlist = resp.data
+      });
     }
   }
 }
