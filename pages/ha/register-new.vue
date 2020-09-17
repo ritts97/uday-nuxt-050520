@@ -353,7 +353,7 @@ export default {
       axios.post(this.$url +'registerpatient', data, headers)
       .then(function (response) {
         var list = response.data[0];
-        var d = {objectid: list['objectid'], name: self.patientData.name, date: list['date'], haId: Vue.$cookies.get('HaId').HaId, status:"registered", cluster : Vue.$cookies.get('HaId').cluster, regno : list['regno'], haname : Vue.$cookies.get('HaId').name}
+        var d = {objectid: list['objectid'], name: self.patientData.name, date: list['date'], ldate: list['date'], haId: Vue.$cookies.get('HaId').HaId, status:"registered", cluster : Vue.$cookies.get('HaId').cluster, regno : list['regno'], haname : Vue.$cookies.get('HaId').name}
         Vue.$cookies.set('PID', d)
         alert('Patient reg. Id '+ Vue.$cookies.get('PID').objectid)
       })
