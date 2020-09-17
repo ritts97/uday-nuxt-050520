@@ -98,7 +98,7 @@
                   <!-- <td>{{ patient.demographics.age }}</td> -->
                   <td>{{ i['date'] }}</td>
                   <td>{{ i['date'] }}</td>
-                  <td>{{ i['name'] }}</td>
+                  <td>{{ i['haname'] }}</td>
                 </tr>
 
                 <tr v-show="list.length === 0" class="pointer" key="empty" style="height: 40px;">
