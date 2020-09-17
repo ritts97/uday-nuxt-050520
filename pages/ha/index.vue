@@ -82,7 +82,7 @@
               <!-- <tbody> -->
 
               <!-- <transition name="u-fade"  mode="in-out" tag="tbody"> -->
-                <tr class="pointer" v-for="i in this.$patientlist" :key="i">
+                <tr class="pointer" v-for="i in this.list" :key="i">
                   <!-- <th class="text-uppercase" scope="row">{{ patient.id }}</th> -->
                   <td class="text-capitalize">
                     <img v-if="i['status'] == 'registered'" src="/circle-green.svg" class="shape-status" alt="">
@@ -92,7 +92,7 @@
                     {{ i['status'] }}
                   </td>
                   <td>
-                    <nuxt-link :to="'/ha/profile?id=' + i['objectid']">{{ i['name'] }}</nuxt-link>
+                    <nuxt-link :to="'/ha/profile?id=' + i['regno']">{{ i['name'] }}</nuxt-link>
                   </td>
                   <!-- <td class="text-uppercase">{{ patient.demographics.gender }}</td> -->
                   <!-- <td>{{ patient.demographics.age }}</td> -->
@@ -182,9 +182,6 @@ export default {
       this.$patientlist.push(Vue.$cookies.get('PID'))
     }
     }
-    if(l == 0){
-      this.$patientlist.push(Vue.$cookies.get('PID'))
-    }
     this.haName = Vue.$cookies.get('HaId').name
     this.cluster = Vue.$cookies.get('HaId').cluster
     this.list = this.$patientlist.filter(patient => patient.cluster = this.cluster)
@@ -197,16 +194,16 @@ export default {
   methods: {
     getList: function (tabName) {
       if (tabName == 'patients') {
-        this.list = this.$patientlist
+        this.list = this.$patientlist.filter(patient => patient.haId = Vue.$cookies.get('HaId').HaId)
       }
       else if (tabName == 'cluster') {
-        this.list = this.filterCluster
+        this.list = this.$patientlist.filter(patient => patient.cluster = this.cluster)
       }
       else if (tabName == 'global') {
         this.list = this.filterGlobal
       }
       else if (tabName == 'queue') {
-        this.list = this.filterQueue
+        this.list = this.$patientlist.filter(patient => patient.status = "registered")
       }
       else if (tabName == 'released') {
         this.list = this.filterReleased
@@ -222,16 +219,16 @@ export default {
     },
     getListLength: function (tabName) {
       if (tabName == 'patients') {
-        return this.$patientlist.length
+        return this.$patientlist.filter(patient => patient.haId = Vue.$cookies.get('HaId').HaId).length
       }
       else if (tabName == 'cluster') {
-        return this.filterCluster.length
+        return this.$patientlist.filter(patient => patient.cluster = this.cluster).length
       }
       else if (tabName == 'global') {
         return this.filterGlobal.length
       }
       else if (tabName == 'queue') {
-        return this.$store.state.udayDb.clusters.cluster001.patientsInQueue.length
+        return this.$patientlist.filter(patient => patient.status = "registered").length
       }
       else if (tabName == 'released') {
         return this.filterReleased.length
